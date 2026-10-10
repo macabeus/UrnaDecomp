@@ -1,6 +1,6 @@
 # How to decompile a function
 
-This page walks one target function from its disassembly to a claim in `splat/matched.txt`. It assumes a working
+This page walks one target function from its disassembly to a match in `splat/matched.txt`. It assumes a working
 checkout: the pinned image built, `asmlift-wasm/` installed and the skeleton linked once
 ([getting-started.md](getting-started.md)). Terms in *italics* are defined in the [glossary](glossary.md).
 
@@ -9,12 +9,12 @@ compiles goes through docker and needs `TMPDIR=/tmp` on macOS, because docker ca
 `/var/folders` temp directory; the commands below carry it.
 
 The example throughout is target function 1931, `comum::CRdvVota::Candidato`, which landed as
-`src/units/13-uenux2-crdvvota.mk`. It is already claimed, so repeating it needs the landed copy out of the way
+`src/units/13-uenux2-crdvvota.mk`. It is already matched, so repeating it needs the landed copy out of the way
 (step 5 says how).
 
 To match several functions at once with Claude Code, run `/decompile-functions`
 ([.claude/commands/decompile-functions.md](../.claude/commands/decompile-functions.md)): it runs this loop in one
-worktree per function, verifies each claim with a second agent, lands the claims as step 10 says, and collects
+worktree per function, verifies each match with a second agent, lands the matches as step 10 says, and collects
 where this page fell short.
 
 ## The loop at a glance
@@ -29,19 +29,19 @@ where this page fell short.
 | 6. land | sources under `src/`, a fragment in `src/units/` and its row in the README's table, `make -C src link` | the skeleton links with the unit |
 | 7. census | `make -C src census` | `ledger/functions.tsv` and its snapshot are rewritten |
 | 8. symbols | `make -C src splat-symbols` | the symbol file names the unit's new functions and data |
-| 9. claim | `make -C src splat-claim` | `git diff splat/matched.txt` shows your function, and its stub is gone |
-| 10. build and commit | `make -C src splat`, `git commit` | the build prints the target's sha256 with the new claim count |
+| 9. match | `make -C src splat-match` | `git diff splat/matched.txt` shows your function, and its stub is gone |
+| 10. build and commit | `make -C src splat`, `git commit` | the build prints the target's sha256 with the new match count |
 
 Steps 6 to 10 run in this order, and this page is the one place that states it. Each step reads what the one
 before it wrote: the census pairs the new link with the target; the symbol file and the scan take names and
-candidates from that census (`ledger/functions.tsv`); the claim comes from the scan; the build verifies the claims.
+candidates from that census (`ledger/functions.tsv`); the new matches come from the scan; the build verifies every match.
 
 ## 1. Pick a function
 
 A *function index* counts imports first: the target's imports are 0–135, so its first defined function is 136
 ([the subject](glossary.md#the-subject)).
 
-The work list is `splat/scan.tsv`, committed with every claim: one row per target function with its verdict
+The work list is `splat/scan.tsv`, committed with every new match: one row per target function with its verdict
 against our current link ([status.md](status.md) "What is left" counts them). Its columns:
 
 | column | holds |
@@ -67,7 +67,7 @@ awk -F'\t' '$5=="differs" && $9 ~ /^(vota|comum|api|simulador|vota-web|ecourna|a
 ```
 
 The `no-candidate` rows (`$5=="no-candidate"` in the same filter) are the functions the scan found no body of ours
-for: the symbol file names none, the census paired none, and no unclaimed body of ours re-points into it. That is
+for: the symbol file names none, the census paired none, and no unmatched body of ours re-points into it. That is
 not the same as unwritten. A function can be written and still pair with nothing: target 1883,
 `CSqlResultSet::VerifyColumnIndex`, is defined in `src/ecourna/api/sql/sqlite/csqlresultset.cpp` and is
 `no-candidate`. The stubs tell the two kinds apart. `tools/round/stubs.py` writes no stub for a function it finds
@@ -129,7 +129,7 @@ pnpm wasm fn ../target/vota_web_wasm.wasm 1931
 ```
 
 `fn` prints the disassembly, a *folded readout* (the stack replayed into expressions), the strings it loads, its
-callers and callees with their components and best matches, and the vtable class and slot it fills
+callers and callees with their components and best pairs, and the vtable class and slot it fills
 ([the toolkit](glossary.md#the-toolkit)). The "strings referenced" list reads every `i32.const` in the data range
 as a pointer, so an error code can show up as a string (1931's `4725` is an error code, not "Tipo de
 identificador…"). A call made inside a `try` goes through an emscripten `invoke_<sig>` import whose first argument
@@ -228,7 +228,7 @@ TMPDIR=/tmp tools/round/try-tu.sh --single 9131 \
 ```
 
 The rows that differ only in an operand are the unresolved data address (`i32.const 0`), the callee as an import,
-and our own data addresses. They are expected in a lone link, and target 9131 is claimed.
+and our own data addresses. They are expected in a lone link, and target 9131 is matched.
 
 `--extract export:<symbol>` takes the function's mangled symbol. To find it, compile the TU and list what it
 defines:
@@ -244,7 +244,7 @@ also in `build/out/wasm/vota_web/symbols.{mangled,demangled}.txt`, two line-alig
 
 A function linked alone gets different inlining and dead-argument decisions from the same function inside the
 program, so a score of 0 here is a reason to try the whole link, not a match. The reverse holds too: target 1931 is
-claimed, yet its body linked alone still differs from the target's.
+matched, yet its body linked alone still differs from the target's.
 
 ## 5. Conclude in the whole link
 
@@ -280,16 +280,16 @@ TMPDIR=/tmp tools/round/try-tu.sh --name munzona --component ecourna/app/dados/a
 Because `--component` moves every TU, it also moves the `std::source_location` paths of a TU from another
 directory. Use it when the TUs share a directory's flags and the moved ones have no records.
 
-The report's census *tiers* are diagnostics ([measuring a match](glossary.md#measuring-a-match)). A target function
-paired with your symbol is worth landing and checking with the splat scan at any tier: most claimed functions pair
-only at `addr` ([status.md](status.md) "Diagnostics: the census tiers"). No tier is a claim. The example shows both
+The report's census *tiers* are diagnostics ([pairing and progress](glossary.md#pairing-and-progress)). A target function
+paired with your symbol is worth landing and checking with the splat scan at any tier: most matched functions pair
+only at `addr` ([status.md](status.md) "Diagnostics: the census tiers"). No tier is a match. The example shows both
 sides of that: the report says `1931 343 B app/comum: none → none`, because a caller of `std::to_string` pairs at
 `none` at depth 2 however exact its body is ([facts/tool-traps.md](reference/facts/tool-traps.md) §X5), and 1931 is
-claimed all the same. The unit-16 run above prints `9131 54 B app/ecourna: none → none` too, for a body that is
+matched all the same. The unit-16 run above prints `9131 54 B app/ecourna: none → none` too, for a body that is
 the target's once re-pointed.
 
 **When the report pairs nothing, re-point against the try link.** Map it once, then run `splat-remap`
-([reference/splat.md](reference/splat.md) "Claiming a function") on its wasm:
+([reference/splat.md](reference/splat.md) "Matching a function") on its wasm:
 
 ```sh
 TMPDIR=/tmp tools/round/link-map.sh build/out/try/munzona/wasm/vota_web     # about 20 s
@@ -300,7 +300,7 @@ pnpm --silent wasm splat-remap ../target/vota_web_wasm.wasm ../build/out/try/mun
 # target 9131: IDENTICAL (2 ambiguous operands read as address content-repointed)
 ```
 
-`IDENTICAL` there is the signal to land. `splat-remap` reads the committed symbol file and none of the claims, so
+`IDENTICAL` there is the signal to land. `splat-remap` reads the committed symbol file and none of the matches, so
 `differs` or `UNRESOLVED` can still turn into a match once steps 8 and 9 add names; the scan in step 9 decides.
 The `ours` index is the function's index in the try link; `pnpm wasm fn` on the try link's wasm with that index
 shows its body beside the target's.
@@ -343,36 +343,37 @@ git diff --stat splat/symbol_addrs.txt
 
 The *symbol file* names target functions and data from evidence that includes the census's unique pairs, so a new
 unit's functions and data get their names here. Run it after every landing that adds functions or data, and read
-the diff: a name that moves can break existing claims (step 10 would say so). It also re-picks the arbitrary name
+the diff: a name that moves can break existing matches (step 10 would say so). It also re-picks the arbitrary name
 of byte-identical *twins*, so expect some churn in lines that have nothing to do with your unit; keep it, do not
-pick lines by hand. Lines below the hand-edit marker survive; never add one whose only evidence is the claim it
+pick lines by hand. Lines below the hand-edit marker survive; never add one whose only evidence is the match it
 enables ([reference/splat.md](reference/splat.md) §2).
 
-## 9. Claim
+## 9. Match
 
 ```sh
-TMPDIR=/tmp make -C src splat-claim
+TMPDIR=/tmp make -C src splat-match
 git diff splat/matched.txt
 ```
 
-`splat-claim` scans every target function, re-points each candidate body of ours into the target's index and
+`splat-match` scans every target function, re-points each candidate body of ours into the target's index and
 address spaces, appends every new byte-identical match to `splat/matched.txt` as `<target index> <our symbol>`,
-rewrites `splat/scan.tsv`, regenerates the progress blocks of `README.md` and `docs/status.md`
-(`make -C src status`), and rewrites the stubs and gaps (`make -C src stubs`): a function with a claim or a body of ours
+rewrites `splat/scan.tsv`, regenerates the status blocks of `README.md` and `docs/status.md`
+(`make -C src status`), and rewrites the stubs and gaps (`make -C src stubs`): a function with a match or a body of ours
 has no stub, so yours goes, and a stub-only file whose last stub goes is removed. A pending member's stub goes too,
 although its body is only a trap: `stubs.py` counts a function in a slot of a vtable our link holds as code of
 ours. The scan still lists it as `no-candidate`; the `-pending.cpp` header is then the only note that it is left
 to do, so name it there. For one function, `pnpm wasm splat-remap` shows the comparison directly;
-[reference/splat.md](reference/splat.md) "Claiming a function" has the command and explains `IDENTICAL`, unresolved
-operands and the first differing byte. It applies none of the claims, so it can say `differs` for a function the
+[reference/splat.md](reference/splat.md) "Matching a function" has the command and explains `IDENTICAL`, unresolved
+operands and the first differing byte. It applies none of the matches, so it can say `differs` for a function the
 scan matches.
 
-A claim the scan found by body has `content` in the `source` column of `splat/scan.tsv`. Once the claim names the
+A match the scan found by body has `content` in the `source` column of `splat/scan.tsv`. Once the match names the
 function, a later scan writes `symbol` there, so a rescan of the committed state differs from the committed
-`scan.tsv` in one such line per new claim. That is not drift; commit what the generator writes.
+`scan.tsv` in one such line per new match. That is not drift; commit what the generator writes.
 
-A *claim* is a promise that the build keeps producing that body. Never edit a piece, and never add a symbol-file
-hand edit whose only evidence is the claim it enables: a name that only makes a claim match proves nothing.
+A *match* is a promise that the build keeps producing that body. Never edit a piece, and never add a symbol-file
+hand edit whose only evidence is the match it enables: a name whose only use is to make a function match proves
+nothing.
 
 ## 10. Build and commit
 
@@ -380,8 +381,8 @@ hand edit whose only evidence is the claim it enables: a name that only makes a 
 TMPDIR=/tmp make -C src splat
 ```
 
-The build substitutes our bytes for every claimed function, prints the meter and fails unless the module's sha256 is
-the target's, `8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2`. If an existing claim breaks
+The build substitutes our bytes for every matched function, prints the meter and fails unless the module's sha256 is
+the target's, `8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2`. If an existing match breaks
 (*drift*), the build names it and the first differing instruction; fix the source until it verifies again
 ([reference/splat.md](reference/splat.md) "The drift rule").
 
@@ -395,10 +396,10 @@ you commit, with `python3 -I -B tools/round/check_encoding.py` (step 3).
 
 **Landing onto a moved main.** When another unit landed after your branch started, merging conflicts in every
 generated file and in the census snapshot, which both branches renamed. Resolve only the files people write:
-`src/units/README.md` keeps both rows, and `splat/matched.txt` keeps both branches' claim lines (step 10 checks
+`src/units/README.md` keeps both rows, and `splat/matched.txt` keeps both branches' match lines (step 10 checks
 every one again). The stub file keeps both branches' removals. Every other generated file takes either side, and
 the census snapshot keeps one name, with the other `git rm`'d. Then run steps 6 to 10 again on the merge: link,
-census (`git rm` the snapshot you kept), symbols, claim, build and the checks. Commit it all as the merge commit.
+census (`git rm` the snapshot you kept), symbols, match, build and the checks. Commit it all as the merge commit.
 Two branches that each took "the next free NN" collide too; `src/units/README.md` "Names" says how to avoid that.
 
 ## Library functions
@@ -419,6 +420,6 @@ differs, the code is usually right and something around it is not. The scan's `d
 To compare the two bodies side by side, read the target with `pnpm wasm fn ../target/vota_web_wasm.wasm <index>`
 and ours with `pnpm wasm fn ../build/out/wasm/vota_web/vota_web_wasm.wasm <ours>` (the scan's `ours` column). A fix
 to a library row is a change of flags, roots, link order or symbol evidence, so it can move many rows at once, and
-it is checked the same way: link, census, symbols, claim, splat build. If you are new to the project, start with
+it is checked the same way: link, census, symbols, match, splat build. If you are new to the project, start with
 TSE functions; the library rows need the background in [reference/toolchain.md](reference/toolchain.md) and
 `docs/reference/facts/`.

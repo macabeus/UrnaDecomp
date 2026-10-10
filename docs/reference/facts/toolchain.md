@@ -1,7 +1,7 @@
 # Facts: the toolchain and the link
 
 What the compiler, linker and Emscripten settings behind `target/vota_web_wasm.wasm` are, and how each was
-measured. Every claim was checked by building a probe in the pinned image (`urna-emsdk:6.0.0`, `build/Dockerfile`,
+measured. Every fact here was checked by building a probe in the pinned image (`urna-emsdk:6.0.0`, `build/Dockerfile`,
 run through `build/docker-build.sh`) and comparing it with the target. `docs/reference/toolchain.md` is the summary;
 this file holds the evidence.
 

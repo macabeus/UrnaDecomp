@@ -96,7 +96,7 @@ function main(argv: string[]): void {
         process.stdout.write(`    source: ${s.source}\n`);
         c.detail.forEach((d) => process.stdout.write(`    ${c.status}: ${d}\n`));
       }
-      process.stdout.write(`stand-ins (link inputs no setup claims): ${standIns.length}\n`);
+      process.stdout.write(`stand-ins (link inputs no setup covers): ${standIns.length}\n`);
       if (check && checks.some((c) => c.status === 'drift')) {
         process.stderr.write(`drift: ${checks.filter((c) => c.status === 'drift').map((c) => c.key).join(', ')}\n`);
         process.exitCode = 1;

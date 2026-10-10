@@ -1,4 +1,4 @@
-// The progress meter: one row per target function, with its owner and the best match any candidate
+// The progress meter: one row per target function, with its owner and the best pair any candidate
 // module offers. A candidate is a whole linked module (a library build, a probe, the project's own
 // link) under a label; every target function is paired against each candidate by census.ts and
 // the strongest pairing wins, in the order
@@ -23,12 +23,12 @@ import { signature } from './normalize';
 import type { Module } from './parse';
 import { score } from './score';
 
-export type MatchKind = 'byte' | 'fingerprint' | 'addr' | 'shape' | 'none';
+export type PairKind = 'byte' | 'fingerprint' | 'addr' | 'shape' | 'none';
 
 export interface Best {
   label: string;
   index: number;
-  kind: MatchKind;
+  kind: PairKind;
   /** rows that differ against the paired function (0 for byte and fingerprint) */
   score: number;
   /** the paired function's name from the candidate's symbol map, when it has one */
@@ -111,7 +111,7 @@ function sameBytes(a: Uint8Array, b: Uint8Array): boolean {
   return true;
 }
 
-const RANK: Record<MatchKind, number> = { byte: 0, fingerprint: 1, addr: 2, shape: 3, none: 4 };
+const RANK: Record<PairKind, number> = { byte: 0, fingerprint: 1, addr: 2, shape: 3, none: 4 };
 
 function better(x: Best, y: Best | null): boolean {
   if (y === null) {
@@ -124,7 +124,7 @@ function better(x: Best, y: Best | null): boolean {
 }
 
 /** The strongest pairing per target function over every candidate, plus each candidate's census. */
-export function bestMatches(
+export function bestPairs(
   target: Module,
   targetNorm: NormalizedFn[],
   candidates: readonly CandidateModule[],
@@ -173,7 +173,7 @@ export function ledgerRows(
   inputs: LedgerInputs = {},
 ): { rows: LedgerRow[]; censuses: Map<string, Census> } {
   const uses = directUses(target, targetNorm);
-  const { best, censuses } = bestMatches(target, targetNorm, candidates);
+  const { best, censuses } = bestPairs(target, targetNorm, candidates);
   const rows = target.funcs.map((fn) => ({
     index: fn.index,
     size: fn.size,
@@ -225,10 +225,10 @@ export function renderLedgerTsv(rows: readonly LedgerRow[]): string {
 
 /** The meter: counts and bytes per kind, overall and per owner. */
 export function ledgerSummary(rows: readonly LedgerRow[]): string {
-  const kinds: MatchKind[] = ['byte', 'fingerprint', 'addr', 'shape', 'none'];
+  const kinds: PairKind[] = ['byte', 'fingerprint', 'addr', 'shape', 'none'];
   const tally = (rs: readonly LedgerRow[]): string => {
-    const n: Record<MatchKind, number> = { byte: 0, fingerprint: 0, addr: 0, shape: 0, none: 0 };
-    const bytes: Record<MatchKind, number> = { byte: 0, fingerprint: 0, addr: 0, shape: 0, none: 0 };
+    const n: Record<PairKind, number> = { byte: 0, fingerprint: 0, addr: 0, shape: 0, none: 0 };
+    const bytes: Record<PairKind, number> = { byte: 0, fingerprint: 0, addr: 0, shape: 0, none: 0 };
     for (const r of rs) {
       const k = r.best?.kind ?? 'none';
       n[k]++;
@@ -298,7 +298,7 @@ export function siblingSymbolMap(wasmPath: string): Map<number, string> | null {
   return existsSync(p) ? readSymbolMap(p) : null;
 }
 
-/** Read a functions.tsv back (the `fn` readout shows the owner and best match from it). */
+/** Read a functions.tsv back (the `fn` readout shows the owner and best pair from it). */
 export function readLedgerTsv(path: string): Map<number, LedgerRow> {
   return parseLedgerTsv(readFileSync(path, 'utf8'));
 }
@@ -324,7 +324,7 @@ export function parseLedgerTsv(text: string): Map<number, LedgerRow> {
           : {
               label,
               index: Number(bIndex),
-              kind: kind as MatchKind,
+              kind: kind as PairKind,
               score: Number(bScore),
               name: bName === '' ? null : bName,
             },
@@ -333,7 +333,7 @@ export function parseLedgerTsv(text: string): Map<number, LedgerRow> {
   return out;
 }
 
-/** Index → name for every row whose best match is strong enough to name the function: a byte,
+/** Index → name for every row whose best pair is strong enough to name the function: a byte,
  *  fingerprint or addr pairing (a shape pairing is often another function of the same shape). */
 export function ledgerNames(rows: ReadonlyMap<number, LedgerRow>): Map<number, string> {
   const out = new Map<number, string>();

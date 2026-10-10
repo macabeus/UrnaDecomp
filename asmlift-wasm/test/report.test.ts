@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { census } from '../src/census';
 import { glueNamesFor } from '../src/glue-file';
 import { importResolver } from '../src/imports';
-import { type LedgerRow, type MatchKind, readLedgerTsv } from '../src/ledger';
+import { type LedgerRow, type PairKind, readLedgerTsv } from '../src/ledger';
 import { normalizeModule } from '../src/normalize';
 import { funcAt, parseModule } from '../src/parse';
 import { movements, renderProgress, tally } from '../src/progress';
@@ -75,7 +75,7 @@ describe('report', () => {
 });
 
 describe('progress', () => {
-  const row = (index: number, size: number, owner: string, kind: MatchKind, score = 0): LedgerRow => ({
+  const row = (index: number, size: number, owner: string, kind: PairKind, score = 0): LedgerRow => ({
     index,
     size,
     uses: 0,

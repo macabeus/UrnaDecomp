@@ -1,7 +1,7 @@
-# splat claim list: <target function index> <our symbol> per line (# starts a comment).
-# A claimed function is assembled from the body the plain skeleton link produces for that symbol, re-pointed into
-# the target (make -C src splat); the build fails while any claim no longer re-points into exactly the target's body.
-# make -C src splat-claim appends new matches from the scan and keeps every existing line.
+# splat match list: <target function index> <our symbol> per line (# starts a comment).
+# A matched function is assembled from the body the plain skeleton link produces for that symbol, re-pointed into
+# the target (make -C src splat); the build fails while any match no longer re-points into exactly the target's body.
+# make -C src splat-match appends new matches from the scan and keeps every existing line.
 136 emscripten_builtin_free
 138 _ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE25__init_copy_ctor_externalEPKcm
 139 ERR_set_debug

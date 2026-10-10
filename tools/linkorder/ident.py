@@ -3,7 +3,7 @@ index<TAB>block(object)<TAB>pos(position in the object's FULL function list)<TAB
 Sources: ledger pairs (byte/fingerprint/addr, depth 2), census depth-0 pairs (fp/addr), wasmfn EXACT by name,
 sqlite attribution names, OPENSSL_FUNC own-name strings, then callee-structure propagation to a fixpoint.
 Gates: the skeleton body must be unique in the skeleton and the target body unique in the target (norm_body),
-or the evidence is a unique name; a skeleton function claimed by two targets (or vice versa) is dropped."""
+or the evidence is a unique name; a skeleton function paired with two targets (or vice versa) is dropped."""
 import os, sys, json, collections, re
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from wasmcode import Module, norm_body

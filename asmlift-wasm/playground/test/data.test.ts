@@ -19,7 +19,7 @@ describe('distillLedger', () => {
     }
   });
 
-  it('gives every function the component, owner and best match the ledger files have', () => {
+  it('gives every function the component, owner and best pair the ledger files have', () => {
     const t = pageTarget();
     const rows = readLedgerTsv(INPUTS.functions);
     const attribution = readAttribution(INPUTS.attribution);

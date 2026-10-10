@@ -7,7 +7,7 @@ import { describe, expect, it } from 'vitest';
 import { census } from '../src/census';
 import { glueNamesFor } from '../src/glue-file';
 import { importResolver } from '../src/imports';
-import { bestMatches, directUses, ledgerRows, readLedgerTsv, renderLedgerTsv, siblingSymbolMap } from '../src/ledger';
+import { bestPairs, directUses, ledgerRows, readLedgerTsv, renderLedgerTsv, siblingSymbolMap } from '../src/ledger';
 import { normalizeModule } from '../src/normalize';
 import { parseModule } from '../src/parse';
 import { TARGET, target, URNA_ROOT } from './helpers';
@@ -34,10 +34,10 @@ describe('ledger', () => {
     const pm = parseModule(new Uint8Array(readFileSync(PROBE)));
     const pNorm = normalizeModule(pm, { importName: importResolver(glueNamesFor(PROBE)!.imports) });
     const names = siblingSymbolMap(PROBE)!;
-    const { best, censuses } = bestMatches(m, targetNorm, [{ label: 'probe', module: pm, norm: pNorm, names }]);
+    const { best, censuses } = bestPairs(m, targetNorm, [{ label: 'probe', module: pm, norm: pNorm, names }]);
     const c = censuses.get('probe')!;
     expect(c.counts.b).toBe(103);
-    // dlmalloc free: identical but for bss addresses, so not a fingerprint but an addr match
+    // dlmalloc free: identical but for bss addresses, so not a fingerprint but an addr pair
     expect(best.get(136)).toMatchObject({ kind: 'addr', name: 'emscripten_builtin_free', score: 35 });
     expect(best.get(262)).toMatchObject({ kind: 'addr', name: 'emscripten_builtin_malloc' });
     // strlen touches no global: same rows, and the same bytes

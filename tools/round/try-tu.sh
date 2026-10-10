@@ -20,9 +20,9 @@
 # compiled with the unit's flags). Library objects are the prebuilt ones (make rebuilds nothing of theirs).
 # The candidate's functions are kept alive by a generated roots TU (tools/round/gen_try_roots.py, compiled with
 # APP_CXXFLAGS) unless --roots gives your own callers (APP_CXXFLAGS + APP_INCLUDES + --flags) or `none`.
-# Target functions the report details: --targets <file of target indices>, else every target function whose best match
-# is now a function the TU(s) define (by symbol name through the --emit-symbol-map twin; --no-named skips the twin link
-# and the names). They are what the TU is expected to produce, not splat claims (splat/matched.txt).
+# Target functions the report details: --targets <file of target indices>, else every target function whose best pair
+# in the try link is a function the TU(s) define (by symbol name through the --emit-symbol-map twin; --no-named skips the twin link
+# and the names). They are what the TU is expected to produce, not splat matches (splat/matched.txt).
 # A census tier of `none` does not mean the body differs. Map the try link with
 #   tools/round/link-map.sh build/out/try/<name>/wasm/vota_web
 # and compare one function with `pnpm wasm splat-remap <target> build/out/try/<name>/wasm/vota_web/vota_web_wasm.wasm
@@ -263,7 +263,7 @@ echo "census: $(elapsed)"
 if [ -n "$targets" ]; then
   grep -oE '^[0-9]+' "$targets" > "$T/targets.txt" || true
 elif [ -n "$named" ]; then
-  # target rows whose best match is one of the TU's symbols
+  # target rows whose best pair is one of the TU's symbols
   awk -F'\t' 'NR==FNR{s[$1]=1; next} FNR>1 && $6=="skeleton" && ($10 in s){print $1}' "$T/symbols.txt" "$T/functions.tsv" > "$T/targets.txt"
   # TU functions the named link has that matched NO target function
   awk -F'\t' 'NR==FNR{s[$1]=1; next} FNR>1 && $6=="skeleton" && ($10 in s){m[$10]=1} END{for(k in s) if(!(k in m)) print k}' "$T/symbols.txt" "$T/functions.tsv" \
@@ -280,7 +280,7 @@ fi
     kit targets "$W" --tsv "$ROOT/$T/functions.tsv" --against "$ROOT/ledger/functions.tsv" --file "$ROOT/$T/targets.txt" --rows "$rows" "skeleton=$ROOT/$M" 2>/dev/null
     echo '```'
   else
-    echo "none (no target function's best match is a TU function; see unmatched-symbols.txt)"
+    echo "none (no target function's best pair is a TU function; see unmatched-symbols.txt)"
   fi
   if [ -s "$T/unmatched-symbols.txt" ]; then
     echo

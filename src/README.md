@@ -33,7 +33,7 @@ The scripts the build calls are in `../tools/round/` (`census.sh`, `census_repor
 
 ## Stubs: the TSE functions not decompiled yet
 
-Every unclaimed TSE function that `tools/round/stubs.py` finds no code of ours for has a stub in `ecourna/`,
+Every unmatched TSE function that `tools/round/stubs.py` finds no code of ours for has a stub in `ecourna/`,
 `uenux2/` or `asn1/`: two comment lines generated where the evidence says the function sat, between `// <stubs>`
 and `// </stubs>` markers. Code of ours, to the generator, is a body in our link, a record that falls on a line of
 our code, or a slot of a vtable our link holds (`stubs.py --report` counts each reason). So a pending member's
@@ -58,13 +58,13 @@ function that returns a class by value does that too, through a hidden first par
 grouped by link-order cluster. A file the evidence names that does not exist yet holds its stubs only. The stub files
 and `unplaced.cpp` are never compiled: no fragment lists them, and the generator never creates a `.cxx` in `asn1/`,
 where `mk/asn1.mk` compiles every one. A stub is a comment, never the target's code: there is no `INCLUDE_ASM`, and an
-unclaimed function's bytes come from its piece in the splat build
+unmatched function's bytes come from its piece in the splat build
 ([../docs/reference/include-asm.md](../docs/reference/include-asm.md)).
 
 Stubs only take blank lines (the ones that keep a decompiled function's throw sites at their recorded lines) or go
 after the end of a file, so no object changes; where a run of blank lines is too short for the stubs its records put
 there, a `#line N` after them gives the next line its number back, the same directive a gap ends with (below). The
-markers say the runs are generated: `make -C src stubs` rewrites them (`splat-scan` and `splat-claim` run it), and
+markers say the runs are generated: `make -C src stubs` rewrites them (`splat-scan` and `splat-match` run it), and
 `make -C src stubs-check` (CI) fails on a stub that is missing, extra, stale or out of place. To edit a file that holds
 stubs or gaps, `python3 -I -B tools/round/stubs.py --strip <file>` turns them back into blank lines first;
 [../docs/how-to-decompile.md](../docs/how-to-decompile.md) step 3 has the rest.
@@ -138,7 +138,7 @@ TMPDIR=/tmp tools/round/try-tu.sh cand.cpp|dir [--flags '…'] [--targets idx.tx
   `make link EXTRA_OBJS=… OUT=build/out/try/<name>/wasm/… OUT_NAMED=…` (the libraries prebuilt, nothing of theirs
   rebuilt), runs the census against the target, and writes `build/out/try/<name>/report.md`: the census tiers per
   owner and per component against `ledger/functions.tsv`, the functions that moved, and for each target function
-  in `--targets` (default: every target function whose best match is now one of the TU's own symbols) its tier
+  in `--targets` (default: every target function whose best pair in the try link is one of the TU's own symbols) its tier
   before and after, the skeleton function it pairs with and the first differing rows. `unmatched-symbols.txt` lists
   the TU functions that reached the link and paired with no target function. try-tu never writes `ledger/`.
   A census tier of `none` does not mean the body differs. `tools/round/link-map.sh build/out/try/<name>/wasm/vota_web`

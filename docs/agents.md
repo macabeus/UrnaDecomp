@@ -54,7 +54,7 @@ The board is a folder **outside** the repository, created for one run; the run's
   deeper than `src/ecourna/*/*/` is no prerequisite of the generic rule at all, so an edit of it does not rebuild
   either, unless its fragment names it (`src/units/README.md` "What a fragment holds" item 3).
 - Two units landing in one run each need their own fragment number: the coordinator assigns them before the
-  matchers start, and the unit that lands second re-runs link, census, symbols, claim and the splat build on top of
+  matchers start, and the unit that lands second re-runs link, census, symbols, match and the splat build on top of
   the first (`docs/how-to-decompile.md` step 10, "Landing onto a moved main").
 - An edit to a shared header recompiles every unit that includes it, and a half-finished edit breaks every other
   agent's link until it is fixed. Keep shared headers compiling at every commit.
@@ -66,8 +66,8 @@ The board is a folder **outside** the repository, created for one run; the run's
   <commit> asmlift-wasm | tar -x -C <dir>`) when that matters.
 - `make -C src splat-symbols` after a new link re-picks the arbitrary name of byte-identical twins, so two runs'
   symbol files conflict on such lines: regenerate after merging rather than pick a side. `splat-scan` and
-  `splat-claim` can disagree on a count; trust the splat build's verification, and read `git diff
-  splat/matched.txt` for claims that a data change made match by accident.
+  `splat-match` can disagree on a count; trust the splat build's verification, and read `git diff
+  splat/matched.txt` for lines that a data change matched by accident.
 
 ## House rules
 

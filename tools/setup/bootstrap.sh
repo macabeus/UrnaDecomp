@@ -260,6 +260,6 @@ if [ "$MODE" != build ]; then
 Next (from the repository root; docs/getting-started.md says what each prints):
   TMPDIR=/tmp make -C src -j4 $(make -s -C src print-LINK_OBJS)   # the app objects, 4 at a time
   TMPDIR=/tmp make -C src link                                    # the plain link and its named twin (never -j)
-  TMPDIR=/tmp make -C src splat                                   # must end with the target's sha256 and the claim count
+  TMPDIR=/tmp make -C src splat                                   # must end with the target's sha256 and the match count
 EOF
 fi

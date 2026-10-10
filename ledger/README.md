@@ -38,7 +38,7 @@ commands and the results.
 
 | file | holds |
 | --- | --- |
-| `functions.tsv` | one row per target function: size, use count, owner, component, and its best match so far (`best_kind` = byte, fingerprint, addr, shape or none, against the skeleton link or the libc probe) |
+| `functions.tsv` | one row per target function: size, use count, owner, component, and its best pair so far (`best_kind` = byte, fingerprint, addr, shape or none, against the skeleton link or the libc probe) |
 | `history/<stamp>-census.tsv` | a copy of `functions.tsv` taken at the end of a census |
 
 The census prints its tiers with `pnpm wasm progress`, which compares `functions.tsv` against the newest file
@@ -48,7 +48,7 @@ census. Earlier snapshots are in git (`git log -- ledger/history`). After a cens
 snapshot and `git rm` the previous one by name.
 
 `functions.tsv` and its tiers are diagnostics: they say how close each function is. The project's official
-count of matched functions is the splat build's claim list, `splat/matched.txt` (`docs/reference/splat.md`).
+count of matched functions is the splat build's match list, `splat/matched.txt` (`docs/reference/splat.md`).
 
 ## Not tracked
 

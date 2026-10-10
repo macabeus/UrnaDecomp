@@ -7,7 +7,7 @@ import { exportNamesFromGlue, importNamesFromGlue } from '@asmlift/wasm/imports'
 import { type Lifted, componentFlags, liftFunction, liftNames } from '@asmlift/wasm/lift';
 import { type Func, type Module, funcAt, importedFunc, parseModule, typeText } from '@asmlift/wasm/parse';
 import { type LedgerString, referencedStrings } from '@asmlift/wasm/strings';
-import type { MatchKind } from '@asmlift/wasm-benchmark/schema';
+import type { PairKind } from '@asmlift/wasm-benchmark/schema';
 
 import type { LedgerData } from './ledger-data';
 
@@ -58,7 +58,7 @@ export interface LedgerFacts {
   component: string;
   evidence: string;
   owner: string;
-  best: { kind: MatchKind; label: string; index: number; score: number } | null;
+  best: { kind: PairKind; label: string; index: number; score: number } | null;
   /** the name of a shape pairing, which names a function of the same shape, not necessarily this one */
   shapeName: string | null;
 }

@@ -1,5 +1,5 @@
 ---
-description: Run a decompilation round on urna, from picking target functions to landed, independently verified splat claims, with one worktree per lane, a message board and a doc-friction log
+description: Run a decompilation round on urna, from picking target functions to landed, independently verified splat matches, with one worktree per lane, a message board and a doc-friction log
 argument-hint: <index> [<index> ...] | <count> <component> [agents=<N>] [round=<NAME>]
 ---
 
@@ -41,14 +41,14 @@ A lane's VERIFY may start as soon as its MATCH returns, while the other lane is 
 
 ## The rules every agent is held to
 
-Put this list in every brief, word for word. It is the standard a claim is judged by.
+Put this list in every brief, word for word. It is the standard a match is judged by.
 
 1. **Docs only.** Learn how to decompile only from the repository's documentation, read from your own checkout:
    `README.md`, `docs/getting-started.md`, `docs/how-to-decompile.md`, `docs/glossary.md`, `docs/agents.md`,
    `docs/reference/**`, `src/README.md`, `src/units/README.md`, `tools/README.md`, `asmlift-wasm/README.md`, and
    the code they point to. When a doc is silent, wrong or ambiguous, resolve it the best way you can **and** post a
    friction entry (below).
-2. **The exact splat check is the only verdict.** A claim counts when `TMPDIR=/tmp make -C src splat` prints the
+2. **The exact splat check is the only verdict.** A match counts when `TMPDIR=/tmp make -C src splat` prints the
    target's sha256 `8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2` with it in
    `splat/matched.txt`: byte-identical after re-pointing. No blinding, no census tier, no score.
 3. **The real function under its real name.** The body is plausible original C++ for that function: the name the
@@ -59,7 +59,7 @@ Put this list in every brief, word for word. It is the standard a claim is judge
    `may_alias` casts, no `goto` a loop or an `if` would express (how-to step 3).
 5. **Stand-ins add only what the docs sanction.** A `-roots.cpp` reaches a function the way the target does, and
    a `-pending.cpp` holds trapping members, as `src/units/README.md` "Companion files" says. Nothing else
-   changes to make a claim land.
+   changes to make a match land.
 6. **Generated files are regenerated, never edited**: stubs and gaps, `splat/scan.tsv`, `splat/symbol_addrs.txt`
    above its hand-edit marker, the status blocks of `README.md` and `docs/status.md`, `ledger/functions.tsv` and
    its snapshot. The commands that write them are how-to steps 7 to 9.
@@ -162,7 +162,7 @@ How to pick, from [how-to-decompile.md](../../docs/how-to-decompile.md) step 1:
   fixing its C++.
 - **Every callee must resolve.** Read each candidate with `pnpm wasm fn` and lift it with `pnpm wasm lift … --check`
   (how-to steps 2 and 3). `fn` does not name the function behind an `invoke_*` table slot; the lift does
-  (`/* &fN */`). A callee resolves when it is claimed (`awk -v n=N '$1 == n' splat/matched.txt` prints a line) or
+  (`/* &fN */`). A callee resolves when it is matched (`awk -v n=N '$1 == n' splat/matched.txt` prints a line) or
   named (`/usr/bin/grep -F '= func:N;' splat/symbol_addrs.txt` prints one). A function whose callees are unnamed
   needs those first.
 - **The stub may sit over code we have**: search our sources for the class before choosing (step 1).
@@ -182,42 +182,42 @@ Brief: the rules above, the board path, the lane's handle (`<ROUND>-A`), the abs
 the target index (and any stretch target), its fragment number, and the PICK post's evidence **as hypotheses**.
 
 The matcher works only in its worktree and follows [how-to-decompile.md](../../docs/how-to-decompile.md) steps 1
-to 10 as written, including steps 6 to 10 in the worktree: link, census, symbols, claim, the splat build, the
+to 10 as written, including steps 6 to 10 in the worktree: link, census, symbols, match, the splat build, the
 checks, and one commit on its branch. It never touches the urna checkout's `main` and never merges.
 
-It returns, and posts as a `rounds/` result: the verdict (claimed, or not claimable and why), the commit(s), the
-splat build's sha256 and claim count, the claims added and lost against `main`
-(`git diff main -- splat/matched.txt`: any line starting with `-` and a digit is a lost claim), the files it owns,
-its stretch target's state, and the number of friction posts. A target that cannot be claimed yet is a result:
+It returns, and posts as a `rounds/` result: the verdict (matched, or not matchable yet and why), the commit(s), the
+splat build's sha256 and match count, the matches added and lost against `main`
+(`git diff main -- splat/matched.txt`: any line starting with `-` and a digit is a lost match), the files it owns,
+its stretch target's state, and the number of friction posts. A target that cannot be matched yet is a result:
 post the blocker as a `facts/` post (which callee, which codegen) and leave it pending. Nothing lands from a lane
-without a claim.
+without a match.
 
 ---
 
 ## Stage 3: VERIFY (one agent per lane, independent)
 
 A different agent from the matcher, given only: the rules above, the board path, the worktree, the branch, the
-commit range, the target index and the claim line. Not the matcher's transcript. Its job is to refute the claim.
+commit range, the target index and the match line. Not the matcher's transcript. Its job is to refute the match.
 It changes no tracked file, works in scratch under `build/out/verify/` (ignored), and posts a verdict,
 **CONFIRMED** or **REFUTED** with the check that failed:
 
 1. **Fresh objects.** Move the unit's objects aside by name (into `build/out/verify/old-objs/`), run
    `TMPDIR=/tmp make -C src splat`, and `cmp` the rebuilt objects with the old ones. A stale object means the
    source edits never rebuilt (`src/units/README.md` "What a fragment holds" item 3).
-2. **The splat build** prints the target's sha256, and the claims against `main` are only additions
+2. **The splat build** prints the target's sha256, and the matches against `main` are only additions
    (`git diff main -- splat/matched.txt`).
-3. **The blanked-target check**, as [docs/reference/splat.md](../../docs/reference/splat.md) "Reviewing a claim"
-   describes: blank the claimed piece in a copy of the split, assemble it with our body, and get the target's
+3. **The blanked-target check**, as [docs/reference/splat.md](../../docs/reference/splat.md) "Reviewing a match"
+   describes: blank the matched piece in a copy of the split, assemble it with our body, and get the target's
    sha256. There is no command for it yet; write the script that section describes under `build/out/verify/` as
-   an `.mts` file and run it from `asmlift-wasm/` with `pnpm --silent exec tsx`. The claim's own bytes are the gate.
-   Run the preferred-readings way too and report its result, but a claim whose operands need the target's choice
+   an `.mts` file and run it from `asmlift-wasm/` with `pnpm --silent exec tsx`. The match's own bytes are the gate.
+   Run the preferred-readings way too and report its result, but a match whose operands need the target's choice
    (splat.md §3) fails it legitimately. Say which way gave which result.
 4. **The checks**: `make -C src stubs-check`, `python3 -I -B tools/round/status.py --check`,
    `python3 -I -B tools/round/stubs.py --check`, `python3 -I -B tools/round/check_encoding.py`, and
-   `TMPDIR=/tmp make -C src check-srcloc` with no wrong record of a claimed function (compare its list with
+   `TMPDIR=/tmp make -C src check-srcloc` with no wrong record of a matched function (compare its list with
    `main`'s; earlier ones are not the lane's).
 5. **Generated files are what the generators write.** Re-running `make -C src splat-symbols` leaves
-   `git status` clean. A rescan changes `splat/scan.tsv` in one way only, the `source` column of a new claim
+   `git status` clean. A rescan changes `splat/scan.tsv` in one way only, the `source` column of a new match
    (how-to step 9). Restore anything a re-run rewrote with `git checkout -- <file>`, and report it.
 6. **The source**, against rules 3 to 5: the real mangled name and where its evidence comes from, real classes, no
    scaffolding in the landed TSE files, Latin-1, throws on their record lines, and roots and pending files in the
@@ -230,18 +230,18 @@ VERIFY. If it is refuted again, report it to the user.
 
 ## Stage 4: LAND (one agent, on `main`)
 
-Brief: the rules above, the board path, the CONFIRMED lanes in landing order, and the claim count and commit of
+Brief: the rules above, the board path, the CONFIRMED lanes in landing order, and the match count and commit of
 `main` before the round. It posts a `rounds/` claim of `main` first, and keeps its logs under `build/out/land/`.
 
-1. **The first lane** fast-forwards when `main` has not moved: `git merge --ff-only decomp/<lane>`. Its claims were
+1. **The first lane** fast-forwards when `main` has not moved: `git merge --ff-only decomp/<lane>`. Its matches were
    measured on this `main`, so nothing needs to be rerun.
 2. **Each later lane** merges with `git merge --no-ff --no-commit decomp/<lane>` and resolves the conflicts as
    [how-to-decompile.md](../../docs/how-to-decompile.md) step 10 "Landing onto a moved main" says, then runs steps 6
-   to 10 again on the merge (link, census, symbols, claim, build, checks) and commits it all as the merge commit.
+   to 10 again on the merge (link, census, symbols, match, build, checks) and commits it all as the merge commit.
    Do not pick generated lines by hand.
 3. **Check the landing**: `TMPDIR=/tmp make -C src splat` prints sha256
-   `8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2`, the claim count is the old count plus every
-   lane's claims, and `git diff <old main> -- splat/matched.txt` has no removed claim. A merged link can add claims
+   `8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2`, the match count is the old count plus every
+   lane's matches, and `git diff <old main> -- splat/matched.txt` has no removed match. A merged link can add matches
    no lane had (a name that moved, a vtable now placed by content). List them, with why, as a `facts/` post. Then
    run the checks of VERIFY step 4, and from `asmlift-wasm/` `pnpm test`, `pnpm typecheck` and `pnpm test:bench`.
 4. **Clean up**: for each landed lane whose worktree is clean (`git -C <worktree> status --porcelain` prints
@@ -268,11 +268,11 @@ change that answers it, or why none does.
 When the round ends, or when the user stops it (then stop launching agents, let running ones finish, and report
 what exists), tell the user:
 
-- **per target**: the verdict (claimed, pending and why, refuted), the VERIFY verdict and which blanked-target
+- **per target**: the verdict (matched, pending and why, refuted), the VERIFY verdict and which blanked-target
   ways it ran, and the lane's commits;
 - **the landing**: how each lane merged (fast-forward or merge commit), the conflicts and how each was resolved,
-  the regeneration and how long the link took, the splat build's sha256, the claim count before and after, every
-  new claim including those no lane had, and that none was lost;
+  the regeneration and how long the link took, the splat build's sha256, the match count before and after, every
+  new match including those no lane had, and that none was lost;
 - **the checks** and their results;
 - **the friction log**: how many posts, and the DOCS commit; the follow-ups that need code;
 - **what is left**: the worktrees removed (quote `git worktree list`), the branches kept, that nothing was pushed,
@@ -284,21 +284,21 @@ what exists), tell the user:
 
 - **PICK** found 616 ecourna `no-candidate` rows, of which 253 had a stub under `src/ecourna`, none placed by a
   record. Of the stubs of 60 to 600 B, only template instantiations and the `CConversor*` ASN.1 converter hooks had
-  every callee claimed or named. It picked 9132 `CConversorHorariosUrna::DoDeconverte` (134 B) for lane A and 9131
+  every callee matched or named. It picked 9132 `CConversorHorariosUrna::DoDeconverte` (134 B) for lane A and 9131
   `CConversorMunicipioZona::DoConverte` (54 B) for lane B, with 9130 (B's sibling slot) as B's stretch goal, and
   fragment numbers 15 and 16.
 - **MATCH A** wrote the `CHorariosUrna` data class (its out-of-line constructor gives the target's 32-byte frame)
   and the converter in `app/dados/asn/`, with a `-pending.cpp` for 9133 and a `-roots.cpp` for the vtable.
-  Matching by content also confirmed the callee's name and claimed 9218
-  (`CConversorCabecalhoEntidade::DoDeconverte`) as a side effect: 7,213 claims. **MATCH B** claimed 9131 (7,212
-  claims). 9130 stayed pending: it needs constructor thunks that binaryen merged and that have no names yet.
+  Matching by content also confirmed the callee's name and matched 9218
+  (`CConversorCabecalhoEntidade::DoDeconverte`) as a side effect: 7,213 matches. **MATCH B** matched 9131 (7,212
+  matches). 9130 stayed pending: it needs constructor thunks that binaryen merged and that have no names yet.
 - **VERIFY** confirmed both lanes, including the blanked-target check. 9132 also passed the preferred-readings way.
   9218 needs the target's reading choice and fails that way, as splat.md says it may.
 - **LAND** fast-forwarded lane A (`f6dc3aa`) and merged lane B (`96eb729`). The merge conflicted in every
   generated file and in the census snapshot that both lanes had renamed. After the regeneration (link 3m19s,
-  census, symbols, claim), the splat build printed the target's sha256 with 7,215 claims: 7,211 + 9132, 9218,
+  census, symbols, match), the splat build printed the target's sha256 with 7,215 matches: 7,211 + 9132, 9218,
   9131, and 6122, a libc++ function that neither lane had. The merged link dropped a self-voted vtable name, so
-  that vtable was placed by its content. No claim was lost.
+  that vtable was placed by its content. No match was lost.
 - **DOCS** (`47efbf4`) answered the round's 33 friction posts with doc changes: among them the `unplaced.cpp`
   file rules, the sret parameter order, `--unresolved-symbols` for a lone link, remapping a try link, the
   deep-source rebuild trap, the fragment-number race, the landing recipe for a moved main, the `$` in `byn$`

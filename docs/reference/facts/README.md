@@ -12,5 +12,5 @@ Cite a fact as `docs/reference/facts/<file>.md §<id>`, for example `docs/refere
 | [app-flags.md](app-flags.md) | F1–F9 | compile flags of ecourna and uenux2 TUs, per-TU `-fPIC`, source idioms the target forced, flag-measuring traps |
 | [libraries.md](libraries.md) | B1–B9 | SQLite, libcrypto, 7-Zip, RHVoice, Boost, zlib: versions, flags, root sets, the compile-diff method |
 | [asn1.md](asn1.md) | A0–A4 | the ASN.1 runtime's lineage and flags, the `Modulo*` schema read from the target's data |
-| [splat.md](splat.md) | S1–S4 | the splat symbol maps, their coverage, and claims that verify but are wrong |
+| [splat.md](splat.md) | S1–S4 | the splat symbol maps, their coverage, and matches that verify but are wrong |
 | [tool-traps.md](tool-traps.md) | X1–X5 | exported roots and inlining, probe links, zsh, fetching from the TSE site, callers of `std::to_string` at depth 2 |

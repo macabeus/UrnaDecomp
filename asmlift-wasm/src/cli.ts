@@ -53,7 +53,7 @@ function usage(): never {
   fingerprint <wasm> [--depth N] [<fn>]      index, size, fingerprint, addr, shape (TSV); one function or all
   score <wasmA> <fnA> <wasmB> <fnB> [--depth N] [--full] [--json]
                                              row diff of B's function against A's (A is the target)
-  census <wasmA> <wasmB> [--depth N] [--json] [--unmatched N] [--pairs]
+  census <wasmA> <wasmB> [--depth N] [--json] [--unpaired N] [--pairs]
                                              match A's functions to B's by fingerprint, then addr, then shape;
                                              --pairs lists them with B's names from its x.js.symbols
   fn <wasm> <fn> [--depth N] [--ledger <dir>] [--owners <cls2.json>]
@@ -66,7 +66,7 @@ function usage(): never {
                                              'fn' readout of every listed function
   ledger <target.wasm> [-o functions.tsv] [--owners <cls2.json>] [--attribution <func-attribution.tsv>] [--depth N]
          <label>=<candidate.wasm>[@<named-twin.wasm>]…
-                                             one row per target function with its best match (the census);
+                                             one row per target function with its best pair (the census);
                                              a plain link gets its names from its --emit-symbol-map twin via @
   progress [--ledger <dir>] [--tsv <functions.tsv>] [--against <prev.tsv>] [--by owner|component] [--moves N]
            [--snapshot [<label>]]            the census tiers per owner (or component) with the delta since the previous
@@ -99,10 +99,10 @@ function usage(): never {
   splat-sym-coverage <target.wasm> <plain.wasm> [--smoke N]          symbol coverage and ledger pairs re-pointed
   splat-twin-check <plain.wasm> <twin.wasm>   the --emit-symbol-map twin's bodies against the plain link's
                                              (src/splat-symbols-cli.ts; urna layout defaults)
-  splat-scan <target.wasm> <plain.wasm> [-o <scan.tsv>] [--claim [<claims>]]   every target function against our
+  splat-scan <target.wasm> <plain.wasm> [-o <scan.tsv>] [--match [<matches>]]   every target function against our
                                              re-pointed candidate: match / differs / unresolved / no-candidate
-  splat-build <target.wasm> <plain.wasm> [--claims <f>] [-o <wasm>] [--expect <sha256>]   the split assembled with
-                                             our bytes for every claim; fails on a claim that no longer verifies
+  splat-build <target.wasm> <plain.wasm> [--matches <f>] [-o <wasm>] [--expect <sha256>]   the split assembled with
+                                             our bytes for every match; fails on a match that no longer verifies
                                              (src/splat-sub-cli.ts; urna layout defaults)
 Every command that normalises takes --import-names <names.json> (module A / the target) and --import-names-b
 <names.json> (module B / a candidate); without them the glue beside the module (x.wasm → x.js) is read when present.
@@ -343,7 +343,7 @@ async function main(argv: string[]): Promise<void> {
     case 'census': {
       const depth = Number(flag(args, '--depth') ?? 2);
       const json = has(args, '--json');
-      const unmatched = Number(flag(args, '--unmatched') ?? 40);
+      const unpaired = Number(flag(args, '--unpaired') ?? 40);
       const pairs = has(args, '--pairs');
       const namesA = flag(args, '--import-names');
       const namesB = flag(args, '--import-names-b');
@@ -366,7 +366,7 @@ async function main(argv: string[]): Promise<void> {
       const symbolsB = siblingSymbolMap(pb);
       process.stdout.write(
         `${renderCensus(c, {
-          listUnmatched: unmatched,
+          listUnpaired: unpaired,
           listPairs: pairs,
           nameB: (i) => symbolsB?.get(i),
           sizeA: (i) => funcAt(ma, i)?.size,

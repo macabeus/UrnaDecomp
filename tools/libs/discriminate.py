@@ -34,7 +34,7 @@ for t in names:
 every = set.intersection(*matched.values())
 some = set.union(*matched.values())
 print(f'  matched by every tag: {len(every)}; by some tag: {len(some)}; discriminators: {len(some - every)}')
-print('  pairwise (fingerprint matches): A-only / B-only')
+print('  pairwise (fingerprint pairs): A-only / B-only')
 for i, a in enumerate(names):
     for b in names[i + 1:]:
         print(f'    {a} vs {b}: {len(fp[a] - fp[b])} / {len(fp[b] - fp[a])}   (any match: {len(matched[a] - matched[b])} / {len(matched[b] - matched[a])})')

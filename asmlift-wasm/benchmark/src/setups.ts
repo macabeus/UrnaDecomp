@@ -65,7 +65,7 @@ export interface SetupCheck {
 
 export interface Classification {
   objects: ClassifiedObject[];
-  /** link inputs no setup claims: hand-written stand-ins for code not reconstructed yet */
+  /** link inputs no setup covers: hand-written stand-ins for code not reconstructed yet */
   standIns: string[];
   checks: SetupCheck[];
 }
@@ -79,7 +79,7 @@ export function classifyObjects(setups: readonly Setup[], image: string): Classi
   }
   const printed = makePrint([...vars]);
   const objects: ClassifiedObject[] = [];
-  const claimed = new Set<string>();
+  const covered = new Set<string>();
   const checks = new Map<string, SetupCheck>(
     setups.map((s) => [s.key, { key: s.key, status: 'ok', objects: 0, detail: [] }]),
   );
@@ -116,7 +116,7 @@ export function classifyObjects(setups: readonly Setup[], image: string): Classi
       continue;
     }
     objects.push({ object, setup: fits[0].key, lang: cmd.lang, source: cmd.source });
-    claimed.add(object);
+    covered.add(object);
   }
   for (const s of makeSetups) {
     if (!objects.some((o) => o.setup === s.key)) {
@@ -124,18 +124,18 @@ export function classifyObjects(setups: readonly Setup[], image: string): Classi
     }
   }
 
-  // artefact: the variables' objects not claimed above; flags from what the library build recorded
+  // artefact: the variables' objects not covered above; flags from what the library build recorded
   for (const s of setups) {
     if (s.truth.kind !== 'artefact') {
       continue;
     }
     const truth = s.truth;
     for (const object of truth.vars.flatMap((v) => printed.get(v)!)) {
-      if (claimed.has(object)) {
+      if (covered.has(object)) {
         continue;
       }
       objects.push({ object, setup: s.key, lang: langOf(object, s), source: null });
-      claimed.add(object);
+      covered.add(object);
     }
     const recorded = artefactFlags(truth);
     if (recorded === null) {
@@ -181,7 +181,7 @@ export function classifyObjects(setups: readonly Setup[], image: string): Classi
   for (const o of objects) {
     checks.get(o.setup)!.objects++;
   }
-  const standIns = printed.get('LINK_OBJS')!.filter((o) => !claimed.has(o));
+  const standIns = printed.get('LINK_OBJS')!.filter((o) => !covered.has(o));
   return { objects, standIns, checks: [...checks.values()] };
 }
 

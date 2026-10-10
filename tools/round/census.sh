@@ -32,7 +32,7 @@ python3 -I tools/round/wasmfn.py cmp "$OUT/skeleton-named.fns.jsonl" "${N%.wasm}
 import json, sys
 for f in sys.argv[1:]:
     d = json.load(open(f)); c = d['counts']
-    print(f"- `{f.split('/')[-1]}`: target {c['a']} fns, skeleton {c['b']}; fingerprint {c['byFingerprint']} + addr {c['byAddr']} + shape {c['byShape']} = {c['byFingerprint']+c['byAddr']+c['byShape']} paired; unmatched target {len(d['unmatchedA'])}, unmatched skeleton {len(d['unmatchedB'])}")
+    print(f"- `{f.split('/')[-1]}`: target {c['a']} fns, skeleton {c['b']}; fingerprint {c['byFingerprint']} + addr {c['byAddr']} + shape {c['byShape']} = {c['byFingerprint']+c['byAddr']+c['byShape']} paired; unpaired target {len(d['unpairedA'])}, unpaired skeleton {len(d['unpairedB'])}")
 PY
   echo; echo '### Census tiers (ledger/functions.tsv, per owner class of tools/libs/cls2.json)'; echo; echo '```'; grep -v '^names for' "$OUT/ledger.log"; echo '```'
   echo; echo '### wasmfn exact bodies (named twin vs target)'; echo

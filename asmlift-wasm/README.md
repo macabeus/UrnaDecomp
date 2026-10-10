@@ -19,10 +19,10 @@ pnpm playground                      # the web app over the target and the bench
 | `disasm <wasm> <fn>`                                                                                        | the instruction stream, raw immediates, body-relative offsets                                                                                                                     |
 | `fingerprint <wasm> [--depth N] [<fn>]`                                                                     | `index size fingerprint addr shape` (TSV) for one or every function                                                                                                               |
 | `score <wasmA> <fnA> <wasmB> <fnB> [--depth N] [--full] [--json]`                                           | row diff of B's function against A's; A is the target                                                                                                                             |
-| `census <wasmA> <wasmB> [--depth N] [--json] [--unmatched N] [--pairs]`                                     | match every function of A to B by fingerprint, then addr, then shape; size histogram                                                                                              |
-| `fn <wasm> <fn> [--depth N] [--ledger <dir>] [--owners <cls2.json>]`                                        | one function: disassembly beside its normalised rows, exports, table slots, a folded readout, and from the ledger its strings, callee owners, vtable slot, callers and best match |
+| `census <wasmA> <wasmB> [--depth N] [--json] [--unpaired N] [--pairs]`                                     | pair every function of A with B by fingerprint, then addr, then shape; size histogram                                                                                             |
+| `fn <wasm> <fn> [--depth N] [--ledger <dir>] [--owners <cls2.json>]`                                        | one function: disassembly beside its normalised rows, exports, table slots, a folded readout, and from the ledger its strings, callee owners, vtable slot, callers and best pair  |
 | `bundle <wasm> --name <n> [--file <indices>] [--no-disasm] <fn>…`                                           | one Markdown file (`<ledger>/bundles/<n>.md`): a header table over the listed functions, then each one's `fn` readout                                                             |
-| `ledger <target.wasm> [-o functions.tsv] <label>=<cand.wasm>[@<twin.wasm>]…`                                | the census: one row per target function with its owner and best match over the candidate modules; `@twin` names a plain link through its `--emit-symbol-map` twin                |
+| `ledger <target.wasm> [-o functions.tsv] <label>=<cand.wasm>[@<twin.wasm>]…`                                | the census: one row per target function with its owner and best pair over the candidate modules; `@twin` names a plain link through its `--emit-symbol-map` twin                 |
 | `progress [--ledger <dir>] [--against <prev.tsv>] [--by owner\|component] [--snapshot [label]]`             | the census tiers per owner or component as a Markdown table with the delta since the previous `<ledger>/history/<stamp>.tsv` snapshot, and the functions that moved              |
 | `targets <target.wasm> --tsv <new.tsv> [--against <prev.tsv>] [--file <indices>] <label>=<cand.wasm>… <fn>…` | per listed target function: previous → new kind/score, the best candidate function by name, and the first differing rows                                                          |
 | `import-names <glue.js> [-o names.json]`                                                                    | `{ minified import field: real name }` from the glue's `wasmImports` table                                                                                                        |
@@ -38,8 +38,8 @@ pnpm playground                      # the web app over the target and the bench
 | `splat-maps <target> <plain> (--fn <ours> \| --data <addr> \| --target-fn <n> \| --summary)`                | one entry of the symbol maps                                                                                                                                                      |
 | `splat-remap <target> <plain> <ours> [--against <target fn>]`                                               | one body of ours re-pointed into the target, and whether it is the target body                                                                                                    |
 | `splat-sym-coverage <target> <plain> [--smoke N]` / `splat-twin-check <plain> <twin>`                       | symbol coverage; the `--emit-symbol-map` twin against the plain link                                                                                                              |
-| `splat-scan <target> <plain> [-o scan.tsv] [--claim [<claims>]]`                                            | every target function against our re-pointed candidate; `--claim` appends new matches to the claim list                                                                           |
-| `splat-build <target> <plain> [--claims f] [-o out.wasm] [--expect <sha256>]`                               | the split with our bytes for every claim; fails on a claim that no longer verifies; prints the meter                                                                              |
+| `splat-scan <target> <plain> [-o scan.tsv] [--match [<matches>]]`                                           | every target function against our re-pointed candidate; `--match` appends new matches to the match list                                                                           |
+| `splat-build <target> <plain> [--matches f] [-o out.wasm] [--expect <sha256>]`                              | the split with our bytes for every match; fails on a match that no longer verifies; prints the meter                                                                              |
 
 `<fn>` is a function index (function index space: imports first, so the target's first defined
 function is 136), `export:<name>` (linked module; the real name, resolved through the glue when the
@@ -114,8 +114,8 @@ an edit ceiling (6,000) the middle is paired positionally and `breakdown.approxi
 `renderSideBySide` prints two columns with `|` `~` `<` `>` marks, `--full` shows context rows too.
 
 **census** (`census.ts`). Groups both modules' functions by fingerprint and pairs them by count
-(identical thunks are common), then the leftovers by addr, then by shape; prints the unmatched
-indices and a histogram by ⌊log₂ size⌋ with the matched byte share; `--pairs` lists every pair with
+(identical thunks are common), then the leftovers by addr, then by shape; prints the unpaired
+indices and a histogram by ⌊log₂ size⌋ with the paired byte share; `--pairs` lists every pair with
 B's name from its symbol map. `census target target` pairs 14,343/14,343 by fingerprint. Against the
 harness probe (103 functions, same toolchain) at depth 2: 29 fingerprint + 29 addr + 8 shape; at
 depth 0: 49 + 22 + 5 (a callee that differs only by an address demotes its caller from fingerprint
@@ -126,7 +126,7 @@ have a body of ≤ 8 bytes, and shape pairs the probe's own 7-byte `probeExporte
 **ledger** (`ledger.ts`). For every target function: `index size uses owner component best_label
 best_index best_kind best_score best_name`. `uses` counts the target's direct call sites (what
 binaryen sorted the code section by); `owner` is the class map (`tools/libs/cls2.json`),
-`component` the attribution ledger (`ledger/func-attribution.tsv`); the best match over every
+`component` the attribution ledger (`ledger/func-attribution.tsv`); the best pair over every
 `<label>=<module.wasm>` candidate is the strongest of **byte** (same body bytes) > **fingerprint** >
 **addr** > **shape** (with the row-diff `score`), named from the candidate's `x.js.symbols`. Under
 the urna layout (`<root>/target/x.wasm`) the owners, attribution and output (`<root>/ledger/functions.tsv`)
@@ -137,10 +137,10 @@ parentheses) and table slots that reach the function, and a **folded readout** (
 stack replayed into expressions, `if (i32.lt_s(l8, 0)) {`, `i32.store[l7+12] = 0;`,
 `return helper(…)`. It is a reading aid (block results show as `<block result>`), not a decompiler.
 With a ledger directory (`--ledger`, defaulting to `<root>/ledger` beside `<root>/target/`;
-`readout.ts`) it adds the function's owner and component, its best match from `functions.tsv`, its
+`readout.ts`) it adds the function's owner and component, its best pair from `functions.tsv`, its
 callers (`callgraph.tsv`), the vtable class and slot it fills (`vtables.json`), every string an
 `i32.const` points at (`strings.tsv`, with the offset into the string) and each callee's owner,
-component, vtable slot and best match. The whole ledger loads in well under a second.
+component, vtable slot and best pair. The whole ledger loads in well under a second.
 `wasm-decompile` is run and its block for the function printed when it is on PATH; Homebrew's wabt
 does not ship it.
 
@@ -149,7 +149,7 @@ does not ship it.
 **bundle** (`report.ts`) writes what `fn` prints for every listed function (arguments, or `--file` with one
 index per line — a ledger TSV works, the first column is taken) into one Markdown file under
 `<ledger>/bundles/<name>.md` (or `--out-dir`), behind a header table: index, size, uses, owner,
-component, vtable class/slot, best match so far. The module is normalised once for the whole file, so
+component, vtable class/slot, best pair so far. The module is normalised once for the whole file, so
 a 50-function bundle takes about as long as one `fn` (measured 4.2–4.8 s wall for 50 ecourna
 functions, 54 KB of body; `fn` alone is 4.3 s). The full readout is large (2.1 MB for those 50);
 `--no-disasm` leaves out the two-column disassembly and keeps the folded readout and the tables
@@ -177,7 +177,7 @@ current ledger into `history/<stamp>[-label].tsv` after printing, so the next ru
 it. `tools/round/census.sh` in urna does exactly that at the end of every census.
 
 **targets** prints, for each listed target function (arguments or `--file`): `<index> <size> <owner>/
-<component>: <prev kind/score> → <new kind/score> <label>:<index> <name>`, and when the new match is an
+<component>: <prev kind/score> → <new kind/score> <label>:<index> <name>`, and when the new pair is an
 addr or shape pair against a candidate module given as `label=path.wasm`, the `score` diff limited to
 `--rows N` differing rows. It is what `try-tu.sh` prints for the target functions a candidate TU is expected to
 produce (`--targets`).
@@ -336,7 +336,7 @@ functions (kind × opcode family, ranked by their mean share of the ratio, with 
 pairs). `--against` compares per function on the `-Oz` score when both runs have one. The lifted
 sources, objects, optimised modules and `.err` files stay in `<out>/lifted/`. An isolated function
 misses what the whole-program link does to it (inlining, dead-argument removal, data addresses), so
-even the `-Oz` score is a structure signal, never a byte match.
+even the `-Oz` score is a structure signal, never byte identity.
 
 Reading a report: the compile rate should be 100% (a failure is a lifter bug; its class and first
 error line are in the failures table and `<out>/lifted/<index>.cpp.err`). Then read `exact -Oz`
@@ -424,10 +424,10 @@ produces is then swapped in. There are four stages, covered in the next three se
 1. **split** (`splat-split`): pieces, a manifest, and a proof that they reassemble.
 2. **symbols** (`splat-symbols`): our link's exact names and the target's evidence-backed symbol file.
 3. **substitute** (`splat-scan`, `splat-build`): a body of ours, re-pointed through both maps, against its piece.
-4. **assemble** (`splat-assemble`, or `splat-build` with a claim list): the module, checked against the
+4. **assemble** (`splat-assemble`, or `splat-build` with a match list): the module, checked against the
    source sha256.
 
-urna drives them as `make -C src splat-split | link-map | splat-symbols | splat-scan | splat-claim | splat`.
+urna drives them as `make -C src splat-split | link-map | splat-symbols | splat-scan | splat-match | splat`.
 Its docs/reference/splat.md has the contributor loop, the drift rule and the meter.
 
 A post-link counterpart of splat for a wasm build whose optimiser re-optimises anything fed through the link
@@ -531,19 +531,19 @@ one that looks like an address or table slot at or above 1024 and resolves to ne
 instruction there. The readings are the ones `matchesTarget` chose; they include the preferred one
 (`RemapResult.bytes`), so a `literal` below 1024 needed no choice. It loads the symbol file (`--symbols`, default
 `<root>/splat/symbol_addrs.txt`) and the map directory beside the plain module (`--map-dir`), and applies no
-claims, unlike `splat-scan` and `splat-build` (`withClaims`). `<ours>` is our index or `sym:<names.tsv name>`; run
+matches, unlike `splat-scan` and `splat-build` (`withMatches`). `<ours>` is our index or `sym:<names.tsv name>`; run
 it as `pnpm exec tsx src/cli.ts splat-remap …` when the name holds a `$`, which `pnpm wasm` hands to a shell.
 
-## splat substitution: the claim list and the build
+## splat substitution: the match list and the build
 
 `splat-sub.ts`, commands in `splat-sub-cli.ts`. A target function is **matched** when our function, re-pointed,
 is byte-identical to its piece (`matchesTarget`, no blinding). **splat-scan** tries, per target function, the
 functions of ours the symbol file names it by, then the ledger's skeleton pair; then, among what is left, pairs by
 body alone (`contentPairs`): one unused function of ours with the same locals and opcode sequence whose re-pointed
 body equals exactly one unmatched target body, and no other such function of ours equals it. A match is the
-strongest evidence of a name (`withClaims`: the claimed symbol names that target function, no other symbol does),
-so the scan runs again with its matches claimed, until they stop changing: a pair found by body corrects the name
-its callers' calls resolve through, and the last pass holds for a build that claims exactly its matches. Verdicts: `match`,
+strongest evidence of a name (`withMatches`: the matched symbol names that target function, no other symbol does),
+so the scan runs again with its matches listed, until they stop changing: a pair found by body corrects the name
+its callers' calls resolve through, and the last pass holds for a build whose match list is exactly its matches. Verdicts: `match`,
 `differs` (the first differing instruction on both sides, plus what our operand there resolves to), `unresolved`
 (a callee or operand with no target image), `no-candidate`. It writes a TSV (`index symbol ours source verdict
 detail size ledger_kind group tried object`) and prints the verdicts per ledger kind and the reasons for the rest.
@@ -557,23 +557,23 @@ voted for (`by:` its index alone): it holds only when another match calls or ref
 references a function only where the target body reads it as a table slot; a constant the target keeps as an integer
 references nothing, even when it equals that function's slot in our table.
 
-The meter has a second axis (`readingMeterOf`): how much the target's bytes chose among our readings. Per claim,
+The meter has a second axis (`readingMeterOf`): how much the target's bytes chose among our readings. Per match,
 the strongest choice it needed: none (re-pointing alone writes the target body), another reading of some operand
 (a literal or table slot where the address reading leads, or the reverse), or which copy of identical string or
 read-only bytes an operand names.
 
-The claim list (urna `splat/matched.txt`) is `<target index> <our symbol>` per line with `#` comments;
-`splat-scan --claim` appends the scan's new matches and keeps every existing line. **splat-build** re-points each
-claimed function through the maps with every claim applied, compares it with its piece, and assembles the split with those bytes (every other function
-from its piece); it refuses to write a module while any claim fails (each failure names the claims line, the
-function and its first differing instruction, or the reason it no longer resolves) and when the module is not the
-split's source sha256. It prints the meter: claimed functions and code bytes, in total and per component, and
+The match list (urna `splat/matched.txt`) is `<target index> <our symbol>` per line with `#` comments;
+`splat-scan --match` appends the scan's new matches and keeps every existing line. **splat-build** re-points each
+matched function through the maps with every match applied, compares it with its piece, and assembles the split with those bytes (every other function
+from its piece); it refuses to write a module while any match fails (each failure names the match list line, the
+function and its first differing instruction, or the reason it does not resolve) and when the module is not the
+split's source sha256. It prints the meter: matched functions and code bytes, in total and per component, and
 the readings the target chose.
 
-| command                                                                                    | does                                                            |
-| ------------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
-| `splat-scan <target> <plain> [-o scan.tsv] [--claim [<claims>]] [--pieces d]`              | every target function against our re-pointed candidate          |
-| `splat-build <target> <plain> [--claims f] [-o out.wasm] [--expect <sha256>] [--pieces d]` | the split with our bytes for every claim, verified, and a meter |
+| command                                                                                     | does                                                            |
+| ------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| `splat-scan <target> <plain> [-o scan.tsv] [--match [<matches>]] [--pieces d]`              | every target function against our re-pointed candidate          |
+| `splat-build <target> <plain> [--matches f] [-o out.wasm] [--expect <sha256>] [--pieces d]` | the split with our bytes for every match, verified, and a meter |
 
 ## Tests
 
@@ -605,9 +605,9 @@ files, and skip what needs them when they are absent. They cover:
 
 - the round trip to the target's sha256, and a refused edited piece;
 - the symbol file's pairs, refutations and virtual-base vtables;
-- a claim that re-points through both maps;
+- a match that re-points through both maps;
 - AudioCollector's destructors not matching;
-- a self-voted claim failing the build.
+- a self-voted match failing the build.
 
 ## Traps
 

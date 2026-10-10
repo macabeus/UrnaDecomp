@@ -78,7 +78,7 @@ export function renderFunctionReport(m: Module, fn: Func, opts: ReportOptions): 
     );
     const best = bestText(ledger, fn.index);
     if (best !== null) {
-      out.push(`;; best match ${best}`);
+      out.push(`;; best pair ${best}`);
     }
     const callers = ledger.callers.get(fn.index);
     if (callers !== undefined) {
@@ -98,7 +98,7 @@ export function renderFunctionReport(m: Module, fn: Func, opts: ReportOptions): 
     }
     const callees = calleeNotes(m, x.instrs, ledger, opts.importName);
     if (callees.length > 0) {
-      out.push('', ';; --- callees (index, call sites, owner, component, vtable | best match)');
+      out.push('', ';; --- callees (index, call sites, owner, component, vtable | best pair)');
       for (const c of callees) {
         out.push(
           `${String(c.index).padStart(6)}  ×${String(c.sites).padEnd(4)} ${c.owner.padEnd(28)} ${c.component.padEnd(10)} ${c.vtable ?? ''}${c.best === null ? '' : ` | ${c.best}`}`,
@@ -158,9 +158,9 @@ export function renderBundle(name: string, m: Module, fns: readonly Func[], opts
   const out: string[] = [
     `# bundle ${name}`,
     '',
-    `${fns.length} functions, ${totalBytes} B of body. Each section is what \`fn\` prints; the table is the round's claim list.`,
+    `${fns.length} functions, ${totalBytes} B of body. Each section is what \`fn\` prints; the table is the round's work list.`,
     '',
-    '| index | size | uses | owner | component | vtable class / slot | best match so far |',
+    '| index | size | uses | owner | component | vtable class / slot | best pair so far |',
     '| ---: | ---: | ---: | --- | --- | --- | --- |',
     ...rows.map(
       (r) =>

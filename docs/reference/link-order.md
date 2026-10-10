@@ -75,7 +75,7 @@ estimate is arbitrary; their window says so).
 
 ## 4. Offsets solve of the target
 
-Anchors: ledger byte/fingerprint/addr matches (size > 8 B) to the skeleton's named functions, restricted to
+Anchors: ledger byte/fingerprint/addr pairs (size > 8 B) to the skeleton's named functions, restricted to
 skeleton bodies that are UNIQUE after normalisation (1,038 of 5,904 dropped: 7-Zip/libc++ vtable thunks share
 bodies across objects and would be attributed to the wrong object), plus the SQLite attribution's names → 4,866
 anchors in 694 objects, split into 1,265 chunks because the target's live sets differ from the skeleton's.
@@ -192,7 +192,7 @@ only the .o.
 [facts/link-order.md](facts/link-order.md) §L5): ledger byte/fingerprint/addr pairs, census depth-0 pairs, wasmfn EXACT
 by unique name, the SQLite attribution (`tools/libs/sqlite/attribution.tsv`), OPENSSL_FUNC own-name strings, and callee-structure propagation (two
 paired functions with equal call counts pair their callees positionally). Gates: unique normalised body on both sides
-(or a unique name), ≥ 6 instructions, no double claims. Then the truth table turns a skeleton function into (object,
+(or a unique name), ≥ 6 instructions, no function paired twice. Then the truth table turns a skeleton function into (object,
 position). Filters: no anchors in the skeleton's roots/stub objects (they own COMDAT bodies the TSE link owns
 elsewhere), no function defined in more than one object (COMDAT), no libc++ template instantiation.
 
@@ -269,7 +269,7 @@ libc++abi (cxa_exception/demangle) 1896–1929; libcrypto 1911–2181, 2903–29
 10000–10125 (ocb128/gcm128/ccm128/o_names/obj_dat/property/rsa_backend as in §4), 10160–10433, 10557–10599, 11073–11119,
 11249–11494 (118 members), 11598–11724, 11862–11895, 13748–13787, 13923–14016; 7zip CPP object at 14058–14068; sqlite3.o chunks
 12345–13942 (first chunk 12345–12378, last 13901–13942 in the h2c solve; 218 chunks). The ecourna landed units (8 objects,
-anchored through their byte matches) are the only anchors inside the app region; the app itself (ordinals ≈ 300–9,200 by
+anchored through their byte pairs) are the only anchors inside the app region; the app itself (ordinals ≈ 300–9,200 by
 elimination: everything between the first libcrypto members and the 9xxx libcrypto run) is placed by the band walk (§7.5),
 not by the solver.
 

@@ -29,9 +29,9 @@ target's sha256, `8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007
 | our link | `TMPDIR=/tmp make -C src link` | `src/`, `third_party/`, `src/mk/*.mk`, `src/units/*.mk` | `build/out/wasm/vota_web/vota_web_wasm.wasm` (the plain link) |
 | our symbols | `make -C src link-map` | the plain link's own `link.cmd` | `build/out/wasm-map/vota_web/{names.tsv,vota_web_wasm.map}` |
 | target symbols | `make -C src splat-symbols` | the target, the plain link, its map, `ledger/` | `splat/symbol_addrs.txt` (committed) |
-| scan | `make -C src splat-scan` | all of the above | `splat/scan.tsv` (committed) and the progress blocks (`make -C src status`) |
-| claim | `make -C src splat-claim` | the scan | appends its new matches to `splat/matched.txt` (committed) |
-| build | `make -C src splat` | pieces, plain link, maps, symbol file, claim list | `build/out/splat/vota_web_wasm.wasm` + meter |
+| scan | `make -C src splat-scan` | all of the above | `splat/scan.tsv` (committed) and the status blocks (`make -C src status`) |
+| match | `make -C src splat-match` | the scan | appends its new matches to `splat/matched.txt` (committed) |
+| build | `make -C src splat` | pieces, plain link, maps, symbol file, match list | `build/out/splat/vota_web_wasm.wasm` + meter |
 
 Everything under `build/out/` is generated from the target and our link, and is gitignored. The committed outputs
 are `splat/symbol_addrs.txt`, `splat/matched.txt` and `splat/scan.tsv`, with the `src/mk/splat-*.mk` rules.
@@ -88,8 +88,8 @@ comment gives the addresses or indices that make the evidence checkable.
 A name with conflicting evidence is left out. So is a data name that the target's own bytes contradict.
 
 Lines after `# ---- hand edits below this line …` survive regeneration and win over generated lines. A
-hand edit needs evidence that does not come from the claim it enables. A name that only makes a claim
-match proves nothing; see the AudioCollector trap in [facts/splat.md](facts/splat.md) §S4.
+hand edit needs evidence that does not come from the match it enables. A name whose only use is to make a
+function match proves nothing; see the AudioCollector trap in [facts/splat.md](facts/splat.md) §S4.
 
 ### 3. Substitute
 
@@ -122,7 +122,7 @@ the object's content places it:
   (`.rodata`, `.data.rel.ro`) found at several places offers each as a copy; a writable object found at
   several places stays unresolved. Placing one object can re-point a word of another, so the placement
   repeats until nothing more resolves. It reads only the two images and the names, never a function body.
-  The claims count among the names, and a scan pass re-points with the previous pass's matches claimed, so
+  The matches count among the names, and a scan pass re-points with the previous pass's matches applied, so
   a function is first matched before its own name re-points any word of the objects it uses.
 
 A table slot reading names the slot the target's table holds the function in. When binaryen merged
@@ -136,30 +136,30 @@ Two rules guard the evidence:
   and `UNCONFIRMED` in the build. A function name voted only by the match's own call or table operand holds
   only if another holding match calls it or has a constant the target reads as its table slot. A constant
   the target keeps as an integer does not count, even when it equals the function's slot in our table, so a
-  unit that shifts our table cannot make or break a claim.
-- **A claim names its function.** The build re-points with every claim applied: the claimed symbol names
+  unit that shifts our table cannot make or break a match.
+- **A match names its function.** The build re-points with every match applied: the matched symbol names
   that target function, and no other symbol does. A match found by body therefore corrects what its
   callers' calls resolve to.
 
 ### 4. Assemble and check
 
-`splat-build` re-points every claimed function and compares it with its piece. It then assembles the split
-from our bytes for the claimed functions and from the original pieces for the rest. The function keeps
+`splat-build` re-points every matched function and compares it with its piece. It then assembles the split
+from our bytes for the matched functions and from the original pieces for the rest. The function keeps
 the manifest's type index, and sizes and LEBs are re-encoded around the bodies. The build writes nothing
-in two cases: when any claim fails, or when the module is not sha256 `8579ef8d…1007e2`.
+in two cases: when any match fails, or when the module is not sha256 `8579ef8d…1007e2`.
 
 ## The drift rule
 
-A claim is a promise that our build still produces that body. When a source, flag, link-order or
-toolchain change breaks a claimed function, `make -C src splat` exits 1 and lists every failing claim.
+A match is a promise that our build still produces that body. When a source, flag, link-order or
+toolchain change breaks a matched function, `make -C src splat` exits 1 and lists every failing match.
 Each failure names the `splat/matched.txt` line, the function, and the first differing instruction on both
 sides, with what our operand resolves to. If the function does not resolve, it says why instead.
 
-To repair drift, fix the source until the claim verifies again. If the loss is deliberate, delete the
-claim line in the same commit and say why in the commit message. Never edit a piece, and never add a
-symbol-file hand edit to make a claim pass.
+To repair drift, fix the source until the match verifies again. If the loss is deliberate, delete the
+match line in the same commit and say why in the commit message. Never edit a piece, and never add a
+symbol-file hand edit to make a match pass.
 
-## Claiming a function
+## Matching a function
 
 1. **Pick one.** The work list is the committed scan `splat/scan.tsv`; rows that are not `match` are left to do.
    [../how-to-decompile.md](../how-to-decompile.md) step 1 explains its columns and filters the TSE rows, and its
@@ -173,12 +173,12 @@ symbol-file hand edit to make a claim pass.
    fragment `src/units/<NN>-<component>-<what>.mk` (src/units/README.md), plus a root if nothing keeps it alive.
    [../how-to-decompile.md](../how-to-decompile.md) covers getting there, from the readout and the lifter through
    `tools/round/try-tu.sh`.
-3. **Land, census, symbols, claim, build**, in that order: [../how-to-decompile.md](../how-to-decompile.md)
+3. **Land, census, symbols, match, build**, in that order: [../how-to-decompile.md](../how-to-decompile.md)
    steps 6 to 10 are the one statement of it, with why each step needs the one before. In short:
    `make -C src link`, `make -C src census`, `make -C src splat-symbols` (read its diff: a name that moves or
-   disappears can break existing claims), `make -C src splat-claim`, `make -C src splat`, each with `TMPDIR=/tmp`.
-   A claim is `<target index> <our symbol>`, where the symbol is `names.tsv`'s key (`name@object` when several
-   objects define it); `splat-claim` passes again with its matches claimed until they stop changing.
+   disappears can break existing matches), `make -C src splat-match`, `make -C src splat`, each with `TMPDIR=/tmp`.
+   A match is `<target index> <our symbol>`, where the symbol is `names.tsv`'s key (`name@object` when several
+   objects define it); `splat-match` passes again with its matches applied until they stop changing.
 
 To check one function before the whole scan, use `pnpm wasm splat-remap` from `asmlift-wasm/`:
 
@@ -191,7 +191,7 @@ pnpm --silent wasm splat-remap $URNA/target/vota_web_wasm.wasm \
 The output is `IDENTICAL`, or the unresolved operands, or the first byte no reading explains. This needs
 `make -C src link-map` first, which `splat-scan` and `splat` run when it is stale. `<our symbol>` is the `name`
 column of `build/out/wasm-map/vota_web/names.tsv` (mangled; look it up there rather than guess: a name that is not
-there fails with `no function of ours is called …`). For the 9132 claim it printed:
+there fails with `no function of ours is called …`). For the 9132 match it printed:
 
 ```
 ours 10514: re-pointed, 134 bytes; rewritten {"global":3,"table":2,"func":4}; soft 0
@@ -209,9 +209,9 @@ target 9132: IDENTICAL (2 ambiguous operands read as literal)
   address or a literal leads) counts as "another reading" in the meter. The output does not say which case it
   was, and neither does the scan's `readings:` detail, so look at the operand's value in the body.
 
-`splat-remap` reads the committed symbol file and none of the claims in `splat/matched.txt`. The scan and the
-build re-point with every claim applied (§3, "A claim names its function"), so `splat-remap` can say `differs` or
-`UNRESOLVED` for a function they match: target 6122 is claimed, and `splat-remap` reports a soft operand (a vtable
+`splat-remap` reads the committed symbol file and none of the matches in `splat/matched.txt`. The scan and the
+build re-point with every match applied (§3, "A match names its function"), so `splat-remap` can say `differs` or
+`UNRESOLVED` for a function they match: target 6122 is matched, and `splat-remap` reports a soft operand (a vtable
 address with no target symbol) and `differs at body byte 6`. The splat build is the verdict.
 
 `pnpm wasm …` runs its command through a shell, which expands `$` even inside single quotes, so a binaryen-merged
@@ -222,19 +222,19 @@ To check a candidate before it lands, give `splat-remap` a try link instead of t
 `tools/round/link-map.sh build/out/try/<name>/wasm/vota_web` has mapped it
 ([../how-to-decompile.md](../how-to-decompile.md) step 5).
 
-### Reviewing a claim
+### Reviewing a match
 
-The build is the check: `make -C src splat` re-points every claimed function, compares it with its piece, and
-writes nothing unless every claim verifies and the module is the target's sha256. Re-pointing never reads a target
+The build is the check: `make -C src splat` re-points every matched function, compares it with its piece, and
+writes nothing unless every match verifies and the module is the target's sha256. Re-pointing never reads a target
 body (rule 4 of §3); the target body only picks among the readings our side offers.
 
-A reviewer who wants to see the claimed bytes come from our link, with the target's body gone, has no command for
+A reviewer who wants to see the matched bytes come from our link, with the target's body gone, has no command for
 it. The pieces are checked against `manifest.json`, so blanking a piece makes `splat-build` refuse, and
 `splat-assemble --substitute` takes a `<index>.bin` body that no command writes. The reviews of 9131 and 9132 used
-a script against the toolkit's exports (`remapBody`, `verifyClaims` and `loadTargetSide` from
+a script against the toolkit's exports (`remapBody`, `verifyMatches` and `loadTargetSide` from
 `asmlift-wasm/src/splat-*.ts`, `assembleSplit` from `splat.ts`):
 
-1. copy the pieces, replace the claimed piece with a valid body of the same size (a `0x00` local count,
+1. copy the pieces, replace the matched piece with a valid body of the same size (a `0x00` local count,
    `unreachable` bytes, a final `0x0b`: random bytes make the module fail to parse), and write its new sha256
    into the copy's `manifest.json`;
 2. take our body for it, in one of two ways (below);
@@ -242,13 +242,13 @@ a script against the toolkit's exports (`remapBody`, `verifyClaims` and `loadTar
 
 The two ways differ in what picks the readings of the ambiguous operands:
 
-- **The claim's own bytes.** `verifyClaims` on the real split gives the bytes the build substitutes, with the
-  readings the target body picked. This checks that the build's output comes from our link, under the claim rule.
+- **The match's own bytes.** `verifyMatches` on the real split gives the bytes the build substitutes, with the
+  readings the target body picked. This checks that the build's output comes from our link, under the match rule.
 - **Preferred readings.** Assemble the blanked split into a module, copy `target/vota_web_wasm.js` beside it
   (`loadTargetSide` takes the import names from the glue next to the wasm it reads; without it every `invoke_*`
   call is `UNRESOLVED`), load that module as the target side, and take `remapBody(...).bytes`, every operand at
-  its preferred reading. No target body exists anywhere in that run, so this is stricter than the claim rule: 9132
-  passes it, while 9218, a claim that holds, gives 313 B against its 311 B piece because it needs the target to
+  its preferred reading. No target body exists anywhere in that run, so this is stricter than the match rule: 9132
+  passes it, while 9218, a match that holds, gives 313 B against its 311 B piece because it needs the target to
   pick readings.
 
 Say which way a review used. A TypeScript script with top-level `await` runs under `pnpm exec tsx` only as an
@@ -256,7 +256,7 @@ Say which way a review used. A TypeScript script with top-level `await` runs und
 
 ## The meter
 
-`TMPDIR=/tmp make -C src splat` ends by printing the meter: the claimed functions and code bytes, in total and per
+`TMPDIR=/tmp make -C src splat` ends by printing the meter: the matched functions and code bytes, in total and per
 component, then how often the target body had to choose among our readings of an operand. The latest meter, grouped
 by origin, and the scan's verdicts are in [../status.md](../status.md), with the commands that regenerate them.
 
@@ -264,9 +264,9 @@ How to read the meter:
 
 - A component is the target function's caller attribution (`ledger/func-attribution.tsv`), not its
   library. For example, libc's `pad` (target 788) counts as RHVoice.
-- "another reading" and "which copy" count claims where the target body chose among our readings of an
+- "another reading" and "which copy" count matches where the target body chose among our readings of an
   ambiguous operand: "which copy" when the choice was among copies of the same content or among the table
-  slots of one function. "Re-pointing alone" counts claims where no choice was needed.
-- Claims of tiny bodies (8 B or less) and of bodies with a byte-identical twin in the target carry an arbitrary
+  slots of one function. "Re-pointing alone" counts matches where no choice was needed.
+- Matches of tiny bodies (8 B or less) and of bodies with a byte-identical twin in the target carry an arbitrary
   name, because binaryen merges identical bodies. [../status.md](../status.md) "Reading the meter" counts both,
   from the committed scan and the target.

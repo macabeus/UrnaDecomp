@@ -45,7 +45,7 @@ export function renderBenchReport(r: BenchResults, setupTitles: ReadonlyMap<stri
       'with callees, data addresses, the stack pointer and the indirect table canonicalised on both sides (raw); then ' +
       'the object is linked alone and put through the target link\'s wasm-opt -Oz passes and scored again (-Oz). ' +
       'The ratio is differing rows over target rows; exact is a -Oz score of 0. An isolated function misses what the ' +
-      'whole-program link does to it, so no score here is a byte match.',
+      'whole-program link does to it, so no score here means byte-identical.',
     '',
   );
   out.push('## Overall', '', ...table(TOTALS_HEAD, [totalsCells(r.totals.overall)]), '');

@@ -1,8 +1,8 @@
 import type { BenchResults } from '@asmlift/wasm-benchmark/schema';
 
 import { type SetupSummary, failures } from '../../lib/bench';
+import { type EChartsOption, ReactEChartsCore, echarts } from '../../shared/echarts';
 import { CHART, DIFFERS, EXACT, FAILED } from '../../shared/theme';
-import { type EChartsOption, ReactEChartsCore, echarts } from './echarts';
 
 /** Rows per setup split by outcome: exact at -Oz, differs, failed (lift, compile, extract or link). */
 export function OutcomeChart({
@@ -57,7 +57,8 @@ export function OutcomeChart({
       name: s.name,
       stack: 'rows',
       barWidth: 14,
-      itemStyle: { color: s.color, borderColor: CHART.tooltipBg, borderWidth: 1 },
+      // a 2px surface gap between segments: green and gold are told apart by more than hue
+      itemStyle: { color: s.color, borderColor: CHART.tooltipBg, borderWidth: 2, borderRadius: 2 },
       emphasis: { focus: 'series' },
       data: keys.map(s.value),
     })),

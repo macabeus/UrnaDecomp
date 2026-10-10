@@ -5,7 +5,7 @@
 // score = the number of rows that differ after alignment: a deleted row 1, an inserted row 1, and
 // within one hunk a deletion paired with an insertion counts ONCE as a replaced row (the way a
 // reader sees "this instruction changed"). 0 means every row is identical after normalisation.
-// `byteExact` is the stronger claim that the two raw bodies are the same bytes.
+// `byteExact` is the stronger statement that the two raw bodies are the same bytes.
 import type { Func } from './parse';
 
 export type RowKind = 'same' | 'replaced' | 'inserted' | 'deleted';

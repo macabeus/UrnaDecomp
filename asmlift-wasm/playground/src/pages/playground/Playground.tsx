@@ -26,7 +26,7 @@ import { Pill } from '../../shared/components/Pill';
 import { DATASET_ROWS, SETUP_BY_KEY } from '../../shared/data/dataset';
 import { pickRun, useRuns } from '../../shared/data/runs';
 import { useCallers, useTarget } from '../../shared/data/target';
-import { outcomeTint } from '../../shared/theme';
+import { EXACT_TINT, outcomeTint } from '../../shared/theme';
 import { PANES, fnParser, paneParser, runParser } from '../../shared/utils/url-state';
 import { CppEditor, FoldView, WatView } from './CodePanes';
 import { FunctionPicker } from './FunctionPicker';
@@ -106,7 +106,7 @@ function FunctionView({ t, index, onPick }: { t: Target; index: number; onPick: 
         </h2>
         <span className="text-xs text-slate-400">{fn.size} bytes</span>
         {row && (
-          <Pill tint="#5eead4" size="xs">
+          <Pill tint={EXACT_TINT} size="xs">
             benchmark row {row.id}
           </Pill>
         )}
@@ -177,7 +177,7 @@ function FunctionView({ t, index, onPick }: { t: Target; index: number; onPick: 
               {facts.evidence !== '-' && <span className="text-slate-500"> (by {facts.evidence})</span>}
             </Fact>
             <Fact term="owner">{facts.owner}</Fact>
-            <Fact term="ledger match">
+            <Fact term="census pair">
               {facts.best === null ? (
                 'none'
               ) : (
@@ -320,7 +320,7 @@ function BenchmarkRow({
       <Panel title="Benchmark" subtitle="not one of the benchmark's rows">
         <p className="text-sm text-slate-400">
           The benchmark has {DATASET_ROWS.length} rows; <code className="font-mono text-xs">pnpm bench add {index}</code> adds this
-          function when a compile setup claims it, and says why not otherwise.
+          function when a compile setup covers it, and says why not otherwise.
         </p>
       </Panel>
     );

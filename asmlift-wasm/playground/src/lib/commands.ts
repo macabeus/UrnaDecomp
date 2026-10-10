@@ -82,7 +82,7 @@ export function localCommands(c: CommandInput): CommandBlock[] {
   blocks.push(
     c.setup === null
       ? {
-          title: 'Add it to the benchmark (refused when no compile setup claims it)',
+          title: 'Add it to the benchmark (refused when no compile setup covers it)',
           cwd: 'asmlift-wasm',
           lines: [`pnpm bench add ${c.index}`],
         }

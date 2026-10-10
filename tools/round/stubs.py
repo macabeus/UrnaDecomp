@@ -1,7 +1,7 @@
 """Write a comment stub for every TSE function not decompiled yet, where the function sat in TSE's file, and a gap
 comment for every run of blank lines that holds code below it at its original line numbers.
 
-    python3 -I -B tools/round/stubs.py            # rewrite every stub and gap (make -C src stubs; splat-scan and splat-claim run it)
+    python3 -I -B tools/round/stubs.py            # rewrite every stub and gap (make -C src stubs; splat-scan and splat-match run it)
     python3 -I -B tools/round/stubs.py --check    # exit 1 naming each stub or gap missing, extra, stale or out of place (CI)
     python3 -I -B tools/round/stubs.py --strip FILE...   # turn a file's stubs and gaps back into blank lines, before editing it
     python3 -I -B tools/round/stubs.py --report   # what --check checks, and the counts, without writing
@@ -18,7 +18,7 @@ std::source_location record of the function gives it a line (its place comes fro
 parameters leave no room for a returned struct), or, with no name, `f<index>` and the wasm types.
 
 Which functions. Every target function of a TSE component (splat/scan.tsv's group: vota, comum, api, simulador,
-vota-web, ecourna, asn1-modules, ASN1) that splat/matched.txt does not claim, unless it has code of ours already: our
+vota-web, ecourna, asn1-modules, ASN1) that splat/matched.txt does not list, unless it has code of ours already: our
 link has a body for it (the scan's `ours` column); or every record of it in its file falls on a line of code of ours
 or names a function our file defines; or it fills a slot of a vtable our link holds (the symbol file gives that
 vtable a size, which it takes from our link) or of the vtable of a class whose members our sources define. An
@@ -174,18 +174,18 @@ def wasm_signatures():
 
 
 class Facts:
-    """What the ledger, the scan and the claims say, read once."""
+    """What the ledger, the scan and the match list say, read once."""
 
     def __init__(self):
         self.group, self.ours, self.object = {}, {}, {}
         for p in tsv('splat/scan.tsv'):
             i = int(p[0])
             self.group[i], self.ours[i], self.object[i] = p[8], p[2], p[10]
-        self.claimed = set()
+        self.matched = set()
         for line in open(os.path.join(ROOT, 'splat', 'matched.txt')):
             p = line.split()
             if p and not p[0].startswith('#'):
-                self.claimed.add(int(p[0]))
+                self.matched.add(int(p[0]))
         self.size = {int(p[0]): int(p[1]) for p in tsv('ledger/functions.tsv')}
         self.uses = {int(p[0]): int(p[1]) for p in tsv('ledger/ordinals.tsv')}
         self.records = collections.defaultdict(list)            # index -> [(file, line, function)]
@@ -705,7 +705,7 @@ class Plan:
         self.excluded = []      # asn1-modules functions no evidence puts in a file
         self.stubs = {}
         for i in sorted(facts.group):
-            if facts.group[i] not in TSE or i in facts.claimed:
+            if facts.group[i] not in TSE or i in facts.matched:
                 continue
             if facts.ours[i] != '-':
                 self.defined[i] = 'candidate'
@@ -1018,8 +1018,8 @@ def report(plan, expected):
             continue
         if len(places) > 1:
             problems.append(f'f{idx} has {len(places)} stubs: {at}')
-        if idx in facts.claimed:
-            problems.append(f'f{idx} ({at}) is claimed in splat/matched.txt: its stub goes')
+        if idx in facts.matched:
+            problems.append(f'f{idx} ({at}) is matched in splat/matched.txt: its stub goes')
         elif idx in plan.defined:
             why = {'candidate': 'our link has a body for it (splat/scan.tsv)',
                    'srcloc': 'its source_location records fall on code of ours',
@@ -1142,7 +1142,7 @@ def counts(plan):
              f'gaps (padding runs written as a comment and #line): {sum(len(g) for g in plan.gaps.values())} in '
              f'{sum(1 for g in plan.gaps.values() if g)} files, for '
              f'{sum(last - first + 2 for g in plan.gaps.values() for first, last in g)} blank lines',
-             f'unclaimed TSE functions not stubbed because they have code: {len(plan.defined)} '
+             f'unmatched TSE functions not stubbed because they have code: {len(plan.defined)} '
              f'({", ".join(f"{k} {v}" for k, v in sorted(defined.items()))})',
              f'asn1-modules functions with no source file (left out): {len(plan.excluded)}']
     return lines

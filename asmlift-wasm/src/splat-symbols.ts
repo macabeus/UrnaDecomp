@@ -20,7 +20,7 @@
 //   content      a read-only object of ours whose exact bytes occur once in the target's data
 //   string       a string from the ledger's strings.tsv, named by its content (`str.<hash>`)
 //   srcloc       a std::source_location record from source-locations.tsv, named by what it records
-// A name with conflicting evidence is left out: a missing symbol costs a match, a wrong one claims a false one.
+// A name with conflicting evidence is left out: a missing symbol costs a match, a wrong one makes a false one.
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';

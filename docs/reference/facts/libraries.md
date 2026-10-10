@@ -15,9 +15,9 @@ This is conan-center `sqlite3/3.50.4` with its default options, `build_type=Rele
 `fPIC=True`. `-fvisibility=hidden -DSQLITE_API=…`, `-fexceptions` and `-DNDEBUG` change nothing.
 `tools/libs/sqlite/build.sh` builds it (defaults = this line); `tools/libs/sqlite/census.sh <variant>` scores it.
 
-Census of the 1,141 functions the classifier calls sqlite (matched = byte, exact or table tier):
+Census of the 1,141 functions the classifier calls sqlite (paired = byte, exact or table tier):
 
-| compile flags | matched / 1141 | instructions matched / 495,052 |
+| compile flags | paired / 1141 | instructions paired / 495,052 |
 | --- | --- | --- |
 | -Oz | 101 | 3,147 |
 | -Os | 188 | 9,270 |
@@ -137,7 +137,7 @@ and Bench files, `-D_7ZIP_ST`, objects at -O3, link `-Oz -fexceptions`, driver c
 `CArchiveLink::Open3` and `IInArchive::Extract`). Census over the 954 target functions labelled 7zip
 (`tools/libs/census_subset.ts`, depth 0; `tools/libs/7zip/census.json`):
 
-| version | matched | fingerprint | byte-exact |
+| version | paired | fingerprint | byte-exact |
 | --- | --- | --- | --- |
 | **21.02** | **451** | 360 | 101 (63,192 B) |
 | 21.03 | 446 | 357 | 97 |
@@ -170,7 +170,7 @@ Version **1.14.0**:
   -cx <name>` is 0 for each, while the 1.14.0-era names are present. 1.16.4 and 1.16.5 are identical in every
   compiled source; there is no tag between 1.14.0 and 1.16.4.
 - **Compile-diff** (`tools/libs/rhvoice/build.sh <tag> cxx14-O3 -O3 -std=c++14`, census over 746 functions): 1.14.0
-  264 matched, 1.16.5 245. Target 2211 `yy_destructor` (lemon-generated `userdict_parser.c`): 0/61 rows differ for
+  264 paired, 1.16.5 245. Target 2211 `yy_destructor` (lemon-generated `userdict_parser.c`): 0/61 rows differ for
   1.14.0, 11/63 for 1.16.5.
 
 What is linked: `src/core/*.cpp` minus the data files they `#include`, `src/hts_engine/HTS_*.c`, sonic at
@@ -202,7 +202,7 @@ Boost is used header-only: regex, date_time (gregorian `bad_year`/`bad_month`/`b
   | 9549 `sp_counted_impl_p<grouped_list…>::dispose` | 14 | 46 |
   | 9519 `sp_counted_impl_p<signal_impl…>::dispose` | 17 | 61 |
 
-  1.89.0 is nearest in all five bodies, but the residual rows are inlined context: a ranking, not a byte match.
+  1.89.0 is nearest in all five bodies, but the residual rows are inlined context: a ranking, not byte identity.
   It also fits the SQLite snapshot's date (1.89.0 was current in August 2025).
 
 `third_party/boost` holds the 1.89.0 release's headers (`tools/setup/bootstrap.sh`); a probe of 1.90.0 or 1.91.0 puts
@@ -233,14 +233,14 @@ The recipe used for 7-Zip, RHVoice and Boost:
    what the app calls. The symbol map names every probe function; it changes only the function order of an -Oz
    link, never a body.
 2. **Census slice**: `tools/libs/census_subset.ts <target> probe.wasm tools/libs/cls2.json <label> --depth 0`.
-   Depth 0 (the body alone) is right for version work; depth 2 halves the matches because callees differ.
+   Depth 0 (the body alone) is right for version work; depth 2 halves the pairs because callees differ.
 3. **Discriminate**: `tools/libs/discriminate.py <label> <tag>=<census.json>:<symbols>…` lists target functions
-   matched by some tags only; confirm each with `pnpm wasm score`. A function that differs with no source change
+   paired by some tags only; confirm each with `pnpm wasm score`. A function that differs with no source change
    between the tags is an inlining artefact of the probe's root set, not a version fact.
 4. **Vtable slots**: `tools/libs/vtable_compare.ts` scores the target's RTTI-named vtable slots against the same
    class in each probe, reaching functions the census cannot name.
 5. `tools/libs/census_summary.py` folds the census JSONs into `tools/libs/<lib>/census.json`.
 
 On all three libraries objects at -O3 beat -O2 > -Os > -Oz, `-flto` loses, and `-std=c++20` changes nothing
-measurable. The matched fraction stays low (7-Zip 19 % of bytes, RHVoice 4 %, Boost 4 %) because the probe's
+measurable. The paired fraction stays low (7-Zip 19 % of bytes, RHVoice 4 %, Boost 4 %) because the probe's
 inlining context is not the app's: enough to rank releases, not a byte reproduction.

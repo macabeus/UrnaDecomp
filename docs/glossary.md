@@ -5,12 +5,13 @@ Several words carry more than one meaning here (twin, probe, band, anchor, rank,
 every meaning in use.
 
 The words to know first, enough for the README and the how-to: **target** (the TSE module being rebuilt),
-**component** (which part of the program calls a function), **claim** and the **meter** (the one progress number),
-the **splat build** (the check that verifies every claim), **scan verdicts** (the work list), the **census tiers**
-(diagnostics, not progress), **unit** and **roots** (how reconstructed C++ lands), and **try-tu** (trying a candidate).
+**component** (which part of the program calls a function), **match** and the **meter** (the one progress number),
+the **splat build** (the check that verifies every match), **scan verdicts** (the work list), the **census tiers**
+(how the census pairs functions: diagnostics, not progress), **unit** and **roots** (how reconstructed C++ lands),
+and **try-tu** (trying a candidate).
 
 Contents: [the subject](#the-subject) · [Portuguese words in the code](#portuguese-words-in-the-code) ·
-[component and owner](#component-and-owner) · [the build](#the-build) · [measuring a match](#measuring-a-match) ·
+[component and owner](#component-and-owner) · [the build](#the-build) · [pairing and progress](#pairing-and-progress) ·
 [the splat build](#the-splat-build) · [link order](#link-order) · [the toolkit](#the-toolkit) ·
 [process](#process)
 
@@ -121,6 +122,12 @@ a component (`libcxx` → `libc++`), when a function has no component; its `app`
 Say "library" when you mean which library's source a function comes from; for a function our build links, the
 benchmark's setup (decided from the object that defines it) answers that exactly.
 
+**origin, TSE code** — the meter's three groups of components (`docs/status.md` "By origin", written by
+`tools/round/status.py`): **TSE code** (`vota`, `comum`, `api`, `simulador`, `vota-web`, `ecourna`, `asn1-modules`,
+`ASN1`: the code this project exists to recover; "TSE's own code" means the same), the **upstream libraries**
+(rebuilt from their own sources) and **not attributed** (`unknown`, `app`). An origin is a sum of components, so it
+inherits their caller rule: a library function only TSE code calls counts as TSE code.
+
 ## The build
 
 **pinned image** — the docker image `urna-emsdk:6.0.0`: `emscripten/emsdk:6.0.0` plus wabt, built and run by
@@ -147,7 +154,7 @@ byte-identical, and names every final function (`build/out/wasm-map/vota_web/nam
 
 **stub** — two meanings. (1) A generated comment for a TSE function not decompiled yet, where the evidence says it
 sat in TSE's file: `// f7010 · 683 B · unmatched · name unknown` over its signature, between `// <stubs>` and
-`// </stubs>` markers. `tools/round/stubs.py` writes them (`make -C src stubs`, run by `splat-claim`, so a claimed
+`// </stubs>` markers. `tools/round/stubs.py` writes them (`make -C src stubs`, run by `splat-match`, so a matched
 function's stub goes) and CI checks them (`stubs.py --check`); a function no evidence places is in its tree's
 `unplaced.cpp`. A function the generator finds code of ours for has none, and a pending member counts as code of
 ours, so it loses its stub when its unit lands. The signature line names the function only when the symbol file
@@ -250,15 +257,15 @@ compile them there and write their objects under `build/out/` (OpenSSL is config
 `build/out/openssl/O3`). `third_party/MANIFEST.md` records each version, how it is fetched, its commit or sha256 and
 the evidence that pinned it.
 
-## Measuring a match
+## Pairing and progress
 
 **census** — three related things. The toolkit command `census` pairs every function of one module with one of
 another by fingerprint, then addr, then shape (`asmlift-wasm/README.md` "census"). `make -C src census`
 (`tools/round/census.sh`) runs it on the skeleton, rewrites `ledger/functions.tsv` and writes a snapshot and
 `build/out/census/{report,progress}.md`.
 
-**census tiers, match tiers** (the ledger's `best_kind`) — how a target function pairs with a candidate function,
-strongest first:
+**census tiers, pairing tiers** (the ledger's `best_kind`) — how a target function pairs with a candidate function,
+strongest first. The census pairs; only the splat build matches, so a tier is never called a match:
 
 | tier | holds when |
 | --- | --- |
@@ -268,7 +275,7 @@ strongest first:
 | `shape` | equal once every constant is dropped |
 | `none` | no pairing |
 
-These are diagnostics: a `byte` or `fingerprint` pair is not a splat match, and only a splat claim counts.
+These are diagnostics: a `byte` or `fingerprint` pair is not a match, and only a match counts.
 *Where:* `asmlift-wasm/README.md` "normalize + fingerprint" and "ledger", `ledger/functions.tsv`.
 
 **depth** — how many call levels a fingerprint covers (`--depth N`, default 2): the hash is iterated over callees, so
@@ -286,31 +293,41 @@ operand-only; an inserted, deleted or opcode-changing row is structural, which i
 *Where:* `asmlift-wasm/README.md` "score", `tools/round/appflags/compare.sh`.
 
 **ledger** — the folder `ledger/` of tables derived from the target (strings, classes, vtables, call graph,
-attribution, ordinals, per-function match state). Its central file `ledger/functions.tsv` (also "the ledger") has one
+attribution, ordinals, per-function pairing state). Its central file `ledger/functions.tsv` (also "the ledger") has one
 row per target function: `index size uses owner component best_label best_index best_kind best_score best_name`,
-written by the toolkit's `ledger` command. *Where:* `ledger/`, `docs/reference/appmap.md` (artefact table),
-`asmlift-wasm/README.md` "ledger".
+written by the toolkit's `ledger` command. The `best_*` columns describe the function's **best pair**: the
+candidate function the census paired it with (its module's label, index and name), the tier and the score. A best
+pair is not a match. *Where:* `ledger/`, `docs/reference/appmap.md` (artefact table), `asmlift-wasm/README.md`
+"ledger".
 
-**meter** — the tally `TMPDIR=/tmp make -C src splat` prints: claimed functions and code bytes, in total and per
-component. Its count of claims in `splat/matched.txt` is the project's one progress number; `docs/status.md` has it,
-written by `make -C src status`. *Where:* `docs/status.md`, `docs/reference/splat.md` "The meter".
+**meter** — the tally `TMPDIR=/tmp make -C src splat` prints: matched functions and code bytes, in total and per
+component. Its count of matches in `splat/matched.txt` is the project's one progress number; `docs/status.md` has it,
+written by `make -C src status`, and the playground's Progress page draws it. *Where:* `docs/status.md`,
+`docs/reference/splat.md` "The meter".
 
-**progress** — the toolkit command `pnpm wasm progress` (also the end of `make -C src census`): the census tiers per
-owner or component with the delta since the last snapshot. It is a diagnostic, not the meter. *Where:*
-`asmlift-wasm/README.md` "progress".
+**progress** — two things with the one name. (1) The toolkit command `pnpm wasm progress` (also the end of
+`make -C src census`, and its `build/out/census/progress.md`): the census tiers per owner or component with the delta
+since the last snapshot. Despite its name it is a diagnostic, not the meter. *Where:* `asmlift-wasm/README.md`
+"progress". (2) The playground's Progress page: the meter drawn, the matches per origin, component and function and
+their count over time, built from `splat/scan.tsv` and the history of `splat/matched.txt`. *Where:*
+`asmlift-wasm/playground/README.md`. "Progress" alone, and "the progress number", mean the meter.
 
 **snapshot** — a copy of `ledger/functions.tsv` saved as `ledger/history/<stamp>[-label].tsv` by
 `progress --snapshot`, so the next run can print what moved. *Where:* `tools/round/census.sh`, `ledger/history/`.
 
-**claim** — a line `<target index> <our symbol>` in `splat/matched.txt`: a promise that our build produces exactly
-that target body, which the splat build verifies on every run (see the next section). The target functions a
-candidate TU is expected to produce are its *targets* (`try-tu.sh --targets`, the toolkit's `targets` command), not
-claims. *Where:* `splat/matched.txt`, `docs/reference/splat.md`, `docs/how-to-decompile.md` step 9.
+**match, matched, match list** — a match is a line `<target index> <our symbol>` in `splat/matched.txt` (the match
+list): a promise that our build produces exactly that target body, which the splat build verifies on every run (see
+the next section). A matched function is a target function with such a line, and the meter counts them.
+`make -C src splat-match` adds the scan's new `match` verdicts to the list (`docs/how-to-decompile.md` step 9). The
+census never matches, it pairs (see **census tiers, pairing tiers**). The target functions a candidate TU is
+expected to produce are its *targets* (`try-tu.sh --targets`, the toolkit's `targets` command), not matches. A
+board's `rounds/` *claim* is unrelated: it reserves paths (see **board**). *Where:* `splat/matched.txt`, `docs/reference/splat.md`,
+`docs/how-to-decompile.md` step 9.
 
 ## The splat build
 
 The splat build is the official progress check: `TMPDIR=/tmp make -C src splat` rebuilds the target from its own
-pieces with our bytes for every claimed function and fails unless the result has the target's sha256.
+pieces with our bytes for every matched function and fails unless the result has the target's sha256.
 `docs/reference/splat.md` is the full description. The name comes from splat, the tool console decomps use to
 split a ROM into pieces; here the re-assembly runs after the toolchain, because nothing fed through `em++` comes out
 unchanged (`docs/reference/include-asm.md`).
@@ -327,7 +344,7 @@ The splat meter's "component" column is this group. *Where:* `asmlift-wasm/src/s
 
 **symbol file** — `splat/symbol_addrs.txt`, the target-side names with their evidence:
 `<name> = func:N; | import:N; | 0xADDR; // … evidence:… by:…`. Lines after the `# ---- hand edits below this line`
-marker survive regeneration; a hand edit needs evidence that does not come from the claim it enables.
+marker survive regeneration; a hand edit needs evidence that does not come from the match it enables.
 *Where:* `docs/reference/splat.md` §2, `make -C src splat-symbols`.
 
 **evidence kinds** — why the symbol file names something: `glue` and `export` (names from the target's glue),
@@ -353,9 +370,10 @@ and "How to read the meter".
 **scan verdicts** — `make -C src splat-scan` writes `splat/scan.tsv` (committed: the work list) with one verdict per
 target function: `match`, `differs` (with the first differing instruction), `unresolved` (an operand with no target
 image), or `no-candidate` (no body of ours was found for it: no symbol-file name, no census pair, no content pair; the
-function may still be written, see `docs/how-to-decompile.md` step 1). `make -C src splat-claim` appends the new
-matches to `splat/matched.txt`. The scan's columns (`ours`, `source`, `tried`, `object`, …) are explained in
-`docs/how-to-decompile.md` step 1. *Where:* `docs/status.md` "What is left", `docs/reference/splat.md` "Claiming a
+function may still be written, see `docs/how-to-decompile.md` step 1). `make -C src splat-match` appends the new
+`match` rows to `splat/matched.txt`, so after it the `match` rows are exactly the match list. The scan's columns
+(`ours`, `source`, `tried`, `object`, …) are explained in `docs/how-to-decompile.md` step 1. In prose, "no candidate"
+is the `no-candidate` verdict. *Where:* `docs/status.md` "What is left", `docs/reference/splat.md` "Matching a
 function".
 
 **self-voted** — a data name whose only vote came from the function being matched, so it proves nothing about that
@@ -363,12 +381,12 @@ match. Such a match holds only if our object's bytes agree with the target's at 
 uses the name; otherwise the scan reports `unresolved (self-voted)` and the build `UNCONFIRMED`.
 *Where:* `docs/reference/splat.md` §3.
 
-**drift** — a claim that stops verifying because a source, flag, link-order or toolchain change altered our body. The
-build exits 1 and names each failing claim; the fix is the source, or deleting the claim line with a reason in the
+**drift** — a match that stops verifying because a source, flag, link-order or toolchain change altered our body. The
+build exits 1 and names each failing match; the fix is the source, or deleting the match line with a reason in the
 commit message, never a piece or symbol-file edit. *Where:* `docs/reference/splat.md` "The drift rule".
 
-**twin in the target** — a claimed body that is byte-identical to another target function (binaryen merges identical
-bodies), so which of the twins a claim names is arbitrary. *Where:* `docs/status.md` "Reading the meter" (the count),
+**twin in the target** — a matched body that is byte-identical to another target function (binaryen merges identical
+bodies), so which of the twins a match names is arbitrary. *Where:* `docs/status.md` "Reading the meter" (the count),
 `docs/reference/splat.md` "How to read the meter".
 
 **grouped** — the split's log line `14343 functions (6255 named, 12820 grouped; …)` counts the pieces that got a name
@@ -467,7 +485,8 @@ to the untracked `ledger/lift-eval/<label>/`. *Where:* `asmlift-wasm/README.md`.
 target functions per compile setup. A row is one target function (`<setup>/<index>` in
 `asmlift-wasm/benchmark/dataset/rows.json`), its features are read off the target body (`leaf`, `loop`, `invoke`, …),
 its outcome is how far it got (`exact`, `differs`, `compile-failed`, …), the raw score compares the object and the
--Oz score compares it after the target link's wasm-opt passes. Exact there is a structure match, never a byte match.
+-Oz score compares it after the target link's wasm-opt passes. The outcome `exact` means structurally equal after
+normalisation, never byte-identical, and it is not a match.
 *Where:* `asmlift-wasm/benchmark/README.md`.
 
 **lift notes** — the lines `pnpm wasm lift` prints under its summary, one per workaround a lifted file contains,
@@ -497,8 +516,10 @@ attribution, with no object). `pnpm bench setups --check` prints a setup as `unv
 library build could confirm its flags, and as `drift` when the build's flags are not the registry's; only drift
 fails. *Where:* `asmlift-wasm/benchmark/README.md`, `.github/CI.md`.
 
-**playground** — the web app in `asmlift-wasm/playground/` that shows any target function's WAT, readout, lift and
-ledger data, and the benchmark runs. *Where:* `asmlift-wasm/playground/README.md`.
+**playground** — the web app in `asmlift-wasm/playground/` that shows the meter and its history (the Progress
+page), any target function's WAT, readout, lift and ledger data, the benchmark runs, and a link to UrnaEmu, the
+emulator that runs the same module. *Where:*
+`asmlift-wasm/playground/README.md`, deployed by `.github/workflows/pages.yml`.
 
 ## Process
 
@@ -524,12 +545,17 @@ and `build/out/`, and in commit messages:
 | `TOOLCHAIN`, `APPMAP`, `BUILD` | toolchain pinning (`build/README.md`), the application map (`docs/reference/appmap.md`), the skeleton link (`src/README.md`) |
 | `APPFLAGS`, `APPFLAGS2` | pinning the ecourna and uenux2 compile flags (`docs/reference/app-flags.md`, `src/units/01-uenux2-api-util-io-ipc.mk`) |
 | `ASN1`, `ASN1-2`, `ASN1PORT` | the ASN.1 runtime fork, its generated modules, and their port to C++20 (`src/asn1/README.md`, `src/mk/asn1.mk`, `src/mk/ecourna-flags.mk`) |
-| `LINKORDER`, `LINKORDER2` | the two link-order rounds (`docs/reference/link-order.md`) |
-| `R-<area>` | ecourna reconstruction rounds, named for the area rebuilt: `R-SEC` security, `R-CEPESC` the CEPESC cipher envelopes, `R-COMP` compression, `R-SQL` the SQLite DAO, `R-APIMISC` api io/util, `R-DADOS` `app/dados` value types, `R-MIDIAS` media descriptors, `R-RUC-DATA` / `R-RUC-CONV` the voter-register result data and converters, `R-ASNCORE` the core ASN.1 converters |
-| `W-<n>`, `FIVE-<n>` | single-function rounds named for the target function index they matched (`W-1931`, `W-5498`, `FIVE-700`) |
-| `SPLAT-SYM` | the round that built the splat symbol maps (`src/mk/splat-map.mk`) |
+| `LINKORDER`, `LINKORDER2` | the offsets and positions solves of `docs/reference/link-order.md` (`build/out/LINKORDER2/` is the positions solve's scratch) |
+| `R-<area>` | ecourna reconstruction, named for the area rebuilt: `R-SEC` security, `R-CEPESC` the CEPESC cipher envelopes, `R-COMP` compression, `R-SQL` the SQLite DAO, `R-APIMISC` api io/util, `R-DADOS` `app/dados` value types, `R-MIDIAS` media descriptors, `R-RUC-DATA` / `R-RUC-CONV` the voter-register result data and converters, `R-ASNCORE` the core ASN.1 converters |
+| `W-<n>`, `FIVE-<n>` | single-function tasks named for the target function index they matched (`W-1931`, `W-5498`, `FIVE-700`) |
+| `SPLAT-SYM` | the splat symbol maps (`src/mk/splat-map.mk`) |
 
-The handles appear in generated file names under `ledger/bundles/` and `build/out/`.
+The `src/units/` fragments are named by their content, not by a handle (`src/units/README.md` "Names").
 
-**board** — the folder outside the repository through which a workflow's agents coordinated (append-only facts, traps
-and round posts, plus the user's inbox). Facts that tracked files cite are kept in `docs/reference/facts/`.
+**board** — the folder outside the repository through which a run's agents coordinate (append-only facts, traps,
+round posts and frictions, plus the user's inbox). A `rounds/` *claim* there is a post reserving the paths a stage
+owns (`docs/agents.md`), unrelated to a match. Facts that tracked files cite are kept in `docs/reference/facts/`.
+
+**friction** — a board post about a point where a doc was missing, wrong, ambiguous or misleading: what the doc led
+the agent to expect and what happened instead. A round's DOCS stage turns each one into a doc change
+(`.claude/commands/decompile-functions.md` "The friction log").

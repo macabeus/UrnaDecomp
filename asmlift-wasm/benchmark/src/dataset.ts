@@ -1,7 +1,7 @@
 // The dataset: target functions, each with the compile setup that built it, its features, the
-// ledger's current match and a pointer to source that reproduces it. Rows are selected per setup
+// ledger's current pair and a pointer to source that reproduces it. Rows are selected per setup
 // deterministically (size bands in turn, each pick the one adding the most features not yet
-// covered, the strongest ledger match and a fixed hash breaking ties); `add` appends a hand-picked
+// covered, the strongest ledger pair and a fixed hash breaking ties); `add` appends a hand-picked
 // row built the same way. The committed rows are frozen: selection.ts records what they were selected
 // from, and a re-selection is a deliberate new dataset version.
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -22,7 +22,7 @@ import { featuresOf } from './features';
 import { LEDGER_TSV, ROWS_JSON, TARGET } from './paths';
 import { type Definitions, type Resolution, loadDefinitions, resolveName } from './provenance';
 import { type ReadRepoFile, definitionLine, readCheckout, referenceFor } from './reference';
-import type { DatasetRow, Feature, Lang, MatchKind, Setup } from './schema';
+import type { DatasetRow, Feature, Lang, PairKind, Setup } from './schema';
 import { loadSetups, setupFlags } from './setups';
 
 /** Larger bodies make the row diff approximate and the run slow; the dataset stops here. */
@@ -78,8 +78,8 @@ export function loadContext(opts: { image?: string; rebuildDefinitions?: boolean
   });
 }
 
-const STRONG: readonly MatchKind[] = ['byte', 'fingerprint', 'addr'];
-const KIND_RANK: Record<MatchKind, number> = { byte: 0, fingerprint: 1, addr: 2, shape: 3, none: 4 };
+const STRONG: readonly PairKind[] = ['byte', 'fingerprint', 'addr'];
+const KIND_RANK: Record<PairKind, number> = { byte: 0, fingerprint: 1, addr: 2, shape: 3, none: 4 };
 
 /** The ledger's name for target function `index` when a byte, fingerprint or addr pairing gives one. */
 function strongName(ctx: Context, index: number): string | null {
@@ -111,7 +111,7 @@ export function buildRow(ctx: Context, index: number, origin: DatasetRow['origin
   }
   const led = ctx.ledger.get(index);
   const res = resolveIndex(ctx, index);
-  const kind: MatchKind = led?.best?.kind ?? 'none';
+  const kind: PairKind = led?.best?.kind ?? 'none';
   const base = {
     id: '',
     index,
@@ -188,7 +188,7 @@ interface Candidate {
   rank: [number, number, number];
 }
 
-/** Every target function each setup can claim, as selection candidates. */
+/** Every target function each setup covers, as selection candidates. */
 export function candidates(ctx: Context): Map<string, Candidate[]> {
   const out = new Map<string, Candidate[]>(ctx.setups.map((s) => [s.key, []]));
   for (const fn of ctx.m.funcs) {

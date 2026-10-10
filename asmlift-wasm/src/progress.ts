@@ -4,19 +4,19 @@
 import { copyFileSync, existsSync, mkdirSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
-import { type LedgerRow, type MatchKind } from './ledger';
+import { type LedgerRow, type PairKind } from './ledger';
 
-export const KINDS: readonly MatchKind[] = ['byte', 'fingerprint', 'addr', 'shape', 'none'];
+export const KINDS: readonly PairKind[] = ['byte', 'fingerprint', 'addr', 'shape', 'none'];
 
 export interface Tally {
-  n: Record<MatchKind, number>;
-  bytes: Record<MatchKind, number>;
+  n: Record<PairKind, number>;
+  bytes: Record<PairKind, number>;
   total: number;
   totalBytes: number;
 }
 
 export function tally(rows: Iterable<LedgerRow>): Tally {
-  const zero = (): Record<MatchKind, number> => ({ byte: 0, fingerprint: 0, addr: 0, shape: 0, none: 0 });
+  const zero = (): Record<PairKind, number> => ({ byte: 0, fingerprint: 0, addr: 0, shape: 0, none: 0 });
   const t: Tally = { n: zero(), bytes: zero(), total: 0, totalBytes: 0 };
   for (const r of rows) {
     const k = r.best?.kind ?? 'none';
@@ -85,13 +85,13 @@ export interface Movement {
   index: number;
   size: number;
   owner: string;
-  from: MatchKind;
-  to: MatchKind;
+  from: PairKind;
+  to: PairKind;
   fromScore: number | null;
   toScore: number | null;
 }
 
-const RANK: Record<MatchKind, number> = { byte: 0, fingerprint: 1, addr: 2, shape: 3, none: 4 };
+const RANK: Record<PairKind, number> = { byte: 0, fingerprint: 1, addr: 2, shape: 3, none: 4 };
 
 /** Every function whose kind or score changed between two ledgers, strongest improvement first. */
 export function movements(cur: Map<number, LedgerRow>, prev: Map<number, LedgerRow>): Movement[] {

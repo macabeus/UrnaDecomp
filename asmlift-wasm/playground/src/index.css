@@ -1,12 +1,61 @@
 @import 'tailwindcss';
 
-/* The family design system (Mizuchi / Transmuter / gba-kit): slate surfaces on a fixed diagonal
-   gradient and thin slate scrollbars. asmlift's accent is teal + gold; it lives in the components. */
+/* The colours of the Brazilian flag: verde #009C3B, amarelo #FFDF00, azul #002776 and branco. The components keep
+   Tailwind's scale names, redefined here so that every page follows: `slate` is the night of the flag's blue (the
+   surfaces and the text), `teal` its green (the accent: active tabs, matched, links) and `amber` its yellow (the
+   highlights), and `blue` its blue, lightened above 800 to read on the surfaces. Charts and canvases take their hex
+   values from shared/theme.ts, which uses the same steps. */
+@theme {
+  --color-slate-50: #f5f7fc;
+  --color-slate-100: #e8edf8;
+  --color-slate-200: #cfd8ee;
+  --color-slate-300: #aab8dc;
+  --color-slate-400: #8193c4;
+  --color-slate-500: #5d70a3;
+  --color-slate-600: #415485;
+  --color-slate-700: #2c3f6c;
+  --color-slate-800: #182b5a;
+  --color-slate-900: #0c1d47;
+  --color-slate-950: #061334;
+
+  --color-teal-50: #e8f8ee;
+  --color-teal-100: #c6eed4;
+  --color-teal-200: #93deae;
+  --color-teal-300: #57ca82;
+  --color-teal-400: #22b95c;
+  --color-teal-500: #05ac48;
+  --color-teal-600: #009c3b;
+  --color-teal-700: #007a2e;
+  --color-teal-800: #005f24;
+  --color-teal-900: #00451a;
+  --color-teal-950: #002b10;
+
+  --color-amber-50: #fffce6;
+  --color-amber-100: #fff8c2;
+  --color-amber-200: #fff3a3;
+  --color-amber-300: #ffe94d;
+  --color-amber-400: #ffdf00;
+  --color-amber-500: #f2cf00;
+  --color-amber-600: #d1b000;
+  --color-amber-700: #a68b00;
+  --color-amber-800: #7a6600;
+  --color-amber-900: #574900;
+  --color-amber-950: #332b00;
+
+  --color-blue-300: #8fb0f5;
+  --color-blue-400: #5b8def;
+  --color-blue-500: #2f66d6;
+  --color-blue-600: #1546b0;
+  --color-blue-700: #0a3592;
+  --color-blue-800: #002776;
+  --color-blue-900: #001d59;
+  --color-blue-950: #00123a;
+}
 
 :root {
   color-scheme: dark; /* native controls + scrollbars render dark */
   scrollbar-width: thin;
-  background-color: #0f172a;
+  background-color: #061334;
 }
 
 html {
@@ -15,11 +64,11 @@ html {
 
 body {
   min-height: 100%;
-  background: linear-gradient(to bottom right, #0f172a, #1e293b, #0f172a);
+  background: linear-gradient(to bottom right, #061334, #0c2463, #061334);
   background-attachment: fixed;
 }
 
-/* Slim slate scrollbars, app-wide (the family baseline) + the .scroll-slim opt-in. */
+/* Slim scrollbars, app-wide, and the .scroll-slim opt-in. */
 ::-webkit-scrollbar,
 .scroll-slim::-webkit-scrollbar {
   width: 8px;
@@ -31,18 +80,29 @@ body {
 }
 ::-webkit-scrollbar-thumb,
 .scroll-slim::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: #2c3f6c;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover,
 .scroll-slim::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: #415485;
 }
 
-/* CodeMirror inside a fixed-height pane: the editor scrolls, not the page. */
+/* CodeMirror inside a fixed-height pane: the editor scrolls, not the page. Its dark theme's grey surfaces take the
+   flag's night blue. */
 .cm-pane .cm-editor {
   height: 100%;
   font-size: 12.5px;
+  background-color: #061334;
+}
+.cm-pane .cm-editor .cm-gutters {
+  background-color: #061334;
+  border-right: 1px solid #182b5a;
+  color: #5d70a3;
+}
+.cm-pane .cm-editor .cm-activeLine,
+.cm-pane .cm-editor .cm-activeLineGutter {
+  background-color: #0c1d47;
 }
 .cm-pane .cm-scroller {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;

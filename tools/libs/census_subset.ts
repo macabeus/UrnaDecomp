@@ -87,7 +87,7 @@ const result = {
   bytesLabelled,
   bytesMatched,
   probeMatchedOutsideLabel: outsideLabel,
-  probeUnmatched: c.unmatchedB.length,
+  probeUnmatched: c.unpairedB.length,
   fingerprintIdx: byFingerprint.sort((x, y) => x - y),
   shapeIdx: byShape.sort((x, y) => x - y),
   byteExactIdx: byteExact.sort((x, y) => x - y),
@@ -95,6 +95,6 @@ const result = {
   pairOf,
 };
 process.stdout.write(
-  `${tag} ${label}: labelled ${inLabel.size}, matched ${result.matched} (fingerprint ${byFingerprint.length}, shape ${byShape.length}, byteExact ${byteExact.length}), bytes ${bytesMatched}/${bytesLabelled} (${((100 * bytesMatched) / Math.max(1, bytesLabelled)).toFixed(1)}%); probe fns ${probe.funcs.length}, probe matched outside label ${JSON.stringify(outsideLabel)}, probe unmatched ${c.unmatchedB.length}\n`,
+  `${tag} ${label}: labelled ${inLabel.size}, matched ${result.matched} (fingerprint ${byFingerprint.length}, shape ${byShape.length}, byteExact ${byteExact.length}), bytes ${bytesMatched}/${bytesLabelled} (${((100 * bytesMatched) / Math.max(1, bytesLabelled)).toFixed(1)}%); probe fns ${probe.funcs.length}, probe matched outside label ${JSON.stringify(outsideLabel)}, probe unmatched ${c.unpairedB.length}\n`,
 );
 if (out !== undefined) writeFileSync(out, `${JSON.stringify(result)}\n`);

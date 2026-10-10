@@ -4,7 +4,7 @@
 #   make -C src libs       # the pinned library builds alone
 #   make -C src census     # toolkit census, ledger/functions.tsv, wasmfn, the progress snapshot in ledger/history/
 #   make -C src check-srcloc  # the std::source_location records of the app objects against the target's
-#   make -C src splat …    # the splat build, scan, claim, status and stubs targets: src/mk/splat-sub.mk
+#   make -C src splat …    # the splat build, scan, match, status and stubs targets: src/mk/splat-sub.mk
 #
 # Every compile runs in the pinned image (urna-emsdk:6.0.0 = emscripten/emsdk:6.0.0 + wabt) through
 # build/docker-build.sh, which mounts the urna root at /work: all recipes cd to the root and use relative paths.
@@ -181,7 +181,7 @@ census: $(ROOT)/$(OUT)/vota_web_wasm.wasm
 	$(H) tools/round/census.sh
 
 # every std::source_location record the link's app objects hold must be one of the target's (a moved throw site
-# fails when a claimed function loads it); tools/round/check_srcloc.py
+# fails when a matched function loads it); tools/round/check_srcloc.py
 check-srcloc: $(ROOT)/$(OUT)/vota_web_wasm.wasm
 	$(H) python3 -I -B tools/round/check_srcloc.py
 

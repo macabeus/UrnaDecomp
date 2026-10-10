@@ -129,7 +129,7 @@ violations. Dead functions between them occupy no ordinal; nothing else can sit 
 **Identification** (`tools/linkorder/ident.py`): sources are the ledger's byte/fingerprint/addr pairs, census
 depth-0 pairs, exact bodies by unique name, the SQLite attribution, OpenSSL own-name strings, then callee-structure
 propagation (paired functions with equal call counts pair their callees positionally). Gates: the normalised body
-is unique on both sides (or the name is unique), ≥ 6 instructions, no double claims. Result: 5,611 pairs (exact
+is unique on both sides (or the name is unique), ≥ 6 instructions, no function paired twice. Result: 5,611 pairs (exact
 4,448, byte 654, name 234, addr 144, fingerprint 25, propagated 106). Coverage of skeleton-live functions: sqlite
 94 %, libc 144/163, OpenSSL members 81 %, libc++ 227/423, 7-Zip 24 %, RHVoice 15 % — the C++ libraries' bodies differ
 by whole-program inlining, so their anchors stay sparse. Anchors defined in more than one object (127 COMDAT

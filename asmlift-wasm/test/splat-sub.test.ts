@@ -7,19 +7,19 @@ import { disassemble } from '../src/disasm';
 import { readManifest } from '../src/splat';
 import { remapBody } from '../src/splat-remap';
 import {
-  ClaimsFailed,
+  MatchesFailed,
   type ScanRow,
-  addClaims,
+  addMatches,
   attempt,
   buildSplat,
   cachedRemapper,
   contentPairs,
-  parseClaims,
+  parseMatchList,
   readPieceBodies,
   readingMeterOf,
   renderScan,
   selfVoted,
-  withClaims,
+  withMatches,
 } from '../src/splat-sub';
 import { loadOurSide, loadTargetSide, symbolMaps } from '../src/splat-symbols';
 import { URNA_ROOT } from './helpers';
@@ -204,7 +204,7 @@ describe('selfVoted', { timeout: 180_000 }, () => {
 });
 
 describe('readingMeterOf', { timeout: 180_000 }, () => {
-  it.skipIf(!real)('sorts claims by the strongest choice the target made among our readings', () => {
+  it.skipIf(!real)('sorts matches by the strongest choice the target made among our readings', () => {
     const manifest = readManifest(PIECES);
     const size = (i: number) => manifest.functions.find((f) => f.index === i)!.size;
     const c = (reading: string, preferred: boolean) => ({ reading, preferred, at: 0, oursAt: 0 });
@@ -217,9 +217,9 @@ describe('readingMeterOf', { timeout: 180_000 }, () => {
       ]),
     );
     expect(meter).toEqual({
-      preferred: { claims: 1, bytes: size(162) },
-      other: { claims: 1, bytes: size(829), operands: 3, byKind: { literal: 2, 'table slot': 1 } },
-      copy: { claims: 1, bytes: size(1189), operands: 1 },
+      preferred: { matches: 1, bytes: size(162) },
+      other: { matches: 1, bytes: size(829), operands: 3, byKind: { literal: 2, 'table slot': 1 } },
+      copy: { matches: 1, bytes: size(1189), operands: 1 },
     });
   });
 });
@@ -263,17 +263,17 @@ describe('contentPairs', { timeout: 180_000 }, () => {
   });
 });
 
-describe('withClaims', { timeout: 180_000 }, () => {
-  it.skipIf(!real)('names a claimed function by its claim and drops every other name the symbol file gives it', () => {
+describe('withMatches', { timeout: 180_000 }, () => {
+  it.skipIf(!real)('names a matched function by its match and drops every other name the symbol file gives it', () => {
     const { maps } = load();
     expect(maps.target.symbols.fns.get('sqlite3ErrorMsg')).toBe(162);
-    const claimed = withClaims(maps, [
+    const matched = withMatches(maps, [
       { index: 9670, symbol: USERDICT_DELETER },
       { index: 162, symbol: 'BF_encrypt' },
     ]);
-    expect(claimed.target.symbols.fns.get(USERDICT_DELETER)).toBe(9670);
-    expect(claimed.target.symbols.fns.get('BF_encrypt')).toBe(162);
-    expect(claimed.target.symbols.fns.has('sqlite3ErrorMsg')).toBe(false);
+    expect(matched.target.symbols.fns.get(USERDICT_DELETER)).toBe(9670);
+    expect(matched.target.symbols.fns.get('BF_encrypt')).toBe(162);
+    expect(matched.target.symbols.fns.has('sqlite3ErrorMsg')).toBe(false);
     expect(maps.target.symbols.fns.get('sqlite3ErrorMsg')).toBe(162);
   });
 });
@@ -286,39 +286,39 @@ describe('cachedRemapper', { timeout: 180_000 }, () => {
     const unrelated = maps.ours.fnByKey.get('BF_encrypt')!;
     first.remap(caller);
     first.remap(unrelated);
-    // claim one of sqlite3ErrorMsg's callees for another target function: only the caller is re-pointed again
+    // match one of sqlite3ErrorMsg's callees to another target function: only the caller is re-pointed again
     const callee = maps.ours.module.funcs[caller - maps.ours.module.importedFuncCount];
     const calls = disassemble(callee).filter((i) => i.opcode === 0x10);
     const f = (calls[0].imms[0] as { value: number }).value;
-    const second = cachedRemapper(withClaims(maps, [{ index: 136, symbol: maps.ours.fns.get(f)!.key }]), first);
+    const second = cachedRemapper(withMatches(maps, [{ index: 136, symbol: maps.ours.fns.get(f)!.key }]), first);
     expect(second.remap(unrelated)).toBe(first.results.get(unrelated));
     expect(second.remap(caller)).not.toBe(first.results.get(caller));
   });
 });
 
-describe('parseClaims', () => {
+describe('parseMatchList', () => {
   it('reads index and symbol per line, with comments', () => {
-    const { claims } = parseClaims('# matched\n162 sqlite3ErrorMsg  # by symbol\n\n169 BN_CTX_get\n');
-    expect(claims).toEqual([
+    const { matches } = parseMatchList('# matched\n162 sqlite3ErrorMsg  # by symbol\n\n169 BN_CTX_get\n');
+    expect(matches).toEqual([
       { index: 162, symbol: 'sqlite3ErrorMsg', line: 2 },
       { index: 169, symbol: 'BN_CTX_get', line: 4 },
     ]);
   });
 
-  it('refuses a function claimed twice and a line it cannot read', () => {
-    expect(() => parseClaims('162 a\n162 b\n')).toThrow(/line 2: function 162 is already claimed on line 1/);
-    expect(() => parseClaims('sqlite3ErrorMsg 162\n')).toThrow(/line 1: expected/);
+  it('refuses a function matched twice and a line it cannot read', () => {
+    expect(() => parseMatchList('162 a\n162 b\n')).toThrow(/line 2: function 162 is already matched on line 1/);
+    expect(() => parseMatchList('sqlite3ErrorMsg 162\n')).toThrow(/line 1: expected/);
   });
 });
 
-describe('addClaims', () => {
-  it('appends the scan matches not claimed yet and keeps every existing line', () => {
+describe('addMatches', () => {
+  it('appends the scan matches not listed yet and keeps every existing line', () => {
     const rows = [
       { index: 162, symbol: 'sqlite3ErrorMsg', verdict: 'match' },
       { index: 169, symbol: 'BN_CTX_get', verdict: 'match' },
       { index: 170, symbol: 'x', verdict: 'differs' },
     ] as ScanRow[];
-    const r = addClaims('# hand note\n162 sqlite3ErrorMsg # kept\n', rows);
+    const r = addMatches('# hand note\n162 sqlite3ErrorMsg # kept\n', rows);
     expect(r).toEqual({ text: '# hand note\n162 sqlite3ErrorMsg # kept\n169 BN_CTX_get\n', added: 1 });
   });
 });
@@ -345,42 +345,42 @@ describe('renderScan', () => {
 });
 
 describe('buildSplat', { timeout: 180_000 }, () => {
-  it.skipIf(!real)('assembles the target from the pieces with our bytes for every claim', () => {
+  it.skipIf(!real)('assembles the target from the pieces with our bytes for every match', () => {
     const { maps } = load();
-    const { claims } = parseClaims(`162 sqlite3ErrorMsg\n829 BF_encrypt\n9670 ${USERDICT_DELETER}\n`);
-    const r = buildSplat(maps, PIECES, claims, TARGET_SHA);
+    const { matches } = parseMatchList(`162 sqlite3ErrorMsg\n829 BF_encrypt\n9670 ${USERDICT_DELETER}\n`);
+    const r = buildSplat(maps, PIECES, matches, TARGET_SHA);
     expect(r.assembled.sha256).toBe(TARGET_SHA);
     expect(r.assembled.unchanged.sort()).toEqual([162, 829, 9670]);
-    expect(r.claimed).toBe(3);
-    expect(r.readings.preferred.claims + r.readings.other.claims + r.readings.copy.claims).toBe(3);
+    expect(r.matched).toBe(3);
+    expect(r.readings.preferred.matches + r.readings.other.matches + r.readings.copy.matches).toBe(3);
     const m = readManifest(PIECES);
-    expect(r.claimedBytes).toBe(
+    expect(r.matchedBytes).toBe(
       m.functions.filter((f) => [162, 829, 9670].includes(f.index)).reduce((n, f) => n + f.size, 0),
     );
     expect(r.functions).toBe(14_343);
   });
 
-  it.skipIf(!real)('refuses to build while a claim does not verify, naming the function and the instruction', () => {
+  it.skipIf(!real)('refuses to build while a match does not verify, naming the function and the instruction', () => {
     const { maps } = load();
-    const { claims } = parseClaims(`162 sqlite3ErrorMsg\n9670 ${RUSSIAN_DELETER}\n200 no_such_symbol\n`);
+    const { matches } = parseMatchList(`162 sqlite3ErrorMsg\n9670 ${RUSSIAN_DELETER}\n200 no_such_symbol\n`);
     let failure: unknown;
     try {
-      buildSplat(maps, PIECES, claims, TARGET_SHA);
+      buildSplat(maps, PIECES, matches, TARGET_SHA);
     } catch (e) {
       failure = e;
     }
-    expect(failure).toBeInstanceOf(ClaimsFailed);
-    const f = failure as ClaimsFailed;
-    expect(f.failures.map((x) => x.claim.index)).toEqual([9670, 200]);
+    expect(failure).toBeInstanceOf(MatchesFailed);
+    const f = failure as MatchesFailed;
+    expect(f.failures.map((x) => x.match.index)).toEqual([9670, 200]);
     expect(f.message).toMatch(/line 2: function 9670 .* DIFFERS at \+0xb target \+0xa i32\.const 1103687/);
     expect(f.message).toMatch(/line 3: function 200 .*: our link has no function no_such_symbol/);
   });
 
-  it.skipIf(!real)('refuses a claim whose only evidence for an address is its own vote, naming the operand', () => {
+  it.skipIf(!real)('refuses a match whose only evidence for an address is its own vote, naming the operand', () => {
     const { maps } = load();
-    const { claims } = parseClaims('162 sqlite3ErrorMsg\n137 _Znwm\n');
-    expect(() => buildSplat(maps, PIECES, claims, TARGET_SHA)).toThrow(
-      /line 2: function 137 .*claimed by _Znwm .*UNCONFIRMED: self-voted \+0x1c i32\.const 1936860: __cxa_new_handler = 0x1d8ddc \(evidence:vote:1 by:137\)/,
+    const { matches } = parseMatchList('162 sqlite3ErrorMsg\n137 _Znwm\n');
+    expect(() => buildSplat(maps, PIECES, matches, TARGET_SHA)).toThrow(
+      /line 2: function 137 .*matched to _Znwm .*UNCONFIRMED: self-voted \+0x1c i32\.const 1936860: __cxa_new_handler = 0x1d8ddc \(evidence:vote:1 by:137\)/,
     );
   });
 });

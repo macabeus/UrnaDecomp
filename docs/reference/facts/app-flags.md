@@ -1,9 +1,9 @@
 # Facts: compile flags of the application TUs, per component
 
-The flags each part of TSE's own code was compiled with, and the measurement behind each one. The current flag
-sets live in `src/Makefile` (`ECOURNA_CXXFLAGS`, `UENUX2_CXXFLAGS`, `APP_CXXFLAGS`) and
-`src/mk/ecourna-flags.mk`; [../app-flags.md](../app-flags.md) gives them with their evidence. The ASN.1 runtime's flags are in
-[asn1.md §A1–A2](asn1.md), the libraries' in [libraries.md](libraries.md), the link line in
+The flags each part of TSE's application code (uenux2, ecourna) was compiled with, and the measurement behind each
+one. The current flag sets live in `src/Makefile` (`ECOURNA_CXXFLAGS`, `UENUX2_CXXFLAGS`, `APP_CXXFLAGS`) and
+`src/mk/ecourna-flags.mk`; [../app-flags.md](../app-flags.md) gives them with their evidence. The ASN.1 runtime's
+flags are in [asn1.md §A1–A2](asn1.md), the libraries' in [libraries.md](libraries.md), the link line in
 [toolchain.md §T3](toolchain.md).
 
 How a flag is measured: compile the reconstructed TU under each flag set in `urna-emsdk:6.0.0`, link, and score

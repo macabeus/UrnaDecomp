@@ -1,7 +1,7 @@
-# Facts: splat symbol maps and claims
+# Facts: splat symbol maps and matches
 
-What the splat build's symbol maps rest on, and the ways a claim can verify and still be wrong. `docs/reference/splat.md`
-describes the build (`make -C src splat`), the claim file `splat/matched.txt` and the symbol file
+What the splat build's symbol maps rest on, and the ways a match can verify and still be wrong. `docs/reference/splat.md`
+describes the build (`make -C src splat`), the match list `splat/matched.txt` and the symbol file
 `splat/symbol_addrs.txt`; this file holds the measurements behind them. Toolkit commands run from
 `asmlift-wasm/` as `pnpm wasm <command>`.
 
@@ -75,24 +75,28 @@ non-byte pairs and checks each against its target body: each gives exactly the t
    target 143 spells 12818).
 7. `python3 -I` still writes `__pycache__` beside an imported module: run the Python tools with `-B`.
 
-## S4. A vote can map one class onto another, and the claim still verifies
+## S4. A vote can map one class onto another, and the match still verifies
 
 A data symbol whose only evidence is a `vote` can put one of our objects onto a different object in the target; a
-claim that re-points through that symbol then matches byte for byte and is still wrong.
+match that re-points through that symbol then matches byte for byte and is still wrong.
 
-The case: the symbol file gave target 0x18336c two names, `_ZTVN3api14AudioCollectorE` (evidence: rtti) and
-`_ZTVN4ASN117OBJECT_IDENTIFIERE` (evidence: vote:2). The target's vtable there has typeinfo 0x1833a8, whose name
-pointer gives `N3api14AudioCollectorE`; `grep -c N4ASN117OBJECT_IDENTIFIERE target/vota_web_wasm.wasm` → 0. Through
-that line, claims 10822 `_ZN4ASN117OBJECT_IDENTIFIERD0Ev` and 10840 `…D2Ev` verified exactly — their only
-re-pointed address is `i32.const 1586036` = 0x18336c + 8 — but they are `api::AudioCollector`'s destructors, and
-our ASN.1 destructors happen to compile to the same shape. "Conflicting evidence is left out" catches one name at
-two addresses, not two names at one address. `asmlift-wasm/test/splat-sub.test.ts` and
-`splat-symbols.test.ts` pin this case.
+The case: aligning our ASN.1 destructors with target 10822 and 10840 votes twice for
+`_ZTVN4ASN117OBJECT_IDENTIFIERE` at target 0x18336c, where RTTI names `_ZTVN3api14AudioCollectorE`. The target's
+vtable there has typeinfo 0x1833a8, whose name pointer gives `N3api14AudioCollectorE`;
+`grep -c N4ASN117OBJECT_IDENTIFIERE target/vota_web_wasm.wasm` → 0. A symbol file with both names lets the matches
+10822 `_ZN4ASN117OBJECT_IDENTIFIERD0Ev` and 10840 `…D2Ev` verify exactly — their only re-pointed address is
+`i32.const 1586036` = 0x18336c + 8 — but they are `api::AudioCollector`'s destructors, and our ASN.1 destructors
+happen to compile to the same shape. Leaving out a name that has conflicting addresses does not catch it: here two
+names share one address. So `splat-symbols` drops the data names the target's own bytes contradict
+(`refuteDataNames` in `asmlift-wasm/src/splat-symbols.ts`): an RTTI symbol whose bytes describe another class, a
+voted object whose bytes differ from ours, and one of two names at one target address that cannot both be right (a
+vote yields to independent evidence). `asmlift-wasm/test/splat-symbols.test.ts` (`refuteDataNames`) and
+`splat-sub.test.ts` pin this case, and `grep -c _ZTVN4ASN117OBJECT_IDENTIFIERE splat/symbol_addrs.txt` prints 0.
 
 Related facts:
 
-- **Self-certification is common.** In 414 of 425 (claim, a `vote:1` symbol used only by that claim) rows, the
-  claim's own ledger pair is the target's skeleton pair: the one vote came from the claimed function itself, and
+- **Self-certification is common.** In nearly every (match, a `vote:1` symbol used only by that match) row, the
+  match's own ledger pair is the target's skeleton pair: the one vote comes from the matched function itself, and
   that operand checks nothing.
 - **An independent check exists wherever the object names itself.** For a vtable: vtable + 4 → typeinfo, typeinfo
   + 4 → the name. The vote-evidenced vtables and typeinfos, but for this one, decode to their own class. Every
@@ -100,4 +104,4 @@ Related facts:
   is not the symbol name (`DSAPrivateKey_it`'s is "DSA"): compare ours with the target's, never the `sname` with
   the symbol.
 
-So a hand edit to `splat/symbol_addrs.txt` needs evidence that does not come from the claim it enables.
+So a hand edit to `splat/symbol_addrs.txt` needs evidence that does not come from the match it enables.

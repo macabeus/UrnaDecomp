@@ -1,18 +1,19 @@
 # Status
 
-The project has one progress number: the functions claimed in `splat/matched.txt`, which the splat build
-verifies on every run ([reference/splat.md](reference/splat.md)). A claim means that our whole-program link
+The project has one progress number: the functions matched in `splat/matched.txt`, which the splat build
+verifies on every run ([reference/splat.md](reference/splat.md)). A match means that our whole-program link
 produces that target function's body byte for byte, once its calls and addresses are re-pointed into the target's.
 Everything else that counts functions, such as the census tiers at the end of this page, is a diagnostic.
 
 <!-- status:headline -->
-**7,211 of 14,343 functions claimed (50.28%), 2,115,992 of 5,883,903 code bytes (35.96%).**
+**7,211 of 14,343 functions matched (50.28%), 2,115,992 of 5,883,903 code bytes (35.96%).**
 <!-- /status:headline -->
 
 Every block between `status:` markers on this page and in the README's Status section is written by
 `make -C src status` from two committed files: `splat/matched.txt` and `splat/scan.tsv`, the scan that
-`make -C src splat-claim` writes together with the claims. CI runs `python3 -I -B tools/round/status.py --check`,
-which fails when the scan's matches are not exactly the claims or when a block here is not what the scan gives.
+`make -C src splat-match` writes together with the match list. CI runs `python3 -I -B tools/round/status.py --check`,
+which fails when the scan's `match` rows are not exactly the lines of `splat/matched.txt` or when a block here is
+not what the scan gives.
 Never edit the numbers by hand.
 
 ## By origin
@@ -31,7 +32,7 @@ library function with no evidence of its own that only TSE code calls counts as 
 <!-- /status:origin -->
 
 `ASN1` is TSE's fork of the III ASN.1 runtime: upstream code with TSE's additions ([src/asn1/README.md](../src/asn1/README.md)). The upstream
-libraries are rebuilt from their own sources at the versions `third_party/MANIFEST.md` pins, so most of their claims
+libraries are rebuilt from their own sources at the versions `third_party/MANIFEST.md` pins, so most of their matches
 come from getting the version, the flags and the link order right, not from writing code.
 
 ## By component
@@ -86,7 +87,7 @@ functions our link has a body for, the object that body is compiled from says wh
 scan's `object` column):
 
 <!-- status:unattributed-origin -->
-| our candidate is compiled from | `unknown` claimed / total | `app` claimed / total |
+| our candidate is compiled from | `unknown` matched / total | `app` matched / total |
 | --- | ---: | ---: |
 | OpenSSL | 647 / 668 | 158 / 158 |
 | SQLite | 247 / 249 | 37 / 38 |
@@ -117,8 +118,8 @@ candidate are not placed by anything yet.
 <!-- status:verdicts -->
 | verdict | functions | code bytes | what it means |
 | --- | ---: | ---: | --- |
-| `match` | 7,211 | 2,115,992 | claimed |
-| `differs` | 401 | 157,753 | our link has a candidate body and it differs; `detail` names the first difference. These are the closest to a claim. |
+| `match` | 7,211 | 2,115,992 | matched |
+| `differs` | 401 | 157,753 | our link has a candidate body and it differs; `detail` names the first difference. These are the closest to a match. |
 | `unresolved` | 160 | 95,970 | an operand of our body has no counterpart in the target: a callee the symbol file maps to no target function (such as our roots stand-in or a `byn$mgfn-shared$` thunk), or a data name only this function voted for (*self-voted*) |
 | `no-candidate` | 6,571 | 3,514,188 | our link has no body for it yet |
 <!-- /status:verdicts -->
@@ -127,36 +128,36 @@ candidate are not placed by anything yet.
 For TSE code alone: 372 `match`, 68 `differs`, 41 `unresolved` and 2,804 `no-candidate`.
 <!-- /status:tse-verdicts -->
 
-[how-to-decompile.md](how-to-decompile.md) walks from picking one of these to a claim.
+[how-to-decompile.md](how-to-decompile.md) walks from picking one of these to a match.
 
 ## Reading the meter
 
 `TMPDIR=/tmp make -C src splat` ends by printing the meter: a sha256 line that must name the target's
-`8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2` with the claim count, a `substituted:` line with
-the totals above, one row per component (`component claimed/total claimed-bytes/total-bytes percent`, the rows of
+`8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2` with the match count, a `substituted:` line with
+the totals above, one row per component (`component matched/total matched-bytes/total-bytes percent`, the rows of
 the component tables), and three lines about readings:
 
-- **re-pointing alone** counts claims whose body re-points into the target's with no choice to make.
-- **another reading** counts claims where an `i32.const` or a memarg offset could be an address, a table slot or a
+- **re-pointing alone** counts matches whose body re-points into the target's with no choice to make.
+- **another reading** counts matches where an `i32.const` or a memarg offset could be an address, a table slot or a
   plain integer, and the target body picked one of our readings.
-- **which copy** counts claims whose content sits at several places in the target, such as a tail-merged string, or
+- **which copy** counts matches whose content sits at several places in the target, such as a tail-merged string, or
   whose function pointer names a function the target's table holds in several slots, and the target body picked the
   copy.
 
-[reference/splat.md](reference/splat.md) "Substitute" explains readings. Some claims carry an arbitrary name,
+[reference/splat.md](reference/splat.md) "Substitute" explains readings. Some matches carry an arbitrary name,
 because binaryen merges identical bodies and the target keeps one copy under one index:
 
 <!-- status:twins -->
-261 claims are bodies of 8 B or less, and 37 claims have a byte-identical twin in the target.
+261 matches are bodies of 8 B or less, and 37 matches have a byte-identical twin in the target.
 <!-- /status:twins -->
 
-A meter that does not show the target's sha256 is not a meter: the build failed, and its output lists the claims
+A meter that does not show the target's sha256 is not a meter: the build failed, and its output lists the matches
 that drifted ([reference/splat.md](reference/splat.md) "The drift rule").
 
 ## Regenerating this page
 
 The commit that changes `splat/matched.txt` also commits `splat/scan.tsv` and these blocks. `make -C src
-splat-claim` writes all three. After a scan alone, or a hand edit of the claim list, run:
+splat-match` writes all three. After a scan alone, or a hand edit of the match list, run:
 
 ```sh
 TMPDIR=/tmp make -C src splat-scan    # about two and a half minutes; rewrites splat/scan.tsv and the blocks
@@ -168,10 +169,10 @@ The origin groups, the component descriptions and the object-to-origin rules are
 ## Diagnostics: the census tiers
 
 `make -C src census` pairs every target function with the closest function of our link and records the pairing's
-[tier](glossary.md#measuring-a-match) in `ledger/functions.tsv` (column `best_kind`). The tiers show what is
-close to matching. They are not the meter: a `byte` or `fingerprint` pair is not a claim, and most claims pair at a
-weaker tier, because a fingerprint also covers the callees two calls deep (see
-[depth](glossary.md#measuring-a-match)). Each tier against the scan's verdicts:
+[tier](glossary.md#pairing-and-progress) in `ledger/functions.tsv` (column `best_kind`). The tiers show what is
+close to matching. They are not the meter: a `byte` or `fingerprint` pair is not a match, and most matched
+functions pair at a weaker tier, because a fingerprint also covers the callees two calls deep (see
+[depth](glossary.md#pairing-and-progress)). Each tier against the scan's verdicts:
 
 <!-- status:tiers -->
 | tier | functions | match | differs | unresolved | no-candidate |

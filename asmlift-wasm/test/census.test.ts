@@ -20,8 +20,8 @@ describe('census', () => {
     expect(c.counts.byFingerprint).toBe(14343);
     expect(c.counts.byAddr).toBe(0);
     expect(c.counts.byShape).toBe(0);
-    expect(c.unmatchedA).toEqual([]);
-    expect(c.unmatchedB).toEqual([]);
+    expect(c.unpairedA).toEqual([]);
+    expect(c.unpairedB).toEqual([]);
     expect(c.histogram.reduce((s, r) => s + r.total, 0)).toBe(14343);
     const cpu = process.cpuUsage(t0);
     expect((cpu.user + cpu.system) / 1000).toBeLessThan(60_000);

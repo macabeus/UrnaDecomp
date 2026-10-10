@@ -1,7 +1,7 @@
 # build/ — pinned toolchain and link recipe for `vota_web_wasm.wasm`
 
 Everything here was measured against `target/vota_web_wasm.{wasm,js,data}`; the evidence is in
-`docs/reference/facts/toolchain.md`. Nothing below is a guess about what a compiler "would" emit — each claim was compiled.
+`docs/reference/facts/toolchain.md`. Nothing below is a guess about what a compiler "would" emit — each statement was compiled.
 
 ## Toolchain (pinned)
 

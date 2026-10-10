@@ -1,9 +1,19 @@
-// Every piece of state the URL fragment carries, one parser per key, shared by both pages.
+// Every piece of state the URL fragment carries, one parser per key, shared by the pages.
 import { parseAsInteger, parseAsString, parseAsStringLiteral } from 'nuqs';
 
-export const VIEWS = ['playground', 'benchmark'] as const;
+export const VIEWS = ['progress', 'playground', 'benchmark', 'urnaemu'] as const;
 export type View = (typeof VIEWS)[number];
-export const viewParser = parseAsStringLiteral(VIEWS).withDefault('playground');
+export const viewParser = parseAsStringLiteral(VIEWS).withDefault('progress');
+
+/** the progress page's drill-down: an origin, then one of its components */
+export const originParser = parseAsStringLiteral(['tse', 'upstream', 'unattributed'] as const);
+export const componentParser = parseAsString;
+/** what the progress page counts: functions or code bytes */
+export const metricParser = parseAsStringLiteral(['functions', 'bytes'] as const).withDefault('functions');
+/** the order of the progress page's function waffle */
+export const SORTS = ['verdict', 'index', 'size'] as const;
+export type Sort = (typeof SORTS)[number];
+export const sortParser = parseAsStringLiteral(SORTS).withDefault('verdict');
 
 /** the function the playground shows */
 export const fnParser = parseAsInteger;

@@ -138,8 +138,7 @@ function RunPicker({ runs, run, vs, onRun, onVs }: ViewProps) {
       <p className="ml-auto max-w-xl text-right text-xs leading-relaxed text-slate-500">
         commit <span className="font-mono text-slate-400">{run.commit ?? 'unknown'}</span> · image{' '}
         <span className="font-mono text-slate-400">{run.image}</span> · {run.dataset.rows} rows ·{' '}
-        {(run.durationMs.total / 1000).toFixed(1)} s. Exact here is a structure match of the function linked alone, never a
-        byte match.
+        {(run.durationMs.total / 1000).toFixed(1)} s
       </p>
     </div>
   );

@@ -1,7 +1,7 @@
-// Substitution: a target function is claimed when the body our whole-program link produces, re-pointed into the
+// Substitution: a target function is matched when the body our whole-program link produces, re-pointed into the
 // target's index and address spaces (splat-remap.ts), is byte-identical to the target's piece. The build assembles
-// the split with OUR re-pointed bytes for every claimed function and the original piece for the rest, and refuses
-// to produce a module while a claim no longer verifies.
+// the split with OUR re-pointed bytes for every matched function and the original piece for the rest, and refuses
+// to produce a module while any match does not verify.
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -55,7 +55,7 @@ export interface ScanRow {
   verdict: Verdict;
   detail: string;
   size: number;
-  /** the ledger's best match kind for this target function ('none' when it has none) */
+  /** the ledger's best pair kind for this target function ('none' when it has none) */
   ledgerKind: string;
   group: string;
   tried: number;
@@ -159,7 +159,7 @@ export type Remapper = (ours: number) => RemapResult;
 /**
  * remapBody through `maps`, reusing `previous`'s results for every function whose referenced functions (callees,
  * ref.func, the functions in the table slots its constants may name) resolve the same way in both maps: only the
- * function names differ between the passes of a scan (withClaims).
+ * function names differ between the passes of a scan (withMatches).
  */
 export function cachedRemapper(
   maps: SymbolMaps,
@@ -497,21 +497,21 @@ function readingsText(readings: readonly string[]): string {
 }
 
 /**
- * A claim is the strongest evidence of which target function our symbol is: the maps with every claimed symbol
- * naming its target function, and no other symbol naming a claimed function.
+ * A match is the strongest evidence of which target function our symbol is: the maps with every matched symbol
+ * naming its target function, and no other symbol naming a matched function.
  */
-export function withClaims(maps: SymbolMaps, claims: Iterable<{ index: number; symbol: string }>): SymbolMaps {
-  const claimed = new Map<number, string>();
-  for (const c of claims) {
-    claimed.set(c.index, c.symbol);
+export function withMatches(maps: SymbolMaps, matches: Iterable<{ index: number; symbol: string }>): SymbolMaps {
+  const matched = new Map<number, string>();
+  for (const m of matches) {
+    matched.set(m.index, m.symbol);
   }
   const fns = new Map(maps.target.symbols.fns);
   for (const [name, index] of fns) {
-    if (claimed.has(index) && claimed.get(index) !== name) {
+    if (matched.has(index) && matched.get(index) !== name) {
       fns.delete(name);
     }
   }
-  for (const [index, symbol] of claimed) {
+  for (const [index, symbol] of matched) {
     fns.set(symbol, index);
   }
   return { ...maps, target: { ...maps.target, symbols: { ...maps.target.symbols, fns } } };
@@ -521,25 +521,25 @@ const SCAN_PASSES = 6;
 
 /**
  * Scan every target function of the split: its candidates first, then the pairs found by body alone. Each pass
- * re-points through the maps with the previous pass's matches claimed (a match found by body corrects the name
- * a caller's call resolves through), until the matches stop changing; the last pass's rows therefore hold for a
- * build that claims exactly its matches.
+ * re-points through the maps with the previous pass's matches listed (withMatches; a match found by body corrects
+ * the name a caller's call resolves through), until the matches stop changing; the last pass's rows therefore hold
+ * for a build whose match list is exactly its matches.
  */
 export function scanSplit(
   maps: SymbolMaps,
   manifest: SplatManifest,
   bodies: ReadonlyMap<number, Uint8Array>,
   ledger: ReadonlyMap<number, LedgerRow>,
-  claims: readonly { index: number; symbol: string }[] = [],
+  matchList: readonly { index: number; symbol: string }[] = [],
   onPass?: (pass: number, matches: number) => void,
 ): ScanRow[] {
   const firstSource = new Map<number, ScanRow>();
-  let overlay = claims;
+  let overlay = matchList;
   let previous = '';
   let rows: ScanRow[] = [];
   let cache: ReturnType<typeof cachedRemapper> | undefined;
   for (let pass = 1; pass <= SCAN_PASSES; pass++) {
-    const passMaps = withClaims(maps, overlay);
+    const passMaps = withMatches(maps, overlay);
     cache = cachedRemapper(passMaps, cache);
     const found = scanCandidates(passMaps, manifest, bodies, ledger, cache.remap);
     const extra = contentPairs(passMaps, found, bodies, cache.remap);
@@ -576,7 +576,7 @@ export function scanSplit(
             chosen: undefined,
           };
     });
-    // a later pass reaches through the claimed name what an earlier one found: keep how it was first found
+    // a later pass reaches through the matched name what an earlier one found: keep how it was first found
     rows = rows.map((r) => {
       const first = firstSource.get(r.index);
       if (r.verdict !== 'match') {
@@ -694,20 +694,21 @@ export function renderScan(
 }
 
 // ---------------------------------------------------------------------------------------------------------------
-// the claim list: `<target index> <our symbol>` per line, `#` starts a comment
+// the match list: `<target index> <our symbol>` per line, `#` starts a comment
 
-export interface Claim {
+/** a line of the match list (a scan Match the list records) */
+export interface ListedMatch {
   index: number;
   symbol: string;
   line: number;
 }
 
-export function parseClaims(text: string): { claims: Claim[]; lines: string[] } {
+export function parseMatchList(text: string): { matches: ListedMatch[]; lines: string[] } {
   const lines = text.split('\n');
   if (lines.at(-1) === '') {
     lines.pop();
   }
-  const claims: Claim[] = [];
+  const matches: ListedMatch[] = [];
   const seen = new Map<number, number>();
   lines.forEach((raw, k) => {
     const l = raw.replace(/#.*/, '').trim();
@@ -716,24 +717,24 @@ export function parseClaims(text: string): { claims: Claim[]; lines: string[] } 
     }
     const m = l.match(/^(\d+)\s+(\S+)$/);
     if (m === null) {
-      throw new Error(`claims line ${k + 1}: expected '<target index> <symbol>', got '${raw}'`);
+      throw new Error(`match list line ${k + 1}: expected '<target index> <symbol>', got '${raw}'`);
     }
     const index = Number(m[1]);
     const prev = seen.get(index);
     if (prev !== undefined) {
-      throw new Error(`claims line ${k + 1}: function ${index} is already claimed on line ${prev}`);
+      throw new Error(`match list line ${k + 1}: function ${index} is already matched on line ${prev}`);
     }
     seen.set(index, k + 1);
-    claims.push({ index, symbol: m[2], line: k + 1 });
+    matches.push({ index, symbol: m[2], line: k + 1 });
   });
-  return { claims, lines };
+  return { matches, lines };
 }
 
-/** The claim list with a line added for every scan match it does not claim yet; existing lines stay as written. */
-export function addClaims(text: string, rows: readonly ScanRow[]): { text: string; added: number } {
-  const { claims, lines } = parseClaims(text);
-  const claimed = new Set(claims.map((c) => c.index));
-  const fresh = rows.filter((r) => r.verdict === 'match' && !claimed.has(r.index));
+/** The match list with a line added for every scan match it does not list yet; existing lines stay as written. */
+export function addMatches(text: string, rows: readonly ScanRow[]): { text: string; added: number } {
+  const { matches, lines } = parseMatchList(text);
+  const listed = new Set(matches.map((m) => m.index));
+  const fresh = rows.filter((r) => r.verdict === 'match' && !listed.has(r.index));
   const out = [...lines, ...fresh.map((r) => `${r.index} ${r.symbol}`)];
   return { text: `${out.join('\n')}\n`, added: fresh.length };
 }
@@ -741,91 +742,91 @@ export function addClaims(text: string, rows: readonly ScanRow[]): { text: strin
 // ---------------------------------------------------------------------------------------------------------------
 // the build
 
-export interface ClaimFailure {
-  claim: Claim;
+export interface MatchFailure {
+  match: ListedMatch;
   message: string;
 }
 
 export interface ComponentMeter {
   group: string;
   functions: number;
-  claimed: number;
+  matched: number;
   bytes: number;
-  claimedBytes: number;
+  matchedBytes: number;
 }
 
 export interface BuildResult {
   assembled: AssembleResult;
   meter: ComponentMeter[];
   readings: ReadingMeter;
-  claimed: number;
-  claimedBytes: number;
+  matched: number;
+  matchedBytes: number;
   functions: number;
   bytes: number;
 }
 
-/** Re-point every claimed function and compare it with its piece; failures name the function and where it differs. */
-export function verifyClaims(
+/** Re-point every matched function and compare it with its piece; failures name the function and where it differs. */
+export function verifyMatches(
   maps: SymbolMaps,
   manifest: SplatManifest,
   bodies: ReadonlyMap<number, Uint8Array>,
-  claims: readonly Claim[],
-): { substitutes: Map<number, Uint8Array>; chosen: Map<number, Chosen[]>; failures: ClaimFailure[] } {
+  matches: readonly ListedMatch[],
+): { substitutes: Map<number, Uint8Array>; chosen: Map<number, Chosen[]>; failures: MatchFailure[] } {
   const byIndex = new Map(manifest.functions.map((f) => [f.index, f]));
   const substitutes = new Map<number, Uint8Array>();
   const chosen = new Map<number, Chosen[]>();
-  const failures: ClaimFailure[] = [];
-  const who = (claim: Claim, ours?: number): string => {
-    const f = byIndex.get(claim.index);
-    return `function ${claim.index}${f?.name ? ` (${f.name})` : ''} claimed by ${claim.symbol}${ours === undefined ? '' : ` (ours ${ours})`}`;
+  const failures: MatchFailure[] = [];
+  const who = (match: ListedMatch, ours?: number): string => {
+    const f = byIndex.get(match.index);
+    return `function ${match.index}${f?.name ? ` (${f.name})` : ''} matched to ${match.symbol}${ours === undefined ? '' : ` (ours ${ours})`}`;
   };
-  for (const claim of claims) {
-    const ours = maps.ours.fnByKey.get(claim.symbol);
-    if (!byIndex.has(claim.index)) {
-      failures.push({ claim, message: `${who(claim)}: ${claim.index} is not a defined function of the target` });
+  for (const match of matches) {
+    const ours = maps.ours.fnByKey.get(match.symbol);
+    if (!byIndex.has(match.index)) {
+      failures.push({ match, message: `${who(match)}: ${match.index} is not a defined function of the target` });
       continue;
     }
     if (ours === undefined || ours < maps.ours.module.importedFuncCount) {
-      failures.push({ claim, message: `${who(claim)}: our link has no function ${claim.symbol}` });
+      failures.push({ match, message: `${who(match)}: our link has no function ${match.symbol}` });
       continue;
     }
-    const a = attempt(maps, { ours, symbol: claim.symbol, source: 'symbol' }, claim.index, bodies.get(claim.index)!);
+    const a = attempt(maps, { ours, symbol: match.symbol, source: 'symbol' }, match.index, bodies.get(match.index)!);
     if (a.verdict === 'match') {
-      substitutes.set(claim.index, a.bytes);
-      chosen.set(claim.index, a.chosen);
+      substitutes.set(match.index, a.bytes);
+      chosen.set(match.index, a.chosen);
     } else {
       failures.push({
-        claim,
-        message: `${who(claim, ours)} ${a.verdict === 'differs' ? 'DIFFERS at' : 'is UNRESOLVED:'} ${a.detail}`,
+        match,
+        message: `${who(match, ours)} ${a.verdict === 'differs' ? 'DIFFERS at' : 'is UNRESOLVED:'} ${a.detail}`,
       });
     }
   }
-  const oursOf = new Map(claims.map((c) => [c.index, maps.ours.fnByKey.get(c.symbol)]));
+  const oursOf = new Map(matches.map((m) => [m.index, maps.ours.fnByKey.get(m.symbol)]));
   const refused = selfVoted(maps, new Map([...chosen].map(([t, c]) => [t, { chosen: c, ours: oursOf.get(t) }])));
-  for (const claim of claims) {
-    const x = refused.get(claim.index);
+  for (const match of matches) {
+    const x = refused.get(match.index);
     if (x !== undefined) {
-      substitutes.delete(claim.index);
-      chosen.delete(claim.index);
+      substitutes.delete(match.index);
+      chosen.delete(match.index);
       failures.push({
-        claim,
-        message: `${who(claim, maps.ours.fnByKey.get(claim.symbol))} is UNCONFIRMED: ${selfVotedText(maps, claim.index, bodies.get(claim.index)!, x)}`,
+        match,
+        message: `${who(match, maps.ours.fnByKey.get(match.symbol))} is UNCONFIRMED: ${selfVotedText(maps, match.index, bodies.get(match.index)!, x)}`,
       });
     }
   }
-  failures.sort((a, b) => a.claim.line - b.claim.line);
+  failures.sort((a, b) => a.match.line - b.match.line);
   return { substitutes, chosen, failures };
 }
 
-/** How the target's bytes chose among our readings: per claim, the strongest choice it needed. */
+/** How the target's bytes chose among our readings: per match, the strongest choice it needed. */
 export interface ReadingMeter {
-  /** claims whose every ambiguous operand took its first reading */
-  preferred: { claims: number; bytes: number };
-  /** claims where the target picked another reading (literal, table slot or address) of some operand */
-  other: { claims: number; bytes: number; operands: number; byKind: Record<string, number> };
-  /** claims where the target picked which copy of identical string or read-only bytes an operand names, or which of
+  /** matches whose every ambiguous operand took its first reading */
+  preferred: { matches: number; bytes: number };
+  /** matches where the target picked another reading (literal, table slot or address) of some operand */
+  other: { matches: number; bytes: number; operands: number; byKind: Record<string, number> };
+  /** matches where the target picked which copy of identical string or read-only bytes an operand names, or which of
    *  the table slots holding one function */
-  copy: { claims: number; bytes: number; operands: number };
+  copy: { matches: number; bytes: number; operands: number };
 }
 
 export function readingKind(reading: string): string {
@@ -841,9 +842,9 @@ export function readingKind(reading: string): string {
 export function readingMeterOf(manifest: SplatManifest, chosen: ReadonlyMap<number, readonly Chosen[]>): ReadingMeter {
   const size = new Map(manifest.functions.map((f) => [f.index, f.size]));
   const out: ReadingMeter = {
-    preferred: { claims: 0, bytes: 0 },
-    other: { claims: 0, bytes: 0, operands: 0, byKind: {} },
-    copy: { claims: 0, bytes: 0, operands: 0 },
+    preferred: { matches: 0, bytes: 0 },
+    other: { matches: 0, bytes: 0, operands: 0, byKind: {} },
+    copy: { matches: 0, bytes: 0, operands: 0 },
   };
   for (const [t, list] of chosen) {
     const copies = list.filter((c) => readingKind(c.reading) === 'copy');
@@ -855,47 +856,47 @@ export function readingMeterOf(manifest: SplatManifest, chosen: ReadonlyMap<numb
       out.other.byKind[k] = (out.other.byKind[k] ?? 0) + 1;
     }
     const into = copies.length > 0 ? out.copy : others.length > 0 ? out.other : out.preferred;
-    into.claims++;
+    into.matches++;
     into.bytes += size.get(t) ?? 0;
   }
   return out;
 }
 
-export function meterOf(manifest: SplatManifest, claimed: ReadonlySet<number>): ComponentMeter[] {
+export function meterOf(manifest: SplatManifest, matched: ReadonlySet<number>): ComponentMeter[] {
   const by = new Map<string, ComponentMeter>();
   for (const f of manifest.functions) {
-    const c = by.get(f.group) ?? { group: f.group, functions: 0, claimed: 0, bytes: 0, claimedBytes: 0 };
+    const c = by.get(f.group) ?? { group: f.group, functions: 0, matched: 0, bytes: 0, matchedBytes: 0 };
     c.functions++;
     c.bytes += f.size;
-    if (claimed.has(f.index)) {
-      c.claimed++;
-      c.claimedBytes += f.size;
+    if (matched.has(f.index)) {
+      c.matched++;
+      c.matchedBytes += f.size;
     }
     by.set(f.group, c);
   }
   return [...by.values()].sort(
-    (a, b) => b.claimedBytes - a.claimedBytes || b.bytes - a.bytes || a.group.localeCompare(b.group),
+    (a, b) => b.matchedBytes - a.matchedBytes || b.bytes - a.bytes || a.group.localeCompare(b.group),
   );
 }
 
-export class ClaimsFailed extends Error {
-  constructor(readonly failures: ClaimFailure[]) {
+export class MatchesFailed extends Error {
+  constructor(readonly failures: MatchFailure[]) {
     super(
-      `${failures.length} claimed function${failures.length === 1 ? '' : 's'} no longer verif${failures.length === 1 ? 'ies' : 'y'}:\n${failures
-        .map((f) => `  line ${f.claim.line}: ${f.message}`)
+      `${failures.length} matched function${failures.length === 1 ? '' : 's'} no longer verif${failures.length === 1 ? 'ies' : 'y'}:\n${failures
+        .map((f) => `  line ${f.match.line}: ${f.message}`)
         .join('\n')}`,
     );
   }
 }
 
-/** Assemble the split with our re-pointed bytes for every claim; throws (ClaimsFailed) when any claim does not
+/** Assemble the split with our re-pointed bytes for every match; throws (MatchesFailed) when any match does not
  *  verify, and when the module is not `expectSha256`. */
-export function buildSplat(maps: SymbolMaps, dir: string, claims: readonly Claim[], expectSha256: string): BuildResult {
+export function buildSplat(maps: SymbolMaps, dir: string, matches: readonly ListedMatch[], expectSha256: string): BuildResult {
   const manifest = readManifest(dir);
   const bodies = readPieceBodies(dir, manifest);
-  const { substitutes, chosen, failures } = verifyClaims(withClaims(maps, claims), manifest, bodies, claims);
+  const { substitutes, chosen, failures } = verifyMatches(withMatches(maps, matches), manifest, bodies, matches);
   if (failures.length > 0) {
-    throw new ClaimsFailed(failures);
+    throw new MatchesFailed(failures);
   }
   const assembled = assembleSplit(dir, substitutes);
   if (assembled.substituted.length > 0) {
@@ -904,15 +905,15 @@ export function buildSplat(maps: SymbolMaps, dir: string, claims: readonly Claim
   if (assembled.sha256 !== expectSha256) {
     throw new Error(`the assembled module is sha256 ${assembled.sha256}, not ${expectSha256}`);
   }
-  const claimedSet = new Set(substitutes.keys());
-  const meter = meterOf(manifest, claimedSet);
+  const matchedSet = new Set(substitutes.keys());
+  const meter = meterOf(manifest, matchedSet);
   const sum = (k: keyof ComponentMeter): number => meter.reduce((n, c) => n + (c[k] as number), 0);
   return {
     assembled,
     meter,
     readings: readingMeterOf(manifest, chosen),
-    claimed: sum('claimed'),
-    claimedBytes: sum('claimedBytes'),
+    matched: sum('matched'),
+    matchedBytes: sum('matchedBytes'),
     functions: sum('functions'),
     bytes: sum('bytes'),
   };

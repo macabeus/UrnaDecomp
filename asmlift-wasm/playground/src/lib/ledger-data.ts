@@ -1,6 +1,6 @@
 // The shape of public/data/ledger.json, written by scripts/data.ts. Per-function arrays are indexed
 // by `index - first`; strings repeat often, so they are ids into the tables.
-import type { MatchKind } from '@asmlift/wasm-benchmark/schema';
+import type { PairKind } from '@asmlift/wasm-benchmark/schema';
 
 export interface LedgerData {
   /** the first defined function's index (imports come first) */
@@ -9,7 +9,7 @@ export interface LedgerData {
   components: string[];
   owners: string[];
   evidence: string[];
-  /** the candidate modules a best match was found in (`skeleton`, `probe`) */
+  /** the candidate modules a best pair was found in (`skeleton`, `probe`) */
   labels: string[];
   /** func-attribution.tsv's component per function, an id into `components` ('-' when none) */
   component: number[];
@@ -22,7 +22,7 @@ export interface LedgerData {
   /** index → the name of a shape pairing, which the lifter does not use */
   shapeNames: Record<string, string>;
   /** index → [kind, label id, the paired function's index, score] */
-  best: Record<string, [MatchKind, number, number, number]>;
+  best: Record<string, [PairKind, number, number, number]>;
   /** demangled → mangled, for the names above that a build lists */
   mangled: Record<string, string>;
   /** [addr, len, enc, text] of every ledger string a function's `i32.const` points into */

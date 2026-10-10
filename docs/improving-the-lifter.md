@@ -9,7 +9,7 @@ the benchmark compiles in the image.
 
 A lifted file is a draft that a person or an agent rewrites into the original source
 ([how-to-decompile.md](how-to-decompile.md) step 3). It is never committed under `src/`. Lifter work therefore does
-not move the official meter: claims come only from C++ that lands in `src/` and verifies in the splat build. A
+not move the official meter: matches come only from C++ that lands in `src/` and verifies in the splat build. A
 better lifter shortens the work between a target function and that C++.
 
 That work has two parts, and the lifter serves both:
@@ -25,8 +25,9 @@ That work has two parts, and the lifter serves both:
 
 The two pull apart in one place. To reach the target's shape the lifter adds workarounds that no source had:
 `volatile` stores, empty `asm` barriers (`KEEP_IN_ARM()`, the escape at entry), `goto`
-([asmlift-wasm/README.md](../asmlift-wasm/README.md) "lift" explains each). The benchmark counts a structure match
-that relies on them, and the how-to tells the reader to strip them. So judge a change by both:
+([asmlift-wasm/README.md](../asmlift-wasm/README.md) "lift" explains each). The benchmark counts an `exact` outcome
+(structurally equal after normalisation) that relies on them, and the how-to tells the reader to strip them. So
+judge a change by both:
 
 - a change that lowers `-Oz` ratios without adding a workaround is an improvement;
 - a change that removes a workaround, or replaces one with source-like C++, without raising the ratios is an

@@ -62,7 +62,7 @@ flag as `docs/reference/facts/app-flags.md §F5`.
   changes the link. When several people or agents land units at the same time, each takes its number before it
   starts: in a run of several agents the coordinator hands them out (`docs/agents.md`), and otherwise the
   number is said in the pull request or issue that announces the work. Whoever lands second has a link the first
-  never measured: it runs link, census, symbols, claim and the splat build again on top of the first
+  never measured: it runs link, census, symbols, match and the splat build again on top of the first
   (`docs/how-to-decompile.md` step 10, "Landing onto a moved main").
 - `<component>` is the `src/` tree the sources live in: `ecourna` or `uenux2`.
 - `<what>` is the source directory the unit's files share, with `/` as `-` (`api-security`, `app-dados-midias`), or
@@ -119,7 +119,7 @@ their own bodies are not the target's.
 virtual member, and it needs every virtual member defined, including the ones not reconstructed yet.
 `14-uenux2-ctextfieldmultiline-pending.cpp` defines those with a body of `__builtin_trap()`: the class links and
 the reconstructed constructor can be measured, and a trapping body (one `unreachable`) cannot pass for the target's
-code, so no claim can land on it. It compiles with the unit's own flags, as the real members will, through a
+code, so no match can land on it. It compiles with the unit's own flags, as the real members will, through a
 rule of its own in the fragment (it is not in `ECOURNA_SRCS`) that is added to `EXTRA_OBJS`. Each member
 moves into the class's real source when it is reconstructed, and the file and its rule go with the last one.
 
@@ -134,9 +134,9 @@ waits for. To try a candidate with its pending file before the fragment exists, 
 `12-ecourna-api-sql-sqlite-externs.cpp` holds `CStringUtils::ToLower` and `Replace`, reconstructed from their target
 functions (5158, 1879, 9398) and compiled with the ecourna flags (listed in `ECOURNA_SRCS` as `../units/…`). Unlike a
 pending member, an extern is a real reconstruction; it moves into the owning source (`api/util/cstringutils.cpp`)
-when that unit lands. None of the three is claimed: none is a function of its own in our plain link
+when that unit lands. None of the three is matched: none is a function of its own in our plain link
 (`build/out/wasm-map/vota_web/names.tsv` has no `ToLower` or `Replace`), so the scan lists them as `no-candidate`,
-and 5158 and 1879 still have stubs in `src/ecourna/unplaced.cpp`. Claiming them needs callers that keep their
+and 5158 and 1879 still have stubs in `src/ecourna/unplaced.cpp`. Matching them needs callers that keep their
 bodies, not new code.
 
 ## Landing a unit
@@ -150,7 +150,7 @@ bodies, not new code.
 3. Add a roots file if nothing in the skeleton calls the unit, following the shapes above, and a pending file if
    the class's vtable needs members you have not written.
 4. Add the fragment's row to the table under "Names".
-5. Link, census, symbols, claim and build, in the order and with the reasons `docs/how-to-decompile.md` steps 6 to
+5. Link, census, symbols, match and build, in the order and with the reasons `docs/how-to-decompile.md` steps 6 to
    10 give, and commit the fragment, its companions and its table row with them.
 
 ## Switches

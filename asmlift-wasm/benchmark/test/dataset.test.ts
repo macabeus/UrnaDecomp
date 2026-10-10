@@ -146,7 +146,7 @@ describe.skipIf(!hasImage)('buildRow', () => {
     });
   });
 
-  it('refuses a function no setup can claim', () => {
+  it('refuses a function no setup covers', () => {
     const ctx = loadContext({ image: IMAGE });
     const orphan = [...ctx.ledger.values()].find(
       (r) => r.best === null && r.component === '-' && ctx.m.funcs[r.index - ctx.m.importedFuncCount].size > 8,

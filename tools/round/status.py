@@ -1,11 +1,11 @@
 """Write the progress numbers into README.md and docs/status.md from the committed scan.
 
     python3 -I -B tools/round/status.py           # rewrite the generated blocks (make -C src status)
-    python3 -I -B tools/round/status.py --check   # exit 1 when a block or the scan disagrees with the claims (CI)
+    python3 -I -B tools/round/status.py --check   # exit 1 when a block or the scan disagrees with the matches (CI)
 
-Inputs, all tracked: splat/matched.txt (the claims), splat/scan.tsv (the verdict of every target function, written by
-`make -C src splat-scan` and `splat-claim`) and target/vota_web_wasm.wasm (for byte-identical twins). The scan's
-`match` rows are exactly the claims when splat-claim wrote it, so its sums are the splat build's meter.
+Inputs, all tracked: splat/matched.txt (the match list), splat/scan.tsv (the verdict of every target function, written
+by `make -C src splat-scan` and `splat-match`) and target/vota_web_wasm.wasm (for byte-identical twins). The scan's
+`match` rows are exactly the matches when splat-match wrote it, so its sums are the splat build's meter.
 
 Each generated block sits between `<!-- status:NAME -->` and `<!-- /status:NAME -->`; text outside the markers is
 hand-written and kept.
@@ -17,7 +17,7 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-CLAIMS = os.path.join(ROOT, 'splat', 'matched.txt')
+MATCHES = os.path.join(ROOT, 'splat', 'matched.txt')
 SCAN = os.path.join(ROOT, 'splat', 'scan.tsv')
 TARGET = os.path.join(ROOT, 'target', 'vota_web_wasm.wasm')
 README = os.path.join(ROOT, 'README.md')
@@ -38,9 +38,9 @@ TSE_OTHER = [
 TSE = [c for c, _ in UENUX2 + TSE_OTHER]
 NOT_ATTRIBUTED = ['unknown', 'app']
 VERDICTS = [
-    ('match', 'claimed'),
+    ('match', 'matched'),
     ('differs', 'our link has a candidate body and it differs; `detail` names the first difference. '
-                'These are the closest to a claim.'),
+                'These are the closest to a match.'),
     ('unresolved', 'an operand of our body has no counterpart in the target: a callee the symbol file maps to no '
                    'target function (such as our roots stand-in or a `byn$mgfn-shared$` thunk), or a data name only '
                    'this function voted for (*self-voted*)'),
@@ -57,9 +57,9 @@ def pct(a, b):
     return f'{100 * a / b:.2f}%' if b else '0.00%'
 
 
-def read_claims():
+def read_matches():
     out = []
-    with open(CLAIMS, encoding='utf-8') as f:
+    with open(MATCHES, encoding='utf-8') as f:
         for line in f:
             line = line.split('#', 1)[0].strip()
             if line:
@@ -181,7 +181,7 @@ def total(t, groups):
     return s
 
 
-def blocks(rows, claims):
+def blocks(rows, listed):
     t = tally(rows)
     libs = sorted((g for g in t if g not in TSE and g not in NOT_ATTRIBUTED), key=lambda g: (-t[g][0], g))
     every = total(t, list(t))
@@ -190,12 +190,12 @@ def blocks(rows, claims):
     out = {}
 
     out['readme'] = '\n'.join([
-        f'**{n(every[0])} of {n(every[1])} target functions claimed ({pct(every[0], every[1])}), '
-        f'{pct(every[2], every[3])} of the code bytes.** Most of these claims are upstream libraries rebuilt from '
+        f'**{n(every[0])} of {n(every[1])} target functions matched ({pct(every[0], every[1])}), '
+        f'{pct(every[2], every[3])} of the code bytes.** Most of these matches are upstream libraries rebuilt from '
         f"their own sources. TSE's own code, which this project exists to recover, is {n(tse[0])} of {n(tse[1])} "
-        f'functions claimed: {pct(tse[2], tse[3])} of its code bytes.',
+        f'functions matched: {pct(tse[2], tse[3])} of its code bytes.',
         '',
-        '| origin | components | functions claimed | code bytes claimed |',
+        '| origin | components | functions matched | code bytes matched |',
         '| --- | --- | ---: | ---: |',
         f'| TSE code: uenux2 | {code(c for c, _ in UENUX2)} | {n(ue[0])} / {n(ue[1])} | {pct(ue[2], ue[3])} |',
         f'| TSE code: ecourna | `ecourna` | {n(t["ecourna"][0])} / {n(t["ecourna"][1])} | '
@@ -209,7 +209,7 @@ def blocks(rows, claims):
         f'| not attributed | `app`, `unknown` | {n(na[0])} / {n(na[1])} | {pct(na[2], na[3])} |',
     ])
 
-    out['headline'] = (f'**{n(every[0])} of {n(every[1])} functions claimed ({pct(every[0], every[1])}), '
+    out['headline'] = (f'**{n(every[0])} of {n(every[1])} functions matched ({pct(every[0], every[1])}), '
                        f'{n(every[2])} of {n(every[3])} code bytes ({pct(every[2], every[3])}).**')
 
     def cells(c, bold=False):
@@ -242,7 +242,7 @@ def blocks(rows, claims):
             c[0] += r['verdict'] == 'match'
     order = sorted(by, key=lambda o: (o == 'no candidate in our link', -sum(v[1] for v in by[o].values()), o))
     out['unattributed-origin'] = '\n'.join(
-        ['| our candidate is compiled from | `unknown` claimed / total | `app` claimed / total |', '| --- | ---: | ---: |']
+        ['| our candidate is compiled from | `unknown` matched / total | `app` matched / total |', '| --- | ---: | ---: |']
         + [f'| {o} | {n(by[o]["unknown"][0])} / {n(by[o]["unknown"][1])} | {n(by[o]["app"][0])} / {n(by[o]["app"][1])} |'
            for o in order])
 
@@ -259,10 +259,10 @@ def blocks(rows, claims):
 
     bodies = target_bodies()
     seen = collections.Counter(hashlib.sha256(b).digest() for b in bodies.values())
-    claimed = set(claims)
-    small = sum(1 for r in rows if r['index'] in claimed and r['size'] <= 8)
-    twins = sum(1 for i in claimed if seen[hashlib.sha256(bodies[i]).digest()] > 1)
-    out['twins'] = (f'{n(small)} claims are bodies of 8 B or less, and {n(twins)} claims have a byte-identical twin in '
+    matched = set(listed)
+    small = sum(1 for r in rows if r['index'] in matched and r['size'] <= 8)
+    twins = sum(1 for i in matched if seen[hashlib.sha256(bodies[i]).digest()] > 1)
+    out['twins'] = (f'{n(small)} matches are bodies of 8 B or less, and {n(twins)} matches have a byte-identical twin in '
                     'the target.')
 
     tiers = collections.defaultdict(collections.Counter)
@@ -293,16 +293,16 @@ def main(argv):
     check = argv[1:] == ['--check']
     if argv[1:] not in ([], ['--check']):
         raise SystemExit(__doc__)
-    claims = read_claims()
+    listed = read_matches()
     rows = read_scan()
     problems = []
     matches = sorted(r['index'] for r in rows if r['verdict'] == 'match')
-    if matches != sorted(claims):
-        extra = sorted(set(matches) - set(claims))[:5]
-        missing = sorted(set(claims) - set(matches))[:5]
-        problems.append(f'splat/scan.tsv has {len(matches)} match rows but splat/matched.txt has {len(claims)} claims '
-                        f'(scan only: {extra}, claims only: {missing}); run TMPDIR=/tmp make -C src splat-claim')
-    generated = blocks(rows, claims)
+    if matches != sorted(listed):
+        extra = sorted(set(matches) - set(listed))[:5]
+        missing = sorted(set(listed) - set(matches))[:5]
+        problems.append(f'splat/scan.tsv has {len(matches)} match rows but splat/matched.txt has {len(listed)} matches '
+                        f'(scan only: {extra}, matched.txt only: {missing}); run TMPDIR=/tmp make -C src splat-match')
+    generated = blocks(rows, listed)
     for path, (old, new) in [(p, substitute(p, generated)) for p in (README, STATUS)]:
         if old != new:
             if check:
@@ -314,7 +314,7 @@ def main(argv):
     for p in problems:
         print(p, file=sys.stderr)
     if not problems:
-        print(f'{len(claims)} claims; README.md and docs/status.md agree with splat/scan.tsv')
+        print(f'{len(listed)} matches; README.md and docs/status.md agree with splat/scan.tsv')
     return 1 if problems else 0
 
 

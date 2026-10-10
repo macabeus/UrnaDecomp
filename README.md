@@ -15,9 +15,9 @@ The project is not affiliated with the TSE.
 ## Status
 
 <!-- status:readme -->
-**7,211 of 14,343 target functions claimed (50.28%), 35.96% of the code bytes.** Most of these claims are upstream libraries rebuilt from their own sources. TSE's own code, which this project exists to recover, is 372 of 3,285 functions claimed: 3.14% of its code bytes.
+**7,211 of 14,343 target functions matched (50.28%), 35.96% of the code bytes.** Most of these matches are upstream libraries rebuilt from their own sources. TSE's own code, which this project exists to recover, is 372 of 3,285 functions matched: 3.14% of its code bytes.
 
-| origin | components | functions claimed | code bytes claimed |
+| origin | components | functions matched | code bytes matched |
 | --- | --- | ---: | ---: |
 | TSE code: uenux2 | `vota`, `comum`, `api`, `simulador`, `vota-web` | 71 / 2,050 | 0.74% |
 | TSE code: ecourna | `ecourna` | 128 / 799 | 5.81% |
@@ -28,8 +28,8 @@ The project is not affiliated with the TSE.
 | not attributed | `app`, `unknown` | 1,326 / 2,759 | 37.31% |
 <!-- /status:readme -->
 
-A claim is a line of `splat/matched.txt` that `TMPDIR=/tmp make -C src splat` verifies on every run; it is the only
-progress number this project reports. The table is written by `make -C src status` from the committed scan
+A match is a line of `splat/matched.txt` that `TMPDIR=/tmp make -C src splat` verifies on every run; their count is
+the only progress number this project reports. The table is written by `make -C src status` from the committed scan
 `splat/scan.tsv`, and CI checks it.
 
 A component records which part of the program calls a function, not which library its code came from
@@ -52,9 +52,9 @@ TMPDIR=/tmp make -C src splat    # must print sha256 8579ef8d…1007e2 and the m
 `TMPDIR=/tmp` is needed on macOS: docker cannot mount the default `/var/folders` temp directory.
 
 [docs/how-to-decompile.md](docs/how-to-decompile.md) then walks one function from the work list
-(`splat/scan.tsv`) to a claim. With Claude Code, the `/decompile-functions` command
+(`splat/scan.tsv`) to a match. With Claude Code, the `/decompile-functions` command
 ([.claude/commands/decompile-functions.md](.claude/commands/decompile-functions.md)) runs a whole round: it picks
-functions, matches each in its own worktree, has every claim verified by a second agent, lands them on `main`, and
+functions, matches each in its own worktree, has every match verified by a second agent, lands them on `main`, and
 turns each point where the docs misled into a doc fix.
 
 ## Repository map
@@ -68,7 +68,7 @@ turns each point where the docs misled into a doc fix.
 | `src/app/`, `src/web/` | stand-ins: the exported entry points as stubs, the roots that keep the libraries linked, the app's JS library and its EM_JS shim |
 | `src/Makefile`, `src/mk/` | the build: compile flags per component, the link order, the library targets, the splat rules |
 | `src/units/` | one Makefile fragment per landed unit, named by content (`src/units/README.md`) |
-| `splat/` | the claim list `matched.txt`, the scan `scan.tsv` (every target function's verdict: the work list) and the target's symbol file `symbol_addrs.txt`, all written by the splat tools |
+| `splat/` | the match list `matched.txt`, the scan `scan.tsv` (every target function's verdict: the work list) and the target's symbol file `symbol_addrs.txt`, all written by the splat tools |
 | `ledger/` | what the project knows about the target, as data: strings, classes, vtables, call graph, attribution, per-function census state (`ledger/README.md`) |
 | `tools/` | every script: `setup/`, `extract/` (reading the target), `round/` (the decompile loop), `linkorder/`, `libs/` (pinning each upstream library); `tools/README.md` describes each file |
 | `build/` | the toolchain pin: `Dockerfile`, `docker-build.sh` and the link-line probe (`build/README.md`); its `out/` and `dump/` are generated and ignored |
@@ -98,14 +98,17 @@ pnpm test && pnpm typecheck
   from each compile setup in the module, compiled at that setup's flags and scored raw and after `-Oz`. Run
   `pnpm bench run` before and after a lifter change and put `pnpm bench diff` in the pull request (`asmlift-wasm/benchmark/README.md`;
   [docs/improving-the-lifter.md](docs/improving-the-lifter.md) says what to optimise and lists the known gaps).
-- **Playground.** `asmlift-wasm/playground/` is a web app that shows any target function's WAT, readout and lifted
-  C++, computed in the browser, with the commands to try it filled in, and the benchmark's runs
-  (`pnpm playground`; `asmlift-wasm/playground/README.md`).
+- **Playground.** `asmlift-wasm/playground/` is a web app with four pages: the decompilation progress (waffles from
+  origins down to single functions, and the matches over time), any target function's WAT, readout and lifted C++,
+  computed in the browser, with the commands to try it filled in, the benchmark's runs, and a link to
+  [UrnaEmu](https://eleicoes.rlaneth.com/urnaemu/), the emulator that runs the same module (`pnpm playground`;
+  `asmlift-wasm/playground/README.md`). `.github/workflows/pages.yml` deploys it to GitHub Pages on every push to
+  `main`.
 
 ## Where next
 
-- [docs/README.md](docs/README.md): every document, what it covers and whether it is current.
-- [docs/glossary.md](docs/glossary.md): the project's words, from TSE and uenux2 to claim, twin and mgfn.
+- [docs/README.md](docs/README.md): every document, what it covers and how far to trust it.
+- [docs/glossary.md](docs/glossary.md): the project's words, from TSE and uenux2 to match, twin and mgfn.
 - [docs/improving-the-lifter.md](docs/improving-the-lifter.md): working on the decompiler itself.
 - [docs/reference/splat.md](docs/reference/splat.md): how the splat build re-points and checks a function.
 - [docs/reference/include-asm.md](docs/reference/include-asm.md): why there is no `INCLUDE_ASM`, and stubs instead.

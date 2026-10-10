@@ -5,9 +5,9 @@ from the repository root:
 
 | step | what it checks |
 | --- | --- |
-| `python3 -I -B tools/round/status.py --check` | the committed scan `splat/scan.tsv` matches exactly the claims in `splat/matched.txt`, and every generated block in `README.md` and `docs/status.md` is what that scan gives (`docs/status.md` "Regenerating this page") |
+| `python3 -I -B tools/round/status.py --check` | the committed scan `splat/scan.tsv` has a `match` verdict for exactly the functions in `splat/matched.txt`, and every generated block in `README.md` and `docs/status.md` is what that scan gives (`docs/status.md` "Regenerating this page") |
 | `python3 -I -B tools/round/check_encoding.py` | every tracked file `.editorconfig` declares Latin-1 (TSE's sources) has not been re-saved as UTF-8 |
-| `python3 -I -B tools/round/stubs.py --check` | every unclaimed TSE function with no code of ours has exactly one stub, in the file and at the place its evidence gives, with the text the generator derives, and no other function has one (`src/README.md` "Stubs"); every run of 3 or more blank lines that holds code at its original lines is a gap comment and `#line`, each the generator's ("Gaps") |
+| `python3 -I -B tools/round/stubs.py --check` | every unmatched TSE function with no code of ours has exactly one stub, in the file and at the place its evidence gives, with the text the generator derives, and no other function has one (`src/README.md` "Stubs"); every run of 3 or more blank lines that holds code at its original lines is a gap comment and `#line`, each the generator's ("Gaps") |
 
 Its `asmlift-wasm` job runs, in `asmlift-wasm/`:
 
@@ -25,6 +25,15 @@ Every check runs even when an earlier one failed. The setup check and the benchm
 `make -n` over `src/Makefile`'s objects, and the zlib rules need zlib's sources, so the job first clones
 zlib 1.3.1 into `third_party/zlib`. No other library is fetched. It also installs wabt 1.0.42's release
 build: the toolkit's parser, decoder and splat tests compare against its `wasm-objdump` and `wasm-validate`.
+
+## Deployment
+
+`workflows/pages.yml` runs on every push to `main` (and by hand, `workflow_dispatch`). It builds the web app of
+`asmlift-wasm/playground/` with `pnpm playground:build` and deploys `playground/dist/` to GitHub Pages. The app's
+data is made in that build from the committed files, so the deployed Progress page is the pushed commit's meter.
+The checkout is a full clone, because the Progress page's history reads `splat/matched.txt` at every commit of
+`main` that changed it; a shallow clone builds too, with fewer points. The repository's Pages source must be
+"GitHub Actions" (Settings → Pages). The deployment does not wait for `ci.yml`.
 
 ## Skipped tests
 
@@ -57,7 +66,7 @@ setups print as `unverified`.
   fragment or a flag is checked only by running the two make targets locally.
 - **The tests gated on the image or on `build/out/`.** They skip, as the table above lists. So CI does
   not check that lifted code compiles with em++, the ranking of candidates, the benchmark's compile and
-  score run, or the splat claim verifier.
+  score run, or the splat build's verification of the matches.
 - **The source_location check**, `make -C src check-srcloc`: it reads the records out of the app objects, which
   only the C++ build writes. The stub check above guarantees that stubs take no line of code, not that a
   decompiled function's throw sites sit at their recorded lines; run the make target after a link.

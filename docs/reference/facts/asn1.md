@@ -27,7 +27,7 @@ pnpm --filter @asmlift/wasm exec tsx tools/libs/census_subset.ts target/vota_web
     build/out/asn1/up-Os/probe.wasm tools/libs/cls2.json asn1 --depth 0
 ```
 
-| level | matched (fingerprint / shape / byte-exact) | bytes |
+| level | paired (fingerprint / shape / byte-exact) | bytes |
 | --- | --- | --- |
 | **-Os** | **125** (96 / 29 / 17) | 13,272 / 46,914 (28.3 %) |
 | -O2 | 72 (53 / 19 / 15) | 5,259 (11.2 %) |
@@ -35,13 +35,13 @@ pnpm --filter @asmlift/wasm exec tsx tools/libs/census_subset.ts target/vota_web
 | -Oz | 66 (60 / 6 / 13) | 3,891 (8.3 %) |
 | -O1 | 50 (40 / 10 / 13) | 2,045 (4.4 %) |
 
-The -Os matches are large upstream bodies, not accessors: `PERDecoder::do_visit(CHOICE&)` 393 B,
+The -Os pairs are large upstream bodies, not accessors: `PERDecoder::do_visit(CHOICE&)` 393 B,
 `AVNEncoder::do_visit(BIT_STRING)` 482 B, `OBJECT_IDENTIFIER::encodeCommon` 360 B; `BERDecoder::do_visit(INTEGER&)`
 scores 45 rows against the -O3 body, 46 against -Oz, 0 against -Os.
 
 ## A2. … and without exceptions
 
-`tools/libs/asn1/build.sh up-Os-noexc -Os -fno-exceptions` → 157 matched (126 / 31 / 18), 19,560 B (41.7 %),
+`tools/libs/asn1/build.sh up-Os-noexc -Os -fno-exceptions` → 157 paired (126 / 31 / 18), 19,560 B (41.7 %),
 against 125 / 28.3 % for -Os alone. What `-fno-exceptions` buys: every call under an owning local loses its
 landing pad (`BERDecoder::do_visit(SEQUENCE_OF_Base&)` 291 B goes from 54 rows to 0: the `asn_ptr<AbstractData>`
 around `accept()` emits no `invoke_iii` + `__cxa_find_matching_catch_2`).

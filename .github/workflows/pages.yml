@@ -1,0 +1,67 @@
+# Builds the web app of asmlift-wasm/playground (Progress, Playground and Benchmark) from the pushed commit and
+# deploys it to GitHub Pages. Its data is made at build time from the committed files: the target module, the
+# ledger, splat/scan.tsv and the history of splat/matched.txt (hence the full clone), and the benchmark results.
+# .github/CI.md has the longer form.
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# one deployment at a time, and a newer push waits for the running one instead of cancelling it mid-deploy
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: asmlift-wasm
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # the Progress page's history reads splat/matched.txt at every commit of main that changed it
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: asmlift-wasm/package.json
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: asmlift-wasm/pnpm-lock.yaml
+
+      - run: pnpm install --frozen-lockfile
+
+      # prepares public/data/ (c++filt, from the runner's binutils, demangles the scan's symbols), typechecks and
+      # bundles into playground/dist/
+      - run: pnpm playground:build
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: asmlift-wasm/playground/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

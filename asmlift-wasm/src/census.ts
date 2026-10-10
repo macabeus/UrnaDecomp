@@ -1,8 +1,8 @@
-// Match every function of module A to module B: by exact fingerprint, then address-blind, then by
+// Pair every function of module A with one of module B: by exact fingerprint, then address-blind, then by
 // shape (normalize.ts defines the three; a pair is tagged with the first tier that joined it). Each
 // hash may name several functions (identical bodies are common: thunks, destructors); those are
-// paired by count, so an A hash held by 3 functions and a B hash held by 2 yields 2 matches and
-// 1 unmatched. The size histogram buckets a function by the floor of log2 of its body size.
+// paired by count, so an A hash held by 3 functions and a B hash held by 2 yields 2 pairs and
+// 1 unpaired. The size histogram buckets a function by the floor of log2 of its body size.
 import type { NormalizedFn } from './normalize';
 import type { Module } from './parse';
 
@@ -17,9 +17,9 @@ export interface Pair {
 
 export interface Census {
   pairs: Pair[];
-  unmatchedA: number[];
-  unmatchedB: number[];
-  /** histogram rows: bucket label, functions of A in it, how many of those matched per tier */
+  unpairedA: number[];
+  unpairedB: number[];
+  /** histogram rows: bucket label, functions of A in it, how many of those paired per tier */
   histogram: {
     bucket: string;
     total: number;
@@ -27,7 +27,7 @@ export interface Census {
     byAddr: number;
     byShape: number;
     bytes: number;
-    matchedBytes: number;
+    pairedBytes: number;
   }[];
   counts: { a: number; b: number; byFingerprint: number; byAddr: number; byShape: number };
 }
@@ -119,7 +119,7 @@ export function census(a: Module, na: CensusFn[], b: Module, nb: CensusFn[]): Ce
         byAddr: 0,
         byShape: 0,
         bytes: 0,
-        matchedBytes: 0,
+        pairedBytes: 0,
       };
       buckets.set(k, row);
     }
@@ -127,7 +127,7 @@ export function census(a: Module, na: CensusFn[], b: Module, nb: CensusFn[]): Ce
     row.bytes += fn.size;
     const p = byA.get(fn.index);
     if (p !== undefined) {
-      row.matchedBytes += fn.size;
+      row.pairedBytes += fn.size;
       if (p.by === 'fingerprint') {
         row.byFingerprint++;
       } else if (p.by === 'addr') {
@@ -141,8 +141,8 @@ export function census(a: Module, na: CensusFn[], b: Module, nb: CensusFn[]): Ce
   void b;
   return {
     pairs,
-    unmatchedA: [...leftA].sort((x, y) => x - y),
-    unmatchedB: [...leftB].sort((x, y) => x - y),
+    unpairedA: [...leftA].sort((x, y) => x - y),
+    unpairedB: [...leftB].sort((x, y) => x - y),
     histogram,
     counts: {
       a: na.length,
@@ -155,7 +155,7 @@ export function census(a: Module, na: CensusFn[], b: Module, nb: CensusFn[]): Ce
 }
 
 export interface RenderCensusOptions {
-  listUnmatched?: number;
+  listUnpaired?: number;
   /** list every pair as `a b tier [size] [name of b]` */
   listPairs?: boolean;
   nameB?: (index: number) => string | undefined;
@@ -165,15 +165,15 @@ export interface RenderCensusOptions {
 export function renderCensus(c: Census, opts: RenderCensusOptions = {}): string {
   const lines: string[] = [];
   lines.push(
-    `A: ${c.counts.a} functions, B: ${c.counts.b}. Matched ${c.counts.byFingerprint} by fingerprint + ${c.counts.byAddr} by addr + ${c.counts.byShape} by shape = ${c.pairs.length}; unmatched A ${c.unmatchedA.length}, B ${c.unmatchedB.length}.`,
+    `A: ${c.counts.a} functions, B: ${c.counts.b}. Paired ${c.counts.byFingerprint} by fingerprint + ${c.counts.byAddr} by addr + ${c.counts.byShape} by shape = ${c.pairs.length}; unmatched A ${c.unpairedA.length}, B ${c.unpairedB.length}.`,
   );
   lines.push('');
   lines.push(
-    `${'size bucket'.padEnd(18)} ${'fns'.padStart(6)} ${'fp'.padStart(6)} ${'addr'.padStart(6)} ${'shape'.padStart(6)} ${'unmatched'.padStart(9)} ${'bytes'.padStart(9)} ${'matched%'.padStart(8)}`,
+    `${'size bucket'.padEnd(18)} ${'fns'.padStart(6)} ${'fp'.padStart(6)} ${'addr'.padStart(6)} ${'shape'.padStart(6)} ${'unpaired'.padStart(9)} ${'bytes'.padStart(9)} ${'matched%'.padStart(8)}`,
   );
   for (const r of c.histogram) {
     const un = r.total - r.byFingerprint - r.byAddr - r.byShape;
-    const pct = r.bytes === 0 ? 0 : (100 * r.matchedBytes) / r.bytes;
+    const pct = r.bytes === 0 ? 0 : (100 * r.pairedBytes) / r.bytes;
     lines.push(
       `${r.bucket.padEnd(18)} ${String(r.total).padStart(6)} ${String(r.byFingerprint).padStart(6)} ${String(r.byAddr).padStart(6)} ${String(r.byShape).padStart(6)} ${String(un).padStart(9)} ${String(r.bytes).padStart(9)} ${pct.toFixed(1).padStart(8)}`,
     );
@@ -187,16 +187,16 @@ export function renderCensus(c: Census, opts: RenderCensusOptions = {}): string 
       );
     }
   }
-  const limit = opts.listUnmatched ?? 40;
-  if (c.unmatchedA.length > 0) {
+  const limit = opts.listUnpaired ?? 40;
+  if (c.unpairedA.length > 0) {
     lines.push('');
     lines.push(
-      `unmatched in A (first ${Math.min(limit, c.unmatchedA.length)}): ${c.unmatchedA.slice(0, limit).join(' ')}`,
+      `unpaired in A (first ${Math.min(limit, c.unpairedA.length)}): ${c.unpairedA.slice(0, limit).join(' ')}`,
     );
   }
-  if (c.unmatchedB.length > 0) {
+  if (c.unpairedB.length > 0) {
     lines.push(
-      `unmatched in B (first ${Math.min(limit, c.unmatchedB.length)}): ${c.unmatchedB.slice(0, limit).join(' ')}`,
+      `unpaired in B (first ${Math.min(limit, c.unpairedB.length)}): ${c.unpairedB.slice(0, limit).join(' ')}`,
     );
   }
   return lines.join('\n');

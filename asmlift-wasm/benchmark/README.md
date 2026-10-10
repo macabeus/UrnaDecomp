@@ -31,10 +31,10 @@ Docker can mount; nothing goes through `$TMPDIR`.
 
 The ratio is differing rows over target rows. The -Oz score is the one to steer by: the target went
 through wasm-opt and an object did not. Even so, an isolated function misses what the whole-program
-link does to it (inlining, dead-argument removal, data addresses), so **exact here is a structure
-match, never a byte match**: the byte match lives in the splat build (`docs/reference/splat.md`). The steps
-are the toolkit's own `evaluateLift` (`src/lift-eval.ts`); the benchmark adds the rows, their flags,
-and the per-setup accounting.
+link does to it (inlining, dead-argument removal, data addresses), so **exact here means structurally
+equal after normalisation, never byte-identical**: a byte-identical function is a match of the splat
+build (`docs/reference/splat.md`). The steps are the toolkit's own `evaluateLift` (`src/lift-eval.ts`); the
+benchmark adds the rows, their flags, and the per-setup accounting.
 
 ## The compile setups
 
@@ -117,16 +117,16 @@ share it.
 | `component`, `owner` | the ledger's attribution and owner class |
 | `name`, `symbol` | the ledger's name and the linker symbol it resolved to |
 | `features` | read off the target body: `leaf` (no calls), `loop`, `switch` (br_table), `call_indirect`, `invoke` (an `invoke_*` import), `throw` (`__cxa_throw`, `__resumeException`), `frame` (a shadow-stack frame), `alloca`, `inlined-frame` (a second frame: a callee wasm-opt inlined), `i64`, `float`, `bulk-memory`, `select` |
-| `ledger` | the ledger's current match: `kind` (byte, fingerprint, addr, shape, none) and `score` |
+| `ledger` | the ledger's current pair: `kind` (byte, fingerprint, addr, shape, none) and `score` |
 | `evidence`, `object` | `symbol` with the defining object (`<archive>:<member>` for an archive member), or `component` |
 | `reference` | source that reproduces it: a reconstructed unit under `src/` when the ledger pairs it at byte or fingerprint; a library's upstream file in the tree its build compiles (`third_party/…`); `emsdk:<path>` for a system library, from the member's debug info; `line` when one line defines it, numbered as the compiler numbers it (through `#line`, so in a TSE source it is the line of TSE's file: `src/README.md` "Gaps") |
 | `origin` | `selected` or `manual` |
 
-**Selection** is deterministic. A setup's candidates are the target functions it claims with a body
+**Selection** is deterministic. A setup's candidates are the target functions it covers with a body
 of 9 to 8192 bytes (smaller bodies pair positionally among identical twins, so their name is no
 evidence). The size bands take turns, smallest first; each turn takes the band's candidate that adds
 the most features the setup's picks do not cover yet, ties going to symbol evidence, then the stronger
-ledger match, then an FNV-1a hash of the id. The same target, ledger, registry, definitions and sources
+ledger pair, then an FNV-1a hash of the id. The same target, ledger, registry, definitions and sources
 give the same rows.
 
 **The dataset is frozen.** Selection is not re-run as the project moves: a new unit or a census changes
@@ -163,7 +163,7 @@ reason. Fix the row's cause, or retire it deliberately: a re-selection.
 
 **Adding a row**: `pnpm bench add <index>…` builds the row from today's inputs, marks it `manual` and
 keeps it across re-selections; then `pnpm bench run --label baseline` and commit both. A function no
-setup claims is refused with the reason; reconstruct or link its object first. A new setup is a new
+setup covers is refused with the reason; reconstruct or link its object first. A new setup is a new
 entry in `setups.json` with a `truth` the check can re-derive, then a re-selection.
 
 **Updating the references** (a library's source tree or build output moved, the rows did not): `pnpm bench select

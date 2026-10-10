@@ -2,7 +2,7 @@
 
 This report gives what the project knows about the compiler, linker and flags that produced
 `target/vota_web_wasm.wasm` (sha256 `8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2`, 7,713,699 bytes).
-Every claim below was checked by compiling with the pinned toolchain and comparing against the target. The detailed
+Every statement below is checked by compiling with the pinned toolchain and comparing against the target. The detailed
 evidence lives in `build/README.md`, `docs/reference/app-flags.md`, `third_party/MANIFEST.md` and `docs/reference/link-order.md`.
 
 ## 1. Compiler and toolchain
@@ -166,7 +166,7 @@ make -C src link                               # whole-module link into build/ou
 
 ## 6. The matching toolkit
 
-Every measurement above that scores functions (the library censuses, the flag sweeps, the per-function match state)
+Every measurement above that scores functions (the library censuses, the flag sweeps, the per-function pairing state)
 comes from `asmlift-wasm/`, the toolkit in this repository. `asmlift-wasm/README.md` documents its commands, options
 and tests; the library census results are in `tools/libs/*/census.json`, the records of the probe runs that pin
 each library (the paths inside them are not kept up to date).

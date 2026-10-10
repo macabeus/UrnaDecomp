@@ -1,10 +1,10 @@
 // The substitution commands (cli.ts dispatches here):
-//   splat-scan  <target.wasm> <plain.wasm> [--pieces <d>] [-o <scan.tsv>] [--claim [<claims>]] [--symbols <f>]
+//   splat-scan  <target.wasm> <plain.wasm> [--pieces <d>] [-o <scan.tsv>] [--match [<matches>]] [--symbols <f>]
 //               [--ledger <d>] [--map-dir <d>]
-//   splat-build <target.wasm> <plain.wasm> [--pieces <d>] [--claims <f>] [-o <out.wasm>] [--expect <sha256>]
+//   splat-build <target.wasm> <plain.wasm> [--pieces <d>] [--matches <f>] [-o <out.wasm>] [--expect <sha256>]
 //               [--symbols <f>] [--ledger <d>] [--map-dir <d>]
-// splat-scan reads the claim list (--claim's path, else <root>/splat/matched.txt) as evidence of names and, with
-// --claim, appends its new matches to it.
+// splat-scan reads the match list (--match's path, else <root>/splat/matched.txt) as evidence of names and, with
+// --match, appends its new matches to it.
 // Defaults follow the urna layout: <root>/target/x.wasm, <root>/build/out/splat/pieces, <root>/splat/matched.txt,
 // <root>/splat/symbol_addrs.txt, <root>/splat/scan.tsv, <root>/ledger, <root>/build/out/splat/x.wasm.
 import { existsSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
@@ -13,12 +13,12 @@ import { basename, dirname, join, resolve } from 'node:path';
 import { readLedgerTsv } from './ledger';
 import { readManifest } from './splat';
 import {
-  ClaimsFailed,
+  MatchesFailed,
   type ReadingMeter,
   type ScanRow,
-  addClaims,
+  addMatches,
   buildSplat,
-  parseClaims,
+  parseMatchList,
   readPieceBodies,
   readingMeterOf,
   renderScan,
@@ -36,7 +36,7 @@ function take(args: string[], name: string): string | undefined {
   return v;
 }
 
-/** `--claim` with an optional path: true when bare */
+/** `--match` with an optional path: true when bare */
 function takeOptional(args: string[], name: string): string | true | undefined {
   const i = args.indexOf(name);
   if (i < 0) {
@@ -142,15 +142,15 @@ function readingLines(r: ReadingMeter): string[] {
     .join(', ');
   return [
     'readings the target chose (ambiguous operands: address, table slot or literal; which copy of identical bytes):',
-    `  re-pointing alone   ${String(r.preferred.claims).padStart(6)} claims (${r.preferred.bytes} B)`,
-    `  another reading     ${String(r.other.claims).padStart(6)} claims (${r.other.bytes} B), ${r.other.operands} operands: ${kinds || '-'}`,
-    `  which copy          ${String(r.copy.claims).padStart(6)} claims (${r.copy.bytes} B), ${r.copy.operands} operands`,
+    `  re-pointing alone   ${String(r.preferred.matches).padStart(6)} matches (${r.preferred.bytes} B)`,
+    `  another reading     ${String(r.other.matches).padStart(6)} matches (${r.other.bytes} B), ${r.other.operands} operands: ${kinds || '-'}`,
+    `  which copy          ${String(r.copy.matches).padStart(6)} matches (${r.copy.bytes} B), ${r.copy.operands} operands`,
   ];
 }
 
 function scan(args: string[]): void {
   const out = take(args, '-o');
-  const claim = takeOptional(args, '--claim');
+  const append = takeOptional(args, '--match');
   const s = setup(args);
   const t0 = Date.now();
   const maps = loadMaps(s);
@@ -158,9 +158,9 @@ function scan(args: string[]): void {
   const bodies = readPieceBodies(s.pieces, manifest);
   const ledgerPath = join(s.ledgerDir, 'functions.tsv');
   const ledger = existsSync(ledgerPath) ? readLedgerTsv(ledgerPath) : new Map();
-  const claimsPath = claim === true || claim === undefined ? join(s.root, 'splat', 'matched.txt') : claim;
-  const { claims } = parseClaims(existsSync(claimsPath) ? readFileSync(claimsPath, 'utf8') : '');
-  const rows = scanSplit(maps, manifest, bodies, ledger, claims, (pass, n) =>
+  const listPath = append === true || append === undefined ? join(s.root, 'splat', 'matched.txt') : append;
+  const { matches } = parseMatchList(existsSync(listPath) ? readFileSync(listPath, 'utf8') : '');
+  const rows = scanSplit(maps, manifest, bodies, ledger, matches, (pass, n) =>
     process.stderr.write(`pass ${pass}: ${n} matches\n`),
   );
   const outPath = out ?? join(s.root, 'splat', 'scan.tsv');
@@ -206,33 +206,33 @@ function scan(args: string[]): void {
   for (const [k, n] of [...reasons].sort((a, b) => b[1] - a[1]).slice(0, 20)) {
     w(`  ${String(n).padStart(6)}  ${k}`);
   }
-  if (claim !== undefined) {
-    const before = existsSync(claimsPath) ? readFileSync(claimsPath, 'utf8') : '';
-    const r = addClaims(before, rows);
-    writeFileSync(claimsPath, r.text);
-    w(`${claimsPath}: ${r.added} claims added`);
+  if (append !== undefined) {
+    const before = existsSync(listPath) ? readFileSync(listPath, 'utf8') : '';
+    const r = addMatches(before, rows);
+    writeFileSync(listPath, r.text);
+    w(`${listPath}: ${r.added} matches added`);
   }
 }
 
 function build(args: string[]): void {
-  const claimsArg = take(args, '--claims');
+  const listArg = take(args, '--matches');
   const out = take(args, '-o');
   const expect = take(args, '--expect');
   const s = setup(args);
-  const claimsPath = claimsArg ?? join(s.root, 'splat', 'matched.txt');
+  const listPath = listArg ?? join(s.root, 'splat', 'matched.txt');
   const outPath = out ?? join(s.root, 'build', 'out', 'splat', basename(s.targetPath));
-  const { claims } = parseClaims(existsSync(claimsPath) ? readFileSync(claimsPath, 'utf8') : '');
+  const { matches } = parseMatchList(existsSync(listPath) ? readFileSync(listPath, 'utf8') : '');
   const expected = expect ?? readManifest(s.pieces).source.sha256;
   const maps = loadMaps(s);
   let r: ReturnType<typeof buildSplat>;
   try {
-    r = buildSplat(maps, s.pieces, claims, expected);
+    r = buildSplat(maps, s.pieces, matches, expected);
   } catch (e) {
     if (existsSync(outPath)) {
       unlinkSync(outPath);
     }
-    if (e instanceof ClaimsFailed) {
-      throw new Error(`${claimsPath}: ${e.message}`);
+    if (e instanceof MatchesFailed) {
+      throw new Error(`${listPath}: ${e.message}`);
     }
     throw e;
   }
@@ -240,15 +240,15 @@ function build(args: string[]): void {
   const w = (x: string): boolean => process.stdout.write(`${x}\n`);
   const pct = (a: number, b: number): string => `${((100 * a) / Math.max(b, 1)).toFixed(2)}%`;
   w(
-    `${outPath}: ${r.assembled.bytes.length} bytes, sha256 ${r.assembled.sha256} (expected, ${claims.length} claims from ${claimsPath})`,
+    `${outPath}: ${r.assembled.bytes.length} bytes, sha256 ${r.assembled.sha256} (expected, ${matches.length} matches from ${listPath})`,
   );
   w(
-    `substituted: ${r.claimed}/${r.functions} functions (${pct(r.claimed, r.functions)}), ${r.claimedBytes}/${r.bytes} code bytes (${pct(r.claimedBytes, r.bytes)})`,
+    `substituted: ${r.matched}/${r.functions} functions (${pct(r.matched, r.functions)}), ${r.matchedBytes}/${r.bytes} code bytes (${pct(r.matchedBytes, r.bytes)})`,
   );
   w(`${'component'.padEnd(24)} ${'functions'.padStart(14)} ${'code bytes'.padStart(20)}`);
   for (const c of r.meter) {
     w(
-      `${c.group.padEnd(24)} ${`${c.claimed}/${c.functions}`.padStart(14)} ${`${c.claimedBytes}/${c.bytes}`.padStart(20)}  ${pct(c.claimedBytes, c.bytes)}`,
+      `${c.group.padEnd(24)} ${`${c.matched}/${c.functions}`.padStart(14)} ${`${c.matchedBytes}/${c.bytes}`.padStart(20)}  ${pct(c.matchedBytes, c.bytes)}`,
     );
   }
   for (const l of readingLines(r.readings)) {

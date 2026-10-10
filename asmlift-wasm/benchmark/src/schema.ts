@@ -39,7 +39,7 @@ export interface Setup {
   note?: string;
 }
 
-export type MatchKind = 'byte' | 'fingerprint' | 'addr' | 'shape' | 'none';
+export type PairKind = 'byte' | 'fingerprint' | 'addr' | 'shape' | 'none';
 
 export const FEATURES = [
   'leaf',
@@ -87,8 +87,8 @@ export interface DatasetRow {
   /** the linker symbol that name resolved to */
   symbol: string | null;
   features: Feature[];
-  /** the ledger's current best match */
-  ledger: { kind: MatchKind; score: number | null };
+  /** the ledger's current best pair */
+  ledger: { kind: PairKind; score: number | null };
   /** how the setup was decided: `symbol` = the build object defining the ledger's name;
    *  `component` = the ledger's attribution (no reproducing object yet) */
   evidence: 'symbol' | 'component';

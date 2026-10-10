@@ -3,7 +3,7 @@
 This page takes a fresh clone to a working checkout, then walks through the first three things to try:
 reading and lifting one target function, scoring a rewrite of it alone, and running the splat build. The
 words in *italics* are defined in the [glossary](glossary.md). The step after this page is
-[how-to-decompile.md](how-to-decompile.md), which takes one function from its disassembly to a claim.
+[how-to-decompile.md](how-to-decompile.md), which takes one function from its disassembly to a match.
 
 Run every command from the repository root unless it starts with `cd asmlift-wasm`.
 
@@ -79,7 +79,7 @@ byte as any other checkout at the same commit does. The splat build is section 5
 ## 3. Read and lift a function
 
 Function numbers are wasm function indices: imports are 0–135, so the first defined function is 136. Function
-1931 is `comum::CRdvVota::Candidato`, a small uenux2 method already claimed in `splat/matched.txt`; it is the example
+1931 is `comum::CRdvVota::Candidato`, a small uenux2 method already matched in `splat/matched.txt`; it is the example
 [how-to-decompile.md](how-to-decompile.md) follows.
 
 ```sh
@@ -157,12 +157,12 @@ The first line is the compile command's flags, read from the recipe `src/Makefil
 same instruction for instruction, and lower is closer. `|` marks a row that is the same, `~` one that differs only
 in an operand, `>` and `<` rows only one side has.
 
-The score is high although 1931 is claimed. Compiled alone, the TU gets other inlining decisions than inside the
+The score is high although 1931 is matched. Compiled alone, the TU gets other inlining decisions than inside the
 whole program: here the candidate opens two more stack frames (inlined callees) and ends in an exception landing
 pad (`call import:__resumeException`) that the target's body does not have. That is the normal case
-for TSE code, not a broken setup: the claimed `CStringUtils::ToQWord` (target 1141) scores 982 over 999 alone, because
+for TSE code, not a broken setup: the matched `CStringUtils::ToQWord` (target 1141) scores 982 over 999 alone, because
 its template helper is inlined. Use `--single` to iterate on one function's shape; conclude with the whole-link mode
-([how-to-decompile.md](how-to-decompile.md) step 5), which is what claims count.
+([how-to-decompile.md](how-to-decompile.md) step 5), because only the whole link decides a match.
 
 It takes about 7 s on an idle machine. The 35 s above is a run with other builds going on, and heavy load
 stretches its docker runs to several minutes. A file outside `src/` needs `--component <dir under src/>`
@@ -175,18 +175,20 @@ compile command without running it.
 TMPDIR=/tmp make -C src splat
 ```
 
-The *splat build* re-assembles the target from its pieces, using our re-pointed bytes for every function claimed
-in `splat/matched.txt`, and fails unless the result is the target byte for byte. It took 71 s on the fresh clone,
-where it also built the link map and the pieces, and 47 s on a later run that had both. With the claims of
-2026-10-10 a first run prints (paths shortened; the counts move with every claim):
+The *splat build* re-assembles the target from its pieces, using our re-pointed bytes for every function matched
+in `splat/matched.txt`, and fails unless the result is the target byte for byte. It also reads what each constant
+of ours is (an address, a table slot or an integer) from a second link with the data and the table moved,
+`make -C src link-kinds` ([reference/splat.md](reference/splat.md) §3). A first run builds the link map and the
+pieces (about 71 s with the build) and that shifted link (under a minute); later runs reuse them until the plain
+link changes, and then take about 47 s. It prints (paths shortened; the counts move with every match):
 
 ```
 scratch link byte-identical to build/out/wasm/vota_web/vota_web_wasm.wasm
 build/out/wasm-map/vota_web/names.tsv: 10836 functions named (223 binaryen thunks), 16290 wasm-ld functions
 14343 functions (6255 named, 12820 grouped; names …/target/vota_web_wasm.js + …/ledger/functions.tsv), 4224 data segments, 11 sections → …
 round trip: the pieces reassemble to sha256 8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2 (7713699 bytes), the input's
-…/build/out/splat/vota_web_wasm.wasm: 7713699 bytes, sha256 8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2 (expected, 7211 claims from …/splat/matched.txt)
-substituted: 7211/14343 functions (50.28%), 2119356/5883903 code bytes (36.02%)
+…/build/out/splat/vota_web_wasm.wasm: 7713699 bytes, sha256 8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2 (expected, 7390 matches from …/splat/matched.txt)
+substituted: 7390/14343 functions (51.52%), 2134232/5883903 code bytes (36.27%)
 component                     functions           code bytes
 openssl                       3124/3258       943452/1014603  92.99%
 sqlite                          878/927        700394/772965  90.61%
@@ -194,17 +196,17 @@ sqlite                          878/927        700394/772965  90.61%
 vota                              8/780          2977/470204  0.63%
 ...
 readings the target chose (ambiguous operands: address, table slot or literal; which copy of identical bytes):
-  re-pointing alone     5309 claims (844076 B)
-  another reading       1649 claims (915984 B), 7115 operands: literal 5647, table slot 1468
-  which copy             253 claims (359296 B), 491 operands
+  re-pointing alone     5309 matches (844076 B)
+  another reading       1649 matches (915984 B), 7115 operands: literal 5647, table slot 1468
+  which copy             253 matches (359296 B), 491 operands
 ```
 
 The line with `sha256` and `expected` is the check: the result must be the target's, `8579ef8d…1007e2`. The
-`substituted` line is the project's one progress meter, the claims in `splat/matched.txt`; the table under it
-splits it by component. [status.md](status.md) has today's numbers, generated from the committed scan. The first run also builds the link map
+`substituted` line is the meter, the project's one progress number: the matches in `splat/matched.txt`; the table
+under it splits it by component. [status.md](status.md) has today's numbers, generated from the committed scan. The first run also builds the link map
 (`build/out/wasm-map/vota_web/names.tsv`, a relink of the plain link) and the pieces (`build/out/splat/pieces/`);
 later runs reuse them until the plain link changes. [reference/splat.md](reference/splat.md) covers the pipeline
-and how to claim a function.
+and how to match a function.
 
 ## When something fails
 

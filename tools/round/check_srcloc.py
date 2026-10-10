@@ -12,8 +12,8 @@ The check reads the records out of the objects the plain link was built from (th
 build/out/wasm/vota_web/link.cmd, or the objects given), resolving the two string pointers and the code that loads
 the record through the object's relocations. Each record the target does not have is printed with the functions
 that load it and the target's line and column for the same file and function. It fails when such a record is loaded
-by a claimed function (its symbol is in splat/matched.txt): a claim cannot hold with a moved record, so that is a
-line a change broke. A record loaded only by unclaimed functions is reconstruction not finished yet and is printed
+by a matched function (its symbol is in splat/matched.txt): a match cannot hold with a moved record, so that is a
+line a change broke. A record loaded only by unmatched functions is reconstruction not finished yet and is printed
 as such; `--strict` fails on those too.
 
 Reads build/out/ (make -C src link writes it), so it needs a link but not the image; CI has neither.
@@ -24,7 +24,7 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 LEDGER = os.path.join(ROOT, 'ledger', 'source-locations.tsv')
-CLAIMS = os.path.join(ROOT, 'splat', 'matched.txt')
+MATCHES = os.path.join(ROOT, 'splat', 'matched.txt')
 LINK_CMD = os.path.join(ROOT, 'build', 'out', 'wasm', 'vota_web', 'link.cmd')
 
 R_WASM_MEMORY_ADDR_I32 = 5
@@ -238,11 +238,11 @@ def main(argv):
             p = line.rstrip('\n').split('\t')
             target.add((p[1], p[4], int(p[2]), int(p[3])))
             by_function[(p[1], p[4])].append(f'{p[2]}:{p[3]}')
-    claimed = set()
-    for line in open(CLAIMS):
+    matched = set()
+    for line in open(MATCHES):
         p = line.split()
         if len(p) >= 2 and not p[0].startswith('#'):
-            claimed.add(p[1].split('@')[0])
+            matched.add(p[1].split('@')[0])
     broken, unfinished, seen, files = [], [], 0, set()
     for obj in objects:
         for rec, users in sorted(set(records(obj))):
@@ -252,17 +252,17 @@ def main(argv):
                 continue
             file, func, line, col = rec
             where = ', '.join(by_function.get((file, func), [])) or 'no record of this function in this file'
-            mine = sorted(users & claimed)
+            mine = sorted(users & matched)
             msg = (f'{os.path.relpath(obj, ROOT)}: {func} at {file}:{line}:{col}; the target has {where}; '
                    f'loaded by {", ".join(sorted(users)) or "no function"}')
-            (broken if mine else unfinished).append(msg + (f' (claimed: {", ".join(mine)})' if mine else ''))
+            (broken if mine else unfinished).append(msg + (f' (matched: {", ".join(mine)})' if mine else ''))
     for m in broken:
         print('MOVED ' + m, file=sys.stderr)
     for m in unfinished:
-        print(('MOVED ' if strict else 'unclaimed ') + m, file=sys.stderr)
+        print(('MOVED ' if strict else 'unmatched ') + m, file=sys.stderr)
     print(f'{seen} source_location records in {len(objects)} objects ({len(files)} files): '
-          f'{seen - len(broken) - len(unfinished)} are records of the target; {len(broken)} that claimed functions '
-          f'load are not; {len(unfinished)} that only unclaimed functions load are not')
+          f'{seen - len(broken) - len(unfinished)} are records of the target; {len(broken)} that matched functions '
+          f'load are not; {len(unfinished)} that only unmatched functions load are not')
     return 1 if broken or (strict and unfinished) else 0
 
 
