@@ -93,6 +93,7 @@ A file compiled through `ECOURNA_SRCS` cannot have `_` in its name: the ecourna 
 | `15-ecourna-cconversorhorariosurna` | `CConversorHorariosUrna::DoDeconverte` (target fn 9132) and the `CHorariosUrna` it builds, non-PIC; `DoConverte` (9133) pending |
 | `16-ecourna-cconversormunicipiozona` | `CConversorMunicipioZona::DoConverte` (target fn 9131) and the `CMunicipioZona` data class it reads; `DoDeconverte` (9130) pending |
 | `17-uenux2-cconversororigemconfiguracao` | `comum::asn::CConversorOrigemConfiguracao::DoConverte` (target fn 11367), the `comum::asn::IConversorASN` base and the `md::EOrigemConfiguracao` enum; `DoDesconverte` (11366) pending |
+| `19-uenux2-iscreen` | `api::IScreen::GetFontMetrics` (target fn 8938), the inline default of a virtual member in `api/gui/iscreen.h`; no source of its own, the roots file emits and address-takes it |
 
 ## Companion files
 
