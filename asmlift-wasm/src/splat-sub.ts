@@ -38,6 +38,8 @@ export interface Chosen {
   /** the operand's first reading: the one re-pointing alone would write */
   preferred: boolean;
   at: number;
+  /** the offset of the operand's instruction in our body */
+  oursAt: number;
 }
 
 export type Match = { verdict: 'match'; candidate: Candidate; bytes: Uint8Array; readings: string[]; chosen: Chosen[] };
@@ -145,7 +147,7 @@ function matchOf(candidate: Candidate, pieces: readonly Piece[], readings: reado
       continue;
     }
     const reading = readings[r++];
-    chosen.push({ reading, preferred: p.readings[0] === reading, at });
+    chosen.push({ reading, preferred: p.readings[0] === reading, at, oursAt: p.at });
     at += p.alternatives[p.readings.indexOf(reading)].length;
   }
   return { verdict: 'match', candidate, bytes: realize(pieces, readings), readings: [...readings], chosen };
@@ -184,16 +186,18 @@ export function cachedRemapper(
 
 const referenced = new WeakMap<object, Map<number, number[]>>();
 
-/** The functions our function `ours` calls, references or may name through a table-slot constant, with the body
- *  offset of each operand. */
-function referencedFunctionsAt(maps: SymbolMaps, ours: number): { f: number; at: number }[] {
+/** The functions our function `ours` calls, references or names through a constant the target body reads as a
+ *  table slot (`chosen`), with the body offset of each operand. A constant the target keeps as an integer names
+ *  nothing, even when it equals one of our table slots. */
+function referencedFunctionsAt(maps: SymbolMaps, ours: number, chosen: readonly Chosen[]): { f: number; at: number }[] {
   const m = maps.ours.module;
+  const slots = new Set(chosen.filter((c) => c.reading.startsWith('table slot')).map((c) => c.oursAt));
   const out: { f: number; at: number }[] = [];
   for (const i of disassemble(m.funcs[ours - m.importedFuncCount])) {
     for (const im of i.imms) {
       if (im.kind === 'u32' && im.role === 'func') {
         out.push({ f: im.value, at: i.offset });
-      } else if (im.kind === 's32' && i.opcode === 0x41) {
+      } else if (im.kind === 's32' && i.opcode === 0x41 && slots.has(i.offset)) {
         const f = maps.ours.elem.get(im.value);
         if (f !== undefined) {
           out.push({ f, at: i.offset });
@@ -437,7 +441,7 @@ export function selfVoted(
     if (m.ours === undefined) {
       continue;
     }
-    for (const { f, at } of referencedFunctionsAt(maps, m.ours)) {
+    for (const { f, at } of referencedFunctionsAt(maps, m.ours, m.chosen)) {
       const symbol = maps.ours.fns.get(f)?.key;
       const index = symbol === undefined ? undefined : symbols.fns.get(symbol);
       if (symbol === undefined || index === undefined || matches.has(index)) {

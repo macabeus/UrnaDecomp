@@ -24,7 +24,7 @@ import type { Func, Module } from './parse';
 import { SAME_CONTENT_LIMIT, type SymbolMaps, cStringAt, resolveDataAddress, resolveFunction } from './splat-symbols';
 
 /** A stretch of the re-pointed body: fixed bytes, or the encodings an ambiguous operand may take. */
-export type Piece = Uint8Array | { alternatives: Uint8Array[]; readings: string[] };
+export type Piece = Uint8Array | { alternatives: Uint8Array[]; readings: string[]; at: number };
 
 export interface Soft {
   /** body-relative offset of the instruction */
@@ -246,6 +246,7 @@ export function remapBody(maps: SymbolMaps, ourIndex: number): RemapResult {
               pieces.push({
                 alternatives: [...a.addrs.map((x) => Uint8Array.from(uleb(x))), body.slice(im.offsetAt, end)],
                 readings: [...a.readings, 'literal'],
+                at: i.offset,
               });
               count('memarg');
             }
@@ -319,7 +320,7 @@ export function remapBody(maps: SymbolMaps, ourIndex: number): RemapResult {
             readings.push('literal');
           }
           flush();
-          pieces.push({ alternatives, readings });
+          pieces.push({ alternatives, readings, at: i.offset });
           return;
         }
         case 's64': {
@@ -332,6 +333,7 @@ export function remapBody(maps: SymbolMaps, ourIndex: number): RemapResult {
           pieces.push({
             alternatives: [...sv.values.map((x) => Uint8Array.from(sleb64(x))), body.slice(im.at, end)],
             readings: [...sv.readings, 'literal'],
+            at: i.offset,
           });
           count('address');
           return;

@@ -553,7 +553,9 @@ own operand, so it checks nothing there (`selfVoted`): such a match holds only w
 with the target's at that address (`compareObject`; a .bss object's zeros say nothing), or another match that
 holds re-points through the same name. Otherwise it is `unresolved` with a `self-voted` detail in the scan, and
 `UNCONFIRMED` in the build. The same holds for a function name only the match's own anchored call or table operand
-voted for (`by:` its index alone): it holds only when another match calls or references the same name.
+voted for (`by:` its index alone): it holds only when another match calls or references the same name. A constant
+references a function only where the target body reads it as a table slot; a constant the target keeps as an integer
+references nothing, even when it equals that function's slot in our table.
 
 The meter has a second axis (`readingMeterOf`): how much the target's bytes chose among our readings. Per claim,
 the strongest choice it needed: none (re-pointing alone writes the target body), another reading of some operand

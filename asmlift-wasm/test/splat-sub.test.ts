@@ -109,7 +109,7 @@ describe('selfVoted', { timeout: 180_000 }, () => {
   it.skipIf(!real)('keeps it when another match re-points through the same name', () => {
     const { maps } = load();
     const chosen = chosenOf('_Znwm', 137);
-    const other = { chosen: [{ reading: 'address symbol __cxa_new_handler', preferred: true, at: 0 }] };
+    const other = { chosen: [{ reading: 'address symbol __cxa_new_handler', preferred: true, at: 0, oursAt: 0 }] };
     expect(
       selfVoted(
         maps,
@@ -149,6 +149,52 @@ describe('selfVoted', { timeout: 180_000 }, () => {
     ).toBe(0);
   });
 
+  it.skipIf(!real)('counts a constant as a use of the function in its table slot only when the target reads a slot', () => {
+    // two matches of one body of ours whose i32.const equals a named function's slot in our table, the name voted
+    // by the first match alone: an integer constant in the other confirms nothing
+    const { maps } = load();
+    let use: { ours: number; at: number; symbol: string } | undefined;
+    for (const f of maps.ours.module.funcs) {
+      for (const i of disassemble(f)) {
+        const im = i.imms[0];
+        const g = i.opcode === 0x41 && im?.kind === 's32' ? maps.ours.elem.get(im.value) : undefined;
+        const symbol = g === undefined ? undefined : maps.ours.fns.get(g)?.key;
+        if (symbol !== undefined && maps.target.symbols.fns.has(symbol)) {
+          use = { ours: f.index, at: i.offset, symbol };
+          break;
+        }
+      }
+      if (use !== undefined) {
+        break;
+      }
+    }
+    expect(use).toBeDefined();
+    const { ours, at, symbol } = use!;
+    const fnEvidence = new Map(maps.target.symbols.fnEvidence);
+    fnEvidence.set(symbol, { evidence: 'table', voters: [1] });
+    const alone = { ...maps, target: { ...maps.target, symbols: { ...maps.target.symbols, fnEvidence } } };
+    const read = (reading: string) => ({ chosen: [{ reading, preferred: false, at: 0, oursAt: at }], ours });
+    const slot = read(`table slot of ${symbol}`);
+    expect(
+      selfVoted(
+        alone,
+        new Map([
+          [1, slot],
+          [2, read('literal')],
+        ]),
+      ).get(1),
+    ).toMatchObject({ symbol, bytes: null });
+    expect(
+      selfVoted(
+        alone,
+        new Map([
+          [1, slot],
+          [2, slot],
+        ]),
+      ).size,
+    ).toBe(0);
+  });
+
   it.skipIf(!real)("keeps it when our object's bytes are the target's there", () => {
     // __strerror_l's errmsgidx is voted by target 545 alone, and its 308 bytes are the same on both sides
     const { maps } = load();
@@ -161,7 +207,7 @@ describe('readingMeterOf', { timeout: 180_000 }, () => {
   it.skipIf(!real)('sorts claims by the strongest choice the target made among our readings', () => {
     const manifest = readManifest(PIECES);
     const size = (i: number) => manifest.functions.find((f) => f.index === i)!.size;
-    const c = (reading: string, preferred: boolean) => ({ reading, preferred, at: 0 });
+    const c = (reading: string, preferred: boolean) => ({ reading, preferred, at: 0, oursAt: 0 });
     const meter = readingMeterOf(
       manifest,
       new Map([

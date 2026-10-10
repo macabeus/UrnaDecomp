@@ -132,7 +132,10 @@ Two rules guard the evidence:
 - **No circular evidence.** A data name whose only vote came from the function being matched checks
   nothing there. Such a match holds only if our object's bytes agree with the target's at that address,
   or if another holding match uses the same name. Otherwise it is `unresolved (self-voted)` in the scan
-  and `UNCONFIRMED` in the build.
+  and `UNCONFIRMED` in the build. A function name voted only by the match's own call or table operand holds
+  only if another holding match calls it or has a constant the target reads as its table slot. A constant
+  the target keeps as an integer does not count, even when it equals the function's slot in our table, so a
+  unit that shifts our table cannot make or break a claim.
 - **A claim names its function.** The build re-points with every claim applied: the claimed symbol names
   that target function, and no other symbol does. A match found by body therefore corrects what its
   callers' calls resolve to.

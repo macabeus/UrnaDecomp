@@ -395,6 +395,7 @@ describe('matchesTarget', () => {
       {
         alternatives: [Uint8Array.from([0x90, 0x64]), Uint8Array.from([0x05])],
         readings: ['table slot of f', 'literal'],
+        at: 1,
       },
       Uint8Array.from([0x0b]),
     ];
