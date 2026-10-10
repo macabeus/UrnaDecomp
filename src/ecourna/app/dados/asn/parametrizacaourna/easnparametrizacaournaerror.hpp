@@ -1,0 +1,28 @@
+#pragma once
+#include "ecourna/api/exception/cbaseerror.hpp"
+
+namespace ecourna::app::dados::asn {
+
+// Names synthesised from the messages; values are the target's throw-site codes.
+enum EAsnParametrizacaoUrnaError {
+    EAPUE_GENERO_LABEL_INVALIDO = 2560,
+    EAPUE_GENERO_LABEL_DESCONHECIDO = 2561,
+    EAPUE_GENERO_LABEL_ENTIDADE_INVALIDO = 2562,
+    EAPUE_FORMA_SUSPENDER_COM_VOTO_INVALIDA = 2566,
+    EAPUE_FORMA_SUSPENDER_COM_VOTO_DESCONHECIDA = 2567,
+    EAPUE_FORMA_SUSPENDER_COM_VOTO_ENTIDADE_INVALIDA = 2568,
+    EAPUE_FORMA_SUSPENDER_SEM_VOTO_INVALIDA = 2569,
+    EAPUE_FORMA_SUSPENDER_SEM_VOTO_DESCONHECIDA = 2570,
+    EAPUE_FORMA_SUSPENDER_SEM_VOTO_ENTIDADE_INVALIDA = 2571,
+    EAPUE_ESTILO_TITULO_INVALIDO = 2572,
+    EAPUE_ESTILO_TITULO_DESCONHECIDO = 2573,
+    EAPUE_ESTILO_TITULO_ENTIDADE_INVALIDO = 2574,
+    EAPUE_ALINHAMENTO_TITULO_INVALIDO = 2575,
+    EAPUE_ALINHAMENTO_TITULO_DESCONHECIDO = 2576,
+    EAPUE_ALINHAMENTO_TITULO_ENTIDADE_INVALIDO = 2577,
+};
+
+using CAsnParametrizacaoUrnaError =
+    api::exception::CBaseError<EAsnParametrizacaoUrnaError, api::exception::SErrorLimits{2560, 2585}>;
+
+} // namespace ecourna::app::dados::asn

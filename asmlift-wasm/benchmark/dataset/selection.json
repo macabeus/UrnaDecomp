@@ -1,0 +1,37 @@
+{
+  "version": 3,
+  "per": 12,
+  "commit": "205388eb9b75778085d7a3cefba3b0666b4e8126",
+  "inputs": {
+    "target": {
+      "path": "target/vota_web_wasm.wasm",
+      "sha256": "8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2"
+    },
+    "glue": {
+      "path": "target/vota_web_wasm.js",
+      "sha256": "31e985a01b80449c78c726e4070355bd9875c7a2df7f6fac8b69c61f49248754"
+    },
+    "ledger": {
+      "path": "ledger/functions.tsv",
+      "blob": "a4026531f35c3dc7a12fc4cfc55a28bfcbb25b25"
+    },
+    "setups": {
+      "path": "asmlift-wasm/benchmark/dataset/setups.json",
+      "blob": "23fe96f0c217b3dcf47b52efd1c995d236215d2d"
+    },
+    "definitions": {
+      "path": "asmlift-wasm/benchmark/dataset/selection-definitions.json",
+      "sha256": "956ec875496fc3c119e52be79f673ee192c6a9a3a21408ba8179227b1a2cdb08",
+      "names": 6364,
+      "build": "ca64ddd7c678f7fb6bd82a9e0b61558e13a5b9f8",
+      "note": "rows.json was selected at 205388e, whose definitions table was not kept; these were read from the build at ca64ddd and select the committed rows exactly",
+      "moved": {
+        "build/out/openssl/O3/src/libcrypto.a": "build/out/openssl/O3/libcrypto.a"
+      }
+    }
+  },
+  "references": {
+    "rowsOf": 1,
+    "note": "third_party/sqlite is the SQLite 3.50.4 amalgamation (third_party/sqlite-amalgamation/sqlite-amalgamation-3500400 is gone), and OpenSSL builds out of tree in build/out/openssl/O3, so libcrypto.a moved there from build/out/openssl/O3/src; the SQLite references and the OpenSSL rows' objects follow, read from the working tree"
+  }
+}

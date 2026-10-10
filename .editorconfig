@@ -1,0 +1,14 @@
+# TSE's sources are ISO-8859-1 (Latin-1): their string literals are bytes of the target, so an editor that saves
+# them as UTF-8 changes the build. tools/round/check_encoding.py checks the tracked files against these sections.
+root = true
+
+[src/{uenux2,ecourna}/**]
+charset = latin1
+
+# these TSE files hold UTF-8 string literals
+[src/ecourna/app/dados/iidentificadoreleitor.cpp]
+charset = utf-8
+
+# Latin-1 literals outside the TSE trees
+[{src/units/12-ecourna-api-sql-sqlite-externs.cpp,src/asn1/InvalidTracer.cxx}]
+charset = latin1

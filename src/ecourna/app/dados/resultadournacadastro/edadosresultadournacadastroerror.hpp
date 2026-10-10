@@ -1,0 +1,27 @@
+#pragma once
+#include "ecourna/api/exception/cbaseerror.hpp"
+
+namespace ecourna::app::dados {
+
+// Values are the target's throw-site codes (3273, 3274, 3280 and 3281 have no throw site in the target); names
+// synthesised.
+enum EDadosResultadoUrnaCadastroError {
+    EDRUCE_HABILITACAO_BIOMETRICA_NAO_DEFINIDA = 3267,
+    EDRUCE_SITUACAO_HABILITACAO_AUDIO_NAO_DEFINIDA = 3268,
+    EDRUCE_APRESENTACAO_FOTO_NAO_DEFINIDA = 3269,
+    EDRUCE_SITUACAO_EXIGE_IDENTIFICACAO_MESARIO = 3270,
+    EDRUCE_SITUACAO_PROIBE_IDENTIFICACAO_MESARIO = 3271,
+    EDRUCE_IDENTIFICACAO_MESARIO_NAO_DEFINIDA = 3272,
+    EDRUCE_ESTADO_HABILITACAO_POR_CODIGO_NAO_DEFINIDO = 3275,
+    EDRUCE_DADOS_COMPARECIMENTO_NAO_DEFINIDOS = 3276,
+    EDRUCE_DADOS_COMPARECIMENTO_CIFRADOS_NAO_DEFINIDOS = 3277,
+    EDRUCE_MESARIOS_ABERTURA_NAO_DEFINIDOS = 3278,
+    EDRUCE_MESARIOS_ENCERRAMENTO_NAO_DEFINIDOS = 3279,
+    EDRUCE_TAMANHO_SALT = 3282,
+    EDRUCE_TAMANHO_INFORMACAO_ADICIONAL = 3283,
+};
+
+using CDadosResultadoUrnaCadastroError =
+    api::exception::CBaseError<EDadosResultadoUrnaCadastroError, api::exception::SErrorLimits{3265, 3315}>;
+
+} // namespace ecourna::app::dados

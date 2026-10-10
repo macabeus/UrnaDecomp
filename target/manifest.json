@@ -1,0 +1,206 @@
+{
+  "version": 1,
+  "generatedAt": "2026-09-10T18:56:04",
+  "scenarios": [
+    {
+      "id": "geral-t1",
+      "scenario": "geral",
+      "label": "Eleições Gerais - 1º turno",
+      "description": "Cenário de treinamento para Eleições Gerais.",
+      "fase": "te",
+      "pe": 2500,
+      "uf": "ac",
+      "turno": 1,
+      "municipio": 1,
+      "zona": 1,
+      "secao": 1,
+      "aliases": [
+        {
+          "source": "/dsk/fi/estatico",
+          "target": "/dsk/fe/estatico"
+        },
+        {
+          "source": "/dsk/fi/serialv.dat",
+          "target": "/dsk/fe/serialv.dat"
+        }
+      ],
+      "data": "geral-t1.data",
+      "dataJs": "geral-t1.data.js"
+    },
+    {
+      "id": "geral-t2",
+      "scenario": "geral",
+      "label": "Eleições Gerais - 2º turno",
+      "description": "Cenário de treinamento para Eleições Gerais.",
+      "fase": "te",
+      "pe": 2500,
+      "uf": "ac",
+      "turno": 2,
+      "municipio": 1,
+      "zona": 1,
+      "secao": 1,
+      "aliases": [
+        {
+          "source": "/dsk/fi/estatico",
+          "target": "/dsk/fe/estatico"
+        },
+        {
+          "source": "/dsk/fi/serialv.dat",
+          "target": "/dsk/fe/serialv.dat"
+        }
+      ],
+      "data": "geral-t2.data",
+      "dataJs": "geral-t2.data.js"
+    },
+    {
+      "id": "geral-df-t1",
+      "scenario": "geral-df",
+      "label": "Eleições Gerais no Distrito Federal - 1º turno",
+      "description": "Cenário de treinamento para Eleições Gerais no DF.",
+      "fase": "te",
+      "pe": 2500,
+      "uf": "df",
+      "turno": 1,
+      "municipio": 1,
+      "zona": 1,
+      "secao": 1,
+      "aliases": [
+        {
+          "source": "/dsk/fi/estatico",
+          "target": "/dsk/fe/estatico"
+        },
+        {
+          "source": "/dsk/fi/serialv.dat",
+          "target": "/dsk/fe/serialv.dat"
+        }
+      ],
+      "data": "geral-df-t1.data",
+      "dataJs": "geral-df-t1.data.js"
+    },
+    {
+      "id": "geral-df-t2",
+      "scenario": "geral-df",
+      "label": "Eleições Gerais no Distrito Federal - 2º turno",
+      "description": "Cenário de treinamento para Eleições Gerais no DF.",
+      "fase": "te",
+      "pe": 2500,
+      "uf": "df",
+      "turno": 2,
+      "municipio": 1,
+      "zona": 1,
+      "secao": 1,
+      "aliases": [
+        {
+          "source": "/dsk/fi/estatico",
+          "target": "/dsk/fe/estatico"
+        },
+        {
+          "source": "/dsk/fi/serialv.dat",
+          "target": "/dsk/fe/serialv.dat"
+        }
+      ],
+      "data": "geral-df-t2.data",
+      "dataJs": "geral-df-t2.data.js"
+    },
+    {
+      "id": "geral-zz-t1",
+      "scenario": "geral-zz",
+      "label": "Votação no exterior - 1º turno",
+      "description": "Cenário de treinamento para votação no exterior.",
+      "fase": "te",
+      "pe": 2500,
+      "uf": "zz",
+      "turno": 1,
+      "municipio": 1,
+      "zona": 1,
+      "secao": 1,
+      "aliases": [
+        {
+          "source": "/dsk/fi/estatico",
+          "target": "/dsk/fe/estatico"
+        },
+        {
+          "source": "/dsk/fi/serialv.dat",
+          "target": "/dsk/fe/serialv.dat"
+        }
+      ],
+      "data": "geral-zz-t1.data",
+      "dataJs": "geral-zz-t1.data.js"
+    },
+    {
+      "id": "geral-zz-t2",
+      "scenario": "geral-zz",
+      "label": "Votação no exterior - 2º turno",
+      "description": "Cenário de treinamento para votação no exterior.",
+      "fase": "te",
+      "pe": 2500,
+      "uf": "zz",
+      "turno": 2,
+      "municipio": 1,
+      "zona": 1,
+      "secao": 1,
+      "aliases": [
+        {
+          "source": "/dsk/fi/estatico",
+          "target": "/dsk/fe/estatico"
+        },
+        {
+          "source": "/dsk/fi/serialv.dat",
+          "target": "/dsk/fe/serialv.dat"
+        }
+      ],
+      "data": "geral-zz-t2.data",
+      "dataJs": "geral-zz-t2.data.js"
+    },
+    {
+      "id": "municipal-t1",
+      "scenario": "municipal",
+      "label": "Eleições Municipais - 1º turno",
+      "description": "Cenário de treinamento com Vereador e Prefeito.",
+      "fase": "te",
+      "pe": 2400,
+      "uf": "ac",
+      "turno": 1,
+      "municipio": 1,
+      "zona": 1,
+      "secao": 1,
+      "aliases": [
+        {
+          "source": "/dsk/fi/estatico",
+          "target": "/dsk/fe/estatico"
+        },
+        {
+          "source": "/dsk/fi/serialv.dat",
+          "target": "/dsk/fe/serialv.dat"
+        }
+      ],
+      "data": "municipal-t1.data",
+      "dataJs": "municipal-t1.data.js"
+    },
+    {
+      "id": "municipal-t2",
+      "scenario": "municipal",
+      "label": "Eleições Municipais - 2º turno",
+      "description": "Cenário de treinamento com Vereador e Prefeito.",
+      "fase": "te",
+      "pe": 2400,
+      "uf": "ac",
+      "turno": 2,
+      "municipio": 1,
+      "zona": 1,
+      "secao": 1,
+      "aliases": [
+        {
+          "source": "/dsk/fi/estatico",
+          "target": "/dsk/fe/estatico"
+        },
+        {
+          "source": "/dsk/fi/serialv.dat",
+          "target": "/dsk/fe/serialv.dat"
+        }
+      ],
+      "data": "municipal-t2.data",
+      "dataJs": "municipal-t2.data.js"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@asmlift/wasm",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "WebAssembly matching toolkit for the vota_web_wasm reproduction: parser, disassembler, relocation-aware fingerprints, objdiff-style scorer, census, ledger, lifter, compile-and-rank, splat build",
+  "packageManager": "pnpm@9.14.4",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "wasm": "tsx src/cli.ts",
+    "bench": "pnpm --filter @asmlift/wasm-benchmark bench",
+    "test": "vitest run",
+    "test:bench": "pnpm --filter @asmlift/wasm-benchmark test",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p ../tools && pnpm --filter @asmlift/wasm-benchmark typecheck && pnpm --filter @asmlift/wasm-playground typecheck",
+    "playground": "pnpm --filter @asmlift/wasm-playground dev",
+    "playground:build": "pnpm --filter @asmlift/wasm-playground build",
+    "test:playground": "pnpm --filter @asmlift/wasm-playground test"
+  },
+  "dependencies": {
+    "@asmlift/core": "0.9.0",
+    "@match-kit/compiler": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^6.0.2",
+    "vitest": "^3.2.0"
+  }
+}

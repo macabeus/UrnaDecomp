@@ -1,0 +1,2692 @@
+addr	enc	users	text
+1055	ascii	RHVoice:4|ecourna:1|openssl:1	{:<33s} {{:04}}
+1162	latin1	libc++:1|comum:1	Conteúdo inválido para {}:{}
+1191	latin1	libc++:1|comum:1|ecourna:1	Conteúdo não foi decodificado para {}:{}
+1232	ascii	ecourna:1	 ASSI:{}
+1241	ascii	ecourna:1|RHVoice:1	{} HASH:{}
+1252	ascii	-:3|comum:1	{}: Candidatura duplicada para candidato/cargo {}/{}
+1305	ascii	ecourna:1|openssl:1	Header com tamanho incorreto: {}/{}
+1341	ascii	-:1|ecourna:1	Mensagem com tamanho incorreto: {}/{}
+1379	latin1	-:1|comum:1	Candidato não encontrado: {}/{}
+1411	ascii	-:1|vota:1|comum:1	Quantidade de escolhas difere do esperado: {}/{}
+1460	ascii	openssl:2|7zip:1|ecourna:1	Buffer com tamanho insuficiente para mensagem: {}/{}
+1513	latin1	ecourna:1|comum:1	Resposta não encontrada: {}/{}
+1544	latin1	openssl:3|-:1|sqlite:1	Código Verificador: {}.{}.{}.{}
+1606	ascii	ecourna:1	Falha ao truncar arquivo: {}-{}
+1638	latin1	comum:1	Índice {} fora dos limites: 0-{}
+1671	latin1	libc++:1	O número máximo de teclas suportado é {}
+1712	latin1	-:1	Via nº {}
+1722	latin1	vota:1	 {}ª {}
+1730	ascii	ecourna:2	QRBU:{}:{} VRQR:{} {}
+1752	ascii	simulador:1	CWasmInit::{} {}
+1769	ascii	ecourna:1	Quantidade excessiva de milissegundos {}
+1810	latin1	comum:1	Cargo {} não encontrado para eleição {}
+1850	latin1	ecourna:1	Não existe o arquivo {}
+1874	ascii	ecourna:2	Duplicidade de registro {}
+1901	latin1	vota:1	Biometria coletada não é do mesário {}
+1940	latin1	vota:1	Pedido de leitura da biometria do mesário {}
+1985	latin1	comum:1	Arquivo de HV ({}) não contém munícipio {}
+2028	latin1	ecourna:2	Versão de pacote não encontrada para o cargo {}
+2076	latin1	openssl:1|comum:1|7zip:1	Tipo de identificador principal inválido {}
+2120	latin1	comum:1|ecourna:1	O registro corrente estava inválido {}
+2159	latin1	ecourna:1	Dia da semana inválido {}
+2185	latin1	ecourna:1	Registro não encontrado {}
+2212	latin1	openssl:1|ecourna:1	Cargo não encontrado {}
+2236	latin1	ecourna:2	Já existem informações dinâmicas no banco {}
+2281	latin1	api:1	Não é possível reposicionar para {} em {}
+2323	latin1	api:1	Não há mais bytes disponíveis em {}
+2359	latin1	api:1	Não foi possível ler {} bytes em {}
+2395	latin1	api:1	Não é possível saltar {} bytes em {}
+2432	latin1	comum:2|libc++abi:1	CLeitorASN::{} - não foi possível fazer o seek em {}
+2485	ascii	comum:1|asn1-modules:1	Foto duplicada [{}] em {}
+2511	ascii	vota:1	Digite {}
+2521	ascii	vota:1	Batimento de digitais retornou o score {}
+2563	ascii	-:2|vota:2	Tentativa {} de {}
+2582	ascii	vota:3	via {} de {}
+2595	latin1	comum:2	CLeitorASN::{} - não foi possível ler a entidade de {}
+2650	latin1	ecourna:28|vota:8|api:3	{}: instância {} não corresponde a interface solicitada de {}
+2712	latin1	vota:7|comum:2|libc++:2	{}: instância já criada de {}
+2742	latin1	ecourna:28|vota:8|api:3	{}: solicitada uma instância não criada de {}
+2788	ascii	ecourna:1	Nao existe o conjunto de telas associado ao cargo id {}
+2844	latin1	ecourna:3	Não existe um tick com o id {}
+2875	latin1	comum:3	Método DoDesconverte() não implementado para {}
+2923	latin1	comum:18|vota:1	Método DoConverte() não implementado para {}
+2968	latin1	ecourna:1|comum:1	O cargo não foi posicionado corretamente para {}
+3017	ascii	ecourna:1	DeltaT pode ser adicionado apenas para eAlterarDataSistema {}
+3079	latin1	vota:1|ecourna:1	Operação inválida {}
+3100	latin1	ecourna:1	Tela inválida {}
+3117	ascii	ecourna:1|libc++:1	Cargo {} com escolha invalida {}
+3150	latin1	api:1	Operação desconhecida {}
+3175	latin1	ecourna:1	Eleição não encontrada {}
+3201	ascii	comum:1|-:1	Falha: Esperada {}, pressionada {}
+3236	latin1	vota:1	Todas as pessoas presentes já votaram? {}
+3278	ascii	ecourna:2	O tempo do tick deve ser >= {}
+3309	latin1	vota:1	Estado inválido = {}
+3330	ascii	vota:1	Estado encerramento nao conhecido = {}
+3369	ascii	vota:1	Estado nao conhecido = {}
+3405	latin1	comum:5|ecourna:2	Objeto com conteúdo inválido para {}: {}
+3446	latin1	comum:8|asn1-modules:2|vota:1	Conteúdo inválido para {}: {}
+3476	latin1	comum:8|asn1-modules:2|vota:2	Conteúdo não foi decodificado para {}: {}
+3518	ascii	ecourna:1	Falha ao enviar mensagem {}, {}: {}
+3723	ascii	vota:1	Operador selecionou: {}
+3747	ascii	libc++:1|comum:1	Dados: {}
+3757	latin1	comum:2|vota:1	Valor inválido para tipo voto eleitor: {}
+3799	ascii	ecourna:1	Mais de dez dedos na biometria do eleitor: {}
+3845	ascii	vota:3|comum:1	Ver: {}
+3853	latin1	libc++:1	Falha ao obter estado do modo de demonstração: {}
+3903	latin1	-:1	Versão da aplicação: {}
+3927	latin1	libc++:1|comum:1	Versão: {}
+3938	latin1	asn1-modules:1	Valor inválido para EUrnaAplicativo: {}
+3978	latin1	ecourna:1	Valor inválido para UrnaAplicativo: {}
+4017	ascii	api:1	Falha ao criar mutex recursivo: {}
+4052	latin1	vota:1	Título digitado para encerramento: {}
+4090	latin1	vota:1|comum:1	Valor inválido para EEstadoEncerramento: {}
+4134	latin1	comum:1	Valor não suportado para EEstadoEncerramento: {}
+4183	latin1	comum:1	Valor inválido para EstadoEncerramento: {}
+4226	latin1	comum:1	Valor não suportado para EstadoEncerramento: {}
+4274	latin1	comum:1	Conjunto de minúcias vazia ou maior que o maior valor aceito: {}
+4339	latin1	comum:1	Quantidade de minúcias menor que 0 ou maior que o maior valor aceito: {}
+4412	latin1	api:1	Falha ao criar semáforo: {}
+4440	latin1	-	Falha ao desbloquear semáforo: {}
+4474	latin1	-	Falha ao bloquear semáforo: {}
+4505	latin1	-	Falha ao obter valor do semáforo: {}
+4542	latin1	asn1-modules:1	Valor inválido para EUrnaTipo: {}
+4576	latin1	vota:1	Limite de mesários registrados atingido. Limite máximo: {}
+4635	latin1	comum:1	Valor não suportado para EUrnaModelo: {}
+4676	latin1	vota:1|api:1	Falha ao obter tempo de relógio: {}
+4712	latin1	ecourna:1	Tipo de identificador inválido: {}
+4747	latin1	comum:1	Número de seção inválido: {}
+4776	latin1	ecourna:1|asn1-modules:1	Tipo de local de votação inválido: {}
+4814	latin1	ecourna:1	Dedo habilitação inválido: {}
+4844	latin1	comum:1	Tipo de apuração inválido: {}
+4874	latin1	comum:1|-:1	Sexo inválido: {}
+4892	latin1	comum:2|-:1	Tipo de arquivo inválido: {}
+4921	latin1	comum:1|libc++:1	Motivo inválido: {}
+4941	latin1	ecourna:1	Tipo de impedimento inválido: {}
+4974	latin1	api:1|comum:1	DataJE com formato inválido: {}
+5006	latin1	comum:3|ecourna:1	Tipo inválido: {}
+5024	latin1	comum:2	Turno inválido: {}
+5043	latin1	ecourna:1	Modelo inválido: {}
+5063	latin1	ecourna:1	Fuso-horário inválido: {}
+5089	latin1	ecourna:2|comum:1	Código de município inválido: {}
+5122	latin1	ecourna:2	Município inválido: {}
+5145	latin1	comum:14|asn1-modules:3|ecourna:2	Entidade deixada em estado inválido: {}
+5185	latin1	comum:1	Número de local inválido: {}
+5214	latin1	ecourna:1|asn1-modules:1	Tipo de pacote inválido: {}
+5242	latin1	comum:2	Tipo de envelope inválido: {}
+5272	latin1	ecourna:1	Tipo de identidade inválido: {}
+5304	latin1	comum:1	Tipo de necessidade inválido: {}
+5337	latin1	comum:2|ecourna:1	Tipo de urna inválido: {}
+5363	latin1	comum:1	Número de zona inválido: {}
+5391	latin1	ecourna:1|asn1-modules:1	Sistema inválido: {}
+5412	latin1	ecourna:1	Estado biometria inválido: {}
+5442	latin1	ecourna:1	Tipo de biometria inválido: {}
+5473	latin1	comum:1	Tipo de transferência inválido: {}
+5508	latin1	vota:1	Tipo de abrangência inválido: {}
+5541	ascii	ecourna:1	Turno {} invalido: {}
+5563	ascii	ecourna:2	Turno invalido: {}
+5582	latin1	ecourna:1	O arquivo de origem [{}] não pode ser lido: {}
+5629	latin1	comum:1	Estado não deve ser usado: {}
+5659	ascii	comum:1	Cargo {} difere do esperado: {}
+5691	latin1	ecourna:1	O arquivo de destino [{}] não pôde ser criado: {}
+5741	latin1	ecourna:4|vota:1	O estado não foi carregado: {}
+5772	latin1	ecourna:1	Valor inválido para TipoUrnaOperacao: {}
+5813	ascii	ecourna:1	Integridade referencial: {}
+5841	latin1	ecourna:1	O diretório [{}] não existe: {}
+5873	ascii	ecourna:1	Suplente inexistente: {}
+5898	ascii	ecourna:1|-:1	Propriedade inexistente: {}
+5926	ascii	vota:2	Score: {}
+5936	latin1	comum:1	Valor inválido para EEstadoVota: {}
+5972	latin1	comum:1	Valor inválido para EstadoVota: {}
+6007	ascii	ecourna:1	Falha ao bloquear mutex para escrita: {}
+6048	ascii	ecourna:12|-:2|asn1-modules:1	Falha ao bloquear mutex para leitura: {}
+6089	latin1	comum:1	Valor inválido para TipoAjusteDataHora: {}
+6132	ascii	ecourna:1	Erro ao desligar urna: {}
+6158	latin1	comum:2|boost:1	Tipo inválido de urna: {}
+6184	latin1	comum:2	Valor inválido para estado da urna: {}
+6223	latin1	comum:2	Valor inválido para ModeloUrna: {}
+6258	latin1	comum:1	Valor não suportado para ModeloUrna: {}
+6298	latin1	-:1	Habilitação sem biometria: {}
+6328	latin1	-:1|comum:1	Tipo inválido para urna de contingência: {}
+6372	latin1	comum:1	Quantidade máxima permitida: {}
+6404	latin1	comum:22|ecourna:5|vota:1	Entidade está inválida: {}
+6431	latin1	ecourna:2|-:1	Seção inválida: {}
+6450	latin1	-:1	Situação arquivo inválida: {}
+6480	latin1	comum:1|libc++:1	Suplente com ordem inválida: {}
+6512	latin1	ecourna:4|asn1-modules:1|comum:1	Fase inválida: {}
+6530	latin1	ecourna:2	Zona inválida: {}
+6548	latin1	ecourna:1	Mídia inválida: {}
+6567	latin1	ecourna:2|comum:1|libc++:1	Abrangência inválida: {}
+6592	latin1	ecourna:1	UF inválida: {}
+6608	latin1	comum:1	A aplicação informada não é válida: {}
+6647	latin1	comum:1	A chave informada não é válida: {}
+6682	ascii	ecourna:1	Tipo de identidade invalida: {}
+6714	ascii	ecourna:19	Chave desconhecida: {}
+6737	latin1	ecourna:1	Situação eleição não encontrada: {}
+6773	latin1	ecourna:2	Eleição não encontrada: {}
+6800	latin1	ecourna:1|comum:1|openssl:1	Abrangência não encontrada: {}
+6831	latin1	-:1|ecourna:1	Habilitação biométrica: {}
+6858	latin1	-:1	Habilitação biográfica: {}
+6885	ascii	vota:1	Falha ao abrir arquivo [{}]: {}
+6917	ascii	vota:1	Falha ao ler arquivo [{}]: {}
+6947	latin1	ecourna:1	Falha ao obter informações do arquivo [{}]: {}
+6994	latin1	ecourna:1	Falha ao alterar as permissões do arquivo [{}]: {}
+7045	ascii	ecourna:1	Falha ao alterar o dono do arquivo [{}]: {}
+7089	ascii	ecourna:1	Falha ao obter tamanho do arquivo [{}]: {}
+7132	ascii	ecourna:1	Falha ao alterar a hora do arquivo [{}]: {}
+7176	latin1	ecourna:1	Falha ao validar a existência do recurso [{}]: {}
+7226	latin1	ecourna:2|comum:1|-:1	Falha ao criar caminho temporário para [{}]: {}
+7274	ascii	comum:1	Falha ao renomear [{}] para [{}]: {}
+7311	ascii	ecourna:1	Falha ao copiar o arquivo [{}] para [{}]: {}
+7356	latin1	comum:1	Valor inválido para ETipoDeltaT: {}
+7401	ascii	ecourna:1	Falha ao obter dispositivo da MR: {}
+7438	ascii	ecourna:1	Tamanho da MR: {}
+7456	latin1	comum:1	Valor inválido para EEstadoSA: {}
+7490	latin1	comum:1	Valor inválido para EstadoSA: {}
+7523	ascii	comum:1|ecourna:1	<SCPN> agregad<S|os|os|as>: {}
+7554	latin1	comum:1	Urna em 2º turno sem dados de pleito 2: {}
+7633	latin1	-	O arquivo {} não pode ser adicionado. {}
+7674	latin1	asn1-modules:1	O arquivo {} não pode ser fechado. {}
+7712	latin1	-	A adição do arquivo {} não pode ser concluída. {}
+7762	latin1	ecourna:1	Falha ao enviar ação ao HSM. {}
+7794	ascii	comum:1	Arquivo {} - {}
+7810	latin1	-:1|comum:1	Iniciando aplicação - {}
+7835	ascii	vota:1|7zip:1|ecourna:1	Eleitor impedido - {}
+7857	ascii	comum:1|ecourna:1	[{}] - {}
+7867	ascii	comum:1	Falha ao autenticar. - {}
+7893	ascii	comum:1|ecourna:1	{:<34s}   {}
+7942	ascii	vota:1	UF                                  {}
+7981	ascii	vota:1	Sistema Recuperador de Dados\n{}
+8013	ascii	comum:1|-:1	Falha ao validar assinatura UE\npacote: ({})\narquivo: ({})\nErro SAVD: ({})\n{}
+8090	ascii	vota:3|ecourna:1|comum:1	Falha ao validar assinatura UE\npacote: ({})\nErro SAVD: ({})\n{}
+8160	latin1	ecourna:2|vota:1	Fase inválida: {:#x}
+8309	latin1	-:2|vota:1	Código identificação UE       {:08}
+8345	ascii	comum:1	DATA: {:.10}       HORA: {:.8}
+8376	latin1	vota:1	Código identificação MC       {:.8}
+8429	ascii	comum:1|ecourna:1	{:<32s} {:05}
+8443	ascii	libc++:1|comum:1	Pleito: {:05}
+8457	ascii	comum:1	Processo eleitoral: {:05}
+8627	ascii	comum:2|-:1|ecourna:1	{:<33s} {:04}
+8704	latin1	openssl:4|sqlite:2|vota:1	Seção agregada: {:04}
+8748	latin1	-:1	          Temporários na seção    {:04}
+8828	ascii	comum:1	Local                             {:04}
+8868	ascii	ecourna:1	{:<34s} {:03}
+8983	ascii	vota:1	Data da carga               {:.10}
+9408	ascii	openssl:1|-:1|vota:1	In RTree %s.%s:\n%z
+13996	latin1	api:1	Altura da foto do eleitor inválida: {} px
+14038	latin1	api:1	Largura da foto do eleitor inválida: {} px
+16159	ascii	vota:2	Tentativa x de x
+18027	latin1	ecourna:1	Eleitor já votou
+18044	latin1	vota:1	O eleitor identificado já votou
+18076	ascii	vota:1	Nenhum eleitor votou
+18097	latin1	vota:2	votou/não votou
+18113	latin1	vota:2	Não votou
+18182	latin1	vota:1	Horário de votação terminou
+18210	ascii	vota:1	Nao copiou
+18221	ascii	vota:1	Teste Falhou
+18234	latin1	vota:1	Eleitor já justificou
+18256	ascii	vota:1	justificou/ja justificou
+19325	ascii	api:1	Unexpected fst output
+19402	ascii	vota:1	Era esperado pelo menos um input
+37174	ascii	comum:1	std::string comum::CCargoDSNomeSexoCandidato::operator()() const
+37239	ascii	api:1	std::string comum::CCargoDSNome::operator()() const
+47784	ascii	comum:1	ModuloEstadoGeralUrna::TipoAjusteDataHora comum::asn::CConversorAjusteDataHora::ConverteTipoAjusteDataHora(const md::estadoaplicacao::CAjusteDataHora::ETipoDeltaT &) const
+55822	ascii	simulador:1	= default
+57234	ascii	api:1	Voice name is not set
+57256	ascii	api:1	Voice language is not set
+60237	ascii	api:1	Unsupported language format
+60265	ascii	api:1	Unsupported voice format
+62672	ascii	ecourna:1	sem permissao de escrita no array de bits
+62714	ascii	api:1	No targets
+65600	ascii	vota:1	O processo pode levar alguns minutos
+65707	ascii	vota:1	Urna pronta para receber votos
+65836	ascii	-:1|ecourna:1	Nome do candidato       Num cand Votos
+65875	latin1	vota:1	Suspenso monitoramento de alimentação devido repetição de eventos. [ {} ] eventos
+65957	latin1	vota:1	dígitos
+65979	ascii	comum:1	Visualizar candidatos
+66001	latin1	vota:4	Visualização de candidatos
+66128	ascii	vota:1	Eleitores faltosos
+66486	latin1	vota:1	BUs do Vota obrigatórios
+66511	latin1	vota:1	BUs do RED obrigatórios
+66535	latin1	vota:1	BUs do SA obrigatórios
+66558	latin1	vota:2|-:1	Registrar mesários
+66577	latin1	vota:1	Operador indagado se finaliza registro mesários
+66625	latin1	vota:1	Operador indagado se continua registrando mesários
+66676	latin1	vota:1	Operador indagado se ocorrerá registro de mesários
+66727	latin1	vota:1	Operador confirmou o registro de mesários
+66769	latin1	vota:1	Operador cancelou o registro de mesários
+66810	latin1	vota:1	Operador encerrou ciclo de registro de mesários
+66858	latin1	vota:1	Boletim de Identificação de Mesários
+67258	latin1	-:1	o cargo ({}) no RDV não foi encontrado na lista de cargos
+67391	ascii	vota:1	Eleitor sem atividade por {} segundos
+67505	latin1	comum:1	Dados específicos de BU do Vota não definidos
+67551	latin1	comum:1	Dados específicos de BU do SA não definidos
+67595	latin1	vota:1	Dados biométricos inválidos
+67708	latin1	vota:1	Término do procedimento de assinatura dos arquivos de resultados
+67773	latin1	vota:1	Início do procedimento de assinatura dos arquivos de resultados
+67837	ascii	vota:1	Preparando para assinatura dos arquivos de resultados
+67891	latin1	vota:2	Mídia de resultado inválida para gravação de resultados
+67947	ascii	vota:1	Copiando arquivos para o dir. de resultados
+67991	latin1	-	Não há votos registrados
+68016	latin1	libc++:1	Não há votos ou justificativas registrados
+68059	latin1	ecourna:1	{}: Dados dinâmicos não carregados
+68094	latin1	vota:1	Mesário cancelou entrada dos dados
+68174	latin1	ecourna:1	Havia divergência entre os títulos dinâmicos e os estáticos
+68245	latin1	vota:1	Aguarde até todos os
+68923	latin1	ecourna:1	Um CInputMenuField não comporta mais que 99 itens
+71899	latin1	comum:2	Eleições incompatíveis
+71965	latin1	vota:1	Mesário não solicitou emissão de vias adicionais
+72014	latin1	vota:1	Mesário indagado sobre quantidade de vias adicionais
+72067	ascii	vota:1	BUs do Vota adicionais
+72090	ascii	vota:1	BUs do RED adicionais
+72112	ascii	vota:1	BUs do SA adicionais
+72153	latin1	vota:1	Não há votos nominais
+72175	ascii	api:2	] eh grande demais
+72554	latin1	vota:1	as instruções
+72568	latin1	vota:1	Mesário selecionou outras opções
+72601	latin1	vota:2	CORRIGE: outras opções
+72685	latin1	comum:3|-:1	Mais informações
+73078	latin1	vota:1	Imprimindo versões dos pacotes
+73275	latin1	sqlite:1|comum:1	Versões de Pacotes
+73294	latin1	comum:1	Dados específicos do aplicativo não presentes
+73340	latin1	comum:1	o cargo ({}) e a candidatura ({}) não têm a mesma quantidade de suplentes
+74041	latin1	vota:1	Biometria do mesário {} encontrada em eleitores
+74089	ascii	vota:1	Imprimindo lista de eleitores
+74231	ascii	vota:1|-:1	Exibir contadores
+75645	latin1	ecourna:1	Não havia frames
+77020	ascii	comum:1	Identidade principal ({}) ausente na lista de identidades
+77583	ascii	vota:1	{:05} Justificativas
+77708	latin1	vota:1	Encerramento só pode ser solicitado após as {} horas
+77783	latin1	vota:1	Zerésimas
+77830	latin1	vota:1	Imprimindo vias obrigatórias
+77859	latin1	vota:1|ecourna:1	Eleições Comunitárias
+77881	latin1	comum:1	Número de cópias
+78031	latin1	ecourna:1	Dimensões inválidas
+78051	latin1	comum:1	Datas inválidas
+78067	latin1	ecourna:1	Informações dinâmicas já carregadas
+78103	latin1	ecourna:1	Não há informações carregadas
+81463	ascii	ecourna:1	Serial da MR: %s
+82254	latin1	vota:1	Ano de nascimento não confere. Por favor
+82305	ascii	ecourna:1	Eleitor foi suspenso automaticamente no treinamento eleitor
+82365	latin1	vota:1	Aguardando digitação do identificador do eleitor
+82414	latin1	vota:1	Solicitado título eleitoral para suspensão do eleitor
+82468	ascii	api:1	Erro ao carregar a foto do eleitor
+82575	latin1	vota:1	Habilitação cancelada durante confirmação de dado do eleitor
+82636	ascii	vota:1	Captura da digital do eleitor
+82666	latin1	vota:1	Instruções no terminal do eleitor
+82700	latin1	vota:4	Siga as instruções na tela do eleitor
+82738	latin1	vota:1	Mesário {} habilitou o eleitor
+82769	latin1	vota:1	Mesário digitou o título para suspender o eleitor
+82819	latin1	vota:1	Título de eleitor
+83616	ascii	comum:1|vota:1	posicione POLEGAR ou INDICADOR no sensor
+83657	ascii	vota:1	sobre o sensor
+85943	ascii	vota:1	para parte anterior
+85963	latin1	libc++:1	Página anterior
+86241	ascii	vota:1	o Identificador
+86257	latin1	ASN1:1	 A seleção não é compreendida pelo decodificador
+86355	ascii	vota:10|libc++:1	CONFIRMA: prosseguir
+86376	ascii	comum:2	CORRIGE: Encerrar  CONFIRMA: Prosseguir
+86416	ascii	comum:1	CORRIGE: Cancelar  CONFIRMA: Prosseguir
+86468	latin1	comum:1	Não imprimir
+86576	ascii	api:1	Cannot configure player
+87744	ascii	vota:1|-:1|comum:1	The argument index starts with an invalid character
+87881	ascii	ecourna:27|libc++:17|vota:8	unlock_shared() called with no shared owner
+88139	latin1	ecourna:1	Não há nada para ler
+89731	ascii	vota:1	CONFIRMA: suspender
+90117	ascii	api:1	Error reading eq header
+90918	ascii	comum:1	CORRIGE: Voltar  CONFIRMA: Finalizar
+90959	ascii	vota:1	 para continuar
+90975	ascii	vota:2	CONFIRMA: continuar
+91005	latin1	vota:1	Não testar
+91016	ascii	vota:1	Sem teclas para testar
+91046	latin1	vota:1	eleitor não está liberado para votar
+91083	latin1	vota:1	eleitor não tem idade mínima para votar
+91123	ascii	vota:1	CONFIRMA: votar
+91157	latin1	vota:1	CORRIGE: não habilitar
+91180	ascii	vota:2	CONFIRMA: habilitar
+91206	ascii	vota:2	CONFIRMA: encerrar
+91225	ascii	vota:10	CORRIGE: retornar
+91243	ascii	vota:2	CONFIRMA: retornar
+91262	ascii	comum:1	CORRIGE: Retornar
+91280	ascii	comum:1	CONFIRMA: Retornar
+91331	ascii	vota:9	CORRIGE: cancelar
+91349	ascii	vota:1|comum:1	CORRIGE: Cancelar
+91438	latin1	vota:1	Eleitor não pode votar ou justificar
+91475	latin1	-:1	está impedido de votar ou justificar
+91512	ascii	vota:2	CONFIRMA: justificar
+121458	ascii	vota:1	pode/nao pode entregar comp
+122509	latin1	vota:1	eleitor é militar em serviço
+122538	latin1	libc++:1	Não é possível continuar a execução
+122574	latin1	vota:1	Executar opção
+122589	latin1	vota:1	Enviar para manutenção
+122612	latin1	vota:1	Ainda não foi marcado o início da aquisição
+122656	latin1	vota:1	Já foi marcado o fim da aquisição
+122690	latin1	vota:1	para voltar para a verificação pré-eleição
+122733	latin1	ecourna:1	{}: o local não era de seção
+122762	latin1	vota:1	está impedido de votar nesta seção
+122797	latin1	vota:1	Mesário {} é eleitor da seção
+122827	latin1	vota:1	Mesário {} não é eleitor da seção
+122861	latin1	vota:3	Confirmar seleção
+122879	latin1	api:2	Erro de sincronização
+122901	latin1	api:1	 não é um relatório válido para sincronização
+122947	latin1	vota:1	Erro de gravação
+122964	latin1	vota:1|-:1	Encerrar votação
+122981	latin1	vota:1	Não assinar o caderno de votação
+123014	latin1	vota:1	Eleitor não habilitado para votação
+123050	latin1	vota:1	para deixar a urna pronta para votação
+123089	latin1	vota:1	Registrando mesários antes da votação
+123127	latin1	vota:1	Operador cancelou o encerramento da votação
+123171	latin1	vota:1	Encerramento da votação
+123195	latin1	vota:1	Apresentada tela do reinício da votação
+123235	latin1	vota:1	Mesário confirmou o reinício da votação
+123275	latin1	vota:1	Aguarde o horário de início da votação
+123314	latin1	vota:1	Início da votação
+123332	latin1	vota:1	Áudio desativado pelo fim da votação
+123369	latin1	vota:1	Registrando mesários após a votação
+123405	latin1	vota:1	Título {} é inválido para suspender a votação
+123451	latin1	vota:1	Título {} é válido para suspender a votação
+123495	latin1	vota:1	CONFIRMA: continuar a votação
+123525	latin1	vota:1	encerrar a votação
+123544	latin1	vota:1	Registrando mesários durante a votação
+123583	latin1	vota:1	Erro inesperado durante a votação
+123617	latin1	-	Local de Votação
+123634	latin1	vota-web:1	Software de Votação
+123654	latin1	vota:1	Encerramento da Votação
+123678	latin1	comum:1	Tipo de alimentação
+123698	latin1	ecourna:1	Nao foi especificado o tipo de implementação
+123743	latin1	vota:1	CONFIRMA: cancelar a habilitação
+123776	latin1	vota:1	é desabilitada em demonstração
+123807	latin1	vota:1	Biometria desabilitada em demonstração
+123846	latin1	ecourna:1	Tag [{}] excedeu o limite de codificação
+123887	latin1	vota:2	Data da emissão
+123903	latin1	vota:2	Hora da emissão
+123919	latin1	comum:1	em caso de falha na impressão
+123949	latin1	vota:1	Mesário abortou processo de suspensão
+123987	latin1	ecourna:1	{} - não entra em horário de verão
+124022	latin1	-:1	Padrão
+124029	latin1	vota:3	CORRIGE: não
+124100	ascii	api:1	O arquivo
+124164	ascii	ecourna:1	Urna desligada a pedido do aplicativo
+124202	latin1	vota:1	Finalização de aplicativo
+124249	ascii	vota:1	Tempo aviso desligamento auto
+124279	ascii	vota:1	Tempo desligamento auto
+124309	latin1	comum:1	Relógio está certo
+124328	latin1	ecourna:1	O diretório não está aberto
+124356	latin1	ecourna:1	] não pode ser aberto
+124378	latin1	comum:5|libc++:2|vota:1	O arquivo [{}] não estava aberto
+124411	ascii	ecourna:7	arquivo nao estava aberto
+124633	ascii	ecourna:1	Tela de Candidato Inapto
+124658	latin1	ecourna:1	Tela de Conferência de Candidato Inapto
+124698	ascii	comum:1	Urna pronta para receber o seu voto
+124734	ascii	comum:1	para digitar o seu voto
+124758	latin1	vota:1	 da urna para digitar o seu voto. Aperte a tecla 4 para fala mais lenta. Aperte a tecla 6 para fala mais rápida. Aperte a tecla 3 para aumentar o volume. Aperte a tecla 9 para diminuir o volume. Aperte confirma para iniciar o seu voto
+124993	latin1	ecourna:1	Eleitor foi suspenso e não confirmou nenhum voto
+125348	ascii	vota:1	Lacre a tampa do compartimento
+125410	ascii	vota:1	Pedir ano nascimento
+125431	latin1	vota:1	A validação do ano de nascimento
+125479	latin1	vota:1	Erro na verificação do comparecimento
+125711	ascii	vota:2	Preparando dados para encerramento
+125865	ascii	vota:1	Inicio do Encerramento
+125888	ascii	vota:1	Procedimentos de Encerramento
+125942	latin1	vota:1	Mesários registrados no fechamento
+125977	latin1	vota:1	Não houve registro no fechamento
+126010	latin1	vota:1	Horário de fechamento
+126161	latin1	-:1	Optou por votar em trânsito
+126189	latin1	-:1	Eleitor solicitou voto em trânsito
+126224	latin1	comum:1	Voto em Trânsito
+126291	latin1	vota:1	dígito
+126447	latin1	comum:1	Entidade inválida. Tipo de identificação incorreto
+126498	ascii	comum:1	Entidade em formato incorreto
+126528	latin1	vota:1	Mesário confirma que o horário da urna está correto
+126580	latin1	vota:1	Mesário indagado se horário da urna está correto
+126629	latin1	vota:1	Dado digitado está incompleto
+126659	ascii	ecourna:1	Tela de Voto Proporcional Nulo Incompleto
+126701	ascii	ecourna:1	Tela de Voto Legenda Incompleto
+126733	latin1	comum:1	Conteudo do arquivo eh incompatível com objeto
+126780	latin1	comum:1	Após desligar a urna, entre em contato
+126894	latin1	vota:1	Filtragem por número do candidato
+126928	ascii	vota:1	Nao foi encontrado o partido do candidato
+126970	ascii	ecourna:1	suspenso em cargo sem candidato
+127002	latin1	comum:1	o cargo ({}) da candidatura ({}) não é de candidato
+127054	latin1	vota:1	Eleitor corrigiu na tela de confirmação de candidato
+127596	ascii	ecourna:1	Tela de Cargo sem Candidato
+127734	ascii	vota:1	Fim do teste de Teclado do TE - Sucesso
+127862	latin1	vota:1	título suspenso
+127878	ascii	vota:1	Eleitor voltou a digitar enquanto estava sendo suspenso
+127934	ascii	ecourna:1	Eleitor votou parcialmente e em seguida foi suspenso
+128070	latin1	vota:1	Ano de nascimento digitado é igual ao do cadastro
+128120	latin1	vota:1	Ano de nascimento digitado é diferente do cadastro
+128171	latin1	vota:1	Áudio ativado conforme cadastro
+128688	ascii	ecourna:1	tamanho do buffer nao pode ser zero
+128827	ascii	vota:1	Quantidade de segmentos deve ser maior que zero
+128875	ascii	ecourna:1	tamanho do buffer deve ser maior que zero
+128917	latin1	libc++:2	Gênero
+128931	latin1	libc++:1	Número
+129126	latin1	libc++:1	Não há informação de 2o turno
+129294	latin1	vota:1	Término
+129510	latin1	comum:1	[1] para imprimir a zerésima e seu resumo
+129565	latin1	vota:1	Volume máximo
+129579	latin1	vota:1	Volume mínimo
+129670	latin1	vota:1	utilize o número do título
+129697	latin1	vota:1	Já havia justificativa para o título
+129734	latin1	-:2|ecourna:1	Título
+129755	ascii	vota:1	trailer nulo
+129768	ascii	vota:1	header nulo
+129780	ascii	vota:1	CTextFieldUpdate - campo estava com o texto nulo
+129829	ascii	api:6|libc++:2	Campo estava com o texto nulo
+129859	ascii	vota:4	Texto nulo
+129870	ascii	vota:1	cargoSemCandidato nulo
+129893	ascii	vota:1	trailerCargoSemCandidato nulo
+129923	ascii	vota:1	detalheCandidato nulo
+129945	ascii	ecourna:1	suspenso nulo
+129959	ascii	vota:1	trailerMajoritario nulo
+129983	ascii	vota:1	headerMajoritario nulo
+130006	latin1	comum:1	Número de dígitos do partido nulo
+130040	ascii	vota:1	trailerProporcionalPartido nulo
+130072	ascii	vota:1	headerProporcionalPartido nulo
+130103	ascii	ecourna:1	repetido nulo
+130117	ascii	vota:1	trailerProporcional nulo
+130142	ascii	vota:1	headerProporcional nulo
+130166	ascii	vota:1	partidoApenasVotoLegenda nulo
+130196	ascii	ecourna:2	Dado de entrada nulo
+130266	ascii	ecourna:1	Tela de Voto Nulo
+130284	latin1	ecourna:1	Tela de Conferência de Voto Nulo
+130331	latin1	comum:3|asn1-modules:1	 está vazio
+130343	ascii	ecourna:1	Grupo de votos vazio
+130364	ascii	ecourna:1	Mapa de votos vazio
+130384	ascii	comum:1	Vetor de cargos vazio
+130406	ascii	vota:1	Vetor de partes vazio
+130428	ascii	api:1	Nome do arquivo vazio
+130450	ascii	ecourna:2	Nome de arquivo vazio
+130472	latin1	comum:1	Título inválido: número vazio
+130502	ascii	ecourna:1	 com digitado vazio
+130522	ascii	ecourna:1	 com digitado nao vazio
+130546	ascii	ecourna:1	Nome social vazio
+130564	ascii	ecourna:2	Nome vazio
+130575	latin1	comum:1	O contêiner estava vazio
+130614	latin1	vota:1	Término compulsório
+130634	latin1	vota:1	preso provisório
+130651	latin1	comum:1	Preso provisório
+130668	latin1	ecourna:1	Eleitor foi suspenso pelo mesário
+130702	latin1	vota:1	Áudio desativado pelo mesário
+130732	latin1	vota:1	Áudio ativado pelo mesário
+130759	latin1	vota:1	Identificador do eleitor digitado pelo mesário
+130806	latin1	vota:1	Habilitação cancelada durante a captura de digital do mesário
+130868	latin1	vota:1	Solicita digital do mesário
+130896	latin1	vota:1	Capturada a digital do mesário
+130927	latin1	vota:1	Realizada a conferência da biometria do mesário
+130975	latin1	vota:1	Digitado título inválido para o registro de mesário
+131027	latin1	comum:1	Temporário
+131038	latin1	vota:1	Antes do horário
+131055	latin1	ecourna:1	Campo não encontrado no formulário
+131270	ascii	vota:1	Votacao foi bloqueada por horario
+131476	latin1	vota:1|-:1	Desativar áudio
+131492	latin1	vota:1|-:1	Ativar áudio
+131505	latin1	vota:1	Este eleitor necessita de áudio
+131537	latin1	vota:1	AUD: Áudio
+131642	latin1	vota:1	Início
+131649	latin1	vota:1	eleitor transferido por ofício
+131923	ascii	vota:1	Filtragem por cargo
+131943	ascii	vota:1	Por cargo
+131953	latin1	vota:1	Você está votando para {cargo-atual}, mas não há candidato para o cargo
+132025	latin1	vota:1	Erro na identificação do tipo de cargo
+132189	latin1	vota:1	por código
+134980	latin1	ASN1:1	 Campo OBJECT IDENTIFIER não está atribuído
+135151	latin1	vota:2	Não há candidatos concorrendo
+135190	latin1	vota:1	Mesário indagado se eleitor está votando
+135231	latin1	vota:1	Eleitor está votando
+135252	latin1	vota:1	Eleitor não está votando
+135277	latin1	vota:1	O eleitor está demorando
+135302	ascii	api:1	Urna desligando
+135329	latin1	vota:1	Solicitado ao mesário que desconecte o fone de ouvido
+135383	latin1	vota:1	Solicitado ao mesário que conecte o fone de ouvido
+135481	ascii	vota:1	Filtragem por partido
+135503	ascii	vota:1	Por partido
+135515	ascii	vota:1	Apresentar partido
+135534	ascii	ecourna:1	Nao foi encontrado o partido
+135694	ascii	ecourna:1	Tela de Partido
+135710	latin1	vota:1	Quantidade de vias adicionais excede o máximo permitido
+135766	ascii	comum:1	acima do limite permitido
+135792	ascii	ecourna:1	Ordem de {} com valor {} repetido
+135826	ascii	ecourna:1	Tela de Candidato Repetido
+135853	latin1	ecourna:1	Tela de Conferência de Candidato Repetido
+135906	ascii	api:1	Status indefinido
+135924	latin1	vota:4	Número de inputs inválido
+135950	latin1	comum:1	número de dígitos inválido
+135977	latin1	ecourna:1	Tipo de identidade do eleitor inválido
+136016	latin1	comum:2	Tipo de identificador de eleitor inválido
+136058	latin1	ecourna:2	Valor inválido
+136073	latin1	ecourna:2	Buffer inválido
+136089	latin1	ecourna:1	Número de seção inválido
+136114	latin1	vota:1	Encerramento de votação inválido
+136147	latin1	comum:1	Motivo de apuração inválido
+136175	latin1	comum:1	Tipo de apuração inválido
+136201	latin1	ecourna:1	Tipo de arquivo inválido
+136226	latin1	ecourna:1|asn1-modules:1	Aplicativo inválido
+136246	latin1	vota:1	Ano de nascimento inválido
+136273	latin1	ecourna:1	Número do candidato inválido
+136302	latin1	vota:1	Tipo inválido
+136316	latin1	ecourna:1	Código de município inválido
+136345	latin1	ecourna:1	Arquivo [{}] com tamanho inválido
+136379	latin1	ecourna:4	Tag [{}] com tamanho inválido
+136409	latin1	ecourna:2	Tamanho inválido
+136426	latin1	comum:1	Tipo de id de cabeçalho inválido
+136459	latin1	ecourna:1	Número do cargo inválido
+136484	latin1	comum:1	Número do partido inválido
+136511	latin1	comum:1	Nome do partido inválido
+136536	latin1	ecourna:1	Partido inválido
+136553	latin1	vota:1	Identificador do eleitor digitado inválido
+136596	latin1	ecourna:1	Número de local inválido
+136621	latin1	ecourna:2	Tipo de local inválido
+136644	latin1	ecourna:1	Tipo de envelope inválido
+136670	latin1	ecourna:1	] é um glob inválido
+136691	latin1	ecourna:2|comum:1	Tipo de urna inválido
+136713	latin1	vota:1	Tempo limite de uso de bateria interna inválido
+136761	latin1	vota:1	Tempo de aviso de desligamento por uso da bateria interna inválido
+136828	latin1	ecourna:1	Número de zona inválido
+136852	latin1	ASN1:1	 Campo UTCTime não é válido
+136880	latin1	ASN1:2	' não é válido
+136895	latin1	ASN1:1	 Campo Open Type não contém qualquer dado válido
+136944	ascii	ecourna:2	buffer invalido
+136960	ascii	vota-web:1	CWasmSavd::RecebeMensagem - mensagem de tamanho invalido
+137138	latin1	comum:5|vota:1|asn1-modules:1	O arquivo [{}] é muito grande para ser lido
+137182	latin1	comum:1	Limite de mesários registrados atingido
+137222	ascii	comum:1	Boletim de Urna foi atingido
+137251	ascii	vota:1	Tempo limite de espera usando bateria interna atingido
+137359	ascii	vota:1	IMP: Impedido
+137397	latin1	vota:1	Erro estado do aplicativo não conhecido
+137480	latin1	-:1|comum:1	Áudio ativado
+137494	ascii	vota:1	O voto do eleitor foi computado
+137526	latin1	vota:1	Teste de Teclado do TE não executado
+137612	ascii	vota:1	Procedimento de encerramento abortado
+137650	latin1	vota:1	Tipo de alimentação não implementado
+137687	latin1	api:1	Método não implementado
+137736	ascii	vota:1	Erro na assinatura dos arquivos de resultado
+137781	latin1	vota:1	Não foi passado nenhum arquivo de resultado
+137825	latin1	vota:1	Solicitada a retirada da mídia de resultado
+137869	latin1	vota:1	Retire a mídia de resultado
+137897	latin1	vota:1	Mantenha a mídia de resultado
+138009	latin1	vota:1	áudio habilitado/desabilitado
+138039	ascii	vota:1	Eleitor foi habilitado
+138130	ascii	vota:4	Nao havia campos de input no formulario sem nada digitado
+138188	ascii	vota:1	Erro no teclado do eleitor - dispositivo desconectado
+138242	ascii	vota:1	Fone de ouvido desconectado
+138270	ascii	vota:1	Fone de ouvido conectado
+138303	latin1	vota:1	Mesário {} já registrado
+138328	latin1	comum:1	Já registrado
+138342	latin1	vota:1	Mesário {} registrado
+138364	latin1	vota:1	Tipo de identidade não registrado
+138398	latin1	vota:1	Não há candidato registrado
+138426	latin1	vota:1	O fim da aquisição já havia sido registrado
+138470	latin1	vota:1	O início da aquisição não havia sido registrado
+138518	latin1	vota:1	O voto do eleitor NÃO foi registrado
+138566	latin1	ecourna:1	Arquivo assinado associado ao identificador {} não encontrado
+138628	latin1	ecourna:1	Arquivo de assinatura associado ao identificador {} não encontrado
+138695	latin1	comum:1	Arquivo {} não encontrado
+138721	latin1	-:1	Erro partido não encontrado
+138749	latin1	-:1	um voto do cargo ({}) no RDV está com voto de legenda ({}) para partido não encontrado
+138836	latin1	ecourna:1	{} - {} [{}] não encontrado
+138864	latin1	comum:1	{} - id de foto [{}] não encontrado
+138900	latin1	comum:1	{} - arquivo [{}] da foto [{}] não encontrado
+138946	ascii	ecourna:1|comum:1	 nao encontrado
+138962	latin1	comum:1	o partido ({}) da federação ({},{}) não foi encontrado
+139017	latin1	comum:1	o partido ({}) da candidatura ({},{}) não foi encontrado
+139074	latin1	comum:1	o cargo ({}) da candidatura ({}) não foi encontrado
+139126	latin1	comum:1	Relógio está errado
+139146	latin1	vota:1	Mesário confirma que o horário da urna está errado
+139197	latin1	vota:1	Número errado
+139342	ascii	libc++:1|vota:1	Erro inesperado
+139358	latin1	vota:1	Erro estado do aplicativo não esperado
+139397	ascii	vota:1	Estado nao esperado
+139417	ascii	ecourna:1	Urna sem turno em contexto onde turno era esperado
+139547	latin1	ecourna:1|vota:1	Eleitor não posicionado
+139571	latin1	ecourna:1	Partido não posicionado
+139595	ascii	ecourna:1	 - o cargo atual nao esta posicionado
+139633	ascii	vota:4|ecourna:1	O cargo atual nao esta posicionado
+139668	latin1	ASN1:1	 Campo CHOICE não está selecionado
+139713	latin1	vota:1	Eleitor não encontrado para o identificador informado
+139767	latin1	libc++:2	não informado
+139781	latin1	vota:1	Identificador inválido para o tipo informado
+139843	ascii	comum:1	Objeto de dados do BU mal formado
+139877	ascii	vota:1	Procedimento de encerramento confirmado
+139926	latin1	vota:1	título cancelado
+139943	ascii	vota:1	Por favor, teste o teclado
+139970	ascii	vota:1	Teste de teclado
+140116	ascii	vota:1	nome abreviado
+140145	latin1	ecourna:1	O contexto não pôde ser criado
+140213	latin1	comum:1	Arquivo de local não carregado
+140244	latin1	ecourna:1	{}: o arquivo de locais ainda não foi carregado
+140292	latin1	vota:3|comum:1	Início da aquisição não marcado
+140324	latin1	vota:3|comum:1	Fim da aquisição não marcado
+140390	ascii	ecourna:1	Identificador principal {} duplicado
+140427	latin1	ecourna:1	Dedo já existente ou duplicado
+140458	ascii	vota:1	Ver certificado
+140496	latin1	-:1	Arquivo não identificado
+140521	ascii	vota:1|comum:1	Tipo de cargo nao identificado
+140568	latin1	comum:1	Limite de cópias adicionais do
+140599	ascii	ecourna:1	suspenso branco
+140615	ascii	ecourna:1	em branco
+140660	ascii	ecourna:1	Tela de Voto Branco
+140680	latin1	ecourna:1	Tela de Conferência de Voto Branco
+140715	latin1	comum:1	Nao é esperado que o CJustificadorDAO atualize registros do banco
+140781	latin1	comum:1	Nao é esperado que o CJustificadorDAO exclua registros do banco
+140968	latin1	comum:1	Use o teclado numérico
+140991	latin1	vota:1	Habilitação cancelada durante reconhecimento biométrico
+141095	latin1	comum:1	Exclusão de eleitor dinâmico
+141153	latin1	vota:1	Candidato específico
+141478	ascii	ecourna:1	 presente em mais de uma eleicao
+142337	ascii	vota:1	CONFIRMA: cancelar a habilitacao
+142758	ascii	vota:2	Por favor oriente o eleitor a procurar o
+143030	ascii	api:2|simulador:1	Tentativa de recriar o singleton
+144763	ascii	ecourna:1	commit transaction
+144782	ascii	ecourna:1	begin transaction
+144800	ascii	ecourna:1	rollback transaction
+145955	ascii	comum:1	System Volume Information
+146934	ascii	api:1	Unsupported eq version
+150230	ascii	vota:3	CONFIRMA: sim
+151247	ascii	vota:1	eleitores presentes votarem
+151891	ascii	vota:1	Operador indagado se todas as pessoas presentes votaram
+153860	latin1	api:1	Quantidade de cores não conforme: {} bits por pixel
+154464	latin1	ecourna:3	com número de suplentes incompatível
+154501	latin1	comum:1	Cargo info incompatível
+154525	latin1	comum:1	e de forma legível
+154544	ascii	api:2|vota:2	IInput - Nao havia um caractere disponivel
+154979	latin1	vota:1	Solicitação de dado pessoal do eleitor para habilitação manual
+155042	latin1	comum:1	Siga as instruções do manual
+155165	latin1	vota:1	memória total
+155243	ascii	vota:1	Falha na captura da digital
+155271	ascii	vota:1	BU digital
+155373	latin1	-	Código do processo eleitoral
+155402	latin1	-:1	Eleitor deve procurar cartório eleitoral
+155716	latin1	vota:1	eleitor convocado pela Justiça Eleitoral
+155757	latin1	vota:1	eleitor é servidor da Justiça Eleitoral
+155797	ascii	vota:1	Boletim de Justificativa Eleitoral
+155861	latin1	comum:1	UF não informada para abrangência não federal
+155907	latin1	comum:1	UF informada para abrangência federal
+156033	latin1	comum:1	Município informado para abrangência não municipal
+156084	latin1	comum:1	Município zerado para abrangência municipal
+156380	latin1	-:1	um voto do cargo ({}) no RDV está com voto de legenda ({}) com cargo que não é proporcional
+156472	latin1	ecourna:3|comum:1	não é de proporcional
+156552	ascii	vota:1	via adicional
+156636	latin1	ecourna:1	Tela de Conferência de Voto Nominal
+156672	latin1	vota:1	vota na seção original
+157357	ascii	ecourna:1	Tela Inicial
+157403	latin1	comum:1	Não há informação de local
+157447	ascii	comum:1	Tipo de local
+158324	latin1	ecourna:1	Não há mais id disponível para tick
+166802	ascii	simulador:1	Wait - no ctx, returning
+167029	ascii	simulador:1	Wait - polling
+167368	ascii	api:1	The trie must be sorted before searching
+173085	latin1	libc++:1	CEleitores::LoadEleitorDetalhe - ({}-{} > {}-{}). {} com marcação de impedido não encontrado nas listas de eleitores e de tte
+173211	latin1	-	O arquivo de destino [{}] já existe
+173247	latin1	comum:1	Arquivo {} não existe
+173269	latin1	ecourna:1	Candidato {} / cargo {} não existe
+173304	latin1	comum:5|vota:1|asn1-modules:1	O arquivo [{}] não existe
+173330	latin1	ecourna:1	Arquivo [{}] não existe
+173354	latin1	comum:1	Arquivo de ComplementosMunicipios ({}) não existe
+173404	latin1	-:1	um voto do cargo ({}) no RDV está com voto de legenda ({}), mas o candidato existe
+173487	latin1	-:1	um voto do cargo ({}) no RDV está com voto nulo ({}), mas a resposta existe
+173563	ascii	ecourna:1	{} - {} [{}] existe
+173583	ascii	vota:2	Repetir teste
+173597	latin1	vota:1	para próxima parte
+173777	ascii	ecourna:1|vota:1	Item inexistente
+173794	ascii	ecourna:1	Suplente inexistente
+173945	ascii	ecourna:1	Tela de Candidato Inexistente
+173975	latin1	ecourna:1	Tela de Conferência de Candidato Inexistente
+174037	latin1	vota:1	Erro na Mídia Externa - Mídia não está presente
+174085	latin1	vota:1	A mídia de resultado não estava presente
+174126	latin1	vota:1	Mídia de resultado não estava presente
+174165	latin1	ecourna:2	Eleitor não habilitado manualmente
+174200	ascii	vota:2	Votou parcialmente
+174219	ascii	vota:1	CORRIGE: tentar novamente
+174245	ascii	vota:4	CONFIRMA: tentar novamente
+174300	latin1	comum:1	Cargo e candidato não foram posicionados corretamente
+174354	latin1	ecourna:4|vota:1	Não posicionado no eleitor corretamente
+174394	latin1	ecourna:1	{} - não posicionado no candidato corretamente
+174441	ascii	ecourna:1	Nao foi posicionado no candidato corretamente
+174487	latin1	comum:1	O candidato não foi posicionado corretamente
+174532	latin1	ecourna:2|comum:1	O cargo não foi posicionado corretamente
+174573	ascii	ecourna:1	array de bits nao alocado corretamente
+174612	ascii	comum:1	foi impresso completamente
+174639	latin1	vota:1	Gerando relatório de eleitores habilitados biograficamente
+174698	latin1	ecourna:1	Titular é suplente
+174717	latin1	-:1	um voto do cargo ({}) no RDV está com voto de legenda ({}) com conteúdo insuficiente
+174802	ascii	vota:1	 sem voto nominal correspondente
+174861	latin1	vota:1	NÃO VOTOU. Não entregar o comprovante
+174899	ascii	vota:1	VOTOU. Pode entregar o comprovante
+177738	latin1	-:2	Número livre
+177751	latin1	vota:1	memória livre
+179205	latin1	vota:1	Dado digitado não confere
+179231	ascii	vota:1	Dado digitado confere
+181693	ascii	api:1	creating a new engine
+181888	ascii	comum:1	para diminuir o volume
+181911	ascii	comum:1	para aumentar o volume
+181934	ascii	vota:1	Diminuindo o volume
+181954	ascii	vota:1	Aumentando o volume
+181981	latin1	vota:1	da mídia de resultado conforme
+184165	ascii	simulador:1	no style
+184174	ascii	simulador:1	Invalid style
+184744	ascii	vota:1	nascimento dele
+185345	ascii	api:1	No language resources are available
+185842	ascii	vota:1|-:1|comum:1	The numeric value of the format specifier is too large
+187071	ascii	vota:1	Por favor aguarde
+187287	ascii	vota:1|-:1|comum:1	Using automatic argument numbering in manual argument numbering mode
+187356	ascii	vota:1|-:1|comum:1	Using manual argument numbering in automatic argument numbering mode
+191812	latin1	ecourna:1	Não foi possível criar o QR code
+192004	ascii	comum:1	Tipo desconhecido de identidade
+192036	ascii	vota:1	a Identidade
+192094	ascii	vota:1	eleitor pediu acessibilidade
+192123	latin1	vota:1	Tela de instrução de acessibilidade
+192272	latin1	libc++:1	Assinar o caderno de votação antes de
+192310	latin1	-:1	Esta urna eletrônica só funcionará a partir de
+192357	ascii	vota:1	pergunte novamente ao eleitor o ano de
+192559	ascii	vota:1|-:1|comum:1	The format string contains an invalid escape sequence
+194546	ascii	libc++:2|comum:2|vota:2	map::at:  key not found
+199313	ascii	simulador:1	 - enqueued
+200177	ascii	api:5	Not supported
+201047	ascii	api:1	engine created
+201694	ascii	simulador:1	Yield - returned
+202049	ascii	vota:1	random_device getentropy failed
+202309	ascii	vota:2|api:1|libc++:1	thread constructor failed
+202661	ascii	api:1	thread::join failed
+203862	ascii	simulador:1	Wait - finished
+204942	ascii	api:1	0 eq sections read
+221349	ascii	vota-web:1	VOTA Web
+221867	latin1	vota:1	realização de uma nova tentativa
+221900	ascii	vota:1	Aceitar justificativa
+221987	ascii	vota:1	contagem regressiva
+222007	latin1	vota:1	eleitor está em situação de rua
+222091	latin1	-:1	um voto do cargo ({}) no RDV está com voto nominal ({}) para candidatura inapta
+222171	latin1	-:1	um voto do cargo ({}) no RDV está com voto nulo ({}) para candidatura apta
+222331	latin1	comum:1	Dado não é do Vota
+222472	ascii	comum:1	para fala mais lenta
+222493	ascii	vota:1	Fala mais lenta
+222509	latin1	libc++:2|ecourna:1|comum:1	não é de consulta
+222935	latin1	vota:1	à direita
+222945	ascii	ecourna:1	Header com marca incorreta
+222972	ascii	ecourna:1	Mensagem com marca incorreta
+223077	latin1	vota:1	Inspeção completa
+223095	ascii	ecourna:1	Tela Completa
+223921	latin1	vota:1	cartório eleitoral para consultar a data
+223962	ascii	vota:1	cartorio eleitoral para consultar a data
+225088	latin1	-	Votação suspensa
+225497	latin1	vota:1	Horário de abertura
+225517	latin1	vota:1	Mesários registrados na abertura
+225550	latin1	vota:1	Não houve registro na abertura
+225615	ascii	ecourna:1	Erro na assinatura
+225959	latin1	vota:2	Informe seu título para
+225983	latin1	vota:1	Título inválido para
+226004	ascii	comum:1	com a equipe de suporte para
+226082	latin1	vota:1	Imprimindo parâmetros de urna
+226112	latin1	vota:1	Parâmetros de urna
+226131	latin1	comum:1	Não há informação de urna
+226157	latin1	comum:1	Emitir mais cópias do boletim de urna
+226195	ascii	comum:1	Verifique se o boletim de urna
+226226	ascii	vota:1	Inspecione cabina e urna
+226251	latin1	-:1	NÃO CADASTRADO nesta urna
+226277	ascii	vota:1	Coloque o fone de ouvido na urna
+226310	ascii	vota:2	de nascimento dele no cadastro da urna
+226349	ascii	vota:1	Retire o fone de ouvido da urna
+226381	latin1	-:1	Emissão do estado da urna
+226407	ascii	api:1	Gravando o estado da urna
+226433	latin1	vota:1	Imprimindo relatório de estado da urna
+226472	latin1	vota:1	Tempo de aviso de desligamento não pode ser maior que o tempo para desligar a urna
+226555	ascii	comum:1	Desligar a urna
+226571	ascii	vota:1	Desligando a urna
+226589	ascii	vota:1	Urna operando na bateria externa
+226622	ascii	comum:1	B. Externa
+226633	ascii	vota:1	Urna operando na bateria interna
+226666	ascii	comum:1	B. Interna
+227002	latin1	vota:1	Mesário indicou reimprimir Boletim de Urna
+227045	latin1	vota:1	Mesário indagado sobre qualidade do Boletim de Urna
+227097	latin1	vota:1	Mesário indicou qualidade OK para Boletim de Urna
+227222	latin1	libc++:1	Primeira página
+227238	latin1	libc++:1	Próxima página
+227253	latin1	libc++:1	Última página
+227267	latin1	libc++:1	Página
+227286	ascii	vota:1	conectada na
+227318	latin1	vota:1	Fala em velocidade máxima
+227344	latin1	vota:1	Emissão de zerésima
+227364	latin1	comum:1	Reemissão da zerésima
+227386	latin1	vota:1	Aguardando confirmação para emissão da zerésima
+227434	latin1	vota:1	Aguardando data e hora para emissão da zerésima
+227482	latin1	comum:1	Emissão da zerésima
+227502	latin1	comum:1	Gerando o resumo da zerésima
+227531	latin1	comum:1	[2] para imprimir somente o resumo da zerésima
+227578	latin1	vota:1	Mesário indagado se quer imprimir a zerésima
+227623	latin1	comum:1	Gerando a zerésima
+227642	latin1	vota:1	Resumo da Zerésima
+227845	latin1	vota:1	Fala em velocidade mínima
+227871	latin1	-:1|vota:1	por não ter idade mínima
+227896	latin1	vota:1	Eleitor não tem idade mínima
+228242	latin1	libc++:1	A fonte de dados não pode ser nula
+228308	latin1	vota:1	Confirmação de justificativa nula
+228342	ascii	ecourna:1	{}: Resposta nula
+228414	latin1	vota:1	eleitor é um membro da comunidade indígena ou quilombola
+228528	latin1	ecourna:1	não foi passada nenhuma tela
+228557	latin1	comum:1	Lista de complementos de municípios vazia
+228599	ascii	vota:1	Pilha de contexto vazia
+228623	ascii	ecourna:2	String vazia
+228636	latin1	vota:1	Substitua a mídia de resultado por outra vazia
+228729	latin1	vota:5|ecourna:1	{}ª via
+228737	latin1	vota:1	Transferência temporária
+228762	latin1	vota:1	TTE: Transferência Temporária
+228855	ascii	comum:1	Local com biometria
+228875	latin1	vota:1	        Habilitação sem biometria
+228909	latin1	vota:1	O eleitor não possui biometria
+228940	latin1	comum:1	Não há informação de biometria
+229204	ascii	vota:1	BIO: Biometria
+229377	latin1	comum:1	Não há informação de criptografia
+229411	latin1	comum:1	Entidade inválida com informação de urna e criptografia
+229549	latin1	vota:1	Gravando o resultado na mídia
+229763	latin1	ecourna:1	Urna de contingência
+229784	latin1	-	Tabela de correspondência
+230275	ascii	vota:1	 que so tem uma escolha
+230299	latin1	vota:1	Código de identificação carga
+230329	latin1	comum:1	Histórico de código de carga
+230358	latin1	vota:4|comum:1	Código de identificação da carga
+230554	latin1	vota:1	e faça a entrega
+230571	latin1	ecourna:1	{}ª vaga
+230707	latin1	ecourna:1	Tela de Conferência de Voto Legenda
+230791	latin1	comum:1	para fala mais rápida
+230813	latin1	vota:1	Fala mais rápida
+230830	latin1	comum:1	Data/hora de desligamento do voto impresso não definida
+230886	latin1	ecourna:1	Versões de arquivos inválida
+230915	latin1	ecourna:1	Quantidade de suplentes inválida
+230948	latin1	vota:1	Data da eleição inválida
+230973	latin1	comum:1	Origem configuração inválida
+231002	latin1	comum:1	Sigla do partido inválida
+231028	latin1	ecourna:1	Necessidade especial inválida
+231058	latin1	ecourna:2|comum:1	Fase inválida
+231072	latin1	comum:1	Entidade inválida
+231090	latin1	ecourna:1	Justificativa inválida
+231113	latin1	ecourna:2	Hora inválida
+231127	latin1	ecourna:1	Versão da TAG inválida
+231150	latin1	simulador:1	CWasmThread::Create sem função válida
+231188	latin1	ecourna:1	A string [{}] não representa uma versão válida
+231235	ascii	ecourna:1	Forma suspensao com voto invalida
+231269	ascii	ecourna:1	Forma suspensao sem voto invalida
+231303	ascii	ecourna:1	busca no vetor em posicao invalida
+231338	latin1	-:1	Actions({}) - não reconhecida
+231368	latin1	ecourna:1	Description(EFileOperation) - não reconhecida
+231414	ascii	vota:1	Nenhuma candidatura a ser exibida
+231448	ascii	vota:1	Justificativa recebida
+231502	latin1	vota:1	Mídia de resultado gravada
+231537	ascii	api:1	Foto do eleitor apresentada
+231565	ascii	vota:1	Tipo de identidade digitada
+231593	latin1	vota:1	memória usada
+231607	latin1	vota:1	Digital do mesário não capturada
+231640	latin1	vota:1	Digital não capturada
+231662	ascii	vota:1	Digital capturada
+231680	latin1	vota:3	Identidade não registrada
+231706	latin1	vota:3	A data/hora da emissão do BU não foi registrada
+231754	latin1	ecourna:1	Extensão de arquivo de resultado associada ao identificador {} não encontrada
+231832	latin1	comum:1	Eleição {} não encontrada
+231858	latin1	comum:1	Configuração do município {} não encontrada
+231902	latin1	comum:1	Inscrição não encontrada
+231927	latin1	ecourna:1	Versão de pacote não encontrada
+231959	latin1	-:1	um voto do cargo ({}) no RDV está com voto nominal ({}) para resposta não encontrada
+232044	latin1	-:1	um voto do cargo ({}) no RDV está com voto nominal ({}) para candidatura não encontrada
+232132	ascii	ecourna:1	) nao encontrada
+232149	latin1	comum:1	 da candidatura ({}[{}]) não foi encontrada
+232253	latin1	vota:2	Votação encerrada
+232292	latin1	vota:1	Mídia de resultado retirada
+232379	ascii	vota:1	Tecla indevida pressionada
+232406	latin1	vota:1	Opção de visualização de candidatos selecionada
+232454	latin1	vota:1	Inspeção da urna terminada
+232481	latin1	vota:1	Inspeção da urna confirmada
+232509	latin1	comum:1	Caso a urna não seja ligada à tomada
+232585	latin1	ecourna:4|vota:1|comum:1	Instância já criada
+232605	ascii	-:1|ecourna:1	CCargos - instancia nao criada
+232636	ascii	ecourna:4|-:1|vota:1	CEleitores - instancia nao criada
+232670	ascii	ecourna:2|-:1|api:1	CRespostas - instancia nao criada
+232704	ascii	ecourna:1	CSubstituidorTitulo - instancia nao criada
+232791	ascii	vota:1	CMonitoraAlimentacao - instancia nao criada
+232945	ascii	comum:1	CHV - instancia nao criada
+232999	ascii	comum:1	CCargos - instancia ja criada
+233029	ascii	comum:1	CTelasVota - instancia ja criada
+233062	ascii	comum:1	CInfoMTLCD - instancia ja criada
+233095	ascii	comum:1	Instancia ja criada
+233115	latin1	vota:1	Inspeção da urna iniciada
+233194	latin1	ecourna:1	Tag [{}] não mapeada
+233215	latin1	ecourna:1	Tag [{}] já foi mapeada
+233239	ascii	comum:1	Identidade principal {} duplicada
+233273	latin1	comum:1	Não identificada
+233290	latin1	ecourna:1	Tag [{}] não codificada
+233314	ascii	vota:1	Pressione a tecla destacada
+233342	ascii	vota:1	desconectada da
+233389	latin1	vota:1	        Habilitação biométrica
+233420	latin1	comum:1	Eleitor {} com biometria em urna não biométrica
+233468	latin1	vota:1	Urna operando na rede elétrica
+233499	latin1	comum:1	R. Elétrica
+233604	latin1	vota:3	via única
+233701	latin1	comum:1	Não é permitido fazer cache de mensagem dinâmica
+233780	latin1	vota:1	Nenhum eleitor passou por habilitação biográfica
+233829	latin1	vota:1	Eleitores com habilitação biográfica
+233866	latin1	vota:1	        Habilitação biográfica
+233965	ascii	vota:1	Por favor, espere {}s para a
+234208	ascii	vota:7|comum:2|libc++:2	sz[{}] ptr[{}]
+234223	latin1	vota:1	Imprimindo relatório [{}] via nº [{}]
+234261	latin1	simulador:1	{} - O código da aplicação deve ser menor que {} [{}]
+234315	latin1	simulador:1	Não existe nenhuma operação com número menor que {} [{}]
+234372	latin1	simulador:1	Não existe nenhuma operação com número maior que {} [{}]
+234429	ascii	vota:1	Quantidade de {} [{}]
+234451	latin1	comum:1	Quantidade inválida de UFs [{}]
+234483	latin1	vota:1	Tipo de habilitação do eleitor [{}]
+234519	latin1	ecourna:1	Atribuido voto para cargo sem candidato por suspensão [{}]
+234578	latin1	-:1	Atribuido voto nulo por suspensão [{}]
+234617	latin1	-:1	Atribuido voto branco por suspensão [{}]
+234658	ascii	ecourna:1	Falha ao ler arquivo [{}]
+234729	latin1	comum:2	Tipo inválido [{}]
+234748	latin1	ecourna:1	Linha com nome inválido [{}]
+234777	latin1	ecourna:1	Número ultrapassou o tamanho máximo de {} casas em [{}]
+234833	ascii	ecourna:1	Tamanho de padding excessivo em [{}]
+234870	latin1	ecourna:1	Tamanho de padding secundário inválido em [{}]
+234917	latin1	ecourna:1	Tamanho de padding inválido em [{}]
+234953	latin1	ecourna:1	Cargo {} não possui [{}]
+234978	latin1	ecourna:1	{} - os {}s têm o mesmo nome [{}]
+235012	ascii	vota:1	Timeout de reconhecimento do dedo. Tentativa [{}] de [{}]
+235070	latin1	vota:1	Número de tentativas de reconhecimento do dedo. Tentativa [{}] de [{}]
+235141	ascii	vota:1	Solicita digital. Tentativa [{}] de [{}]
+235182	ascii	vota:1	Capturada a digital. Tentativa [{}] de [{}]
+235226	latin1	comum:1	o partido {} fazia parte das federações [{}] e [{}]
+235394	latin1	ecourna:1	Linha inválida [{}]
+235414	latin1	vota:1	Gerando relatório [{}] [{}]
+235442	latin1	vota:1	Espaço utilizado na MV [{}]
+235470	latin1	vota:1	Espaço livre na MV [{}]
+235494	latin1	vota:1	Espaço utilizado na MI [{}]
+235522	latin1	vota:1	Espaço livre na MI [{}]
+235546	latin1	vota:1	Tag do arquivo de versões de contratos inválida: [{}]. Tag atual: [{}]
+235617	latin1	vota:1	Tag do arquivo de dependências de contratos inválida: [{}]. Tag atual: [{}]
+235693	latin1	comum:1|ecourna:1	UF inválida: [{}]
+235711	ascii	ecourna:1	Carga da [{}]: [{}]
+235731	ascii	vota:1	Copiando arquivo de resultado para MI: [{}]
+235775	ascii	vota:1	Copiando arquivo de resultado para ME: [{}]
+235819	ascii	vota:1	Gerando arquivo de resultado [{}] + [{}]
+235860	latin1	vota:1	Digital capturada não corresponde a digital do eleitor: Polegar Direito [score {}], Polegar Esquerdo [score {}], Indicador Direito [score {}], Indicador Esquerdo [score {}]
+288369	latin1	vota:1	mídia inválida para gravação pelo motivo [%d]
+310579	ascii	vota:1	na Bateria Externa com [{:2.2f}V/{}A]
+310617	ascii	vota:1	na Bateria Interna com [{:2.2f}V/{}A]
+319820	ascii	api:2	Texto [
+319828	latin1	ecourna:1	CMontadorHash::CriaHashesDiretorio - diretório [
+319877	ascii	ecourna:1	Texto de busca repetido [
+319903	latin1	vota:1	Primeiro código verificador inválido [
+319942	latin1	ecourna:2	Serial inválido [
+319960	latin1	ecourna:1	Código da carga inválido [
+319987	latin1	ecourna:1	Serial da MV inválido [
+320011	latin1	ecourna:1	Serial da MC inválido [
+320035	ascii	ecourna:3	valor invalido [
+320052	ascii	vota:1	Frase muito grande [
+320073	ascii	api:1	RHVoice [
+320083	ascii	ecourna:1	tela nula [
+320095	latin1	ecourna:1	Item de menu não cabe na tela [
+320127	latin1	vota:1	Identificação inválida [
+320152	latin1	ecourna:3	Data inválida [
+320168	latin1	comum:1	UF inválida [
+320182	latin1	ecourna:1	ID de carga inválido: [
+321639	ascii	vota:1	Gravando o banco de dados na MV
+321671	ascii	vota:1	Gravando a justificativa na MV
+321702	ascii	api:1	Gravando o estado geral da urna na MV
+321740	latin1	vota:1	Falha na gravação do RDV na MV
+321771	latin1	vota:1	Ocorreu um erro copiando arquivos de resultado para o diretório de resultados da MV
+321855	latin1	vota:1	Ocorreu um erro copiando arquivos gerados para o diretório de trabalho da MV
+321932	ascii	vota:1	Assinando resultados para a MV
+321963	ascii	vota:1	Copiando resultados para a MV
+321993	ascii	vota:1	Ocorreu um erro copiando arquivos de resultados e assinatura  para a MV
+322204	latin1	comum:1	NÃO VOTOU
+322214	latin1	vota:1	JÁ JUSTIFICOU
+322396	ascii	vota:1	Imprimir QR Code no BU
+322654	latin1	-	BU SEÇÃO SA INT
+322714	ascii	simulador:1	= FE_NOT_PRESENT
+323951	ascii	ecourna:1	HASHES ARQUIVOS
+323967	ascii	ecourna:1	ARQUIVOS DE ELEITORES E CANDIDATOS
+324002	latin1	comum:1	REGISTRO DE MESÁRIOS
+324023	ascii	comum:1	FIM DOS TRABALHOS
+324781	ascii	comum:1	URNA OPERANDO EM PERFEITAS
+325175	latin1	vota:1	CONTINUAÇÃO DA VOTAÇÃO&IDENTIFIQUE O ELEITOR
+325220	latin1	comum:1	REINÍCIO DA VOTAÇÃO&IDENTIFIQUE O ELEITOR
+325357	ascii	vota:1	Posicione seu dedo POLEGAR ou INDICADOR
+325490	ascii	vota:1	desabilitando MR
+325507	ascii	ecourna:1|vota:1	habilitando MR
+325522	latin1	vota:1	Erro na cópia dos resultados para MR
+325559	ascii	vota:1	Copiando resultado para MR
+326383	latin1	-:1|comum:1	ATENÇÃO
+326391	latin1	vota:1	DEMONSTRAÇÃO PRÉ-ELEIÇÃO
+326416	latin1	ecourna:1	ZERÉSIMA DE SEÇÃO
+326434	latin1	libc++:1	VISUALIZAÇÃO
+326447	latin1	comum:1	REINÍCIO DA VOTAÇÃO
+326467	latin1	ecourna:1	ZERÉSIMA DE APURAÇÃO
+326488	latin1	ecourna:1	IMPRESSO EM MODO DEMONSTRAÇÃO
+326518	latin1	comum:1	REIMPRESSÃO
+326597	ascii	comum:6|vota:5|vota-web:1	10.23.0.1 - DESENVOLVIMENTO
+326637	latin1	vota:1	optou por votar EM TRÂNSITO
+326665	ascii	vota:1	ANO DE NASCIMENTO INCORRETO
+326697	latin1	vota:1	TÉRMINO
+326705	ascii	ecourna:2|libc++:1	VOTO NULO
+326715	latin1	comum:1	EMISSÃO DO RELATÓRIO
+326736	latin1	vota:1	INÍCIO
+326825	latin1	vota:1	NÃO HÁ CANDIDATOS CONCORRENDO
+326855	latin1	vota:1	ÁUDIO DESATIVADO
+326872	latin1	vota:2|-:1	ÁUDIO ATIVADO
+326886	latin1	vota:1	ÚLTIMO VOTO FOI COMPUTADO
+326912	latin1	comum:1	NÚMERO ERRADO
+326926	ascii	ecourna:2	VOTO EM BRANCO
+326941	latin1	-	REG AUTENTICAÇÕES SIECO
+326965	latin1	-	REG CERTIFICAÇÕES SIECO
+327085	ascii	ecourna:1	PRAGMA foreign_keys = ON
+327997	latin1	ecourna:1	INDISPONÍVEL
+328278	latin1	-	BU imp. de Justif. Seção MI
+328318	latin1	vota:1	Não há dados a serem salvos na MI
+328352	latin1	vota:1	Gerando boletim de mesários na MI
+328386	ascii	vota:1	Gerando os resultados na MI
+328446	latin1	-	Arquivo de versões na MI
+328471	ascii	vota:1	Gerando boletim de justificativa na MI
+328510	ascii	vota:1	Gravando a justificativa na MI
+328541	ascii	vota:1	Gerando boletim de urna na MI
+328571	ascii	api:1	Gravando o estado geral da urna na MI
+328609	latin1	vota:1	Falha na gravação do RDV na MI
+328640	latin1	-	Resumo da Zerésima MI
+328662	ascii	vota:1	Assinando resultados da MI
+328689	ascii	vota:1	Copiando resultados da MI
+329651	latin1	vota:1	Não é permitido justificar com o CPF
+330071	ascii	comum:1	DESLIGUE A URNA NA CHAVE
+330143	ascii	vota:1	Data de fechamento da UE
+330168	ascii	vota:1	Data de abertura da UE
+330275	ascii	ecourna:1	CANDIDATO INEXISTENTE
+330305	ascii	vota:1	ELEITOR DEVE VOTAR NOVAMENTE
+330334	ascii	ecourna:1	ELEITORES HABILITADOS BIOGRAFICAMENTE
+330372	latin1	vota:2	URNA ELETRÔNICA INOPERANTE
+330456	latin1	vota:1	Início do teste de Teclado do TE
+330585	latin1	vota:1	Inicia uma sessão no MSE
+330610	latin1	vota:1	Finaliza a sessão no MSE
+330656	ascii	simulador:1	CABINA: LIVRE
+330753	latin1	ecourna:1	CANDIDATO NÃO CONCORRE
+330776	latin1	ecourna:1	CANDIDATA NÃO CONCORRE
+330931	latin1	-	BU imp. de Justif. Seção ME
+330971	latin1	-	Arquivo de versões na ME
+331065	ascii	vota:1	FALHA NA ME: SUBSTITUA A ME
+331345	latin1	vota:1	NÃO HÁ QR CODE
+331385	latin1	comum:1	A JUSTIÇA ELEITORAL AGRADECE
+331975	latin1	vota:1	Inicia uma sessão no MSD
+332000	latin1	vota:1	Finaliza a sessão no MSD
+333327	latin1	ecourna:1	ALIMENTAÇÃO AC
+334776	latin1	-	VOTAÇÃO SUSPENSA
+334828	latin1	-	Arquivo de versões do SA
+334888	ascii	comum:1	DO BOLETIM DE URNA
+334907	ascii	comum:1	ESTADO DA URNA
+334922	ascii	vota:1	FALHA NA MI: SUBSTITUA A URNA
+334952	latin1	ecourna:1	ALIMENTAÇÃO BATERIA EXTERNA
+334980	latin1	ecourna:1	ALIMENTAÇÃO BATERIA INTERNA
+335008	ascii	comum:1	URNA OPERANDO NA BATERIA INTERNA
+335057	latin1	comum:1	IMPRESSÃO DA ZERÉSIMA
+335079	latin1	ecourna:1	RESUMO DA ZERÉSIMA
+335098	ascii	ecourna:1	{}a. VIA
+335107	latin1	comum:1	CONTINGÊNCIA
+335120	latin1	-:1|vota:1	RESUMO DA CORRESPONDÊNCIA
+335173	ascii	ecourna:1	COMPROVANTE DE CARGA
+335222	ascii	ecourna:2	VOTO DE LEGENDA
+335238	ascii	simulador:1	CABINA: OCUPADA
+335254	latin1	vota:1	Mudança do estado da chave: URNA DESLIGADA
+335297	latin1	vota:1	AUSÊNCIA JUSTIFICADA
+335343	latin1	ecourna:1	CRÍTICA
+335481	latin1	comum:1	Continuar registrando mesários?
+335513	latin1	comum:1	Finalizar registro de mesários?
+335616	latin1	vota:1	Deseja enviar a urna para manutenção?
+335654	latin1	comum:1	Registrar mesário?
+335673	latin1	-:1	Deseja realmente desativar o áudio?
+335709	latin1	-:1	Deseja realmente ativar o áudio?
+335742	latin1	vota:1	O eleitor ainda está votando?
+335772	latin1	vota:1	Encerramento de votação antecipado?
+335808	ascii	vota:1	Quer testar o teclado?
+335972	latin1	vota:1	Todas as pessoas presentes já votaram?
+336203	ascii	comum:1	Quer imprimir o boletim de urna?
+336236	latin1	comum:1	Quer imprimir a zerésima?
+336331	ascii	comum:1	 SET identidade_habilitacao = ?, tipo_identidade_habilitacao = ?, estado_comparecimento = ?, tipo_ativacao_audio = ?, tipo_habilitacao = ?,  dedo_habilitacao = ?, score_habilitacao = ?, numero_tentativa = ?, erro_decifrar_biometria = ?, estado_apresentacao_foto = ?, resultado_decifracao_foto = ?, titulo_mesario = ?, tipo_identificador_mesario = ? WHERE titulo = ?
+336697	ascii	comum:1|ecourna:1	Quantidade de <SCPB> agregad<S|os|os|as>
+336916	latin1	vota:1	não pertence <S|a|ao|à> <SCSN>
+336971	ascii	vota:1	para <P|este|este|esta> <PLSB>
+337182	ascii	simulador:1	CWasmScreen this=
+337347	latin1	ecourna:1	============DEMONSTRAÇÃO==============
+337464	ascii	vota:1	============= BU DIGITAL =============
+337503	ascii	vota:1	======== CERTIFICADO DIGITAL =========
+338570	latin1	comum:1	mídia inválida [%d] arquivos:
+338607	latin1	comum:1	Quantidade de mesários registrados:
+338678	latin1	comum:1	Número de cópias desejadas:
+338727	latin1	comum:1	Escolha a sua opção:
+338748	latin1	vota:2	Seção:
+338755	latin1	vota:1	Previsão de horário de verão:
+338785	ascii	vota:2	Digite o ANO de nascimento:
+338813	latin1	comum:1	Título:
+338821	latin1	comum:1	Título inválido:
+339109	ascii	vota:1|comum:1|-:1	Aperte a tecla:
+339145	latin1	vota:1	MESÁRIOS:
+339205	ascii	vota:1	ESCOLHA O TIPO:
+339221	latin1	vota:1	MINISTÉRIO PÚBLICO:
+339241	ascii	vota:1	JUIZ ELEITORAL:
+339288	ascii	vota:1	TURMA APURADORA:
+348663	latin1	api:1	Letícia-F123
+352108	latin1	-	Código do pleito 2
+352176	latin1	api:1	maxX menor que a posição x da linha 2
+356298	latin1	-	Código do pleito 1
+356353	latin1	api:1	maxX menor que a posição x da linha 1
+358802	latin1	-	(0x{:X} - {}) Não foi possível incluir o arquivo {} no pacote {}.
+358868	latin1	vota:1	Início: {}, fim: {}.
+358889	ascii	vota:1	{cargo-atual} {quantidade-digitos}. Voto {progresso}.
+358943	latin1	vota:2	Você está votando para {cargo-atual}. {quantidade-digitos}. Voto {progresso}.
+359549	latin1	comum:1	A data da eleição já passou.
+359578	ascii	ecourna:1	EncryptInit_ex falhou.
+359601	ascii	ecourna:1	DecryptInit_ex falhou.
+359971	ascii	-:5|ecourna:1	Attempt to access an uninitialized boost::match_results<> class.
+360036	latin1	ecourna:1	Apenas mídias de resultado possuem informação de inicialização de aplicativos.
+360115	latin1	ecourna:1	Não é possível calcular o hash de dados vazios.
+360163	latin1	comum:1	ela será desligada em {} segundos.
+360198	latin1	ecourna:1	Há eleições com identificadores repetidos.
+360241	latin1	ecourna:1	Eleição não tem cargos definidos.
+360275	latin1	ecourna:6	Chame o método 'Next()' antes de buscar resultados.
+360327	latin1	vota:1	Mídia de resultado já contém arquivos de resultados.
+360380	latin1	-:1	Se o erro persistir, substitua a mídia de resultados.
+360596	latin1	comum:1	obter mais instruções.
+360619	latin1	vota:1	conforme as instruções.
+360643	latin1	libc++:1	Não há outras informações.
+360670	latin1	ecourna:1	Um TSharedSymmetricCipher é necessário para decifrar chaves.
+360731	ascii	ecourna:1	tamanho minimo do salt deve ser 16 bytes.
+360773	ascii	ecourna:1	O tamanho da chave deve ser igual 16 bytes.
+360817	latin1	ecourna:1	Há eleições sem versão de pacotes.
+360871	latin1	comum:1	Quantidade não nula e sem suplências.
+360909	latin1	comum:1	Quantidade de suplências incompatível com sequência de suplências.
+360976	ascii	vota:1	Ocorreu um erro enquanto o eleitor registrava suas escolhas.
+361037	latin1	ecourna:1	Há eleições com situações inválidas.
+361074	latin1	comum:1	Campo qtdMinucias não confere com quantidade de minúcias enviadas.
+361141	latin1	ecourna:1	Eleitor que votou não possui informações sobre a apresentacao de fotos do eleitor.
+361224	ascii	vota:1	Ocorreu um erro durante captura da digital do eleitor.
+361279	latin1	vota:1	Não há dados salvos de biometria do eleitor.
+361391	latin1	-:1	Se o erro persistir, substitua o módulo impressor.
+361457	latin1	comum:1	Há cargos com mesmo identificador.
+361587	ascii	ecourna:1	Sem dados para decifrar.
+361612	ascii	ecourna:1	Sem dados para cifrar.
+361635	latin1	-:1	Argumento inválido validar assinar.
+361723	ascii	ecourna:1	Falha ao autenticar.
+361744	latin1	-:1	está impedido de votar ou justificar.
+361842	latin1	-:1|ecourna:1	Motivo não informado pelo serviço.
+361877	latin1	ecourna:1	IInterfaceSavd::EnviarAcaoHSM - Tentativa de envio de ação inválido ao serviço.
+361957	latin1	-:1	não está apto a votar nesta eleição.
+361994	latin1	-	Tipo inválido para urna de seção.
+362028	latin1	ecourna:1	Códigos de município incompatíveis para seção.
+362075	latin1	-:1	Se o erro persistir, substitua a mídia de votação.
+362126	latin1	-:1|ecourna:1	Não há informação.
+362145	latin1	ecourna:1	Não existe título de eleitor associado a esta habiliação.
+362203	latin1	-:1	Se o erro persistir, substitua a mídia de aplicação.
+362256	latin1	ecourna:3	Não há informação de horário de verão.
+362295	latin1	vota:1	Não existe previsão de horário de verão.
+362336	latin1	ecourna:1	Argumento inválido assinar verificar arquivo.
+362382	latin1	vota:1	Não encontrou digital coletada em nenhum dos arquivos, vai salvar a digital em novo arquivo.
+362492	latin1	ecourna:1	Autenticação não definida para este aplicativo.
+362540	ascii	ecourna:1	Falha ao iniciar o contexto.
+362569	latin1	comum:1	O horário de emissão da zerésima passou. Verifique se o relógio da urna está certo.
+362653	latin1	vota:1	Você está votando para {cargo-atual} no número {voto}. Aperte confirma para votar na legenda {legenda}, {nome-partido}, ou corrige para reiniciar o seu voto.
+362811	ascii	vota:1	Confira o seu voto.
+362831	latin1	vota:1	Você está votando para {cargo-atual} no número {voto}. Candidato inexistente. Aperte confirma para votar na legenda {legenda}, {nome-partido}, ou corrige para reiniciar este voto.
+363011	latin1	vota:1	Você está votando para {cargo-atual}. Digite os demais dígitos do seu candidato, ou aperte confirma para prosseguir, ou corrige para reiniciar este voto.
+363165	latin1	vota:1	Você está votando para {cargo-atual} no candidato {voto}. Número errado. Aperte confirma para prosseguir, ou corrige para reiniciar este voto.
+363308	latin1	api:1	Não há informação de foto.
+363335	latin1	ecourna:1	Informação habilitacaoPorCodigo era esperada neste ponto.
+363393	latin1	ecourna:1	Não foram definidos os dados de comparecimento.
+363441	latin1	comum:1	Erro no hash encadeado: Tipo de identificador do cabeçalho da entidade BU precisa ser um pleito.
+363538	ascii	ecourna:1	Modo de abertura do zip incorreto.
+363573	latin1	ecourna:1	Modo de compressão incorreto.
+363603	latin1	-:1	Parâmetro incorreto.
+363656	latin1	-:1	Desligue a urna, retire a mídia de votação e a mídia de resultado e utilize o ADH para ajustar o horário desta urna, ou leve a mídia de votação e a mídia de resultado para outra urna de contingência com horário correto.
+363876	latin1	ecourna:1	Dados de comparecimento cifrados não definidos para este objeto.
+363941	latin1	ecourna:1	Dados de apresentação de foto de eleitor não definidos para este objeto.
+364014	latin1	ecourna:1	Dados de comparecimento não definidos para este objeto.
+364070	latin1	ecourna:1	Data e hora de início não definidos para este objeto.
+364124	latin1	ecourna:1	Data e hora de fim não definidos para este objeto.
+364175	latin1	ecourna:1	Comparecimento de mesários no encerramento não definido para este objeto.
+364249	latin1	ecourna:1	Habilitação de áudio não definido para este objeto.
+364301	latin1	ecourna:1	Estado de habilitação por código não definido para este objeto.
+364365	latin1	ecourna:1	Comparecimento de mesários na abertura não definido para este objeto.
+364435	latin1	ecourna:1	Habilitação biométrica não definida para este objeto.
+364489	latin1	comum:1	Construtor exclusivo para transferências de fato.
+364539	ascii	comum:1	Sequenciador com valor errado para o carregamento de fotos do candidato.
+364612	ascii	comum:1	Erro ao carregar codigo do candidato.
+364650	ascii	comum:1	Sequenciador com valor errado para o carregamento de codigo do candidato.
+364724	latin1	ecourna:1	Tipo de cargo de candidato sem informações de candidato.
+364781	latin1	ecourna:2	Não é cargo de candidato.
+364807	latin1	comum:1	Mesário registrado com sucesso.
+364839	ascii	ecourna:1	Identificador do par de chaves igual a zero.
+364898	latin1	-:1	CPF não encontrado. Digite o Título.
+364935	latin1	comum:1	O ponteiro para a DAO não pode ser nulo.
+364976	ascii	ecourna:1	salt vazio.
+364988	ascii	ecourna:2	Vetor de dados vazio.
+365010	ascii	comum:1	Conjunto de respostas vazio.
+365039	latin1	ecourna:1	Criação de QRCode com texto vazio.
+365074	latin1	ecourna:1	conteúdo de info vazio.
+365098	latin1	ecourna:2|libc++:1|comum:1	conteúdo vazio.
+365114	ascii	ecourna:1|vota:1	Bytes da chave vazio.
+365136	ascii	ecourna:1	Titular da chave vazio.
+365160	ascii	ecourna:1	Nome do pacote vazio.
+365182	ascii	ecourna:1	Nome vazio.
+365194	latin1	ecourna:1	número aleatório da UE vazio.
+365224	latin1	ecourna:1	Para situação diferente de NaoReconhecido é preciso informar o título de eleitor do mesário.
+365317	latin1	ecourna:1	Para situação igual a NaoReconhecido não deve ser informado o título de eleitor do mesário.
+365409	latin1	vota:1	Inspeção terminada.&Siga as instruções&no terminal do mesário.
+365472	latin1	comum:1	Siga as instruções no terminal do mesário.
+365515	latin1	vota:1	Não há dados salvos de biometria do mesário.
+365560	latin1	vota:1	Digital coletada bate com uma digital gravada após o registro inicial de mesário. Não é possível associar a habilitação a um mesário.
+365694	latin1	comum:1	Deve existir no mínimo um município.
+365731	latin1	ecourna:1	Eleitor que votou não possui informações sobre habilitação por áudio.
+365801	latin1	vota:1	Biometria desativada na configuração da eleição, fluxo indevido.
+365866	ascii	comum:1	Tipo de local indefinido.
+365892	latin1	ecourna:1	O identificador de habilitação do eleitor não está definido.
+365953	latin1	ecourna:1	O identificador principal do eleitor não está definido.
+366009	latin1	ecourna:2	O identificador de habilitação do eleitor precisa estar definido.
+366075	latin1	ecourna:1	País inválido.
+366090	latin1	ecourna:1	Número de dígitos inválido.
+366118	latin1	asn1-modules:1|ecourna:1	Estado de apresentação da foto do eleitor inválido.
+366170	latin1	asn1-modules:1|ecourna:1	Resultado da apresentação da foto do eleitor inválido.
+366225	latin1	ecourna:1	tipo do arquivo inválido.
+366251	latin1	-:1	Tipo do arquivo inválido.
+366277	latin1	-:1	Arquivo inválido.
+366295	latin1	asn1-modules:1|ecourna:1	Forma de suspender com voto inválido.
+366333	latin1	asn1-modules:1|ecourna:1	Forma de suspender sem voto inválido.
+366371	latin1	ecourna:2	Código de formato da foto inválido.
+366407	latin1	vota:1	Ano de nascimento inválido.
+366435	latin1	comum:1	Pleito inválido.
+366452	latin1	comum:1	Nome neutro inválido.
+366474	latin1	-:1	Tipo inválido.
+366489	latin1	comum:1	Nome feminino inválido.
+366513	latin1	comum:1	Nome masculino inválido.
+366538	latin1	libc++:1	Forma de validar título inválido.
+366572	latin1	libc++:1	Alinhamento do título inválido.
+366604	latin1	libc++:1	Estilo do título inválido.
+366631	latin1	ecourna:1	Fuso-horário inválido.
+366654	latin1	ecourna:1	Código de município inválido.
+366684	latin1	-:1|ecourna:1	Município inválido.
+366704	latin1	ecourna:2	Chave AES de tamanho inválido.
+366735	latin1	ecourna:2	Tipo de id de cabeçalho inválido.
+366769	latin1	ecourna:1	Tipo de cargo inválido.
+366793	latin1	ecourna:1	Código de cargo inválido.
+366819	latin1	ecourna:1	Foi lido conteúdo inválido.
+366847	latin1	comum:1	Período inválido.
+366865	latin1	asn1-modules:1	Tipo dedo inválido.
+366885	latin1	ecourna:1	Tipo de dedo inválido.
+366908	latin1	comum:1	Nome abreviado inválido.
+366933	latin1	ecourna:1	Valor de origem inválido.
+366959	latin1	comum:1	Número de votável inválido.
+366987	latin1	libc++:1	Gênero do label inválido.
+367013	latin1	asn1-modules:1|ecourna:1	Estado de coleta de digital inválido.
+367051	latin1	comum:1	Processo eleitoral inválido.
+367080	latin1	asn1-modules:1	Tipo IDEleitoral inválido.
+367107	latin1	-:1	Local inválido.
+367123	latin1	ecourna:1	CHashArquivo: hash inválido.
+367152	latin1	ecourna:1	CHashArquivo: nome inválido.
+367181	latin1	ecourna:1	CHashDiretorio: nome inválido.
+367212	latin1	comum:1	Nome inválido.
+367227	latin1	ecourna:1	Tipo de id inválido.
+367248	latin1	asn1-modules:1	Formato de data inválido.
+367274	latin1	ecourna:1|asn1-modules:1	Tipo de erro de biomoetria inválido.
+367311	latin1	comum:1	Argumento tipo de biometria inválido.
+367349	latin1	ecourna:1	id da criptografia inválido.
+367378	latin1	-:1	ID da criptografia inválido.
+367407	latin1	ecourna:1|asn1-modules:1	Tipo de mídia inválido.
+367431	latin1	comum:1	Serial da mídia de carga inválido.
+367466	latin1	ecourna:1	Nome da UF inválido.
+367487	latin1	-:1	Tipo de ID inválido.
+367508	latin1	-	Número de série '{}' inválido.
+367539	latin1	ecourna:1	Índice do parâmetro fora do intervalo válido.
+367585	latin1	ecourna:1	Índice da coluna fora do intervalo válido.
+367628	utf8	ecourna:2	Turno inválido.
+367645	ascii	ecourna:1	Limite de tentativas atingido.
+367676	latin1	vota:1	Limite de verificações de dado do eleitor atingido.
+367728	latin1	vota:1	Fim da verificação 1x4 atingido.
+367780	latin1	-	Coluna {} não faz parte do resultado.
+367818	latin1	-:1	Arquivo não encontrado.
+367842	latin1	ecourna:1	Dedo não encontrado.
+367863	latin1	comum:1	O relógio da urna está errado.
+367894	latin1	ecourna:5	Cargo não posicionado.
+367917	latin1	ecourna:1	Campo ({}) não informado.
+367943	latin1	-	O arquivo {} não pode ser criado.
+367977	latin1	-	O arquivo {} está fechado.
+368004	latin1	api:4	Create(size_t) não sobrecarregado.
+368039	latin1	api:4	Create(const std::string &) não sobrecarregado.
+368087	latin1	ecourna:1	O nome de uma chave não pode ser modificado.
+368132	latin1	comum:1	País em branco.
+368148	ascii	comum:1	Nome da uf em branco.
+368170	ascii	comum:1	Sigla da uf em branco.
+369169	latin1	ecourna:1	Argumento inválido para ação do hsm.
+369206	latin1	comum:1	Quantidade de suplências incompatível.
+369245	latin1	-:1	Versão incompatível.
+369266	latin1	asn1-modules:1	Valor não disponível.
+369380	latin1	comum:1	Eleitor de voto em trânsito sem informações de domicílio eleitoral.
+369448	latin1	-:1	Desligue a urna eletrônica e envie-a para a Junta Eleitoral.
+369509	latin1	asn1-modules:1	Agregada igual à principal.
+369537	latin1	vota:1	Argumento inválido, tamanho do local.
+369575	latin1	vota:1	Argumento inválido para local.
+369791	ascii	ecourna:1	Falha ao atualizar o hash.
+369818	ascii	ecourna:1	Falha ao finalizar o hash.
+369845	latin1	vota:1	de execução do teste.
+369867	latin1	comum:1|ecourna:1	Argumento inválido validar assinar o pacote.
+369912	latin1	comum:1	Há cargos com abrangência diferente.
+370017	latin1	-:1	Desligue a urna, insira uma mídia de votação usada de outra urna que apresentou problema e tente novamente.
+370125	latin1	-:1	Desligue a urna, insira uma mídia de votação válida e tente novamente.
+370196	latin1	ecourna:1	Identificador do eleitor não definido corretamente.
+370248	latin1	-:1	Memória insuficiente.
+370270	latin1	ecourna:1	Cada índice no mapa deve ser igual ao código do município da configuração correspondente.
+370360	latin1	ecourna:1	O nome de uma seção é constante.
+370393	latin1	comum:1	A urna eletrônica está inoperante.
+370830	latin1	libc++:1	Candidato não concorre.
+371345	latin1	vota:1	Você está votando para {cargo-atual} n{o/a} candidat{o/a} {voto}: {candidato-com-suplentes}. Aperte confirma ou corrige.
+371466	latin1	vota:1	Você está votando para {cargo-atual} n{o/a} candidat{o/a} {voto}: {candidato}. Aperte confirma ou corrige.
+371573	latin1	vota:1	Você está respondendo à pergunta: {cargo-atual}. Você escolheu a opção {voto}: {escolha-referendo}. Aperte confirma ou corrige.
+371701	latin1	vota:2	Você está votando em branco para {cargo-atual}. Aperte confirma ou corrige.
+371777	latin1	vota:1	Você está votando para {cargo-atual} n{o/a} candidat{o/a} {voto}: {candidato}. Candidat{o/a} já foi escolhid{o/a} em voto anterior. Se apertar confirma, este voto será nulo. Aperte confirma ou corrige.
+371979	latin1	vota:2	Você está votando para {cargo-atual} no candidato {voto}. Número errado. Se apertar confirma, este voto será nulo. Aperte confirma ou corrige.
+372122	latin1	vota:1	Você está votando para {cargo-atual} n{o/a} candidat{o/a} {voto}. Candidat{o/a} não concorre. Se apertar confirma, este voto será nulo. Aperte confirma ou corrige.
+372286	latin1	vota:1	Você já votou na opção "{escolha-referendo}". Se apertar confirma, este voto será nulo. Aperte confirma ou corrige.
+372402	latin1	vota:1	Você está votando em branco. Aperte confirma ou corrige.
+372459	ascii	comum:2|vota:1	Por favor, aguarde.
+373402	latin1	ecourna:1	Tipo de cargo de consulta sem informações de consulta.
+373457	latin1	ecourna:4|-:1	Não é cargo de consulta.
+373567	ascii	vota:1	Por favor, inspecione cabina e urna.
+373604	latin1	vota:1	O QR code ao lado contém o certificado desta urna.
+373655	latin1	-:1	O QR code ao lado contém o resultado da votação para esta urna.
+373719	latin1	-:1	Se o erro persistir, faça a apuração em outra urna.
+373771	ascii	-:1|comum:1	Desligue a urna.
+373852	latin1	-:1	Se o erro persistir, substitua a mídia externa.
+373900	latin1	-:1	Se o erro persistir, substitua a mídia interna.
+373948	latin1	-:1	Se o erro persistir, tire uma foto dessa tela em que apareça o QR Code ao lado e envie para a equipe de suporte para receber auxílio para resolução do problema.
+374109	latin1	-:1	Tire uma foto dessa tela em que apareça o QR Code ao lado e envie para a equipe de suporte para receber auxílio para resolução do problema.
+374249	ascii	ecourna:1	Quantidade de bits nula.
+374274	latin1	comum:1	Diferença de horário nula.
+374301	ascii	comum:1	Lista de cargos vazia.
+374324	latin1	ecourna:1	A lista de configurações de municípios não pode ser vazia.
+374383	latin1	ecourna:1	A lista de partidos não pode ser vazia.
+374423	latin1	comum:1	chave de sessão vazia.
+374446	ascii	ecourna:2|libc++:1	chave vazia.
+374459	ascii	ecourna:1|-:1	Chave vazia.
+374472	ascii	ecourna:1	A fila estava vazia.
+374493	ascii	comum:1	chave secreta vazia.
+374514	ascii	ecourna:1	tabela de criptografia da UE vazia.
+374550	latin1	comum:1	Eleitor corrente não tem biometria.
+374586	latin1	comum:1	Não tem nem foto nem dedos, mas falou que tem biometria.
+374643	latin1	-	Construtor exclusivo para sem transferência.
+374688	latin1	ecourna:1	Códigos de município incompatíveis para urna de contingência.
+374750	latin1	-:1	Desligue a urna e faça uma nova carga.
+374789	latin1	vota:1	Ativação de áudio não permitida.
+374841	latin1	ecourna:1	Quantidade de escolhas inválida.
+374874	latin1	-:1|ecourna:1	Seção inválida.
+374890	latin1	ecourna:1	Operação inválida.
+374909	latin1	ecourna:1	Situação arquivo inválida.
+374936	latin1	asn1-modules:1	Situação do arquivo inválida.
+374966	latin1	ecourna:1	Página de impressão do voto inválida.
+375004	latin1	ecourna:1|asn1-modules:1	Situação de comparecimento inválida.
+375041	latin1	asn1-modules:1|-:1	Situação de habilitação do áudio inválida.
+375084	latin1	ecourna:1	Estrutura do código de cargo inválida.
+375123	latin1	-:1|asn1-modules:1	Situação de habilitação por código inválida.
+375168	latin1	ecourna:3|comum:1	Fase inválida.
+375183	latin1	comum:1	CHOICE de id inválida.
+375206	latin1	comum:1	Resposta inválida.
+375225	latin1	comum:1	Pergunta inválida.
+375244	latin1	comum:1|-:1|ecourna:1	Zona inválida.
+375259	latin1	ecourna:1	Abrangência inválida.
+375281	latin1	asn1-modules:1	Agregada inválida.
+375300	latin1	ecourna:1	Sigla da UF inválida.
+375322	latin1	comum:1	Opção de Detalhe Inválida.
+375349	latin1	comum:1	A entidade não está válida.
+375377	latin1	comum:1	A entidade não está estritamente válida.
+375418	latin1	comum:1	Classe DAO {} já foi registrada.
+375451	latin1	comum:2	Classe DAO {} não foi registrada.
+375485	ascii	ecourna:1	Estrutura de dados mal formada.
+375517	ascii	ecourna:1	Classe de dados de comparecimento mal formada.
+375595	ascii	vota:1	Chave privada com tamanho pequeno. Esperado pelo menos [{}]. Encontrado [{}].
+375748	ascii	ecourna:3	O tipo '{}' deve ter valores no intervalo [{},{}].
+375847	latin1	vota:1	Ocorreu um erro durante a persitência dos dados na MV.
+375902	latin1	vota:1	Ocorreu um erro durante a sincronização da justificativa na MV.
+375966	latin1	api:1	Ocorreu um erro durante a sincronização do estado geral da urna na MV.
+376037	latin1	-:1	O QR code ao lado contém o resultado da votação para esta urna. Use as teclas 3 e 9 para navegar pelas partes do BU.
+376154	latin1	comum:1	AOS MESÁRIOS.
+376168	latin1	vota:1	Ocorreu um erro durante a cópia do resultado para a MR.
+376224	latin1	ecourna:1	Tipo de mídia inválido para este construtor: MR.
+376273	ascii	ecourna:1	Falha ao fazer decode BER.
+376307	ascii	ecourna:2	Erro ao alocar contexto de cifra OpenSSL.
+376349	latin1	vota:1	Ocorreu um erro durante a geração do boletim de mesários na MI.
+376413	latin1	-:1	Ocorreu um erro durante a persitência dos dados na MI.
+376468	latin1	vota:1	Ocorreu um erro gerando os resultados no diretório de trabalho na MI.
+376538	latin1	vota:1	Ocorreu um erro durante a geração do relatório de eleitores habilitados biograficamente na MI.
+376633	latin1	vota:1	Ocorreu um erro durante a geração do boletim de justificativa na MI.
+376702	latin1	vota:1	Ocorreu um erro durante a sincronização da justificativa na MI.
+376766	latin1	vota:1	Ocorreu um erro durante a geração do boletim de urna na MI.
+376826	latin1	api:1	Ocorreu um erro durante a sincronização do estado geral da urna na MI.
+376897	ascii	vota:1	Ocorreu um erro assinando os resultados da MI.
+376944	latin1	vota:1	Ocorreu um erro copiando os resultados para o diretório de resultados da MI.
+377021	latin1	vota:1	Ocorreu um erro copiando os arquivos de resultado para o diretório de definitivo da MI.
+377109	ascii	comum:1	E PREPARE-A PARA TRANSPORTE.
+377151	latin1	api:1	Ocorreu um erro durante a sincronização do estado geral do VOTA.
+377216	latin1	ecourna:1	O tamanho de salt não pode ser menor do que 16.
+377264	latin1	ecourna:1	O tamanho de informacaoAdicional não pode ser menor do que 16.
+377327	ascii	ecourna:1	Nao foi converter para base64.
+377358	latin1	ecourna:1	Versão deve ter tamanho 12.
+377386	latin1	ecourna:1|comum:1	Não há pleito 2.
+377421	latin1	vota:1|api:1	A posição da caixa não pode ter x < 3 ou y < 1.
+377469	latin1	-	Criação de QRCode com largura 0.
+377528	ascii	vota:1	 segundos...
+377541	ascii	vota:1	 segundo...
+377563	ascii	vota:4|comum:1	Por favor, aguarde...
+377585	latin1	-	O tamanho do número de inscrição eleitoral não pode ser maior do que {} ({}).
+377663	latin1	-	O tamanho do número de identificação livre não pode ser maior do que {} ({}).
+377741	latin1	-	O tamanho do número de CPF não pode ser maior do que {} ({}).
+377803	latin1	-	O número de identificação de eleitor deve ser numérico ({}).
+377864	latin1	comum:1	Mesário(a) não reconhecido(a).
+377979	latin1	comum:1	Não há mídia de resultado de inialização para a aplicação '{}'.
+378086	latin1	vota:1	-> Urna em horário de verão <-
+378128	ascii	vota:1	---------LISTA DE CANDIDATOS----------
+378206	ascii	vota:1	-------------- {:02} / {:02} ---------------
+378618	latin1	comum:1	Versões de pacotes ({}/{})
+378645	ascii	comum:1	Lista de eleitores ({}/{})
+378672	latin1	comum:1	Parâmetros de urna ({}/{})
+378699	ascii	comum:1	Estado da urna ({}/{})
+378722	latin1	vota:1	Biometria coletada não é do mesário {} ({})
+378766	latin1	vota:1	Biometria do mesário {} encontrada nos arquivos coletados ({})
+378855	latin1	vota:1	Biometria do mesário {} encontrada em eleitores ({})
+378908	ascii	ecourna:1	Identificador principal ({}) ausente para o eleitor ({})
+378965	ascii	comum:1	Identidade duplicada ({}) para o eleitor ({})
+379011	ascii	ecourna:1	Bit fora dos limites ({}) do vetor ({})
+379096	latin1	vota:1	Erro ao decifrar a biometria do eleitor - Código ({})
+379150	ascii	ecourna:1	Alinhamento desconhecido ({})
+379180	latin1	ecourna:1	Falha ao desmontar mídia de resultado ({})
+379223	latin1	ecourna:1	Falha ao montar mídia de resultado ({})
+379263	latin1	libc++:1	Altura da barra ({}) não comporta a margem ({})
+379311	latin1	libc++:1	Largura da barra ({}) não comporta a margem ({})
+379360	latin1	ecourna:1|api:1	A largura do qrcode ({}) superou o espaço disponível ({})
+379418	ascii	api:1	Not supported ({})
+379437	ascii	ecourna:1	Tecla desconhecida ({})
+379461	latin1	vota:2	Identificador digitado pelo mesário foi: ({})
+379507	ascii	comum:1	Falha ao validar assinatura {}\npacote: ({})\narquivo: ({})\nErro SAVD: ({} - {})
+379586	ascii	ecourna:1	Falha ao validar assinatura {}\npacote: ({})\nErro SAVD: ({} - {})
+379955	ascii	ecourna:1	Assert (qtd == 0u)
+382299	ascii	ecourna:1	Assert (r >= left)
+383255	ascii	api:1	Assert (bottom >= t)
+383505	latin1	-	Não Habilitados MI (res)
+383546	latin1	-	Justif. de Seção MI (res)
+383768	latin1	-	Não habilitados da MR do SA MI (res)
+383838	latin1	-	Mesário da MR do SA MI (res)
+383915	latin1	-	Não Habilitados ME (res)
+383956	latin1	-	Justif. de Seção ME (res)
+384213	ascii	ecourna:1	Assert (numImpresso >= numObrigatorias)
+388038	ascii	api:1	Assert (b >= top)
+389837	ascii	vota:1	Assert (appInfo.GetVota().GetQtdBU() <= qtdBuObrigatorio)
+389895	ascii	ecourna:1	Assert (mesario)
+393600	ascii	ecourna:1	Assert (right >= l)
+398326	ascii	comum:1	(voto de legenda)
+398344	ascii	vota:1	Solicite que o(a) eleitor(a)
+398373	latin1	comum:1	Solicite que o(a) mesário(a)
+398402	latin1	vota:3	Eleitor(a) não reconhecido(a)
+398432	ascii	vota:1	Falha ao assinar ({}-Ecourna[{}])
+398466	ascii	ecourna:1	Falha ao assinar ({}-UE[{}])
+398495	ascii	ecourna:1	Ordem de suplente errada ({} [{}])
+398594	ascii	vota:1	Assert (vota.GetEstadoVota() == EAVIMPRIMIRBU)
+398641	ascii	vota:1	Assert (poInfo.GetVota().GetEstadoVota() == EAVIMPRIMIRBU)
+398700	ascii	vota:1	Assert (appInfo.GetVota().GetEstadoVota() == EAVGERARBU)
+398757	ascii	vota:3	Assert (vota.GetEstadoEncerramento() == EAEIMPRIMIROBRIGATORIABU)
+398823	ascii	vota:1	Assert (appInfo.GetVota().GetEstadoEncerramento() == EAEIMPRIMIROBRIGATORIABU)
+398935	ascii	vota:1	Assert (poInfo.GetVota().GetEstadoVota() == EAVGERARRELATORIOS)
+398999	ascii	vota:1	Assert (egVota.GetEstadoEncerramento() == EAEFIMDOSTRABALHOS)
+399061	ascii	vota:1	Assert (appInfo.GetVota().GetEstadoEncerramento() == EAEFIMDOSTRABALHOS)
+399134	ascii	vota:1	Assert (vota.GetEstadoVota() == EAVGRAVARRESULTADOS)
+399187	ascii	vota:1	Assert (vota.GetEstadoVota() == EAVINICIAL || vota.GetEstadoVota() == EAVGERADADOSDINAMICOS)
+399280	ascii	vota:1	Assert (vota.GetEstadoVota() == EAVCOPIARESULTADOSMR)
+399334	ascii	vota:1	Assert (vota.GetEstadoEncerramento() == EAERETIRAMR)
+400677	latin1	-	Justif. de Seção MI (rec. Para SA)
+400808	latin1	-	Justif. de Seção ME (rec. Para SA)
+400939	ascii	vota:2	Assert (appinfo.GetVota().GetEstadoVota() == EAVAGUARDAHORAZERESIMA)
+401008	ascii	vota:4	Assert (vota.GetEstadoVota() == EAVENCERRADA)
+401054	ascii	vota:1	Assert (egVota.GetEstadoVota() == EAVENCERRADA)
+401102	ascii	vota:2	Assert (appInfo.GetVota().GetEstadoVota() == EAVENCERRADA)
+401161	ascii	vota:1	Assert (comum::CAppInfo::GetInst().GetVota().GetEstadoVota() == EAVENCERRADA)
+401239	ascii	vota:1	ELEITOR(A) RECONHECIDO(A)
+402125	latin1	comum:1	Número de dígitos do partido ({}) supera o limite (5)
+402713	ascii	ecourna:1	PRAGMA integrity_check(1)
+402739	ascii	ecourna:1	Assert (estVota.GetQtdBU() == numVia - 1)
+403011	ascii	vota:1	Assert (vota.GetQtdBU() == 0)
+403041	ascii	vota:1	Assert (poInfo.GetVota().GetQtdBU() == 0)
+403127	ascii	vota:1	.*?\\).*?:\\d+:-?\\d+ - ((.|\\n)*)
+403818	ascii	vota:1	Assert (eleitores.GetNumComparecimentos() == rdv.Comparecimento())
+408912	ascii	vota:1	virtual void vota::CConfirmaVotoSemCandidato::ProcessInputAudio()
+409095	ascii	vota:1	virtual void vota::CConfirmaVotoEmCargo::ProcessInputAudio()
+409214	ascii	vota:1	virtual void vota::CCompletaProporcional::ProcessInputAudio()
+409403	ascii	vota:1	virtual void vota::CConfirmaVotoSemCandidato::StartStateAudio()
+409467	ascii	vota:1	virtual void vota::CConfirmaVotoEmCargo::StartStateAudio()
+409526	ascii	vota:1	virtual void vota::CCompletaProporcional::StartStateAudio()
+435360	ascii	comum:1	CREATE TABLE IF NOT EXISTS registro_justificativa ( \nnumero_titulo     BIGINT PRIMARY KEY UNIQUE NOT NULL, \nano_nascimento    SMALLINT \n)
+435498	ascii	comum:1	CREATE TABLE IF NOT EXISTS comparecimento_mesario ( \nnumero_titulo      BIGINT NOT NULL,      \ntipo_identificador INTEGER CHECK(tipo_identificador IN (1,2,3) ) NOT NULL, periodo_presente   INTEGER NOT NULL,     \npertence_secao     INTEGER NOT NULL,     \nestado_biometria   INTEGER NOT NULL,     \ndedo_habilitacao   INTEGER NOT NULL,     \ndata_hora_registro DATETIME NOT NULL,    \nid_arquivo         INTEGER,              \nUNIQUE (numero_titulo, periodo_presente) \n)
+436017	ascii	vota:1	 com numero de votos (
+436040	ascii	ecourna:1	Numero de votos (
+436058	ascii	vota:1	) diferente do numero de digitos (
+436093	ascii	ecourna:1	 nao eh multiplo da quantidade de escolhas (
+436138	ascii	vota:1	) diferente da quantidade de escolhas (
+436178	latin1	vota:1	Posição (
+436188	ascii	vota:1	 com tamanho (
+436203	ascii	vota:1	Cedula com cargo nao encontrado (
+436237	ascii	ecourna:1	 diferente do esperado (
+436262	ascii	vota:1	) difere do esperado (
+436285	ascii	ecourna:1	Eleicao (
+436295	ascii	vota:1	) fora do limite (
+436314	ascii	vota:1	Tamanho da cedula (
+436355	latin1	libc++:1	Tecla de controle não suportada '{}'
+436392	latin1	-	Falha ao executar operação no banco de dados.\nMensagem do banco de dados: '{}'\nOperação: '{}'
+436486	ascii	vota:1|-:1|comum:1	The replacement field misses a terminating '}'
+436533	ascii	vota:1|-:1|comum:1	The argument index should end with a ':' or a '}'
+436647	ascii	vota:1|-:1|comum:1	The format string terminates at a '{'
+436829	latin1	ecourna:1	Data/hora [{}] não está no formato 'AAAAMMDDhhmmss'
+438126	ascii	simulador:1	Write '
+438305	ascii	vota:1	, $&
+438317	ascii	api:1	{: >3}%
+438595	ascii	libc++:1|comum:1	at root "%s"
+439306	ascii	vota:1	Horario de votacao terminou!
+439459	latin1	vota:1	Candidato não encontrado!
+439485	latin1	vota:1	Nenhum cargo disponível!
+439510	latin1	vota:1	Nenhum partido disponível!
+439933	ascii	vota:1	Favor encerrar a urna!
+439959	latin1	-:1	O número máximo permitido é 
+439995	ascii	ecourna:1|comum:1	APTT:{} 
+440004	ascii	ecourna:1	PART:{} 
+440013	ascii	vota:1	HIQT:{} 
+440022	ascii	comum:1	FALT:{} 
+440031	ascii	ecourna:1|comum:1	APTS:{} 
+440040	ascii	ecourna:1	VERS:{} 
+440049	ascii	ecourna:1	TOTP:{} 
+440058	ascii	comum:1	COMP:{} 
+440067	ascii	ecourna:1	LEGP:{} 
+440076	ascii	comum:1	APTO:{} 
+440085	ascii	ecourna:1	TIPO:{} 
+440094	ascii	ecourna:2	NULO:{} 
+440103	ascii	ecourna:1	TURN:{} 
+440112	ascii	ecourna:2	BRAN:{} 
+440121	ascii	comum:1	DTEM:{} 
+440130	ascii	comum:1	HREM:{} 
+440139	ascii	comum:1	HBBM:{} 
+440148	ascii	ecourna:1	DTPL:{} 
+440157	ascii	ecourna:1	IDEL:{} 
+440166	ascii	comum:1	MUNI:{} 
+440175	ascii	ecourna:2	NOMI:{} 
+440184	ascii	ecourna:1	PLEI:{} 
+440193	ascii	ecourna:1	CARG:{} 
+440202	ascii	comum:1|ecourna:1	ORIG:{} 
+440211	ascii	comum:1	HBBG:{} 
+440220	ascii	vota:1	IDUE:{} 
+440229	ascii	comum:1	AGRE:{} 
+440238	ascii	ecourna:2	TOTC:{} 
+440247	ascii	ecourna:1	VERC:{} 
+440256	ascii	ecourna:1	PROC:{} 
+440265	ascii	ecourna:1	ORLC:{} 
+440274	ascii	ecourna:1	LEGC:{} 
+440283	ascii	comum:1	DTFC:{} 
+440292	ascii	comum:1	HRFC:{} 
+440301	ascii	ecourna:1	CSEC:{} 
+440310	ascii	comum:1	HBSB:{} 
+440319	ascii	comum:1	DTAB:{} 
+440328	ascii	comum:1	HRAB:{} 
+440337	ascii	ecourna:1	APTA:{} 
+440346	ascii	vota:1	ZONA:{} 
+440355	ascii	comum:1	LOCA:{} 
+440364	ascii	vota:1	SECA:{} 
+440373	latin1	comum:1	Candidato {} não encontrado para cargo {} 
+440416	ascii	ecourna:1	Cargo {} 
+440426	ascii	vota:1	HICA:{}:{:.24s} 
+440443	ascii	vota:1	IDCA:{:.24s} 
+440457	ascii	ecourna:1	UNFE:{:2s} 
+440469	ascii	ecourna:1	FASE:{:c} 
+440654	ascii	ecourna:1	nao sincronizou 
+440777	latin1	vota:1	Votação a partir das 
+440821	latin1	ASN1:1	 para campo INTEGER é maior que seu limite superior 
+440874	latin1	ASN1:1	 para campo INTEGER é menor que seu limite inferior 
+441266	latin1	ecourna:1	nao foi possível abrir 
+441290	ascii	ecourna:2	nao foi possivel abrir 
+441321	ascii	ecourna:1	nao foi possivel fechar 
+441350	latin1	comum:1	Eleição 
+441359	ascii	comum:3|asn1-modules:1	O arquivo 
+441370	ascii	ecourna:2	arquivo nao estava aberto 
+441397	ascii	ecourna:1	CVoto - voto 
+441460	latin1	ecourna:1	Não foi possível ler o diretório 
+441494	latin1	comum:1	Município 
+441681	ascii	vota:1	Cedula do cargo 
+441698	ascii	ecourna:1	) do cargo 
+441710	ascii	vota:1	Voto nulo por repeticao para o cargo 
+441748	ascii	vota:1	Voto nominal para o cargo 
+441785	ascii	ecourna:2|comum:1	Cargo 
+441792	ascii	ecourna:1	nao foi possivel alterar modo 
+441823	latin1	ASN1:1	 Campo ENUMERATED possui valor inválido 
+441864	latin1	ASN1:1	 Campo GeneralizedTime não é válido 
+441901	ascii	ecourna:1	CVoto - tipo de voto invalido 
+441932	ascii	vota:1	Cargo nao encontrado 
+441954	ascii	vota:1	Estado nao esperado 
+441975	ascii	comum:1	Cargo duplicado 
+441992	latin1	vota:1	Número do 
+442003	latin1	vota:1	A urna está pronta para receber o seu voto. Use o teclado numérico 
+442244	ascii	comum:2	SELECT titulo, tipo_identificador, identidade_habilitacao, tipo_identidade_habilitacao, estado_comparecimento, tipo_habilitacao, dedo_habilitacao, score_habilitacao, numero_tentativa, erro_decifrar_biometria, tipo_ativacao_audio, estado_apresentacao_foto, resultado_decifracao_foto, titulo_mesario, tipo_identificador_mesario from 
+442576	latin1	vota:1	Suspensão automática em 
+442881	latin1	comum:3	Excluir não implementada para entidade 
+442921	latin1	comum:1	Atualizar não implementada para entidade 
+442963	latin1	comum:1	ExcluirID não implementada para entidade 
+443005	ascii	comum:3|asn1-modules:1	DecodeObject de 
+443022	ascii	comum:4	CodeObject de 
+443037	ascii	ecourna:1	nao recuperou o descritor de 
+443067	latin1	comum:1	A votação será iniciada a partir de 
+443104	latin1	ecourna:1	não foi possível ler conteúdo de 
+443138	ascii	ecourna:2|comum:1|-:1	WriteToFile de 
+443154	ascii	comum:5|libc++:2|vota:1	ReadFromFile de 
+443183	ascii	vota:1	{} rede CA em [{:3.2f}V] e 
+443229	ascii	ecourna:1	random device not supported 
+443333	latin1	comum:5|ecourna:3	Arquivo não foi codificado para 
+443366	latin1	api:1	Falha ao alocar memória 
+443400	ascii	comum:1	Entidade visitada invalida 
+443428	ascii	ecourna:28|vota:8|api:3	PolySingleton - solicitada uma instancia nao criada 
+443481	ascii	vota:1	Urna ligada 
+443494	latin1	vota:1	Solicitada a emissão de [{}] 
+443609	ascii	comum:1	CREATE TABLE IF NOT EXISTS 
+443637	ascii	comum:1	INSERT INTO 
+444029	ascii	comum:1	UPDATE 
+444086	ascii	ecourna:1	 - erro = 
+444097	ascii	ecourna:1	, erro = 
+444213	ascii	api:1	, format: 
+444224	ascii	vota:1	Ocorreu um erro durante a assinatura dos arquivos: 
+444283	ascii	vota:1	<%d>%s %n%s%s%.0d%s: 
+444325	latin1	-:1	\n\n    Código Verificador: 
+444360	ascii	vota:3	Ver: 
+444366	latin1	libc++:1	Digite a sua opção: 
+444387	latin1	vota:1	Selecione a opção: 
+444407	ascii	ecourna:1	Ocorreu um erro durante a assinatura do arquivo: 
+444457	ascii	vota:1	Digite o ANO de nascimento: 
+444486	ascii	vota:1	Selecione um filtro: 
+444508	latin1	comum:1	Informe o título do mesário: 
+444538	ascii	vota:1	Selecione o cargo: 
+444558	ascii	vota:1	Selecione o partido: 
+444580	latin1	ecourna:1	Texto inválido: 
+444597	latin1	vota:1	Título inválido: 
+444615	latin1	ecourna:1	Token inválido: 
+444632	latin1	ecourna:1	Label inválido: 
+444649	latin1	comum:1	Tipo de abrangência inválido: 
+444680	latin1	api:1	Campo encontrado, mas não é do tipo solicitado: 
+444729	ascii	api:1	, revision: 
+444783	ascii	vota:1	Hora atual: 
+444796	ascii	api:1	Path: 
+444976	ascii	api:1	Language resource: 
+444996	ascii	api:1	Voice resource: 
+445153	ascii	api:1	G2p failed: 
+445188	ascii	api:1	Syllabification failed: 
+445219	ascii	comum:1	Local com biometria: 
+445241	latin1	ecourna:1	Identidade inválida: 
+445263	latin1	comum:1	Entidade visitada inválida: 
+445292	latin1	vota:2	Tecla não encontrada: 
+445339	ascii	vota:1	ASSINATURA BU DIGITAL: 
+445373	ascii	vota:1	VOTANDO PARA: 
+445388	latin1	libc++:1|comum:1	RESUMO DA CORRESPONDÊNCIA: 
+445452	ascii	ecourna:1	] - 
+445457	ascii	-:1|ecourna:1	) - 
+445574	ascii	vota:1	Hora da carga                 {:.8}\n
+445626	latin1	-:1	          Originais da seção      {:04}\n
+445708	ascii	ecourna:1	Total de votos Nominais           {:04}\n
+445749	latin1	ecourna:1	Total de votos Válidos            {:04}\n
+446660	latin1	comum:1	CONDIÇÕES DE FUNCIONAMENTO\n
+446739	ascii	comum:1	 WHERE titulo = ?\n
+447970	ascii	comum:1	 (titulo, tipo_identificador, identidade_habilitacao, tipo_identidade_habilitacao, estado_comparecimento, tipo_habilitacao, dedo_habilitacao, score_habilitacao, tipo_ativacao_audio, numero_tentativa, erro_decifrar_biometria, estado_apresentacao_foto, resultado_decifracao_foto, titulo_mesario, tipo_identificador_mesario ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n
+448347	ascii	comum:1	 SELECT numero_titulo, ano_nascimento FROM registro_justificativa \n
+448415	ascii	comum:1	 SELECT numero_titulo, tipo_identificador, periodo_presente, pertence_secao, estado_biometria,  dedo_habilitacao, data_hora_registro, id_arquivo FROM comparecimento_mesario  ORDER BY pertence_secao ASC, numero_titulo ASC, periodo_presente ASC, dedo_habilitacao ASC \n
+448682	ascii	comum:1	 SELECT numero_titulo, ano_nascimento FROM registro_justificativa WHERE numero_titulo = ? \n
+448774	ascii	comum:1	 SELECT numero_titulo, tipo_identificador, periodo_presente, pertence_secao, estado_biometria, dedo_habilitacao, data_hora_registro, id_arquivo FROM comparecimento_mesario WHERE numero_titulo = ? and periodo_presente = ? \n
+448997	ascii	comum:1	 INSERT INTO registro_justificativa (numero_titulo, ano_nascimento) VALUES (?, ?) \n
+449081	ascii	comum:1	 INSERT INTO comparecimento_mesario (numero_titulo, tipo_identificador, periodo_presente, pertence_secao, estado_biometria, dedo_habilitacao, data_hora_registro, id_arquivo) VALUES (?, ?, ?, ?, ?, ?, ?, ?) \n
+449289	ascii	comum:1	( titulo BIGINT PRIMARY KEY UNIQUE NOT NULL, tipo_identificador INTEGER CHECK(tipo_identificador IN (1,2,3) ) NOT NULL, identidade_habilitacao BIGINT NOT NULL, tipo_identidade_habilitacao INTEGER CHECK(tipo_identidade_habilitacao IN (1,2,3) ) NOT NULL, estado_comparecimento INTEGER NOT NULL, tipo_habilitacao INTEGER NOT NULL, dedo_habilitacao INTEGER NOT NULL, score_habilitacao INTEGER NOT NULL, tipo_ativacao_audio INTEGER CHECK(tipo_ativacao_audio IN (0,1,2) ) NOT NULL, numero_tentativa INTEGER CHECK(numero_tentativa IN (0,1,2,3,4) ) NOT NULL, erro_decifrar_biometria INTEGER NOT NULL, estado_apresentacao_foto INTEGER CHECK(estado_apresentacao_foto IN (0,1,2) ) NOT NULL, resultado_decifracao_foto INTEGER CHECK(estado_apresentacao_foto IN (0,1,2,3,4,5,6,7,8) ) NOT NULL, titulo_mesario BIGINT, tipo_identificador_mesario INTEGER CHECK(tipo_identificador IN (1,2,3) ) ) \n
+450174	ascii	vota:1	UE DE {}\n\n
+458222	latin1	-	X*£+
+458422	latin1	-	¼~ÿ?
+461430	latin1	-	ËE¸ÀÑEc
+461534	latin1	-	*GHÀ-G
+462530	latin1	-	d§³¶à\r
+474976	latin1	comum:1	NÚMERO REPETIDO
+475072	ascii	vota:1	Erro no teste do teclado
+475104	latin1	vota:1	Por favor, solicite ajuda dos técnicos do TRE
+475152	latin1	vota:1	para as devidas providências.
+483472	ascii	vota:1	Boletim de Urna
+485696	ascii	ecourna:1	boletim de urna
+485744	ascii	vota:1	boletim de eleitores\nhabilitados biograficamente
+485824	latin1	vota:1	boletim de mesários
+485872	ascii	vota:1	boletim de justificativa eleitoral
+518848	ascii	vota:1	Lista de eleitores
+538432	ascii	vota:2	TREINAMENTO DE ELEITORES
+547888	latin1	ecourna:4	ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ$ÿÿÿ%&ÿÿÿÿ'(ÿ)*+
+551312	latin1	ecourna:1	ÿÿÿÿÿÿÿÿÿÿÿÿ
+1110880	latin1	-	ÿÿÿÿ\t
+1112944	latin1	comum:1	Falha ao gerar as sementes criptográficas HKDF.
+1118052	latin1	ecourna:2	ÇÿÿÿÁÿÿÿÉÿÿÿÍÿÿÿÓÿÿÿÚÿÿÿÀÿÿÿÈÿÿÿÌÿÿÿÒÿÿÿÙÿÿÿÂÿÿÿÊÿÿÿÎÿÿÿÔÿÿÿÛÿÿÿÃÿÿÿÕÿÿÿÑÿÿÿxXabcdefABCDEF0123456789
+1142536	latin1	-	Lÿÿÿ´
+1148336	latin1	-	ÿÿÿÿ
+1184840	latin1	-	¬Í½¦ê/²¨PÂyIòIÖå­§s_5
+1187408	latin1	-	0å~tfn¤bîduò¨ÿP"ÚTè­\t
+1189352	latin1	-	ÐfÐ.±ÂÅ;ÔwýÐl!?P«>àV'
+1195616	latin1	-	ví¼¡±u÷ jky"Þó)ë*éfq$
+1201904	latin1	-	¿»FÍ
+1206023	latin1	-	Ó^ÝHX1
+1209977	latin1	-	@¾@%
+1211520	latin1	-	äç÷h\\{Ï.\nhZ¿6:m&+¼!
+1212072	latin1	-	÷h\\{Ï.\nhZ¿6:m&+¼!
+1215257	latin1	-	@¾@%
+1216404	latin1	-	~¢j+"MÑ`%
+1216668	latin1	-	 R5q
+1217410	latin1	-	 R5q
+1218176	latin1	-	 R5q
+1218990	latin1	-	 R5q
+1219828	latin1	-	 R5q
+1220208	latin1	-	·ñ¡{ZnÙv<L/{ÿçîå]
+1220690	latin1	-	 R5q
+1221096	latin1	-	¡{ZnÙv<L/{ÿçîå]
+1221576	latin1	-	 R5q
+1222032	latin1	-	ZnÙv<L/{ÿçîå]
+1222937	latin1	-	@¾@%
+1222992	latin1	-	Ùv<L/{ÿçîå]
+1224000	latin1	-	<L/{ÿçîå]
+1226064	latin1	-	ÿçîå]
+1228215	latin1	-	 6_ï
+1233065	latin1	-	@¾@%
+1234488	latin1	-	aè1Úl`Î\rÛ.åäOIßh~àc©0
+1239800	latin1	-	ÑdÌ6¶·¿ÀýËsÎ\n
+1241190	latin1	-	ÑdÌ6¶·¿ÀýËsÎ\n
+1242628	latin1	-	ÑdÌ6¶·¿ÀýËsÎ\n
+1243767	latin1	-	æ&ý¬2)
+1245569	latin1	-	@¾@%
+1248984	latin1	-	L8]qÎ¤f>):«ìÞÑ½'1\rqÕ 
+1249824	latin1	-	ùë¬kL5
+1251408	latin1	-	¬kL5
+1255456	latin1	-	\ne±,3
+1257158	latin1	-	\ne?¦æZ&
+1260497	latin1	-	@¾@%
+1261025	latin1	-	V¥ó1
+1265208	latin1	-	yh;¹C>þñ³÷Sá´BØ[a9\tð+
+1271801	latin1	-	A2ñ1
+1276200	latin1	-	Ökqu]hßÓî&<x¦ëÒý_°Ú?\r
+1277873	latin1	-	@¾@%
+1280304	latin1	-	]hßÓî&<x¦ëÒý_°<e¡m:<7
+1292352	latin1	-	³¿ù6
+1292360	latin1	-	ð¿þ\n
+1309948	latin1	-	ÿÿÿÿ
+1309956	latin1	-	ÿÿÿÿ
+1309992	latin1	-:1	þÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿüÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+1310108	latin1	-	þÿÿÿÿÿÿÿÿÿÿÿ
+1310136	latin1	-	þÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+1310200	latin1	-	þÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+1310452	latin1	-	þÿÿÿ
+1310468	latin1	-	þÿÿÿ
+1310508	latin1	-	þÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+1312152	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿ
+1314072	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+1322248	latin1	-	ÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+1322272	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+1322785	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿ¬s
+1322806	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿ¬p
+1326944	latin1	-	·L>ÿÃB=
+1327236	latin1	-	&PLÿ¾Uu
+1327424	latin1	-	#A5þEì¿
+1327480	latin1	-	µ±>ÿú)U
+1327744	latin1	-	}\rÌþô­w
+1327824	latin1	-	ÚõXþü#<
+1327912	latin1	-	ÔµÛÿ\\*çÿï
+1327960	latin1	-	1=ðþ¶]Ã
+1328120	latin1	-	nX4þâµYÿÐ/Zþr¡Pÿ!tø
+1328240	latin1	-	Å?¨þt\nR
+1328272	latin1	-	gg«þí×oÿØ5E
+1328568	latin1	-	4Û=þfËH
+1328644	latin1	-	Oú½ÿ`ãüþ&ñ>
+1328673	latin1	-	19þAú\r
+1329396	latin1	-	Nnyÿø¨|
+1329648	latin1	-	eÅNÿbMË
+1329956	latin1	-	iSÇÿ£Äæ
+1329972	latin1	-	½ÑËÿ¤÷Þþÿ#¥
+1330472	latin1	-	È\rtþ{<Äÿà;¸þòYÄ
+1330880	latin1	-	þÏSÿ\tZóÿóô¬
+1330968	latin1	-	0PFþÓ3ì
+1331060	latin1	-	U¡vÿ&
+1331128	latin1	-	Ë~Dÿ·\\0
+1331248	latin1	-	ô{\tþ
+1331368	latin1	-	¿ýnþg÷§
+1331504	latin1	-	¢@Èþ[:h
+1331792	latin1	-	ôªhÿë-|ÿFcº
+1332024	latin1	-	õT¸þxÆhÿ~Ú`
+1332108	latin1	-	÷Ú'ÿçÚì
+1332748	latin1	-	ç>²ÿÛ·á
+1333320	latin1	-	$D3þ*E±ÿ¨LVÿ&dÌÿ&5#
+1333792	latin1	-	]+ þø½í
+1333980	latin1	-	£½óÿ:ÑÂÿWI<
+1334080	latin1	-	H96þ²>¸
+1334168	latin1	-	=íÜÿö9%
+1334288	latin1	-	ÃgÞþÍE;
+1334492	latin1	-	Z<àÿTÔü
+1334656	latin1	-	"j£þ°+O
+1334872	latin1	-	¨bûÿyGø
+1334968	latin1	-	¦uSÿDÃ^
+1335136	latin1	-	ê7°ÿ=2A
+1335192	latin1	-	í¤\nþ¹ï>
+1335264	latin1	-	Û%#ÿ©Ã&
+1335528	latin1	-	Ô#Lÿ&}¯
+1335672	latin1	-	§ÅxÿD6¹ÿ)Ú¼
+1336056	latin1	-	Go¬þâ*;ÿ³
+1336356	latin1	-	äéßÿ%ØÑþ²±Ñÿ·-¥þàar
+1336424	latin1	-	?©Ñÿ
+1336464	latin1	-	èëËÿê
+1336816	latin1	-	(±wþ¶{Zÿ°¥°
+1337128	latin1	-	EBÕþ)`{
+1337504	latin1	-	àB6þæºåÿ'¶Ä
+1337784	latin1	-	.rÈÿ=¸B
+1338560	latin1	-	ð2Ðÿ¡?ú
+1339120	latin1	-	\nöOÿÆÙ²
+1339204	latin1	-	\t¦¡ÿ7¢²ÿ-¸¼
+1339348	latin1	-	ÜÊåÿfùÓ
+1339416	latin1	-	 |fÿ(ä±
+1339472	latin1	-	 3¥þ¿ó7
+1339680	latin1	-	 +¦þï[i
+1339972	latin1	-	vÌËÿò
+1340204	latin1	-	3.àÿr0Oÿ\t¯â
+1340536	latin1	-	>JxÿzÃn
+1341180	latin1	-	1p<ÿÙåû
+1341440	latin1	comum:1	`[Èÿ%};
+1341912	latin1	-	ÆÓ2þ.õg
+1342040	latin1	-	Ö|\\þ#vë
+1342064	latin1	-	Öø=þ;nö
+1342388	latin1	-	\nÆyÿýÿðÿB{Ò
+1342428	latin1	-	,wzÿ³b3
+1342684	latin1	-	o)Èÿíla
+1342760	latin1	-	ïD±ÿsn:
+1342808	latin1	-	­ Wÿÿ#µ
+1343000	latin1	-	æßâþòÛE
+1343032	latin1	-	oÿ§þ'ÄÖ
+1343256	latin1	-	§®ìÿãlkÿ¼òAÿ·Qÿ
+1343612	latin1	-	\tòîÿ¸5;
+1343864	latin1	-	mÀ`ÿ4sî
+1343872	latin1	-	&yóÿÉ8!
+1344064	latin1	-	EÍ¶ÿôZ+
+1344152	latin1	-	<Nàÿ
+1344384	latin1	-	rÒ5þÇÌw
+1345024	latin1	-	O Vÿt%²
+1345564	latin1	-	Ð¢:ÿ·b]
+1345912	latin1	-	d\tzþve«ÿüË
+1345923	latin1	-	þ Ï6
+1346016	latin1	-	¹^þþs7É
+1346532	latin1	-	²jËÿaÚ]
+1346600	latin1	-	Ê*2ÿjj½ÿ¾DÙÿé:u
+1346724	latin1	-	Ûu­ÿ"%xþÈEP
+1347464	latin1	-	¬¯Ðþ¯J%
+1347728	latin1	-	Õ'ùÿþßäÿ·¥Æ
+1347800	latin1	-	¢\nqÿÂhH
+1348040	latin1	-	CàýÿÏ½@
+1348080	latin1	-	ê¤]þ]¯ý
+1348088	latin1	-	ÆEWÿàj.
+1348120	latin1	-	À¥^þõeÙ
+1348892	latin1	-	1 °ÿovaÿíhë
+1348920	latin1	-	Þ|¥ÿ´B#ÿV®ö
+1349316	latin1	-	4ÓYÿý
+1349576	latin1	-	LÞ7þé¶?
+1349584	latin1	-	D«¿þ4oÞÿ\niMÿPªë
+1349616	latin1	-	ý.ÛÿïL!
+1350400	latin1	-	, uþ2kÂ
+1350616	latin1	-	ëj+ÿ§4è
+1350812	latin1	-	À¼úÿäL5
+1350995	latin1	-	ÿÊòò
+1351184	latin1	-	$üxþk©M
+1351424	latin1	-	®«·ÿùJp
+1351575	latin1	-	ÿ1-Ê
+1352320	latin1	-	ÍZpÿ!pã
+1352396	latin1	-	2Dtÿe¯(ÿøié
+1352544	latin1	-	7Åáþ©_ùÿBADÿ¼ê~
+1353216	latin1	-	æ\ncÿ¢
+1353232	latin1	-	Ð2_þÎÐ_ÿ÷¿YþnêOÿ¥=ó
+1353444	latin1	-	Ì+GÿÇT¬
+1353456	latin1	-	oîaþæ(æ
+1353584	latin1	-	¡~ûþé B
+1353680	latin1	-	GkÈÿóf½
+1353744	latin1	-	Dn´þÒªw
+1354168	latin1	-	Ê$Qþ EÌÿ@á»
+1354280	latin1	-	zhäþªòË
+1354424	latin1	-	A^¨þõøÒÿ§lÉþÿ¡o
+1354660	latin1	-	+ÇÀÿXlq
+1354976	latin1	-	)@ôÿÎ¸N
+1355280	latin1	-	×§úþ¯¤æ
+1355308	latin1	-	]ÖkÿvH
+1355315	latin1	-	þP=êÿy¯}
+1355800	latin1	-	\nÁÁþzÂ±
+1355808	latin1	-	zîfÿ¢Ú«
+1356111	latin1	-	ÿ½åº
+1356920	latin1	-	¬PMþ
+1356928	latin1	-	º!ñþ^ýßÿ,rü
+1357044	latin1	-	AuVÿýfÒþþy$
+1357088	latin1	-	ÕTëÿ-Þà
+1357110	latin1	-	(ÿ}±gÿEáB
+1357200	latin1	-	A½Ùþ»³¢ÿ »æ
+1357240	latin1	-	Û±?þôZ³
+1357260	latin1	-	h½%ÿ¹9Â
+1357268	latin1	-	#>çÿÜøl
+1357584	latin1	-	`»ÿÿ*NÈ
+1357681	latin1	-	·âþ´\rHÿ
+1357792	latin1	-	·L>ÿÃB=
+1357964	latin1	-	&PLÿ¾Uu
+1358032	latin1	-	#A5þEì¿
+1358088	latin1	-	µ±>ÿú)U
+1358232	latin1	-	}\rÌþô­w
+1358428	latin1	-	D¸KÿÎZû
+1358504	latin1	-	îwÛÿç­Õ
+1358552	latin1	-	¯ó»þiY­
+1358704	latin1	-	³ËÝÿÿ¹q
+1359176	latin1	-	Û®³/µºÑ
+1359216	latin1	-	ÐÆ?ü
+1359312	latin1	-	öÕ\\OöÝY
+1359424	latin1	-	ýXBç»ÏÉ
+1359448	latin1	-	(¦ð÷ÈºY
+1359592	latin1	-	.Î®*}þ2
+1359704	latin1	-	êûJ3Ùt|
+1359808	latin1	-	ÔÎÊyü[ã
+1359912	latin1	-	ï÷þ¤àO¢
+1359976	latin1	-	uÉåÕ@çÌ
+1360112	latin1	-	a¥-æydh
+1360136	latin1	-	3Ô¸áwE>
+1360248	latin1	-	þóÖ0ó{ 
+1360408	latin1	-	@¾ûÄÊJ¯
+1360464	latin1	-	&H÷¤HÒ1
+1360504	latin1	-	ø%E3C;4
+1360592	latin1	-	]PÝ!,×¦
+1360696	latin1	-	×]AvCò»
+1360816	latin1	-	R_2DókÏ
+1360840	latin1	-	À÷nyhsá
+1361016	latin1	-	WwýZË[!
+1361032	latin1	-	¾&JF;üÜ
+1361072	latin1	-	ó;ajBâL
+1361080	latin1	-	!\täX¬l&
+1361120	latin1	-	-÷"¯Uaø
+1361136	latin1	-	Ä:ijAn¬
+1361176	latin1	-	<­w$z\tO
+1361296	latin1	-	m0¯ÍÇÿ³
+1361320	latin1	-	7Ýà½îÎ¬
+1361424	latin1	-	æÈaM8ôÇ
+1361432	latin1	-	²½ñ`ëQN
+1361440	latin1	-	Ø!FªçKö
+1361536	latin1	-	àIå±æ^r
+1361664	latin1	-	KÐfÎdþÄ
+1361704	latin1	-	ÜMT·£àb
+1361776	latin1	-	Àf%ºUÆ+
+1361792	latin1	-	©Ød÷³äQ
+1361840	latin1	-	$dgè/¡½
+1361872	latin1	-	n¢"?Éå·
+1361912	latin1	-	¸nöÀÊ©î
+1361944	latin1	-	ñÐµµ8Ab
+1361976	latin1	-	âëÖf]/Å
+1362024	latin1	-	?õíRï;b
+1362096	latin1	-	4Ñó$0hÿ
+1362192	utf8	-	qM巠*y
+1362256	latin1	-	5ÎÍóh\r·
+1362264	latin1	-	,¹T³Yyî
+1362288	latin1	-	¦}Ëb{îZ
+1362304	latin1	-	ÜF»º$cR
+1362624	latin1	-	`hüç|Ý9
+1362632	latin1	-	¡=e%dOÖ
+1362688	latin1	-	ÇW´ÙYû$
+1362696	latin1	-	L>"`àÔ§
+1362728	latin1	-	=á£6è86
+1362896	latin1	-	&çØÑ*Q,
+1362936	latin1	-	O¢ºx45¶
+1363064	latin1	-	FÔÒ1¹ðñ
+1363072	latin1	-	"Ô5<L^Ë
+1363088	latin1	-	qä£l±Pú
+1363120	latin1	-	DÊæK~.Û
+1363136	latin1	-	Õa¬ºÙoo
+1363176	latin1	-	°jETf:^
+1363240	latin1	-	õ'!]ôTl
+1363312	latin1	-	~ÆÒ_Ç>>
+1363320	latin1	-	JI)ük^¿
+1363400	latin1	-	·]À_.ñ/
+1363440	latin1	-	¡àÈÐ=×,
+1363448	latin1	-	þQoél]d
+1363496	latin1	-	wãò5±úç
+1363568	latin1	-	Òx²TØL§
+1363744	latin1	-	öElk¼î:
+1363768	latin1	-	Ôy\r<æ9ô
+1363816	latin1	-	]½+0Óq+
+1363824	latin1	-	Î_v6*øâ
+1363856	latin1	-	¿`Çq¬ ¦
+1363873	latin1	-	ófô×~T
+1363888	latin1	-	 1Îh1vÇ
+1364000	latin1	-	j6º#yìÓ
+1364008	latin1	-	ãu­àr~:
+1364024	latin1	-	Q@¶DT<í
+1364040	latin1	-	5mFiVdÉ
+1364120	latin1	-	Rß8­!
+1364136	latin1	-	¥ÅbÌÔTB
+1364168	latin1	-	Z4Cêå²Ò
+1364264	latin1	-	;-¯ö9Ï
+1364304	latin1	-	ÖýêßÌ§B
+1364360	latin1	-	r"ö7zÏÇ
+1364400	latin1	-	ûlÚO5xe
+1364416	utf8	-	]eٵٹR
+1364424	latin1	-	Ãa´¡{ìÔ
+1364496	latin1	-	GJ¿ûÀpø
+1364656	latin1	-	j¶7ø³j$
+1364672	latin1	-	®mó5êçW
+1364680	latin1	-	.â]Ñz}ô
+1364784	latin1	-	<âØ\nx?Æ
+1364816	latin1	-	dì®V%Í³
+1364880	latin1	-	bþ×.+²í
+1364912	latin1	-	ÈìV©£m×
+1364984	latin1	-	|@XE5øK
+1364992	latin1	-	¿üð0J}Î
+1365000	latin1	-	=ð)&',Ð
+1365112	latin1	-	.ÐKg£(Æ
+1365128	latin1	-	ÿ|\\NAB§
+1365136	latin1	-	!2áÆóËA
+1365200	latin1	-	:PÝ`4l*
+1365232	latin1	-	Î0Al/îÜ
+1365248	latin1	-	«5¡=K[\r
+1365344	latin1	-	é¯v°sÌ#
+1365464	latin1	-	ä©d1G]µ
+1365496	latin1	-	Dº\\²êDø
+1365520	latin1	-	zºÕ_5i´
+1365768	latin1	-	(ÎlK¤%Ã
+1365824	latin1	-	Å"vø;b
+1365880	latin1	-	pînsõV'
+1365960	latin1	-	)®/á¬ü¥
+1365976	latin1	-	F3lq]ïç
+1366056	latin1	-	hÿQ(DÜT
+1366080	latin1	-	Aã:®Z<Á
+1366112	latin1	-	¥ÛªB,i7
+1366184	latin1	-	a2ºuõ5ì
+1366232	latin1	-	ÍònÙ$Gï
+1366416	latin1	-	L`ôNx<v
+1366432	latin1	-	ËDüý{S¬
+1366536	latin1	-	ø¾òD
+1366576	latin1	-	>ç!'BÇº
+1366592	latin1	-	j[pô\\¬ø
+1366680	latin1	-	é:dfzÛv
+1366784	latin1	-	&æ_'PHµ
+1366808	latin1	-	LÎ\\Y{¬ä
+1366832	latin1	-	ùlHXo"W
+1366840	latin1	-	WÌðTqU±
+1366896	latin1	-	{RÁ:½Ö9
+1367024	latin1	-	 úJ¾,ùÛ
+1367040	latin1	-	zbÌÎ¿FB
+1367120	latin1	-	Ç°EãV?O
+1367144	latin1	-	»­áÀÕÇä
+1367200	latin1	-	qò÷O1VÎ
+1367304	latin1	-	k}Ûfl\t\n
+1367416	latin1	-	#~/N©ÏD
+1367520	latin1	-	i³`Îë¢<
+1367544	latin1	-	9¨¡xë®9
+1367555	latin1	-	¤-Å}
+1367616	latin1	-	PÎÓ_»"û
+1367648	latin1	-	õÃ´E}cý
+1367720	latin1	-	ßNVB¡kß
+1367784	latin1	-	Ñ¨°ÅWjÔ
+1367888	latin1	-	þ\t<"ù\r¡
+1367904	latin1	-	Ò>Lt¸0C
+1367920	latin1	-	ãñ¹}jÏä
+1367952	latin1	-	íøµ/À`«
+1368144	latin1	-	¬u;h4Ûm
+1368168	latin1	-	üîÜöÐÜî
+1368184	latin1	-	ÉuªêMG6
+1368216	latin1	-	nþ²ÂñôÑ
+1368360	latin1	-	õCb²¨vÿ
+1368368	latin1	-	ãA¥AÒ ®
+1368376	latin1	-	0Ô<ñj½i
+1368392	latin1	-	×.ÏDèØ²
+1368448	latin1	-	!\\¿n¥¡u
+1368456	latin1	-	íS¬é+ç£
+1368496	latin1	-	|1WFCâ$
+1368528	latin1	-	]xaÙ¹HÙ
+1368568	latin1	-	ÝQQSútí
+1368576	latin1	-	wÄµIÀ2~
+1368752	latin1	-	*9äwYVÉ
+1368784	latin1	-	#di¬}ôz
+1368824	latin1	-	SOÉì7'>
+1368856	latin1	-	ÇêÙNE¯Þ
+1368904	latin1	-	£À]øâÈà
+1368936	latin1	-	\\~IÜ°Eâ
+1369016	latin1	-	jy¡ñöl¿
+1369048	latin1	-	ýµg*4-E
+1369200	latin1	-	@ZnÒÑ"î
+1369352	latin1	-	Ão>.ÔcÓ
+1369384	latin1	-	²<%¢lGU
+1369400	latin1	-	¡(²­±s±
+1369592	latin1	-	¾Ø¯Ca9ë
+1369600	latin1	-	ÿÍ$ûìÔ 
+1369624	latin1	-	Fññ:½47
+1369632	latin1	-	~Ruü.~¸
+1369640	latin1	-	P«ÝUß0Ò
+1369720	latin1	-	C²ðI6©³
+1369728	latin1	-	É&þÄðøg
+1369752	latin1	-	õ×ïÊ\tÔò
+1369840	latin1	-	ðC(ËÈG£
+1369872	latin1	-	¬±YÊHcM
+1369896	latin1	-	$1Ë¥µ¿J
+1369952	latin1	-	?\n&Ó\rÅÐ
+1370008	latin1	-	DÀ-òËb#
+1370016	latin1	-	¸cöß*",
+1370024	latin1	-	yË_I$Ég
+1370040	latin1	-	ûfËì©wß
+1370056	latin1	-	2ûúùTè¹
+1370088	latin1	-	Ä æt· [
+1370120	latin1	-	P4Ùð/¥Ë
+1370168	latin1	-	,[üya-
+1370272	latin1	-	®Èú×¼ó3
+1370344	latin1	-	GZæVÙß)
+1370392	latin1	-	*ÛðtÚô¶
+1370408	latin1	-	;âÒ:7jó
+1370616	latin1	-	éKèÜòÕP
+1370624	latin1	-	\nE¢Ì  _
+1370704	latin1	-	Ë³Ný<cÎ
+1370728	latin1	-	´¡åÄ8Dó
+1370744	latin1	-	­`¶ñQ¥A
+1370752	latin1	-	zCÖû¨÷×
+1370768	latin1	-	KX<´¼K­
+1370832	latin1	-	9éþG´$ð
+1370896	latin1	-	Åè?2'6U
+1370920	utf8	-	3wV殳%
+1370992	latin1	-	ùÏ_¿yn+
+1371000	latin1	-	Þâ%¤]5«
+1371024	latin1	-	¡Eå)Ê°W
+1371048	latin1	-	ËAâón«C
+1371096	latin1	-	æ$y]'®Ú
+1371112	latin1	-	CÔ»à_5Ò
+1371160	latin1	-	¯©ë²ñiø
+1371168	latin1	-	k#Ã}T¼Y
+1371248	latin1	-	ÆÛ¬dÿyÏ
+1371280	latin1	-	ãj^7ñd?
+1371360	latin1	-	Ç>p9)Ã1
+1371400	latin1	-	ÚÅÙ \\*ü
+1371472	latin1	-	dSCIö£i
+1371488	latin1	-	¯sé7¢ö¹
+1371512	latin1	-	÷ÔÉZì6Á
+1371568	latin1	-	òÿî\tY¯w
+1371776	latin1	-	òR\\{ÍHç
+1371800	latin1	-	G¨3*l¤Å
+1371808	latin1	-	\tª2^9ÞË
+1371816	latin1	-	@1B»NGr
+1371856	latin1	-	ñ'Bíï6v
+1371880	latin1	-	Uþc¸2áE
+1371888	latin1	-	j6Û.ft9
+1371960	latin1	-	TØZí¹ÉÇ
+1371968	latin1	-	ò{³Åç÷@
+1371984	latin1	-	¶f£âzv¨
+1372152	latin1	-	»5nV,)û
+1372168	latin1	-	>]\nëÛ³ß
+1372176	latin1	-	Á5#YÙ@)
+1372192	latin1	-	¯L¼X5SZ
+1372280	latin1	-	v¼aº©Zs
+1372288	latin1	-	(æÛ-¨÷Ù
+1372376	latin1	-	âµð~4ãb
+1372456	latin1	-	þçE¤0áa
+1372528	latin1	-	Î¡7©¨y«
+1372560	latin1	-	ØcûÌ)uÛ
+1372568	latin1	-	fxñWé[¾
+1372600	latin1	-	ÔöÕ¸õ%H
+1372632	latin1	-	\nD4¿¯m`
+1372672	latin1	-	ÄüÁü~õñ
+1372720	latin1	-	óSx·ÝÏj
+1372752	latin1	-	8Ì>×,mÃ
+1372768	latin1	-	]Ó5+²¥C
+1372784	latin1	-	Ú¨Êm4­&
+1372864	latin1	-	ù´.TNÕÀ
+1372912	latin1	-	F³5oUTÒ
+1372968	latin1	-	ã®XMN×t
+1373048	latin1	-	,úÚ3ò»D
+1373080	latin1	-	Ãª6»,Þ
+1373088	latin1	-	xtqÙ)ú.
+1373104	latin1	-	ïùÞX´4Á
+1373216	latin1	-	ç¸ÓvYê«
+1373248	latin1	-	ì©èÉân{
+1373328	latin1	-	JA(ZÏó@
+1373368	latin1	-	ÛE5«`ó½
+1373376	latin1	-	Ã,1âÔ¿î
+1373528	latin1	-	Ö|f>ö9_
+1373544	latin1	-	; ¾B«ý×
+1373640	latin1	-	#ÓÄ\\¸#þ
+1373744	latin1	-	íiÒ\\>o+
+1373776	latin1	-	7¤(.Q(%
+1373816	latin1	-	sR+6J|û
+1373848	latin1	-	éö B·ëu
+1373872	latin1	-	kßô¸DE.
+1373912	latin1	-	-¶¯BFþ 
+1374000	latin1	-	(ú\nðiû±
+1374104	latin1	-	ÀÜ{3¡áÜ
+1374152	latin1	-	4Äí¾%«o
+1374232	latin1	-	ÃÞûÑÙ¹¶
+1374344	latin1	-	u«7&´y­
+1374376	latin1	-	ãNçýf¿~
+1374392	latin1	-	'L¾fPHç
+1374408	latin1	-	j^¤ÝqóL
+1374432	latin1	-	)næëíFç
+1374464	latin1	-	2¥îoÚ<0
+1374528	latin1	-	2¥îoÚ<0
+1374640	latin1	-	ø-KøæWõ
+1374912	latin1	-	ò²dñ:ø>
+1374920	latin1	-	\r]R ¥I\t
+1375032	latin1	-	ÄÀ»n>DÁ
+1375144	latin1	-	Dè ê¡Bä
+1375160	latin1	-	G@ÖÖ¾jÁ
+1375435	latin1	-	íµxv
+1375592	latin1	-	RJ×ø³ØÍ
+1375600	latin1	-	n%èmáZ¬
+1375752	latin1	-	{'$déÊÁ
+1375920	latin1	-	rDV@©°¹
+1375968	latin1	-	~ï¹ÇÓêÑ
+1376072	latin1	-	R&]tÇêü
+1376144	latin1	-	qmú5e\nò
+1376184	latin1	-	à´|\tXäê
+1376232	latin1	-	)±s*Bp 
+1376304	latin1	-	ÍØrt"²P
+1376400	latin1	-	:gùn´Tú
+1376408	latin1	-	æ/°Õ¸ïf
+1376624	latin1	-	e.ö²¯$R
+1376632	latin1	-	¾BZûãíÑ
+1376712	latin1	-	(A¢uÑ>¹
+1376736	latin1	-	"C³ÐÁÙõ
+1376768	latin1	-	èú2 vÇ2
+1376792	latin1	-	¢*l·ió»
+1376832	latin1	-	çs|ÊGK|
+1376888	latin1	-	Øíï7óRA
+1377176	latin1	-	¸d<)o\nÚ
+1377264	latin1	-	J·»ã©ÛD
+1377368	latin1	-	¸%yþóoÃ
+1377489	latin1	-	®ÚJjôe
+1377520	latin1	-	ùiA&ó0Å
+1377616	latin1	-	Þ<1¥õ´a
+1377664	latin1	-	BÃzBCó;
+1377696	latin1	-	2Öq»¨>ê
+1377720	latin1	-	åÕ%Ý?Rñ
+1377744	latin1	-	!ÖòpéÆ`
+1377792	latin1	-	\r÷sRÅÎ)
+1377800	latin1	-	@c\\'îDp
+1377832	latin1	-	ã½æÏÖ%¡
+1377912	latin1	-	aJjÃ$>'
+1378016	latin1	-	1³0ïù6j
+1378128	latin1	-	fyÉ>q´¿
+1378200	latin1	-	²®?×4PR
+1378208	latin1	-	}<ÚûvWC
+1378256	latin1	-	Hõßp9Hæ
+1378296	latin1	-	Ý&ÎÝ×Rv
+1378304	latin1	-	C(¡{í,Ù
+1378384	latin1	-	=QA¨6Õñ
+1378408	latin1	-	Ô×¢ZY±Í
+1378560	latin1	-	æX¦i`OÏ
+1378600	latin1	-	çÆÁÚ¸Üð
+1378608	latin1	-	¥³8õg«ò
+1378640	latin1	-	ãÚHÎÈÚ:
+1378712	latin1	-	¥E@47dI
+1378720	latin1	-	°ùäDÙ¶1
+1378752	latin1	-	ÙßÑBw{,
+1378776	latin1	-	ºTï´ó l
+1378800	latin1	-	ù 5JbÄº
+1378832	latin1	-	L°­m3`Ã
+1378864	latin1	-	=áì5j½ø
+1378880	latin1	-	lw`âzaÃ
+1378888	latin1	-	×"iéÃ\r²
+1378984	latin1	-	Åy8\n[~Í
+1379048	latin1	-	6Ë9 6cu
+1379144	latin1	-	lÌçÜ Z¥
+1379152	latin1	-	Fñs`¹wd
+1379304	latin1	-	g</½:79
+1379344	latin1	-	¹q¤X¤¹ý
+1379370	latin1	-	ø:{Éb
+1379376	latin1	-	ëí(ê>sú
+1379408	latin1	-	P2ù¶í|J
+1379432	latin1	-	YþmÝ\nûH
+1379456	latin1	-	ÈnvÑ²Û0
+1379464	latin1	-	^U8Ñ\nlX
+1379520	latin1	-	b¨âAØÞl
+1379552	latin1	-	Ëi\tbÑüê
+1379568	latin1	-	çmyy
+1379601	latin1	-	Hç|}(Y
+1379608	latin1	-	ðÃE¶16û
+1379880	latin1	-	óãy­ÚEj
+1379896	latin1	-	Ã=¢/¤~Ä
+1379992	latin1	-	Íí6ê´ÌK
+1380000	latin1	-	hòîzj¾i
+1380048	latin1	-	â9¿ºCe>
+1380120	latin1	-	\nZy |­&
+1380136	latin1	-	ÌßÔù¼`\r
+1380184	latin1	-	\\üt¾³´F
+1380192	latin1	-	Î[ï+zÄ 
+1380368	latin1	-	p¥6>}`ñ
+1380400	utf8	-	_Ȭd>ܷ
+1380440	latin1	-	Gàwô'#E
+1380488	latin1	-	èâÝ=¨¯Æ
+1380576	latin1	-	@OÄÙ³Jß
+1404044	latin1	-	ÿÿÿÿÿÿÿÿ
+1404124	latin1	-	ÿÿÿÿÿÿÿÿ
+1404288	latin1	-	ÿÿÿÿ
+1409916	latin1	-	^³q »
+1429788	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ\n
+1429840	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ\n
+1430062	latin1	-	àµ¦¦¦¦¦¦¦¦¦YY¦
+1453120	latin1	openssl:2	ÿÿÿÿÿÿÿÿÿàðÿÿñÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿàÿÿÿÿÿÿÿÿÿÿÿÿò>?
+1453584	latin1	openssl:2	ÿÿÿÿÿÿÿÿÿÿÿÿ
+1484384	latin1	sqlite:1	ÿýÿý
+1484389	latin1	-	ÿÿÿþþþýûúÿ
+1484406	latin1	-	ýþÿþ
+1484416	latin1	-	þýüüüýýûþüüÿþýü
+1484434	latin1	-	þþýýýþþÿÿþýþ
+1484450	latin1	-	ÿþùûûö
+1484460	latin1	-	þÿÿüþ
+1484466	latin1	-	÷üÿýüÿýÿþÿ÷öüÿûûÿÿ
+1484486	latin1	-	ûýûþ
+1484495	latin1	-	ûúøúú
+1484501	latin1	-	þÿýÿýûýÿþýüþü
+1484519	latin1	-	ýûýÿÿ
+1484533	latin1	-	þüüú
+1484540	latin1	-	þþü÷ûùýûùø
+1484551	latin1	-	þô÷ûøþþÿ
+1484560	latin1	-	ýýÿýÿýûÿÿÿÿýúûøüú÷ûÿûýýýýýýýýþýûþýýüúûþþþýÿþûÿþûýûûüûûüþ
+1484631	latin1	-	þüþýþ
+1484637	latin1	-	ýûúûúþþûõÿþ
+1484653	latin1	-	þýþýýþ÷øúýüúÿÿÿüúý
+1484672	latin1	-	þÿýÿýúùúÿøÿüø
+1484686	latin1	-	ÿýÿþýÿþýúÿÿýýûûúüûþ
+1484706	latin1	-	ýúÿÿþÿþþþ
+1484716	latin1	-	þþþÿþþÿÿüþûÿÿþÿÿþý
+1484739	latin1	-	þÿüþÿÿÿÿÿÿþ
+1484751	latin1	-	þüþþýÿ
+1484758	latin1	-	ÿÿÿÿþÿÿ
+1484766	latin1	-	ÿÿÿÿÿÿÿÿÿÿ
+1484783	latin1	-	ÿÿýþ
+1497674	latin1	-	ëþÙÿQ
+1498520	latin1	-	$ ÓW
+1498536	latin1	-	Ù3áT
+1498552	latin1	-	°9ðQ
+1498568	latin1	-	Zü£J
+1502211	latin1	-	@û!ù?
+1502235	latin1	-	`QÌx;
+1505540	latin1	-	ÿÿÿÿÿÿ@
+1508452	latin1	-	ÿÿÿÿÿ
+1508704	latin1	-	ÿÿÿÿÿÿÿÿÿÿ(
+1508724	latin1	-	\nÿÿÿÿ
+1511188	latin1	-	²Ñ²Ñ²Ñ²Ñ
+1514064	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+1526436	latin1	-:1	ÿÿÿÿ
+1540224	latin1	vota:1	ÿÿÿÿ
+1601364	latin1	vota:1	ÿÿÿÿ
+1619984	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+1620436	latin1	-	ÿÿÿÿÿÿÿÿ
+1620528	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+1620652	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿó
+1620864	latin1	-	ÿÿÿÿÿÿÿÿ
+1620888	latin1	-	ÿÿÿÿÿÿÿÿ
+1620972	latin1	-	ÿÿÿÿÿÿÿÿ
+1621072	latin1	-	ÿÿÿÿÿÿÿÿ
+1621184	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿ
+1621280	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+1621424	latin1	-	ÿÿÿÿÿÿÿÿ
+1621596	latin1	-	ÿÿÿÿÿÿÿÿó
+1621988	latin1	-	ÿÿÿÿ
+1622012	latin1	-	ÿÿÿÿ
+1622320	latin1	-	ÿÿÿÿÿÿÿÿ
+1622464	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+1622624	latin1	-	ÿÿÿÿÿÿÿÿ
+1622648	latin1	-	ÿÿÿÿ
+1622860	latin1	-	ÿÿÿÿ
+1623280	latin1	-	ÿÿÿÿÿÿÿÿ
+1623488	latin1	-	ÿÿÿÿÿÿÿÿ
+1623584	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿ
+1623600	latin1	-	ÿÿÿÿÿÿÿÿ
+1623724	latin1	-	ÿÿÿÿÿÿÿÿ
+1623760	latin1	-	ÿÿÿÿÿÿÿÿ
+1623840	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿ
+1624032	latin1	-	ÿÿÿÿ
+1624432	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+1624528	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿ
+1624708	latin1	-	ÿÿÿÿÿÿÿÿ
+1624744	latin1	-	ÿÿÿÿÿÿÿÿ
+1624780	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿó
+1624848	latin1	-	ÿÿÿÿÿÿÿÿ
+1625056	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+1625168	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+1627328	latin1	-	ÿÿÿÿ
+1627536	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿ
+1627616	latin1	-	ÿÿÿÿÿÿÿÿ
+1627900	latin1	-	ÿÿÿÿ
+1627952	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+1628128	latin1	-	ÿÿÿÿÿÿÿÿ
+1628148	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+1628432	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+1628624	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿó
+1629048	latin1	-	ÿÿÿÿ
+1629356	latin1	-	ÿÿÿÿ
+1629900	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿó
+1630076	latin1	-	ÿÿÿÿÿÿÿÿ:
+1630548	latin1	-	ÿÿÿÿÿÿÿÿ
+1630580	latin1	-	ÿÿÿÿ
+1630640	latin1	-	ÿÿÿÿÿÿÿÿÿÿÿÿ
+1630768	latin1	-	ÿÿÿÿÿÿÿÿ
+1630896	latin1	-	ÿÿÿÿÿÿÿÿ
+1637404	latin1	-	ÿÿÿÿ
+1637608	latin1	-	ÿÿÿÿ
+1647856	latin1	-	ÿÿÿÿÿÿÿÿA$
+1648024	latin1	-	ÿÿÿÿÿÿÿÿE$
+1648432	latin1	-	ÿÿÿÿÿÿÿÿA$
+1648456	latin1	-	ÿÿÿÿÿÿÿÿG$
+1651308	latin1	-	ÿÿÿÿÿÿÿÿ
+1651348	latin1	-	ÿÿÿÿÿÿÿÿ
+1651388	latin1	-	ÿÿÿÿÿÿÿÿ
+1651428	latin1	-	ÿÿÿÿÿÿÿÿ
+1651468	latin1	-	ÿÿÿÿÿÿÿÿ
+1651508	latin1	-	ÿÿÿÿÿÿÿÿ
+1651548	latin1	-	ÿÿÿÿÿÿÿÿ
+1651588	latin1	-	ÿÿÿÿÿÿÿÿ
+1651628	latin1	-	ÿÿÿÿÿÿÿÿ
+1651668	latin1	-	ÿÿÿÿÿÿÿÿ
+1651708	latin1	-	ÿÿÿÿÿÿÿÿ
+1651748	latin1	-	ÿÿÿÿÿÿÿÿ
+1651788	latin1	-	ÿÿÿÿÿÿÿÿ
+1651828	latin1	-	ÿÿÿÿÿÿÿÿ
+1652040	latin1	-	ÿÿÿÿ
+1652080	latin1	-	ÿÿÿÿ
+1652120	latin1	-	ÿÿÿÿ
+1652160	latin1	-	ÿÿÿÿ
+1652320	latin1	-:1	ÿÿÿÿ¼Æ
+1652328	latin1	-	ýÿÿÿ´>
+1711420	latin1	-:2|openssl:1	ÿÿÿÿv
+1712920	latin1	-	ÿÿÿÿÓî
+1718136	latin1	-	ÿÿÿÿÓî
+1722440	latin1	-	ÿÿÿÿÓî
+1723240	latin1	-	ÿÿÿÿÓî
+1723372	latin1	-	ÿÿÿÿ½ô
+1723572	latin1	-	ÿÿÿÿ½ô
+1723772	latin1	-	ÿÿÿÿ½ô
+1723972	latin1	-	ÿÿÿÿ½ô
+1724172	latin1	-	ÿÿÿÿ½ô
+1724372	latin1	-	ÿÿÿÿ½ô
+1724572	latin1	-	ÿÿÿÿ½ô
+1724772	latin1	-	ÿÿÿÿ½ô
+1724972	latin1	-	ÿÿÿÿ½ô
+1725172	latin1	-	ÿÿÿÿ½ô
+1725372	latin1	-	ÿÿÿÿ½ô
+1725572	latin1	-	ÿÿÿÿ½ô
+1725772	latin1	-	ÿÿÿÿ½ô
+1725972	latin1	-	ÿÿÿÿ½ô
+1726172	latin1	-	ÿÿÿÿ½ô
+1726372	latin1	-	ÿÿÿÿ½ô
+1726572	latin1	-	ÿÿÿÿ½ô
+1726772	latin1	-	ÿÿÿÿ½ô
+1726972	latin1	-	ÿÿÿÿ½ô
+1727172	latin1	-	ÿÿÿÿ½ô
+1727372	latin1	-	ÿÿÿÿ½ô
+1727572	latin1	-	ÿÿÿÿ½ô
+1727772	latin1	-	ÿÿÿÿ½ô
+1727972	latin1	-	ÿÿÿÿ½ô
+1728172	latin1	-	ÿÿÿÿ½ô
+1728372	latin1	-	ÿÿÿÿ½ô
+1728572	latin1	-	ÿÿÿÿ½ô
+1728772	latin1	-	ÿÿÿÿ½ô
+1728972	latin1	-	ÿÿÿÿ½ô
+1729172	latin1	-	ÿÿÿÿ½ô
+1729372	latin1	-	ÿÿÿÿ½ô
+1729572	latin1	-	ÿÿÿÿ½ô
+1729772	latin1	-	ÿÿÿÿ½ô
+1729972	latin1	-	ÿÿÿÿ½ô
+1730172	latin1	-	ÿÿÿÿ½ô
+1730372	latin1	-	ÿÿÿÿ½ô
+1730572	latin1	-	ÿÿÿÿ½ô
+1730772	latin1	-	ÿÿÿÿ½ô
+1730972	latin1	-	ÿÿÿÿ½ô
+1731172	latin1	-	ÿÿÿÿ½ô
+1731372	latin1	-	ÿÿÿÿ½ô
+1731572	latin1	-	ÿÿÿÿ½ô
+1731772	latin1	-	ÿÿÿÿ½ô
+1731972	latin1	-	ÿÿÿÿ½ô
+1732172	latin1	-	ÿÿÿÿ½ô
+1732372	latin1	-	ÿÿÿÿ½ô
+1732572	latin1	-	ÿÿÿÿ½ô
+1732772	latin1	-	ÿÿÿÿ½ô
+1732972	latin1	-	ÿÿÿÿ½ô
+1733172	latin1	-	ÿÿÿÿ½ô
+1733572	latin1	-	ÿÿÿÿ±Å
+1733696	latin1	-	ÿÿÿÿÓÿ
+1733736	latin1	-	ÿÿÿÿ±Å
+1737372	latin1	-	ÿÿÿÿmE
+1737392	latin1	-	ÿÿÿÿ7E
+1738872	latin1	-	ÿÿÿÿmE
+1738892	latin1	-	ÿÿÿÿ7E
+1748028	latin1	-	ÿÿÿÿmE
+1748048	latin1	-	ÿÿÿÿ7E
+1750316	latin1	-	ÿÿÿÿmE
+1750336	latin1	-	ÿÿÿÿ7E
+1766584	latin1	-	ÿÿÿÿÏÿ
+1766968	latin1	-	ÿÿÿÿÏÿ
+1767768	latin1	-	ÿÿÿÿ¼Æ
+1767808	latin1	-	ÿÿÿÿ(Ú
+1767992	latin1	-	ÿÿÿÿ¼Æ
+1768032	latin1	-	ÿÿÿÿ(Ú
+1768052	latin1	-	ÿÿÿÿµ7
+1768240	latin1	-	ÿÿÿÿ(Ú
+1768300	latin1	-	ÿÿÿÿ¼Æ
+1768848	latin1	-	ÿÿÿÿ¼Æ
+1768868	latin1	-	ÿÿÿÿëø
+1768888	latin1	-	ÿÿÿÿ(Ú
+1769120	latin1	-	ÿÿÿÿ¼Æ
+1769140	latin1	-	ÿÿÿÿëø
+1769160	latin1	-	ÿÿÿÿ(Ú
+1769392	latin1	-	ÿÿÿÿ(Ú
+1769680	latin1	-	ÿÿÿÿ¼Æ
+1770092	latin1	-	ÿÿÿÿ¼Æ
+1770132	latin1	-	ÿÿÿÿ(Ú
+1770352	latin1	-	ÿÿÿÿ¼Æ
+1770372	latin1	-	ÿÿÿÿ!á
+1770592	latin1	-	ÿÿÿÿ¼Æ
+1770612	latin1	-	ÿÿÿÿ!á
+1770772	latin1	-	ÿÿÿÿGô
+1771528	latin1	-	ÿÿÿÿYô
+1771616	latin1	-	ÿÿÿÿ¦ô
+1771656	latin1	-	ÿÿÿÿÃ.
+1771756	latin1	-	ÿÿÿÿ[9
+1771796	latin1	-	ÿÿÿÿT9
+1772092	latin1	-	ÿÿÿÿ[9
+1772132	latin1	-	ÿÿÿÿT9
+1772380	latin1	-	ÿÿÿÿ[9
+1772420	latin1	-	ÿÿÿÿT9
+1772632	latin1	-	ÿÿÿÿYô
+1772652	latin1	-	ÿÿÿÿSô
+1772672	latin1	-	ÿÿÿÿ¼Æ
+1772712	latin1	-	ÿÿÿÿ[9
+1772772	latin1	-	ÿÿÿÿT9
+1773024	latin1	-	ÿÿÿÿYô
+1773044	latin1	-	ÿÿÿÿSô
+1773064	latin1	-	ÿÿÿÿ¼Æ
+1773104	latin1	-	ÿÿÿÿ[9
+1773164	latin1	-	ÿÿÿÿT9
+1773232	latin1	-	ÿÿÿÿ¦ô
+1773372	latin1	-	ÿÿÿÿ[9
+1773412	latin1	-	ÿÿÿÿT9
+1773612	latin1	-	ÿÿÿÿ[9
+1773652	latin1	-	ÿÿÿÿT9
+1773868	latin1	-	ÿÿÿÿ[9
+1773908	latin1	-	ÿÿÿÿT9
+1774456	latin1	-	ÿÿÿÿªê
+1774688	latin1	-	ÿÿÿÿ¦ô
+1774748	latin1	-	ÿÿÿÿÃ.
+1774768	latin1	-	ÿÿÿÿ_Ý
+1774828	latin1	-	ÿÿÿÿªê
+1775008	latin1	-	ÿÿÿÿ_Ý
+1775168	latin1	-	ÿÿÿÿ©6
+1775188	latin1	-	ÿÿÿÿº)
+1775312	latin1	-	ÿÿÿÿÃ.
+1775352	latin1	-	ÿÿÿÿªê
+1775716	latin1	-	ÿÿÿÿªê
+1775896	latin1	-	ÿÿÿÿ_Ý
+1776008	latin1	-	ÿÿÿÿªê
+1776188	latin1	-	ÿÿÿÿ_Ý
+1776296	latin1	-	ÿÿÿÿªê
+1776476	latin1	-	ÿÿÿÿ_Ý
+1776604	latin1	-	ÿÿÿÿªê
+1776784	latin1	-	ÿÿÿÿ_Ý
+1777204	latin1	-	ÿÿÿÿªê
+1777384	latin1	-	ÿÿÿÿ_Ý
+1777528	latin1	-	ÿÿÿÿªê
+1777708	latin1	-	ÿÿÿÿ_Ý
+1777848	latin1	-	ÿÿÿÿªê
+1778028	latin1	-	ÿÿÿÿ_Ý
+1778188	latin1	-	ÿÿÿÿªê
+1778368	latin1	-	ÿÿÿÿ_Ý
+1778480	latin1	-	ÿÿÿÿ¦ô
+1778540	latin1	-	ÿÿÿÿÃ.
+1778560	latin1	-	ÿÿÿÿ_Ý
+1778620	latin1	-	ÿÿÿÿªê
+1778800	latin1	-	ÿÿÿÿ_Ý
+1778840	latin1	-	ÿÿÿÿ©6
+1778860	latin1	-	ÿÿÿÿº)
+1779696	latin1	-	ÿÿÿÿ¦ô
+1779736	latin1	-	ÿÿÿÿÃ.
+1780032	latin1	-	ÿÿÿÿ¦ô
+1780072	latin1	-	ÿÿÿÿwÅ
+1781360	latin1	-	ÿÿÿÿ¦ô
+1782824	latin1	-	ÿÿÿÿ¼Æ
+1782884	latin1	-	ÿÿÿÿ±Å
+1783176	latin1	-	ÿÿÿÿ(Ú
+1783448	latin1	-	ÿÿÿÿ(Ú
+1783944	latin1	-	ÿÿÿÿmE
+1784216	latin1	-	ÿÿÿÿ2Ú
+1784236	latin1	-	ÿÿÿÿpÐ
+1785496	latin1	-	ÿÿÿÿÃð
+1785644	latin1	-	ÿÿÿÿ5Ä
+1785824	latin1	-	ÿÿÿÿÃð
+1786048	latin1	-	ÿÿÿÿ¼Æ
+1786068	latin1	-	ÿÿÿÿÃð
+1786200	latin1	-	ÿÿÿÿ5Ä
+1786380	latin1	-	ÿÿÿÿÃð
+1786608	latin1	-	ÿÿÿÿ¼Æ
+1786648	latin1	-	ÿÿÿÿÃð
+1786736	latin1	-	ÿÿÿÿ¼Æ
+1786796	latin1	-	ÿÿÿÿ5Ä
+1786976	latin1	-	ÿÿÿÿÃð
+1787204	latin1	-	ÿÿÿÿ5Ä
+1787448	latin1	-	ÿÿÿÿ5Ä
+1787540	latin1	-	ÿÿÿÿ5Ä
+1787808	latin1	-	ÿÿÿÿ¼Æ
+1788132	latin1	-	ÿÿÿÿ¼Æ
+1789188	latin1	-	ÿÿÿÿ¼Æ
+1789208	latin1	-	ÿÿÿÿ±Å
+1789296	latin1	-	ÿÿÿÿ±Å
+1789448	latin1	-	ÿÿÿÿ±Å
+1789780	latin1	-	ÿÿÿÿ¼Æ
+1789840	latin1	-	ÿÿÿÿ¼Æ
+1789984	latin1	-	ÿÿÿÿ è
+1790004	latin1	-	ÿÿÿÿoè
+1792268	latin1	-	ÿÿÿÿmE
+1792288	latin1	-	ÿÿÿÿ7E
+1793980	latin1	-	ÿÿÿÿmE
+1794000	latin1	-	ÿÿÿÿ7E
+1794020	latin1	-	ÿÿÿÿKô
+1794152	latin1	-	ÿÿÿÿKô
+1795808	latin1	-	ÿÿÿÿ¼Æ
+1795828	latin1	-	ÿÿÿÿëø
+1795848	latin1	-	ÿÿÿÿ(Ú
+1797056	latin1	-	ÿÿÿÿ-E
+1797076	latin1	-	ÿÿÿÿ\\õ
+1797244	latin1	-	ÿÿÿÿmE
+1797264	latin1	-	ÿÿÿÿ7E
+1797364	latin1	-	ÿÿÿÿ´ô
+1797592	latin1	-	ÿÿÿÿmE
+1797612	latin1	-	ÿÿÿÿ7E
+1797804	latin1	-	ÿÿÿÿYD
+1797912	latin1	-	ÿÿÿÿ=Õ

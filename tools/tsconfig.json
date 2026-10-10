@@ -1,0 +1,7 @@
+{
+  "extends": "../asmlift-wasm/tsconfig.json",
+  "compilerOptions": {
+    "typeRoots": ["../asmlift-wasm/node_modules/@types"]
+  },
+  "include": ["**/*.ts"]
+}

@@ -1,0 +1,24 @@
+# target_fn	candidate symbol substring (demangled, from x.js.symbols)	what
+3703	teste::ResumoBase64	comum caller + inlined ecourna EncodeBase64 (base64.cpp 247/267)
+1143	CError::CError(	CError ctor (what-string composition)
+1011	callee:SErrorLimits{1325, 1725}>::CBaseError(	merged CBaseError<E,L> ctor body
+2202	ConverteSemSinal	cstringutils unsigned converter
+5155	ConverteComSinal	cstringutils signed converter
+6153	callee:CStringUtils::ToByte(	merged ToByte/ToWord thunk
+1142	CStringUtils::ToByte(	ToByte thunk
+3508	CStringUtils::ToInt16(	ToInt16
+2200	CStringUtils::ToInt32(	ToInt32
+1141	CStringUtils::ToQWord(	ToQWord
+1523	CStringUtils::ToDWord(	ToDWord
+3507	CStringUtils::HexToInt(	HexToInt
+3506	CStringUtils::HexStringToBytes(	HexStringToBytes
+9406	CStringUtils::Trim(	Trim
+9256	IIdentificadorEleitor::IIdentificadorEleitor(	IIdentificadorEleitor ctor
+3939	callee:CNumeroCPF::CNumeroCPF(	merged CNumero* ctor body
+5107	CNumeroCPF::CNumeroCPF(	CNumeroCPF ctor thunk
+9264	CNumeroCPF::Formatado()	CNumeroCPF::Formatado
+9262	CNumeroInscricaoEleitoral::Formatado()	CNumeroInscricaoEleitoral::Formatado
+9263	CNumeroIdentificacaoLivre::Formatado()	CNumeroIdentificacaoLivre::Formatado
+778	IIdentificadorEleitor::~IIdentificadorEleitor()	IIdentificadorEleitor dtor
+4636	CError::~CError()	CError dtor
+11562	CError::what()	CError::what

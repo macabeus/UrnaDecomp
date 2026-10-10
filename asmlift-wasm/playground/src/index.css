@@ -1,0 +1,49 @@
+@import 'tailwindcss';
+
+/* The family design system (Mizuchi / Transmuter / gba-kit): slate surfaces on a fixed diagonal
+   gradient and thin slate scrollbars. asmlift's accent is teal + gold; it lives in the components. */
+
+:root {
+  color-scheme: dark; /* native controls + scrollbars render dark */
+  scrollbar-width: thin;
+  background-color: #0f172a;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100%;
+  background: linear-gradient(to bottom right, #0f172a, #1e293b, #0f172a);
+  background-attachment: fixed;
+}
+
+/* Slim slate scrollbars, app-wide (the family baseline) + the .scroll-slim opt-in. */
+::-webkit-scrollbar,
+.scroll-slim::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track,
+.scroll-slim::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb,
+.scroll-slim::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover,
+.scroll-slim::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* CodeMirror inside a fixed-height pane: the editor scrolls, not the page. */
+.cm-pane .cm-editor {
+  height: 100%;
+  font-size: 12.5px;
+}
+.cm-pane .cm-scroller {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}

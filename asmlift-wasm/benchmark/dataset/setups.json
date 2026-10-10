@@ -1,0 +1,276 @@
+[
+  {
+    "key": "uenux2",
+    "title": "uenux2, the TSE application",
+    "flags": {
+      "c++": "-O2 -fPIC -std=c++20 -DNDEBUG"
+    },
+    "image": "urna-emsdk:6.0.0",
+    "source": "src/Makefile UENUX2_CXXFLAGS; docs/reference/toolchain.md §3",
+    "truth": {
+      "kind": "make",
+      "vars": [
+        "UENUX2_OBJS"
+      ]
+    },
+    "components": [
+      "vota",
+      "vota-web",
+      "comum",
+      "simulador"
+    ],
+    "note": "No -fexceptions: throw sites call __cxa_throw directly. Few uenux2 units are reconstructed, so most rows come from the ledger's attribution."
+  },
+  {
+    "key": "ecourna",
+    "title": "ecourna (conan libecea1da310e5107), PIC translation units",
+    "flags": {
+      "c++": "-O3 -fPIC -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow"
+    },
+    "image": "urna-emsdk:6.0.0",
+    "source": "src/Makefile ECOURNA_CXXFLAGS + src/mk/ecourna-flags.mk",
+    "truth": {
+      "kind": "make",
+      "vars": [
+        "ECOURNA_OBJS"
+      ]
+    }
+  },
+  {
+    "key": "ecourna-nopic",
+    "title": "ecourna, non-PIC translation units (app/dados, api/io, api/compression, app/dados/asn converters)",
+    "flags": {
+      "c++": "-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fno-pic"
+    },
+    "image": "urna-emsdk:6.0.0",
+    "source": "src/Makefile ECOURNA_CXXFLAGS + the -fno-PIC rules of src/mk/ecourna-flags.mk, 06-ecourna-api-compression.mk, 04-ecourna-app-dados-asn.mk and the other unit fragments",
+    "truth": {
+      "kind": "make",
+      "vars": [
+        "ECOURNA_OBJS"
+      ]
+    }
+  },
+  {
+    "key": "asn1",
+    "title": "TSE fork of the III ASN.1 runtime and its generated Modulo* modules",
+    "flags": {
+      "c++": "-Os -fno-exceptions -std=c++17 -DNDEBUG"
+    },
+    "image": "urna-emsdk:6.0.0",
+    "source": "src/mk/asn1.mk ASN1_CXXFLAGS (the runtime and the modules)",
+    "truth": {
+      "kind": "make",
+      "vars": [
+        "ASN1_OBJS",
+        "ASN1MOD_OBJS"
+      ]
+    }
+  },
+  {
+    "key": "asn1-eh",
+    "title": "ASN.1 runtime translation units that throw (BERDecoderPartial)",
+    "flags": {
+      "c++": "-Os -fno-exceptions -std=c++17 -DNDEBUG -fexceptions -fignore-exceptions"
+    },
+    "image": "urna-emsdk:6.0.0",
+    "source": "src/mk/asn1.mk ASN1_CXXFLAGS + ASN1_FLAGS_<unit>",
+    "truth": {
+      "kind": "make",
+      "vars": [
+        "ASN1_OBJS"
+      ]
+    }
+  },
+  {
+    "key": "zlib",
+    "title": "zlib 1.3.1 + minizip",
+    "flags": {
+      "c": "-O3 -fPIC -DNDEBUG -D_LARGEFILE64_SOURCE=1"
+    },
+    "image": "urna-emsdk:6.0.0",
+    "source": "src/units/06-ecourna-api-compression.mk ZLIB_CFLAGS",
+    "truth": {
+      "kind": "make",
+      "vars": [
+        "ZLIB_OBJS"
+      ]
+    },
+    "note": "The flags are a stopgap (conan zlib defaults), not yet confirmed against the target."
+  },
+  {
+    "key": "sqlite",
+    "title": "SQLite 3.50.4 amalgamation",
+    "flags": {
+      "c": "-O3 -fPIC -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_UNLOCK_NOTIFY -DHAVE_FDATASYNC -DHAVE_GMTIME_R -DHAVE_LOCALTIME_R -DHAVE_POSIX_FALLOCATE -DHAVE_STRERROR_R -DHAVE_USLEEP"
+    },
+    "image": "urna-emsdk:6.0.0",
+    "source": "tools/libs/sqlite/build.sh DEFAULT_CFLAGS, run by src/Makefile (variant O3pic2)",
+    "truth": {
+      "kind": "artefact",
+      "vars": [
+        "SQLITE_O"
+      ],
+      "file": "build/out/sqlite/O3pic2/cflags.txt",
+      "format": "lines"
+    }
+  },
+  {
+    "key": "openssl",
+    "title": "OpenSSL 3.0.17 libcrypto",
+    "flags": {
+      "c": "-O3 -fPIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG"
+    },
+    "image": "urna-emsdk:6.0.0",
+    "source": "tools/libs/openssl/configure.sh (URNA_OSSL_CFLAGS=-O3 from src/Makefile, -fPIC) → the configured Makefile's CFLAGS and CNF_CPPFLAGS",
+    "truth": {
+      "kind": "artefact",
+      "vars": [
+        "LIBCRYPTO"
+      ],
+      "file": "build/out/openssl/O3/Makefile",
+      "format": "make-var",
+      "fileVars": [
+        "CNF_CFLAGS",
+        "CFLAGS",
+        "CNF_CPPFLAGS"
+      ]
+    },
+    "note": "Each object's rule adds its own defines (-DSTATIC_LEGACY, -DOPENSSLDIR=…); they change no lifted source."
+  },
+  {
+    "key": "7zip",
+    "title": "7-Zip / LZMA SDK 21.02, single-threaded",
+    "flags": {
+      "c": "-Oz -fexceptions -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_7ZIP_ST -O3",
+      "c++": "-Oz -fexceptions -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_7ZIP_ST -O3 -DPROG_VARIANT_R"
+    },
+    "image": "urna-emsdk:6.0.0",
+    "source": "tools/libs/7zip/build.sh COMMON + the -O3 src/Makefile passes (variant st-O3)",
+    "truth": {
+      "kind": "artefact",
+      "vars": [
+        "SEVENZIP_OBJS"
+      ],
+      "file": "build/out/7zip/21.02-st-O3/flags.nul",
+      "format": "nul",
+      "cxxOnly": [
+        "-DPROG_VARIANT_R"
+      ]
+    }
+  },
+  {
+    "key": "rhvoice",
+    "title": "RHVoice 1.14.0 core (+ hts_engine and sonic in C)",
+    "flags": {
+      "c": "-Oz -fexceptions -DRHVOICE=1 '-DPACKAGE=\"RHVoice\"' -O3 -DNDEBUG",
+      "c++": "-Oz -fexceptions -DRHVOICE=1 '-DPACKAGE=\"RHVoice\"' -O3 -std=c++14 -DNDEBUG"
+    },
+    "image": "urna-emsdk:6.0.0",
+    "source": "tools/libs/rhvoice/build.sh COMMON + the flags src/Makefile passes (variant cxx14-O3-ndebug)",
+    "truth": {
+      "kind": "artefact",
+      "vars": [
+        "RHVOICE_OBJS"
+      ],
+      "file": "build/out/rhvoice/1.14.0-cxx14-O3-ndebug/flags.nul",
+      "format": "nul"
+    }
+  },
+  {
+    "key": "boost",
+    "title": "Boost 1.89.0, header-only",
+    "flags": null,
+    "image": "urna-emsdk:6.0.0",
+    "source": "tools/libs/boost/build.sh; compiled by each including translation unit",
+    "truth": {
+      "kind": "header-only",
+      "namespace": "boost::"
+    },
+    "note": "A row's flags are those of the setup whose objects instantiate it (`instantiatedBy`)."
+  },
+  {
+    "key": "libc",
+    "title": "emscripten musl libc (libc.a)",
+    "flags": {
+      "c": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -DNDEBUG"
+    },
+    "image": "urna-emsdk:6.0.0",
+    "source": "emscripten tools/system_libs.py (class libc), prebuilt in the image",
+    "truth": {
+      "kind": "emscripten",
+      "library": "libc",
+      "archive": "libc.a"
+    }
+  },
+  {
+    "key": "libc-optz",
+    "title": "emscripten musl libc, the -Oz link's size-optimised members (libc_optz.a)",
+    "flags": {
+      "c": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -Os -fno-inline-functions -fno-builtin -DEMSCRIPTEN_OPTIMIZE_FOR_OZ -DNDEBUG"
+    },
+    "image": "urna-emsdk:6.0.0",
+    "source": "emscripten tools/system_libs.py (class libc_optz), prebuilt in the image",
+    "truth": {
+      "kind": "emscripten",
+      "library": "libc_optz",
+      "archive": "libc_optz.a"
+    }
+  },
+  {
+    "key": "dlmalloc",
+    "title": "emscripten dlmalloc (libdlmalloc.a)",
+    "flags": {
+      "c": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG"
+    },
+    "image": "urna-emsdk:6.0.0",
+    "source": "emscripten tools/system_libs.py (class libmalloc, malloc=dlmalloc), prebuilt in the image",
+    "truth": {
+      "kind": "emscripten",
+      "library": "libmalloc",
+      "archive": "libdlmalloc.a"
+    }
+  },
+  {
+    "key": "compiler-rt",
+    "title": "compiler-rt builtins (libcompiler_rt.a)",
+    "flags": {
+      "c": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG -DCOMPILER_RT_HAS_ATOMICS=1 -sSUPPORT_LONGJMP=emscripten -sDISABLE_EXCEPTION_THROWING=0"
+    },
+    "image": "urna-emsdk:6.0.0",
+    "source": "emscripten tools/system_libs.py (class libcompiler_rt), prebuilt in the image",
+    "truth": {
+      "kind": "emscripten",
+      "library": "libcompiler_rt",
+      "archive": "libcompiler_rt.a"
+    }
+  },
+  {
+    "key": "libcxx",
+    "title": "libc++ (libc++.a)",
+    "flags": {
+      "c++": "-O2 -fno-unroll-loops -Oz -DLIBCXX_BUILDING_LIBCXXABI=1 -D_LIBCPP_BUILDING_LIBRARY -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -std=c++23 -DLIBC_NAMESPACE=__llvm_libc -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0"
+    },
+    "image": "urna-emsdk:6.0.0",
+    "source": "emscripten tools/system_libs.py (class libcxx, JS exceptions), prebuilt in the image",
+    "truth": {
+      "kind": "emscripten",
+      "library": "libc++",
+      "archive": "libc++.a"
+    }
+  },
+  {
+    "key": "libcxxabi",
+    "title": "libc++abi (libc++abi.a)",
+    "flags": {
+      "c++": "-O2 -fno-unroll-loops -Oz -D_LIBCXXABI_USE_FUTEX -D_LIBCPP_BUILDING_LIBRARY -D_LIBCXXABI_BUILDING_LIBRARY -DLIBCXXABI_NON_DEMANGLING_TERMINATE -std=c++23 -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0 -D_LIBCXXABI_HAS_NO_THREADS -D__EMSCRIPTEN_EXCEPTIONS__ -DLIBCXXABI_SILENT_TERMINATE"
+    },
+    "image": "urna-emsdk:6.0.0",
+    "source": "emscripten tools/system_libs.py (class libcxxabi, JS exceptions), prebuilt in the image",
+    "truth": {
+      "kind": "emscripten",
+      "library": "libc++abi",
+      "archive": "libc++abi.a"
+    }
+  }
+]

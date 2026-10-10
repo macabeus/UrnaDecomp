@@ -1,0 +1,1394 @@
+Assert (comum::CAppInfo::GetInst().GetVota().GetEstadoVota() == EAVENCERRADA)
+CAplicativo::ETipoAplicativo ecourna::app::dados::asn::CConversorAplicativo::DeconverteTipoAplicativo(ModuloInformacaoMidia::TipoAplicativo) const
+CAppInfoBuilder &comum::teste::CAppInfoBuilder::SalvaApp(bool, EFlashOrigem, EUrnaTurno, EApp)
+CAppInfoBuilder &comum::teste::CAppInfoBuilder::SalvaApps(bool, std::vector<EMidia>, EUrnaTurno, std::vector<EApp>)
+CAppInfoBuilder &comum::teste::CAppInfoBuilder::SalvaGeral(bool, std::vector<EMidia>)
+CBaseType<ecourna::app::dados::EErroLeituraBiometria, ecourna::app::dados::ErroBioPrimeiro, ecourna::app::dados::ErroBioUltimo, 34>::CBaseType(TYPE) [TYPE = ecourna::app::dados::EErroLeituraBiometria, MIN_VAL = ecourna::app::dados::ErroBioPrimeiro, MAX_VAL = ecourna::app::dados::ErroBioUltimo, BASIC_TYPE = 34]
+CBaseType<ecourna::app::dados::ETipoIdentificadorEleitor, ecourna::app::dados::TipoIDPrimeiro, ecourna::app::dados::TipoIDNumeroLivre, 40>::CBaseType(TYPE) [TYPE = ecourna::app::dados::ETipoIdentificadorEleitor, MIN_VAL = ecourna::app::dados::TipoIDPrimeiro, MAX_VAL = ecourna::app::dados::TipoIDNumeroLivre, BASIC_TYPE = 40]
+CBaseType<unsigned int, 0, 9999, 8>::CBaseType(TYPE) [TYPE = unsigned int, MIN_VAL = 0, MAX_VAL = 9999, BASIC_TYPE = 8]
+CBaseType<unsigned int, 0, 99999, 0>::CBaseType(TYPE) [TYPE = unsigned int, MIN_VAL = 0, MAX_VAL = 99999, BASIC_TYPE = 0]
+CBaseType<unsigned int, 0, 99999, 6>::CBaseType(TYPE) [TYPE = unsigned int, MIN_VAL = 0, MAX_VAL = 99999, BASIC_TYPE = 6]
+CBaseType<unsigned short, 0, 99, 4>::CBaseType(TYPE) [TYPE = unsigned short, MIN_VAL = 0, MAX_VAL = 99, BASIC_TYPE = 4]
+CBaseType<unsigned short, 0, 999, 38>::CBaseType(TYPE) [TYPE = unsigned short, MIN_VAL = 0, MAX_VAL = 999, BASIC_TYPE = 38]
+CBaseType<unsigned short, 0, 9999, 15>::CBaseType(TYPE) [TYPE = unsigned short, MIN_VAL = 0, MAX_VAL = 9999, BASIC_TYPE = 15]
+CBaseType<unsigned short, 0, 9999, 36>::CBaseType(TYPE) [TYPE = unsigned short, MIN_VAL = 0, MAX_VAL = 9999, BASIC_TYPE = 36]
+CBaseType<unsigned short, 0, 9999, 7>::CBaseType(TYPE) [TYPE = unsigned short, MIN_VAL = 0, MAX_VAL = 9999, BASIC_TYPE = 7]
+CBaseType<unsigned short, 0, 9999, 9>::CBaseType(TYPE) [TYPE = unsigned short, MIN_VAL = 0, MAX_VAL = 9999, BASIC_TYPE = 9]
+CBaseType<unsigned short, 1, 99, 3>::CBaseType(TYPE) [TYPE = unsigned short, MIN_VAL = 1, MAX_VAL = 99, BASIC_TYPE = 3]
+CBaseType<unsigned short, 100, 999, 39>::CBaseType(TYPE) [TYPE = unsigned short, MIN_VAL = 100, MAX_VAL = 999, BASIC_TYPE = 39]
+CCandidaturas::Container::iterator comum::CCandidaturas::Localiza(TCargoID, TCandidatoID)
+CComparecimentoMesario::EEstadoColetaDigital ecourna::app::dados::asn::CConversorComparecimentoMesario::DeconverteEstadoColetaDigital(ModuloResultadoUrnaCadastro::EstadoColetaDigital) const
+CConversorEstadoComparecimento::TDado::ESituacaoComparecimento ecourna::app::dados::asn::CConversorEstadoComparecimento::DeconverteEstadoComparecimento(ModuloResultadoUrnaCadastro::SituacaoComparecimentoEleitor) const
+CConversorEstadoComparecimento::TDado::ESituacaoHabilitacaoAudio ecourna::app::dados::asn::CConversorEstadoComparecimento::DeconverteSituacaoHabilitacaoAudio(ModuloResultadoUrnaCadastro::SituacaoHabilitacaoAudio) const
+CConversorInformacaoMidia::TDado::ETipoMidia ecourna::app::dados::asn::CConversorInformacaoMidia::DeconverteTipoMidia(ModuloInformacaoMidia::TipoMidia) const
+CDedo comum::md::CBiometriaEleitor::GetDedo(CDedo::TipoDedo) const
+CDedo::ETipoDedo ecourna::app::dados::asn::CConversorHabilitacaoBiometrica::DeconverteTipoDedo(const ModuloTiposEleitorais::TipoDedo &) const
+CEleitorDetalhe comum::CEleitores::LoadEleitorDetalhe(const md::CEleitorDecorator &, const std::vector<md::CImpedido> &, size_t &, const md::CEleitorDinamico *) const
+CEleitorIdentidade comum::md::CEleitorDecorator::GetIdentidadePorTipo(ecourna::app::dados::ETipoIdentificadorEleitor) const
+CEleitores::LoadEleitorDetalhe - ({}-{} > {}-{}). {} com marcação de impedido não encontrado nas listas de eleitores e de tte
+CEstadoComparecimento::ESituacaoHabilitacaoAudio ecourna::app::dados::CEstadoComparecimento::GetSituacaoHabilitacaoAudio() const
+CEstadoHabilitacaoPorCodigo::ESituacaoReconhecimentoMesario ecourna::app::dados::asn::CConversorEstadoHabilitacaoPorCodigo::DeconverteSituacaoReconhecimentoMesario(ModuloResultadoUrnaCadastro::SituacaoReconhecimentoMesario) const
+CFormInterativoTelaVota vota::CCompletaProporcional::GetTelaCargoAtual(const std::string &)
+CFormInterativoTelaVota vota::CConfirmaVotoEmCargo::GetTelaCargoAtual(const std::string &)
+CFormInterativoTelaVota vota::CConfirmaVotoSemCandidato::GetTelaCargoAtual(const std::string &)
+CFormInterativoTelaVota vota::CPedeMajoritario::GetTelaCargoAtual()
+CFormInterativoTelaVota vota::CPedeProporcional::GetTelaCargoAtual()
+CFormInterativoTelaVota vota::CTelasCargo::GetTela(const ETelaVotacao) const
+CFormInterativoTelaVota vota::CTelasVota::GetTelaCargo(const comum::TCargoID, const ETelaVotacao) const
+CFoto::EFormatoImagem ecourna::app::dados::asn::CConversorFoto::DeconverteFormatoImagem(ModuloTiposEleitorais::FormatoImagem::NamedNumber) const
+CFotos::GetImagem(id)
+CIniKey &api::CIniKey::operator=(const CIniKey &)
+CIniSection &api::CIniSection::operator=(const CIniSection &)
+CInteractiveFormBuilder::SharedInput api::CInteractiveFormBuilder::AddLabeledInputControl(const std::vector<std::pair<char, std::string>> &, const SRect &, bool)
+CLabelParametrizado::EGeneroLabel ecourna::app::dados::asn::CConversorLabelParametrizado::DesconverterGeneroLabel(const TEntidade &) const
+CMenuItem &api::CInputMenuField::AddItem(const std::string &, TMenuCallback)
+CMenuItem &api::CMenuItem::SetSearchText(const std::string &)
+CMovie api::getResourceMovie(const std::string &)
+CParametrosUrna::EFormaSuspenderComVoto ecourna::app::dados::asn::CConversorParametrosUrna::DesconverterFormaSuspenderComVoto(const TEntidade &) const
+CParametrosUrna::EFormaSuspenderSemVoto ecourna::app::dados::asn::CConversorParametrosUrna::DesconverterFormaSuspenderSemVoto(const TEntidade &) const
+CPolySingletonList::%s(%s[%s])[%s] %s%s
+CQRCodeImagePaper::QrcodeData api::CQRCodeImagePaper::MontaImagem(size_t, const std::string &)
+CResultadoUrnaCadastro::ESituacaoArquivo ecourna::app::dados::asn::CConversorResultadoUrnaCadastro::DeconverteSituacaoArquivo(ModuloTiposEcoUrna::SituacaoArquivo) const
+CTituloRelatorio::EAlinhamentoTitulo ecourna::app::dados::asn::CConversorTituloRelatorio::DesconverterAlinhamentoTitulo(const TEntidade &) const
+CTituloRelatorio::EEstiloTitulo ecourna::app::dados::asn::CConversorTituloRelatorio::DesconverterEstiloTitulo(const TEntidade &) const
+CVotosCargos::TMapa comum::md::(anonymous namespace)::criaMapa(const TVectorCargo &)
+CVotosEleicoesVota::TMapaCargoEleicao comum::md::(anonymous namespace)::MontaMapa(const CVotosEleicoesVota::TMapa &)
+Calling OPENSSL_DIR_read("%s")
+Create(const std::string &) não sobrecarregado.
+EEstadoEncerramento comum::asn::CConversorEstadoGeralVota::DesconverteEstadoEncerramento(const ModuloEstadoGeralVota::EstadoEncerramento &) const
+EEstadoSA comum::asn::CConversorEstadoGeralSA::DesconverteEstadoSA(const ModuloEstadoGeralSA::EstadoSA &) const
+EEstadoUrna comum::asn::CConversorEstadoGeral::DesconverteEstadoUrna(const ModuloEstadoGeralUrna::EstadoUrna &) const
+EEstadoVota comum::asn::CConversorEstadoGeralVota::DesconverteEstadoVota(const ModuloEstadoGeralVota::EstadoVota &) const
+EInputResult api::CInteractiveForm<api::IScreen, api::IInputKbd>::Read() [MEDIA = api::IScreen, INPUT = api::IInputKbd]
+EInputResult api::CInteractiveForm<api::IScreen, api::IInputKbd>::WaitAndRead() [MEDIA = api::IScreen, INPUT = api::IInputKbd]
+EInputResult api::CInteractiveForm<api::IScreenMT, api::IInputMT>::Read() [MEDIA = api::IScreenMT, INPUT = api::IInputMT]
+ESTADO &comum::GetEstado(const std::string &, std::optional<ESTADO> &) [ESTADO = comum::md::estadoaplicacao::CEstadoGeralGap]
+ESTADO &comum::GetEstado(const std::string &, std::optional<ESTADO> &) [ESTADO = comum::md::estadoaplicacao::CEstadoGeralVota]
+ESTADO &comum::GetEstado(const std::string &, std::optional<ESTADO> &) [ESTADO = comum::md::estadoaplicacao::CEstadoGeral]
+ETipoImpedimento comum::md::CImpedido::GetImpedimentoP2() const
+EUrnaAplicativo comum::asn::CConversorEstadoGeralGap::DesconverteUrnaAplicativo(const ModuloEstadoGeralGap::UrnaAplicativo &) const
+EUrnaModelo comum::asn::CConversorDadoCarga::DesconverteModelo(const ModuloTiposEcoUrna::ModeloEquipamento &) const
+EUrnaTipo comum::asn::CConversorDadoCarga::DesconverteTipoUrna(const ModuloEstadoGeralUrna::TipoUrnaOperacao &) const
+IControladorRegistraMesarios &comum::(anonymous namespace)::GetControlador()
+IQRCodeBUDS &vota::(anonymous namespace)::GetQRDSInst()
+ModuloBoletimUrna::ResultadoVotacao comum::asn::(anonymous namespace)::CriaResultadoVotacao(const md::CResultadoVotacao &)
+ModuloBoletimUrna::ResultadoVotacaoPorEleicao comum::asn::(anonymous namespace)::CriaResultadoVotacaoPorEleicao(const md::CResultadoVotacaoPorEleicao &)
+ModuloBoletimUrna::TotalVotosCargo comum::asn::(anonymous namespace)::CriaVotosCargo(const md::CVotosCargo &)
+ModuloBoletimUrna::TotalVotosVotavel comum::asn::(anonymous namespace)::CriaVotosVotavel(const md::CVotosVotavel &, const TCargoID, const ueword)
+ModuloEstadoGeralGap::UrnaAplicativo comum::asn::CConversorEstadoGeralGap::ConverteUrnaAplicativo(const EUrnaAplicativo) const
+ModuloEstadoGeralSA::EstadoSA comum::asn::CConversorEstadoGeralSA::ConverteEstadoSA(const EEstadoSA) const
+ModuloEstadoGeralUrna::EstadoUrna comum::asn::CConversorEstadoGeral::ConverteEstadoUrna(const EEstadoUrna) const
+ModuloEstadoGeralUrna::TipoAjusteDataHora comum::asn::CConversorAjusteDataHora::ConverteTipoAjusteDataHora(const md::estadoaplicacao::CAjusteDataHora::ETipoDeltaT &) const
+ModuloEstadoGeralUrna::TipoUrnaOperacao comum::asn::CConversorDadoCarga::ConverteTipoUrna(const EUrnaTipo) const
+ModuloEstadoGeralVota::EstadoEncerramento comum::asn::CConversorEstadoGeralVota::ConverteEstadoEncerramento(const EEstadoEncerramento) const
+ModuloEstadoGeralVota::EstadoVota comum::asn::CConversorEstadoGeralVota::ConverteEstadoVota(const EEstadoVota) const
+ModuloInformacaoMidia::TipoAplicativo ecourna::app::dados::asn::CConversorAplicativo::ConverteTipoAplicativo(CAplicativo::ETipoAplicativo) const
+ModuloInformacaoMidia::TipoMidia ecourna::app::dados::asn::CConversorInformacaoMidia::ConverteTipoMidia(TDado::ETipoMidia) const
+ModuloParametrizacaoUrna::AlinhamentoTitulo::NamedNumber ecourna::app::dados::asn::CConversorTituloRelatorio::ConverterAlinhamentoTitulo(CTituloRelatorio::EAlinhamentoTitulo) const
+ModuloParametrizacaoUrna::EstiloTitulo::NamedNumber ecourna::app::dados::asn::CConversorTituloRelatorio::ConverterEstiloTitulo(CTituloRelatorio::EEstiloTitulo) const
+ModuloParametrizacaoUrna::FormaSuspenderComVoto ecourna::app::dados::asn::CConversorParametrosUrna::ConverterFormaSuspenderComVoto(CParametrosUrna::EFormaSuspenderComVoto) const
+ModuloParametrizacaoUrna::FormaSuspenderSemVoto ecourna::app::dados::asn::CConversorParametrosUrna::ConverterFormaSuspenderSemVoto(CParametrosUrna::EFormaSuspenderSemVoto) const
+ModuloParametrizacaoUrna::GeneroLabel::NamedNumber ecourna::app::dados::asn::CConversorLabelParametrizado::ConverterGeneroLabel(CLabelParametrizado::EGeneroLabel) const
+ModuloResultadoUrnaCadastro::ErroLeituraBiometria ecourna::app::dados::asn::CConversorHabilitacaoBiometrica::ConverteErroLeituraBiometria(TErroLeituraBiometria) const
+ModuloResultadoUrnaCadastro::EstadoColetaDigital ecourna::app::dados::asn::CConversorComparecimentoMesario::ConverteEstadoColetaDigital(CComparecimentoMesario::EEstadoColetaDigital) const
+ModuloResultadoUrnaCadastro::SituacaoComparecimentoEleitor ecourna::app::dados::asn::CConversorEstadoComparecimento::ConverteEstadoComparecimento(TDado::ESituacaoComparecimento) const
+ModuloResultadoUrnaCadastro::SituacaoHabilitacaoAudio ecourna::app::dados::asn::CConversorEstadoComparecimento::ConverteSituacaoHabilitacaoAudio(TDado::ESituacaoHabilitacaoAudio) const
+ModuloResultadoUrnaCadastro::SituacaoReconhecimentoMesario ecourna::app::dados::asn::CConversorEstadoHabilitacaoPorCodigo::ConverteSituacaoReconhecimentoMesario(CEstadoHabilitacaoPorCodigo::ESituacaoReconhecimentoMesario) const
+ModuloTiposEcoUrna::ModeloEquipamento comum::asn::CConversorDadoCarga::ConverteModelo(const EUrnaModelo) const
+ModuloTiposEcoUrna::SituacaoArquivo ecourna::app::dados::asn::CConversorResultadoUrnaCadastro::ConverteSituacaoArquivo(CResultadoUrnaCadastro::ESituacaoArquivo) const
+ModuloTiposEleitorais::FormatoImagem::NamedNumber ecourna::app::dados::asn::CConversorFoto::ConverteFormatoImagem(CFoto::EFormatoImagem) const
+ModuloTiposEleitorais::TipoDedo ecourna::app::dados::asn::CConversorHabilitacaoBiometrica::ConverteTipoDedo(const CDedo::ETipoDedo &) const
+ModuloTiposResultadosEcoUrna::MotivoApuracaoEletronica comum::asn::CConversorTipoApuracaoSA::ConverteMotivoApuracaoEletronica(const uebyte) const
+ModuloTiposResultadosEcoUrna::MotivoApuracaoManual comum::asn::CConversorTipoApuracaoSA::ConverteMotivoApuracaoManual(const uebyte) const
+ModuloTiposResultadosEcoUrna::MotivoApuracaoMistaComBU comum::asn::CConversorTipoApuracaoSA::ConverteMotivoApuracaoBU(const uebyte) const
+ModuloTiposResultadosEcoUrna::MotivoApuracaoMistaComMR comum::asn::CConversorTipoApuracaoSA::ConverteMotivoApuracaoMR(const uebyte) const
+PRAGMA integrity_check(1)
+RecordType *api::CDataMap<comum::md::CEleitorIdentidade, comum::CEleitorDetalhe>::GetCurrent() const [KeyType = comum::md::CEleitorIdentidade, RecordType = comum::CEleitorDetalhe]
+RecordType *api::CDataMap<unsigned int, comum::md::CCandidatura>::GetCurrent() const [KeyType = unsigned int, RecordType = comum::md::CCandidatura]
+RecordType *api::CDataMap<unsigned int, comum::md::CRespostaConsulta>::GetCurrent() const [KeyType = unsigned int, RecordType = comum::md::CRespostaConsulta]
+RecordType *api::CDataMap<unsigned short, comum::md::CPartido>::GetCurrent() const [KeyType = unsigned short, RecordType = comum::md::CPartido]
+SELECT count(*) FROM %Q.'%q%s'
+SELECT length(data) FROM '%q'.'%q_node' WHERE nodeno = 1
+SELECT raise(ABORT,%Q) FROM "%w"."%w"
+SPoint api::CInputMenuField::NextItemPosition() const
+SRect api::CInputMenuField::GetInstructionTextRect() const
+SRect api::CTextFieldDoubleLine::CalcLineRect(const std::string &, SPoint) const
+SharedVector api::getResourceFile(const std::string &)
+TDado comum::asn::IConversorASN<ModuloCandidatos::Candidatura, comum::md::CCandidatura>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloCandidatos::Candidatura, DADO = comum::md::CCandidatura]
+TDado comum::asn::IConversorASN<ModuloCandidatos::DadosCandidato, comum::md::CDadosCandidato>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloCandidatos::DadosCandidato, DADO = comum::md::CDadosCandidato]
+TDado comum::asn::IConversorASN<ModuloCandidatos::EntidadeCandidatos, std::vector<comum::md::CCandidatura>>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloCandidatos::EntidadeCandidatos, DADO = std::vector<comum::md::CCandidatura>]
+TDado comum::asn::IConversorASN<ModuloComplementosMunicipios::ComplementoMunicipio, comum::md::CComplementoMunicipio>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloComplementosMunicipios::ComplementoMunicipio, DADO = comum::md::CComplementoMunicipio]
+TDado comum::asn::IConversorASN<ModuloComplementosMunicipios::EntidadeComplementosMunicipios, comum::md::CComplementosMunicipiosUF>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloComplementosMunicipios::EntidadeComplementosMunicipios, DADO = comum::md::CComplementosMunicipiosUF]
+TDado comum::asn::IConversorASN<ModuloComplementosMunicipios::HorarioVerao, comum::md::CHorarioVerao>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloComplementosMunicipios::HorarioVerao, DADO = comum::md::CHorarioVerao]
+TDado comum::asn::IConversorASN<ModuloDadosDisponiveisCarga::DadosDisponiveisCarga, comum::md::CDadosDisponiveisCarga>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloDadosDisponiveisCarga::DadosDisponiveisCarga, DADO = comum::md::CDadosDisponiveisCarga]
+TDado comum::asn::IConversorASN<ModuloEleicao::CargoPergunta, comum::md::CCargo>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloEleicao::CargoPergunta, DADO = comum::md::CCargo]
+TDado comum::asn::IConversorASN<ModuloEleicao::DetalheCargo, comum::md::CDetalheCandidato>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloEleicao::DetalheCargo, DADO = comum::md::CDetalheCandidato]
+TDado comum::asn::IConversorASN<ModuloEleicao::DetalhePergunta, comum::md::CDetalheConsulta>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloEleicao::DetalhePergunta, DADO = comum::md::CDetalheConsulta]
+TDado comum::asn::IConversorASN<ModuloEleicao::EntidadeEleicao, comum::md::CEleicaoPE>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloEleicao::EntidadeEleicao, DADO = comum::md::CEleicaoPE]
+TDado comum::asn::IConversorASN<ModuloEleicao::NomesCargo, comum::md::CNomesCargo>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloEleicao::NomesCargo, DADO = comum::md::CNomesCargo]
+TDado comum::asn::IConversorASN<ModuloEleicao::Suplencias, comum::md::CSuplencia>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloEleicao::Suplencias, DADO = comum::md::CSuplencia]
+TDado comum::asn::IConversorASN<ModuloEleitores::BiometriaEleitor, comum::md::CBiometriaEleitor>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloEleitores::BiometriaEleitor, DADO = comum::md::CBiometriaEleitor]
+TDado comum::asn::IConversorASN<ModuloEleitores::Dedo, comum::md::CDedo>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloEleitores::Dedo, DADO = comum::md::CDedo]
+TDado comum::asn::IConversorASN<ModuloEstadoGeralDefs::NumViasImpressasRelatorios, comum::md::estadoaplicacao::CNumViasImpressasRelatorios>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloEstadoGeralDefs::NumViasImpressasRelatorios, DADO = comum::md::estadoaplicacao::CNumViasImpressasRelatorios]
+TDado comum::asn::IConversorASN<ModuloEstadoGeralGap::EstadoGeralGap, comum::md::estadoaplicacao::CEstadoGeralGap>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloEstadoGeralGap::EstadoGeralGap, DADO = comum::md::estadoaplicacao::CEstadoGeralGap]
+TDado comum::asn::IConversorASN<ModuloEstadoGeralUrna::AjusteDataHora, comum::md::estadoaplicacao::CAjusteDataHora>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloEstadoGeralUrna::AjusteDataHora, DADO = comum::md::estadoaplicacao::CAjusteDataHora]
+TDado comum::asn::IConversorASN<ModuloEstadoGeralUrna::DadoCarga, comum::md::estadoaplicacao::CDadoCarga>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloEstadoGeralUrna::DadoCarga, DADO = comum::md::estadoaplicacao::CDadoCarga]
+TDado comum::asn::IConversorASN<ModuloEstadoGeralUrna::DadoCorrespondencia, comum::md::estadoaplicacao::CDadoCorrespondencia>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloEstadoGeralUrna::DadoCorrespondencia, DADO = comum::md::estadoaplicacao::CDadoCorrespondencia]
+TDado comum::asn::IConversorASN<ModuloEstadoGeralUrna::DadoLocal, comum::md::estadoaplicacao::CDadoLocal>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloEstadoGeralUrna::DadoLocal, DADO = comum::md::estadoaplicacao::CDadoLocal]
+TDado comum::asn::IConversorASN<ModuloEstadoGeralUrna::DadoSecao, comum::md::estadoaplicacao::CLocalidadeEleitoral>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloEstadoGeralUrna::DadoSecao, DADO = comum::md::estadoaplicacao::CLocalidadeEleitoral]
+TDado comum::asn::IConversorASN<ModuloEstadoGeralUrna::EstadoGeralUrna, comum::md::estadoaplicacao::CEstadoGeral>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloEstadoGeralUrna::EstadoGeralUrna, DADO = comum::md::estadoaplicacao::CEstadoGeral]
+TDado comum::asn::IConversorASN<ModuloEstadoGeralVota::EstadoGeralVota, comum::md::estadoaplicacao::CEstadoGeralVota>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloEstadoGeralVota::EstadoGeralVota, DADO = comum::md::estadoaplicacao::CEstadoGeralVota]
+TDado comum::asn::IConversorASN<ModuloFotosCandidatos::FotoCandidato, comum::md::CFotoCandidato>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloFotosCandidatos::FotoCandidato, DADO = comum::md::CFotoCandidato]
+TDado comum::asn::IConversorASN<ModuloImpedidos::EntidadeImpedidos, std::vector<comum::md::CImpedido>>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloImpedidos::EntidadeImpedidos, DADO = std::vector<comum::md::CImpedido>]
+TDado comum::asn::IConversorASN<ModuloLocal::IdentificacaoAgregada, comum::md::CIdentificacaoAgregada>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloLocal::IdentificacaoAgregada, DADO = comum::md::CIdentificacaoAgregada]
+TDado comum::asn::IConversorASN<ModuloLocal::Local, comum::md::CLocal>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloLocal::Local, DADO = comum::md::CLocal]
+TDado comum::asn::IConversorASN<ModuloLocal::SecaoEleitoral, comum::md::CSecaoEleitoral>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloLocal::SecaoEleitoral, DADO = comum::md::CSecaoEleitoral]
+TDado comum::asn::IConversorASN<ModuloPartidos::EntidadePartidos, comum::md::CEntidadePartidos>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloPartidos::EntidadePartidos, DADO = comum::md::CEntidadePartidos]
+TDado comum::asn::IConversorASN<ModuloPartidos::Partido, comum::md::CPartido>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloPartidos::Partido, DADO = comum::md::CPartido]
+TDado comum::asn::IConversorASN<ModuloProcessoEleitoral::EntidadeProcessoEleitoral, comum::md::CProcessoEleitoralDTO>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloProcessoEleitoral::EntidadeProcessoEleitoral, DADO = comum::md::CProcessoEleitoralDTO]
+TDado comum::asn::IConversorASN<ModuloProcessoEleitoral::OrigemConfiguracao, comum::md::EOrigemConfiguracao>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloProcessoEleitoral::OrigemConfiguracao, DADO = comum::md::EOrigemConfiguracao]
+TDado comum::asn::IConversorASN<ModuloProcessoEleitoral::Pleito, comum::md::CPleitoDTO>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloProcessoEleitoral::Pleito, DADO = comum::md::CPleitoDTO]
+TDado comum::asn::IConversorASN<ModuloRegistroDigitalVoto::Eleicoes, comum::md::CVotosEleicoesVota>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloRegistroDigitalVoto::Eleicoes, DADO = comum::md::CVotosEleicoesVota]
+TDado comum::asn::IConversorASN<ModuloRegistroDigitalVoto::EntidadeRegistroDigitalVoto, comum::md::CVotosEleicoesVota>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloRegistroDigitalVoto::EntidadeRegistroDigitalVoto, DADO = comum::md::CVotosEleicoesVota]
+TDado comum::asn::IConversorASN<ModuloRegistroDigitalVoto::Voto, comum::md::CVoto>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloRegistroDigitalVoto::Voto, DADO = comum::md::CVoto]
+TDado comum::asn::IConversorASN<ModuloRegistroDigitalVoto::VotosCargo, std::pair<comum::md::CVotosCargos::SCargoInfo, comum::md::CVotos>>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloRegistroDigitalVoto::VotosCargo, DADO = std::pair<comum::md::CVotosCargos::SCargoInfo, comum::md::CVotos>]
+TDado comum::asn::IConversorASN<ModuloSituacoesEleicoes::EntidadeSituacoesEleicoes, std::vector<comum::md::CSituacoesEleicoes>>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloSituacoesEleicoes::EntidadeSituacoesEleicoes, DADO = std::vector<comum::md::CSituacoesEleicoes>]
+TDado comum::asn::IConversorASN<ModuloTiposCadastro::Municipio, comum::md::CMunicipio>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloTiposCadastro::Municipio, DADO = comum::md::CMunicipio]
+TDado comum::asn::IConversorASN<ModuloTiposEcoUrna::Carga, comum::md::CCarga>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloTiposEcoUrna::Carga, DADO = comum::md::CCarga]
+TDado comum::asn::IConversorASN<ModuloTiposEleitorais::Abrangencia, comum::md::CAbrangencia>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloTiposEleitorais::Abrangencia, DADO = comum::md::CAbrangencia]
+TDado comum::asn::IConversorASN<ModuloTiposEleitorais::CabecalhoEntidade, comum::md::CCabecalhoEntidade>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloTiposEleitorais::CabecalhoEntidade, DADO = comum::md::CCabecalhoEntidade]
+TDado comum::asn::IConversorASN<ModuloTiposEleitorais::CabecalhoPacote, comum::md::CCabecalhoPacote>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloTiposEleitorais::CabecalhoPacote, DADO = comum::md::CCabecalhoPacote]
+TDado comum::asn::IConversorASN<ModuloTiposEleitorais::CodigoCargoConsulta, unsigned char>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloTiposEleitorais::CodigoCargoConsulta, DADO = unsigned char]
+TDado comum::asn::IConversorASN<ModuloTiposEleitorais::Seguranca, comum::md::CSeguranca>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloTiposEleitorais::Seguranca, DADO = comum::md::CSeguranca]
+TDado comum::asn::IConversorASN<ModuloTiposEleitorais::TipoIdentificadorEleitor, ecourna::app::dados::ETipoIdentificadorEleitor>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloTiposEleitorais::TipoIdentificadorEleitor, DADO = ecourna::app::dados::ETipoIdentificadorEleitor]
+TDado comum::asn::IConversorASN<ModuloTiposResultadosEcoUrna::CorrespondenciaResultado, comum::md::CCorrespondenciaResultado>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloTiposResultadosEcoUrna::CorrespondenciaResultado, DADO = comum::md::CCorrespondenciaResultado]
+TDado comum::asn::IConversorASN<ModuloTiposResultadosEcoUrna::TipoApuracaoSA, comum::md::CTipoApuracaoSA>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloTiposResultadosEcoUrna::TipoApuracaoSA, DADO = comum::md::CTipoApuracaoSA]
+TDado comum::asn::IConversorASN<ModuloTiposResultadosEcoUrna::Urna, comum::md::CUrna>::Desconverte(const TEntidade &) const [ENTIDADE = ModuloTiposResultadosEcoUrna::Urna, DADO = comum::md::CUrna]
+TDado comum::asn::IConversorBiometriaASN<ModuloEleitores::BiometriaEleitorCifrada, comum::md::CBiometriaEleitor>::Desconverte(const TEntidade &, const md::CParametro &) const [ENTIDADE = ModuloEleitores::BiometriaEleitorCifrada, DADO = comum::md::CBiometriaEleitor]
+TDado comum::asn::IConversorParcialASN<ModuloEleitores::EntidadeEleitores, comum::md::CEntidadeEleitores, comum::asn::CVisitanteEleitor>::Desconverte(const api::CFile &, const std::shared_ptr<TVisitor> &) const [ENTIDADE = ModuloEleitores::EntidadeEleitores, DADO = comum::md::CEntidadeEleitores, VISITOR = comum::asn::CVisitanteEleitor]
+TDado comum::asn::IConversorParcialASN<ModuloFotosCandidatos::EntidadeFotosCandidatos, comum::md::CIndicesFotos, comum::asn::CVisitanteFoto>::Desconverte(const api::CFile &, const std::shared_ptr<TVisitor> &) const [ENTIDADE = ModuloFotosCandidatos::EntidadeFotosCandidatos, DADO = comum::md::CIndicesFotos, VISITOR = comum::asn::CVisitanteFoto]
+TDado ecourna::api::asn::IConversorASN<ModuloConfiguracaoMunicipios::ConfiguracaoMunicipio, ecourna::app::dados::CConfiguracaoMunicipio>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloConfiguracaoMunicipios::ConfiguracaoMunicipio, DADO = ecourna::app::dados::CConfiguracaoMunicipio]
+TDado ecourna::api::asn::IConversorASN<ModuloConfiguracaoMunicipios::EntidadeConfiguracaoMunicipios, ecourna::app::dados::CConfiguracaoMunicipios>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloConfiguracaoMunicipios::EntidadeConfiguracaoMunicipios, DADO = ecourna::app::dados::CConfiguracaoMunicipios]
+TDado ecourna::api::asn::IConversorASN<ModuloConfiguracaoMunicipios::HorariosUrna, ecourna::app::dados::CHorariosUrna>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloConfiguracaoMunicipios::HorariosUrna, DADO = ecourna::app::dados::CHorariosUrna]
+TDado ecourna::api::asn::IConversorASN<ModuloFederacoes::EntidadeFederacoes, ecourna::app::dados::CFederacoes>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloFederacoes::EntidadeFederacoes, DADO = ecourna::app::dados::CFederacoes]
+TDado ecourna::api::asn::IConversorASN<ModuloFederacoes::Federacao, ecourna::app::dados::CFederacao>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloFederacoes::Federacao, DADO = ecourna::app::dados::CFederacao]
+TDado ecourna::api::asn::IConversorASN<ModuloInformacaoMidia::Aplicativo, ecourna::app::dados::CAplicativo>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloInformacaoMidia::Aplicativo, DADO = ecourna::app::dados::CAplicativo]
+TDado ecourna::api::asn::IConversorASN<ModuloInformacaoMidia::Autenticacao, ecourna::app::dados::CAutenticacao>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloInformacaoMidia::Autenticacao, DADO = ecourna::app::dados::CAutenticacao]
+TDado ecourna::api::asn::IConversorASN<ModuloInformacaoMidia::DadosGeracaoMidia, ecourna::app::dados::CDadosGeracaoMidia>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloInformacaoMidia::DadosGeracaoMidia, DADO = ecourna::app::dados::CDadosGeracaoMidia]
+TDado ecourna::api::asn::IConversorASN<ModuloInformacaoMidia::InformacaoMidia, ecourna::app::dados::CInformacaoMidia>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloInformacaoMidia::InformacaoMidia, DADO = ecourna::app::dados::CInformacaoMidia]
+TDado ecourna::api::asn::IConversorASN<ModuloParametrizacaoUrna::EntidadeParametrizacaoUrna, ecourna::app::dados::CParametrizacaoUrna>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloParametrizacaoUrna::EntidadeParametrizacaoUrna, DADO = ecourna::app::dados::CParametrizacaoUrna]
+TDado ecourna::api::asn::IConversorASN<ModuloParametrizacaoUrna::LabelParametrizado, ecourna::app::dados::CLabelParametrizado>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloParametrizacaoUrna::LabelParametrizado, DADO = ecourna::app::dados::CLabelParametrizado]
+TDado ecourna::api::asn::IConversorASN<ModuloParametrizacaoUrna::ParametrosUrna, ecourna::app::dados::CParametrosUrna>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloParametrizacaoUrna::ParametrosUrna, DADO = ecourna::app::dados::CParametrosUrna]
+TDado ecourna::api::asn::IConversorASN<ModuloParametrizacaoUrna::TituloRelatorio, ecourna::app::dados::CTituloRelatorio>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloParametrizacaoUrna::TituloRelatorio, DADO = ecourna::app::dados::CTituloRelatorio]
+TDado ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::ApresentacaoFotoEleitor, ecourna::app::dados::CApresentacaoFotoEleitor>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloResultadoUrnaCadastro::ApresentacaoFotoEleitor, DADO = ecourna::app::dados::CApresentacaoFotoEleitor]
+TDado ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::ComparecimentoMesario, ecourna::app::dados::CComparecimentoMesario>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloResultadoUrnaCadastro::ComparecimentoMesario, DADO = ecourna::app::dados::CComparecimentoMesario]
+TDado ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::ComparecimentoSecao, ecourna::app::dados::CComparecimentoSecao>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloResultadoUrnaCadastro::ComparecimentoSecao, DADO = ecourna::app::dados::CComparecimentoSecao]
+TDado ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::DadosCifracao, ecourna::app::dados::CDadosCifracao>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloResultadoUrnaCadastro::DadosCifracao, DADO = ecourna::app::dados::CDadosCifracao]
+TDado ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::DadosComparecimento, ecourna::app::dados::CDadosComparecimento>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloResultadoUrnaCadastro::DadosComparecimento, DADO = ecourna::app::dados::CDadosComparecimento]
+TDado ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::DadosComparecimentoCifrado, ecourna::app::dados::CDadosComparecimentoCifrado>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloResultadoUrnaCadastro::DadosComparecimentoCifrado, DADO = ecourna::app::dados::CDadosComparecimentoCifrado]
+TDado ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::EstadoComparecimento, ecourna::app::dados::CEstadoComparecimento>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloResultadoUrnaCadastro::EstadoComparecimento, DADO = ecourna::app::dados::CEstadoComparecimento]
+TDado ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::EstadoHabilitacaoPorCodigo, ecourna::app::dados::CEstadoHabilitacaoPorCodigo>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloResultadoUrnaCadastro::EstadoHabilitacaoPorCodigo, DADO = ecourna::app::dados::CEstadoHabilitacaoPorCodigo]
+TDado ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::HabilitacaoBiometrica, ecourna::app::dados::CHabilitacaoBiometrica>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloResultadoUrnaCadastro::HabilitacaoBiometrica, DADO = ecourna::app::dados::CHabilitacaoBiometrica]
+TDado ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::IdentificacaoJustificativa, ecourna::app::dados::CIdentificacaoJustificativa>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloResultadoUrnaCadastro::IdentificacaoJustificativa, DADO = ecourna::app::dados::CIdentificacaoJustificativa]
+TDado ecourna::api::asn::IConversorASN<ModuloTiposEcoUrna::IdentificadorGeradorMidia, ecourna::app::dados::CIdentificadorGeradorMidia>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloTiposEcoUrna::IdentificadorGeradorMidia, DADO = ecourna::app::dados::CIdentificadorGeradorMidia]
+TDado ecourna::api::asn::IConversorASN<ModuloTiposEcoUrna::RegistroIdentificacaoEleitor, ecourna::app::dados::CRegistroIdentificacaoEleitor>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloTiposEcoUrna::RegistroIdentificacaoEleitor, DADO = ecourna::app::dados::CRegistroIdentificacaoEleitor]
+TDado ecourna::api::asn::IConversorASN<ModuloTiposEleitorais::CabecalhoEntidade, ecourna::app::dados::CCabecalhoEntidade>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloTiposEleitorais::CabecalhoEntidade, DADO = ecourna::app::dados::CCabecalhoEntidade]
+TDado ecourna::api::asn::IConversorASN<ModuloTiposEleitorais::CodigoCargoConsulta, CBaseType<unsigned short, 1, 99, 3>>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloTiposEleitorais::CodigoCargoConsulta, DADO = CBaseType<unsigned short, 1, 99, 3>]
+TDado ecourna::api::asn::IConversorASN<ModuloTiposEleitorais::Fase, ecourna::app::dados::CFaseID>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloTiposEleitorais::Fase, DADO = ecourna::app::dados::CFaseID]
+TDado ecourna::api::asn::IConversorASN<ModuloTiposEleitorais::Foto, ecourna::app::dados::CFoto>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloTiposEleitorais::Foto, DADO = ecourna::app::dados::CFoto]
+TDado ecourna::api::asn::IConversorASN<ModuloTiposEleitorais::IdentificacaoSecaoEleitoral, ecourna::app::dados::CIdentificacaoSecaoEleitoral>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloTiposEleitorais::IdentificacaoSecaoEleitoral, DADO = ecourna::app::dados::CIdentificacaoSecaoEleitoral]
+TDado ecourna::api::asn::IConversorASN<ModuloTiposEleitorais::IdentificadorEleitor, ecourna::app::dados::CIdentificadorEleitor>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloTiposEleitorais::IdentificadorEleitor, DADO = ecourna::app::dados::CIdentificadorEleitor]
+TDado ecourna::api::asn::IConversorASN<ModuloTiposEleitorais::MunicipioZona, ecourna::app::dados::CMunicipioZona>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloTiposEleitorais::MunicipioZona, DADO = ecourna::app::dados::CMunicipioZona]
+TDado ecourna::api::asn::IConversorASN<ModuloTiposEleitorais::Turno, CBaseType<unsigned short, 1, 2, 11>>::Deconverte(const TEntidade &) const [ENTIDADE = ModuloTiposEleitorais::Turno, DADO = CBaseType<unsigned short, 1, 2, 11>]
+TEntidade comum::asn::IConversorASN<ModuloBoletimUrna::EntidadeBoletimUrna, comum::md::CEntidadeBU>::Converte(const TDado &) const [ENTIDADE = ModuloBoletimUrna::EntidadeBoletimUrna, DADO = comum::md::CEntidadeBU]
+TEntidade comum::asn::IConversorASN<ModuloBoletimUrna::HistoricoVotoImpresso, comum::md::CHistoricoVotoImpresso>::Converte(const TDado &) const [ENTIDADE = ModuloBoletimUrna::HistoricoVotoImpresso, DADO = comum::md::CHistoricoVotoImpresso]
+TEntidade comum::asn::IConversorASN<ModuloComplementosMunicipios::ComplementoMunicipio, comum::md::CComplementoMunicipio>::Converte(const TDado &) const [ENTIDADE = ModuloComplementosMunicipios::ComplementoMunicipio, DADO = comum::md::CComplementoMunicipio]
+TEntidade comum::asn::IConversorASN<ModuloComplementosMunicipios::HorarioVerao, comum::md::CHorarioVerao>::Converte(const TDado &) const [ENTIDADE = ModuloComplementosMunicipios::HorarioVerao, DADO = comum::md::CHorarioVerao]
+TEntidade comum::asn::IConversorASN<ModuloEnvelopeGenerico::EntidadeEnvelopeGenerico, comum::md::CEnvelopeGenerico>::Converte(const TDado &) const [ENTIDADE = ModuloEnvelopeGenerico::EntidadeEnvelopeGenerico, DADO = comum::md::CEnvelopeGenerico]
+TEntidade comum::asn::IConversorASN<ModuloEstadoGeralDefs::NumViasImpressasRelatorios, comum::md::estadoaplicacao::CNumViasImpressasRelatorios>::Converte(const TDado &) const [ENTIDADE = ModuloEstadoGeralDefs::NumViasImpressasRelatorios, DADO = comum::md::estadoaplicacao::CNumViasImpressasRelatorios]
+TEntidade comum::asn::IConversorASN<ModuloEstadoGeralGap::EstadoGeralGap, comum::md::estadoaplicacao::CEstadoGeralGap>::Converte(const TDado &) const [ENTIDADE = ModuloEstadoGeralGap::EstadoGeralGap, DADO = comum::md::estadoaplicacao::CEstadoGeralGap]
+TEntidade comum::asn::IConversorASN<ModuloEstadoGeralSA::EstadoGeralSA, comum::md::estadoaplicacao::CEstadoGeralSA>::Converte(const TDado &) const [ENTIDADE = ModuloEstadoGeralSA::EstadoGeralSA, DADO = comum::md::estadoaplicacao::CEstadoGeralSA]
+TEntidade comum::asn::IConversorASN<ModuloEstadoGeralUrna::AjusteDataHora, comum::md::estadoaplicacao::CAjusteDataHora>::Converte(const TDado &) const [ENTIDADE = ModuloEstadoGeralUrna::AjusteDataHora, DADO = comum::md::estadoaplicacao::CAjusteDataHora]
+TEntidade comum::asn::IConversorASN<ModuloEstadoGeralUrna::DadoCarga, comum::md::estadoaplicacao::CDadoCarga>::Converte(const TDado &) const [ENTIDADE = ModuloEstadoGeralUrna::DadoCarga, DADO = comum::md::estadoaplicacao::CDadoCarga]
+TEntidade comum::asn::IConversorASN<ModuloEstadoGeralUrna::DadoCorrespondencia, comum::md::estadoaplicacao::CDadoCorrespondencia>::Converte(const TDado &) const [ENTIDADE = ModuloEstadoGeralUrna::DadoCorrespondencia, DADO = comum::md::estadoaplicacao::CDadoCorrespondencia]
+TEntidade comum::asn::IConversorASN<ModuloEstadoGeralUrna::DadoLocal, comum::md::estadoaplicacao::CDadoLocal>::Converte(const TDado &) const [ENTIDADE = ModuloEstadoGeralUrna::DadoLocal, DADO = comum::md::estadoaplicacao::CDadoLocal]
+TEntidade comum::asn::IConversorASN<ModuloEstadoGeralUrna::DadoSecao, comum::md::estadoaplicacao::CLocalidadeEleitoral>::Converte(const TDado &) const [ENTIDADE = ModuloEstadoGeralUrna::DadoSecao, DADO = comum::md::estadoaplicacao::CLocalidadeEleitoral]
+TEntidade comum::asn::IConversorASN<ModuloEstadoGeralUrna::EstadoGeralUrna, comum::md::estadoaplicacao::CEstadoGeral>::Converte(const TDado &) const [ENTIDADE = ModuloEstadoGeralUrna::EstadoGeralUrna, DADO = comum::md::estadoaplicacao::CEstadoGeral]
+TEntidade comum::asn::IConversorASN<ModuloEstadoGeralVota::EstadoGeralVota, comum::md::estadoaplicacao::CEstadoGeralVota>::Converte(const TDado &) const [ENTIDADE = ModuloEstadoGeralVota::EstadoGeralVota, DADO = comum::md::estadoaplicacao::CEstadoGeralVota]
+TEntidade comum::asn::IConversorASN<ModuloHashes::EntidadeHashes, comum::md::CEntidadeHashes>::Converte(const TDado &) const [ENTIDADE = ModuloHashes::EntidadeHashes, DADO = comum::md::CEntidadeHashes]
+TEntidade comum::asn::IConversorASN<ModuloLocal::IdentificacaoAgregada, comum::md::CIdentificacaoAgregada>::Converte(const TDado &) const [ENTIDADE = ModuloLocal::IdentificacaoAgregada, DADO = comum::md::CIdentificacaoAgregada]
+TEntidade comum::asn::IConversorASN<ModuloLocal::SecaoEleitoral, comum::md::CSecaoEleitoral>::Converte(const TDado &) const [ENTIDADE = ModuloLocal::SecaoEleitoral, DADO = comum::md::CSecaoEleitoral]
+TEntidade comum::asn::IConversorASN<ModuloPartidos::Partido, comum::md::CPartido>::Converte(const TDado &) const [ENTIDADE = ModuloPartidos::Partido, DADO = comum::md::CPartido]
+TEntidade comum::asn::IConversorASN<ModuloRegistroDigitalVoto::Eleicoes, comum::md::CVotosEleicoesVota>::Converte(const TDado &) const [ENTIDADE = ModuloRegistroDigitalVoto::Eleicoes, DADO = comum::md::CVotosEleicoesVota]
+TEntidade comum::asn::IConversorASN<ModuloRegistroDigitalVoto::EntidadeRegistroDigitalVoto, comum::md::CVotosEleicoesVota>::Converte(const TDado &) const [ENTIDADE = ModuloRegistroDigitalVoto::EntidadeRegistroDigitalVoto, DADO = comum::md::CVotosEleicoesVota]
+TEntidade comum::asn::IConversorASN<ModuloRegistroDigitalVoto::Voto, comum::md::CVoto>::Converte(const TDado &) const [ENTIDADE = ModuloRegistroDigitalVoto::Voto, DADO = comum::md::CVoto]
+TEntidade comum::asn::IConversorASN<ModuloRegistroDigitalVoto::VotosCargo, std::pair<comum::md::CVotosCargos::SCargoInfo, comum::md::CVotos>>::Converte(const TDado &) const [ENTIDADE = ModuloRegistroDigitalVoto::VotosCargo, DADO = std::pair<comum::md::CVotosCargos::SCargoInfo, comum::md::CVotos>]
+TEntidade comum::asn::IConversorASN<ModuloTiposCadastro::Municipio, comum::md::CMunicipio>::Converte(const TDado &) const [ENTIDADE = ModuloTiposCadastro::Municipio, DADO = comum::md::CMunicipio]
+TEntidade comum::asn::IConversorASN<ModuloTiposEcoUrna::Carga, comum::md::CCarga>::Converte(const TDado &) const [ENTIDADE = ModuloTiposEcoUrna::Carga, DADO = comum::md::CCarga]
+TEntidade comum::asn::IConversorASN<ModuloTiposEleitorais::Abrangencia, comum::md::CAbrangencia>::Converte(const TDado &) const [ENTIDADE = ModuloTiposEleitorais::Abrangencia, DADO = comum::md::CAbrangencia]
+TEntidade comum::asn::IConversorASN<ModuloTiposEleitorais::ArquivoAssinatura, api::hash::CHashArquivo>::Converte(const TDado &) const [ENTIDADE = ModuloTiposEleitorais::ArquivoAssinatura, DADO = api::hash::CHashArquivo]
+TEntidade comum::asn::IConversorASN<ModuloTiposEleitorais::CabecalhoEntidade, comum::md::CCabecalhoEntidade>::Converte(const TDado &) const [ENTIDADE = ModuloTiposEleitorais::CabecalhoEntidade, DADO = comum::md::CCabecalhoEntidade]
+TEntidade comum::asn::IConversorASN<ModuloTiposEleitorais::CabecalhoPacote, comum::md::CCabecalhoPacote>::Converte(const TDado &) const [ENTIDADE = ModuloTiposEleitorais::CabecalhoPacote, DADO = comum::md::CCabecalhoPacote]
+TEntidade comum::asn::IConversorASN<ModuloTiposEleitorais::CodigoCargoConsulta, unsigned char>::Converte(const TDado &) const [ENTIDADE = ModuloTiposEleitorais::CodigoCargoConsulta, DADO = unsigned char]
+TEntidade comum::asn::IConversorASN<ModuloTiposEleitorais::Seguranca, comum::md::CSeguranca>::Converte(const TDado &) const [ENTIDADE = ModuloTiposEleitorais::Seguranca, DADO = comum::md::CSeguranca]
+TEntidade comum::asn::IConversorASN<ModuloTiposResultadosEcoUrna::CorrespondenciaResultado, comum::md::CCorrespondenciaResultado>::Converte(const TDado &) const [ENTIDADE = ModuloTiposResultadosEcoUrna::CorrespondenciaResultado, DADO = comum::md::CCorrespondenciaResultado]
+TEntidade comum::asn::IConversorASN<ModuloTiposResultadosEcoUrna::TipoApuracaoSA, comum::md::CTipoApuracaoSA>::Converte(const TDado &) const [ENTIDADE = ModuloTiposResultadosEcoUrna::TipoApuracaoSA, DADO = comum::md::CTipoApuracaoSA]
+TEntidade comum::asn::IConversorASN<ModuloTiposResultadosEcoUrna::Urna, comum::md::CUrna>::Converte(const TDado &) const [ENTIDADE = ModuloTiposResultadosEcoUrna::Urna, DADO = comum::md::CUrna]
+TEntidade comum::asn::IConversorASN<ModuloVersaoArquivos::EntidadeVersaoArquivos, comum::md::CVersoesArquivos>::Converte(const TDado &) const [ENTIDADE = ModuloVersaoArquivos::EntidadeVersaoArquivos, DADO = comum::md::CVersoesArquivos]
+TEntidade ecourna::api::asn::IConversorASN<ModuloBoletimUrna::DetalhamentoComparecimento, ecourna::app::dados::CDetalhamentoComparecimento>::Converte(const TDado &) const [ENTIDADE = ModuloBoletimUrna::DetalhamentoComparecimento, DADO = ecourna::app::dados::CDetalhamentoComparecimento]
+TEntidade ecourna::api::asn::IConversorASN<ModuloConfiguracaoMunicipios::ConfiguracaoMunicipio, ecourna::app::dados::CConfiguracaoMunicipio>::Converte(const TDado &) const [ENTIDADE = ModuloConfiguracaoMunicipios::ConfiguracaoMunicipio, DADO = ecourna::app::dados::CConfiguracaoMunicipio]
+TEntidade ecourna::api::asn::IConversorASN<ModuloConfiguracaoMunicipios::HorariosUrna, ecourna::app::dados::CHorariosUrna>::Converte(const TDado &) const [ENTIDADE = ModuloConfiguracaoMunicipios::HorariosUrna, DADO = ecourna::app::dados::CHorariosUrna]
+TEntidade ecourna::api::asn::IConversorASN<ModuloFederacoes::Federacao, ecourna::app::dados::CFederacao>::Converte(const TDado &) const [ENTIDADE = ModuloFederacoes::Federacao, DADO = ecourna::app::dados::CFederacao]
+TEntidade ecourna::api::asn::IConversorASN<ModuloInformacaoMidia::Aplicativo, ecourna::app::dados::CAplicativo>::Converte(const TDado &) const [ENTIDADE = ModuloInformacaoMidia::Aplicativo, DADO = ecourna::app::dados::CAplicativo]
+TEntidade ecourna::api::asn::IConversorASN<ModuloInformacaoMidia::Autenticacao, ecourna::app::dados::CAutenticacao>::Converte(const TDado &) const [ENTIDADE = ModuloInformacaoMidia::Autenticacao, DADO = ecourna::app::dados::CAutenticacao]
+TEntidade ecourna::api::asn::IConversorASN<ModuloInformacaoMidia::DadosGeracaoMidia, ecourna::app::dados::CDadosGeracaoMidia>::Converte(const TDado &) const [ENTIDADE = ModuloInformacaoMidia::DadosGeracaoMidia, DADO = ecourna::app::dados::CDadosGeracaoMidia]
+TEntidade ecourna::api::asn::IConversorASN<ModuloParametrizacaoUrna::LabelParametrizado, ecourna::app::dados::CLabelParametrizado>::Converte(const TDado &) const [ENTIDADE = ModuloParametrizacaoUrna::LabelParametrizado, DADO = ecourna::app::dados::CLabelParametrizado]
+TEntidade ecourna::api::asn::IConversorASN<ModuloParametrizacaoUrna::ParametrosUrna, ecourna::app::dados::CParametrosUrna>::Converte(const TDado &) const [ENTIDADE = ModuloParametrizacaoUrna::ParametrosUrna, DADO = ecourna::app::dados::CParametrosUrna]
+TEntidade ecourna::api::asn::IConversorASN<ModuloParametrizacaoUrna::TituloRelatorio, ecourna::app::dados::CTituloRelatorio>::Converte(const TDado &) const [ENTIDADE = ModuloParametrizacaoUrna::TituloRelatorio, DADO = ecourna::app::dados::CTituloRelatorio]
+TEntidade ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::ApresentacaoFotoEleitor, ecourna::app::dados::CApresentacaoFotoEleitor>::Converte(const TDado &) const [ENTIDADE = ModuloResultadoUrnaCadastro::ApresentacaoFotoEleitor, DADO = ecourna::app::dados::CApresentacaoFotoEleitor]
+TEntidade ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::ComparecimentoMesario, ecourna::app::dados::CComparecimentoMesario>::Converte(const TDado &) const [ENTIDADE = ModuloResultadoUrnaCadastro::ComparecimentoMesario, DADO = ecourna::app::dados::CComparecimentoMesario]
+TEntidade ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::ComparecimentoSecao, ecourna::app::dados::CComparecimentoSecao>::Converte(const TDado &) const [ENTIDADE = ModuloResultadoUrnaCadastro::ComparecimentoSecao, DADO = ecourna::app::dados::CComparecimentoSecao]
+TEntidade ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::DadosCifracao, ecourna::app::dados::CDadosCifracao>::Converte(const TDado &) const [ENTIDADE = ModuloResultadoUrnaCadastro::DadosCifracao, DADO = ecourna::app::dados::CDadosCifracao]
+TEntidade ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::DadosComparecimento, ecourna::app::dados::CDadosComparecimento>::Converte(const TDado &) const [ENTIDADE = ModuloResultadoUrnaCadastro::DadosComparecimento, DADO = ecourna::app::dados::CDadosComparecimento]
+TEntidade ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::DadosComparecimentoCifrado, ecourna::app::dados::CDadosComparecimentoCifrado>::Converte(const TDado &) const [ENTIDADE = ModuloResultadoUrnaCadastro::DadosComparecimentoCifrado, DADO = ecourna::app::dados::CDadosComparecimentoCifrado]
+TEntidade ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::EntidadeResultadoUrnaCadastro, ecourna::app::dados::CResultadoUrnaCadastro>::Converte(const TDado &) const [ENTIDADE = ModuloResultadoUrnaCadastro::EntidadeResultadoUrnaCadastro, DADO = ecourna::app::dados::CResultadoUrnaCadastro]
+TEntidade ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::EstadoComparecimento, ecourna::app::dados::CEstadoComparecimento>::Converte(const TDado &) const [ENTIDADE = ModuloResultadoUrnaCadastro::EstadoComparecimento, DADO = ecourna::app::dados::CEstadoComparecimento]
+TEntidade ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::EstadoHabilitacaoPorCodigo, ecourna::app::dados::CEstadoHabilitacaoPorCodigo>::Converte(const TDado &) const [ENTIDADE = ModuloResultadoUrnaCadastro::EstadoHabilitacaoPorCodigo, DADO = ecourna::app::dados::CEstadoHabilitacaoPorCodigo]
+TEntidade ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::HabilitacaoBiometrica, ecourna::app::dados::CHabilitacaoBiometrica>::Converte(const TDado &) const [ENTIDADE = ModuloResultadoUrnaCadastro::HabilitacaoBiometrica, DADO = ecourna::app::dados::CHabilitacaoBiometrica]
+TEntidade ecourna::api::asn::IConversorASN<ModuloResultadoUrnaCadastro::IdentificacaoJustificativa, ecourna::app::dados::CIdentificacaoJustificativa>::Converte(const TDado &) const [ENTIDADE = ModuloResultadoUrnaCadastro::IdentificacaoJustificativa, DADO = ecourna::app::dados::CIdentificacaoJustificativa]
+TEntidade ecourna::api::asn::IConversorASN<ModuloTiposEcoUrna::IdentificadorGeradorMidia, ecourna::app::dados::CIdentificadorGeradorMidia>::Converte(const TDado &) const [ENTIDADE = ModuloTiposEcoUrna::IdentificadorGeradorMidia, DADO = ecourna::app::dados::CIdentificadorGeradorMidia]
+TEntidade ecourna::api::asn::IConversorASN<ModuloTiposEcoUrna::RegistroIdentificacaoEleitor, ecourna::app::dados::CRegistroIdentificacaoEleitor>::Converte(const TDado &) const [ENTIDADE = ModuloTiposEcoUrna::RegistroIdentificacaoEleitor, DADO = ecourna::app::dados::CRegistroIdentificacaoEleitor]
+TEntidade ecourna::api::asn::IConversorASN<ModuloTiposEleitorais::CabecalhoEntidade, ecourna::app::dados::CCabecalhoEntidade>::Converte(const TDado &) const [ENTIDADE = ModuloTiposEleitorais::CabecalhoEntidade, DADO = ecourna::app::dados::CCabecalhoEntidade]
+TEntidade ecourna::api::asn::IConversorASN<ModuloTiposEleitorais::CodigoCargoConsulta, CBaseType<unsigned short, 1, 99, 3>>::Converte(const TDado &) const [ENTIDADE = ModuloTiposEleitorais::CodigoCargoConsulta, DADO = CBaseType<unsigned short, 1, 99, 3>]
+TEntidade ecourna::api::asn::IConversorASN<ModuloTiposEleitorais::Fase, ecourna::app::dados::CFaseID>::Converte(const TDado &) const [ENTIDADE = ModuloTiposEleitorais::Fase, DADO = ecourna::app::dados::CFaseID]
+TEntidade ecourna::api::asn::IConversorASN<ModuloTiposEleitorais::IdentificacaoSecaoEleitoral, ecourna::app::dados::CIdentificacaoSecaoEleitoral>::Converte(const TDado &) const [ENTIDADE = ModuloTiposEleitorais::IdentificacaoSecaoEleitoral, DADO = ecourna::app::dados::CIdentificacaoSecaoEleitoral]
+TEntidade ecourna::api::asn::IConversorASN<ModuloTiposEleitorais::IdentificadorEleitor, ecourna::app::dados::CIdentificadorEleitor>::Converte(const TDado &) const [ENTIDADE = ModuloTiposEleitorais::IdentificadorEleitor, DADO = ecourna::app::dados::CIdentificadorEleitor]
+TEntidade ecourna::api::asn::IConversorASN<ModuloTiposEleitorais::MunicipioZona, ecourna::app::dados::CMunicipioZona>::Converte(const TDado &) const [ENTIDADE = ModuloTiposEleitorais::MunicipioZona, DADO = ecourna::app::dados::CMunicipioZona]
+TEntidade ecourna::api::asn::IConversorASN<ModuloTiposEleitorais::Turno, CBaseType<unsigned short, 1, 2, 11>>::Converte(const TDado &) const [ENTIDADE = ModuloTiposEleitorais::Turno, DADO = CBaseType<unsigned short, 1, 2, 11>]
+TErroLeituraBiometria ecourna::app::dados::asn::CConversorHabilitacaoBiometrica::DeconverteErroLeituraBiometria(const ModuloResultadoUrnaCadastro::ErroLeituraBiometria &) const
+TLocalID comum::md::CEnvelopeGenerico::GetLocal() const
+TMessage api::CPriorityMessageQueue<api::SMessage>::Remove() [TMessage = api::SMessage]
+TMunicipioID comum::md::CIDPacote::Municipio() const
+TQtdVoto comum::md::CVotosEleicoesVota::Brancos(TCargoID) const
+TQtdVoto comum::md::CVotosEleicoesVota::Candidato(TCargoID, const std::string &) const
+TQtdVoto comum::md::CVotosEleicoesVota::Cargo(TCargoID) const
+TQtdVoto comum::md::CVotosEleicoesVota::Comparecimento(TEleicaoID) const
+TQtdVoto comum::md::CVotosEleicoesVota::Legenda(TCargoID, const std::string &) const
+TQtdVoto comum::md::CVotosEleicoesVota::Legendas(TCargoID) const
+TQtdVoto comum::md::CVotosEleicoesVota::Nominais(TCargoID) const
+TQtdVoto comum::md::CVotosEleicoesVota::Nulos(TCargoID) const
+TQtdVoto comum::md::CVotosEleicoesVota::Partido(TCargoID, const std::string &) const
+TSecaoID comum::CLocal::GetSecaoID() const
+TSharedIdentificadorEleitor ecourna::app::dados::CRegistroIdentificacaoEleitor::GetIdentificadorHabilitacao() const
+TSharedIdentificadorEleitor ecourna::app::dados::CRegistroIdentificacaoEleitor::GetIdentificadorPrincipal() const
+TZonaID comum::CLocal::GetZonaID() const
+TZonaID comum::md::CIDPacote::Zona() const
+api::BatteryIconDataSource<api::CPowerInformation::IconOrientation::Horizontal>::BatteryIconDataSource() [Orientation = api::CPowerInformation::IconOrientation::Horizontal]
+api::BatteryIconDataSource<api::CPowerInformation::IconOrientation::Vertical>::BatteryIconDataSource() [Orientation = api::CPowerInformation::IconOrientation::Vertical]
+api::CApplicationContextGuard::CApplicationContextGuard(CApplicationContextStack &, CApplicationContext)
+api::CDSImageField::CDSImageField(const SPoint &, const std::shared_ptr<IObservable<SharedIImage>> &, EAnchorPoint)
+api::CDate::CDate(const std::string &)
+api::CDateTime comum::md::CDadosBUVota::GetDataHoraDesligamentoVotoImpresso() const
+api::CDateTime::CDateTime(const std::string &)
+api::CDirReader::CDirReader(const std::string &)
+api::CFixedImage::CFixedImage(const std::string &)
+api::CFramedText::CFramedText(size_t, const SPoint &, const SFont &, ETextAlignment)
+api::CImageFieldUpdate::CImageFieldUpdate(const SPoint &, const SharedIImage &, const std::chrono::milliseconds &, EAnchorPoint)
+api::CLp::CLp()
+api::CMovie::CMovie(std::vector<CMovieFrame>, const SPoint &)
+api::CPosixMutex::CPosixMutex()
+api::CPosixRWMutex::CPosixRWMutex()
+api::CPosixSemaphore::CPosixSemaphore(unsigned int)
+api::CPriorityMessageQueue<api::SMessage>::CPriorityMessageQueue() [TMessage = api::SMessage]
+api::CProgressBar::CProgressBar(const uedword, const uedword, const uedword, const SRect &, TColor, TColor, TColor, TColor, const std::string &, TFontSize, uebyte, const TColor)
+api::CQRCodeGuard::CQRCodeGuard(const std::string &)
+api::CScopedReportFile::CScopedReportFile(const std::filesystem::path &)
+api::CScopedReportFile::~CScopedReportFile()
+api::CStepsProgressBar::CStepsProgressBar(const uedword, const std::vector<std::string> &, const SRect &, const TColor, const TColor, const TColor, const TColor, const TColor, const TColor, const TColor)
+api::CTextBox::CTextBox(const std::string &, ETextStatus, SPoint, TFontSize, ETextAlignment, SPoint, TColor, TColor)
+api::CTextField::CTextField(const SPoint &, const SharedIText &, const SFont &, TColor, TColor)
+api::CTextFieldBlinking::CTextFieldBlinking(const SPoint &, const SharedIText &, const SFont &, TColor, TColor, TColor)
+api::CTextFieldDoubleLine::CTextFieldDoubleLine(const SPoint &, const SPoint &, TPosition, const SharedIText &, const SFont &, TColor, TColor)
+api::CTextFieldMT::CTextFieldMT(const SPoint &, const SharedIText &)
+api::CTextFieldMultiLine::CTextFieldMultiLine(const SRect &, const SharedIText &, const SFont &, TColor, TColor)
+api::CTextFieldPaper::CTextFieldPaper(const SharedIText &, IPaper::EStyle)
+api::CTextFieldUpdate::CTextFieldUpdate(const SPoint &, const SharedIText &, const std::chrono::milliseconds &, const SFont &, TColor, TColor)
+api::CTextRectField::CTextRectField(const SRect &, TColor, const SharedIText &, const SFont &, TColor)
+api::CTextSource::CTextSource(const std::shared_ptr<std::string> &)
+api::CThread::CThread()
+api::CWait::CWait(const size_t)
+api::CWavFile::CWavFile(const CWavAudio &, const void *)
+api::EInputResult vota::CVotacaoStateAudio::EmiteEcoCorrigeConfirma(const CFormInterativoTelaVota &) const
+api::IPaper &comum::CImprimirIdentificacaoMesariosFinal::GetPrinter() const
+api::SRect vota::(anonymous namespace)::adicionaFotoEmoldurada(api::CFormBuilder &, const api::TPosition, const api::TPosition, const api::TPosition, const api::TPosition, SRCFT) [SRCFT = comum::CCandidaturasDSFoto]
+api::SRect vota::(anonymous namespace)::adicionaFotoEmoldurada(api::CFormBuilder &, const api::TPosition, const api::TPosition, const api::TPosition, const api::TPosition, SRCFT) [SRCFT = std::__bind<(lambda at /home/rubio/tse/uenux2/src/app/vota/eleitor/comum/ctelasvota.cpp:3323:29) &, const comum::md::CDadosCandidato &>]
+api::SharedPaperForm vota::(anonymous namespace)::CriaTituloExtratoRDV()
+auto api::CApplication::EnterLoopBeeping()::(lambda)::operator()(int, int) const
+auto api::CInteractiveFormBuilder::AddLabeledInputControl(const std::vector<std::pair<char, std::string>> &, const SRect &, bool)::(lambda)::operator()(char) const
+auto comum::CCabecalhoQRCodeBuilder::preBuild()::(lambda)::operator()(const std::vector<std::pair<std::reference_wrapper<const std::string>, std::string>> &) const
+auto comum::CConfiguracaoEleicao::CConfiguracaoEleicao(const std::string &, const md::EOrigemConfiguracao, const bool, const md::CPleito &, const ecourna::app::dados::CParametrosUrna &, const ecourna::app::dados::CConfiguracaoMunicipio &, const std::set<TCargoID> &, const md::estadoaplicacao::CEstadoGeral &, const md::TVectorIdentificacaoAgregada &, const TPleitoID, const bool, const bool, const ecourna::app::dados::ETipoIdentificadorEleitor, const std::vector<ecourna::app::dados::ETipoIdentificadorEleitor> &)::(lambda)::operator()(const auto &) const [identificador:auto = ecourna::app::dados::ETipoIdentificadorEleitor]
+auto comum::CDataSourcesRelatorio<comum::CRdvVota, comum::CEleitores>::GetLinhasEleitoresAptos()::(lambda)::operator()() const [RDV = comum::CRdvVota, DSAptos = comum::CEleitores]
+auto comum::md::(anonymous namespace)::MontaMapa(const CVotosEleicoesVota::TMapa &)::(lambda)::operator()(const std::pair<const unsigned int, comum::md::CVotosCargos> &)::(lambda)::operator()(const auto &) const [it:auto = std::pair<const comum::md::CVotosCargos::SCargoInfo, comum::md::CVotos>]
+auto comum::md::(anonymous namespace)::criaMapa(const TVectorCargo &)::(lambda)::operator()(const auto &) const [cargo:auto = comum::md::CCargo]
+auto vota::CEstadoComDesligamentoAutomatico::ProcessTick(uebyte)::(lambda)::operator()() const
+auto vota::CSuspensaoAutomaticaEleitor::DisparaSinalizacaoSonora()::(lambda)::operator()() const
+auto vota::CTelasVota::CriaTelaVisualizacaoCandidato(const comum::md::CCandidatura &, size_t, size_t)::(lambda)::operator()(TPosition, int) const
+auto vota::CThreadMonitor::SaiPorVotacaoSuspensa()::(lambda)::operator()() const
+automatic index on %s(%s)
+bool api::CDirReader::NextEntry()
+bool api::CMenuValidation::matchesExactly(const std::string &) const
+bool api::CMenuValidation::matchesPartially(const std::string &) const
+bool api::ExistResource(struct stat &, const std::string &)
+bool api::isResource(const std::string &)
+bool comum::CControladorReconhecimentoMesario::ComparaDigitais(const std::vector<uebyte> &, const std::vector<uebyte> &)
+bool comum::CInformacaoEleicao::EhModoDemonstracao() const
+bool comum::CPedeDigitalMesario::ExecutaBatimentoDigitalMesario(const api::TSharedImageVector &, const long, const long)
+bool comum::IInterfaceInit::GetDemoMode()
+bool comum::IInterfaceInit::IsMRMontadoSemHabilitar()
+bool comum::IInterfaceInit::IsMRPresenteSemHabilitar()
+bool ecourna::api::io::CFile::Eof() const
+bool ecourna::api::io::CFile::Open(const std::string &, const std::string &, FileMode)
+bool ecourna::api::io::CFile::Seek(int, int) const
+bool ecourna::api::io::CFile::SetFileMode(FileMode)
+bool ecourna::api::sql::sqlite::CSqlResultSet::StepStatement()
+bool vota::CPedeMajoritario::ExisteCandidatoValidoResposta(const std::string &) const
+bool vota::CRegistraDigitalOperador::BiometriaMesarioPresenteNosEleitores(const comum::md::CEleitorIdentidade &)
+bool vota::CRetirarMR::AguardaRetiradaMR()
+bool vota::CThreadEleitor::ProcessarEntrada(comum::CAppStateContext &)
+bool vota::CThreadMonitor::VotacaoSuspensa()
+calling fflush()
+calling fopen(%s, %s)
+calling fread()
+calling stat(%s)
+char api::IInput::GetKey()
+char comum::DefineTipo(const bool)
+char comum::md::estadoaplicacao::CDadoCarga::GetFaseChar() const
+comum::CCalculaCV::CCalculaCV(const std::string &, const std::string &, char, size_t)
+comum::CEleitorDetalhe::CEleitorDetalhe(const md::CEleitorDecorator &, const md::CEleitorDinamico &, const md::ETipoImpedimento, const md::ETipoImpedimento)
+comum::CGeradorBUBase<comum::CRdvVota, comum::CEleitores>::CGeradorBUBase(std::shared_ptr<api::IForm<api::IPaper>>, std::shared_ptr<api::IForm<api::IPaper>>, std::shared_ptr<api::IForm<api::IPaper>>, std::shared_ptr<api::IForm<api::IPaper>>, std::shared_ptr<api::IForm<api::IPaper>>, std::shared_ptr<api::IForm<api::IPaper>>, std::shared_ptr<api::IForm<api::IPaper>>, std::shared_ptr<api::IForm<api::IPaper>>, std::shared_ptr<api::IForm<api::IPaper>>, std::shared_ptr<api::IForm<api::IPaper>>, std::shared_ptr<api::IForm<api::IPaper>>, std::shared_ptr<api::IForm<api::IPaper>>, std::shared_ptr<api::IForm<api::IPaper>>) [RDV = comum::CRdvVota, DSAptos = comum::CEleitores]
+comum::CGeradorRelBase<comum::CRdvVota, comum::CEleitores>::CGeradorRelBase(std::shared_ptr<api::IForm<api::IPaper>>, std::shared_ptr<api::IForm<api::IPaper>>, std::shared_ptr<api::IForm<api::IPaper>>) [RDV = comum::CRdvVota, DSAptos = comum::CEleitores]
+comum::CPedeTituloMesarioFinal::CPedeTituloMesarioFinal()
+comum::CPedeTituloMesarioInicial::CPedeTituloMesarioInicial()
+comum::CPedeTituloMesarioVotacao::CPedeTituloMesarioVotacao()
+comum::CRdv::CRdv(md::RdvPosicionadorPtr, const std::vector<uebyte> &, uebyte)
+comum::IResultado::IResultado(TMunicipioID, TZonaID, TLocalID, TSecaoID, char, EExtensaoArquivoResultado, ESavdArquivoUE)
+comum::TCargoID comum::CCargos::GetCurrentCargoID() const
+comum::TCargoID vota::(anonymous namespace)::GetCargoID()
+comum::TEleicaoID comum::CCargos::GetCurrentEleicaoID() const
+comum::TQtdImpresso vota::GetQuantidadeMaximaBUsAdicionais()
+comum::md::CAbrangencia::CAbrangencia(ETipoAbrangencia, const std::string &, TMunicipioID)
+comum::md::CCabecalhoEntidade::CCabecalhoEntidade(const api::CDateTime &, uedword, ETipoCabecalho)
+comum::md::CCabecalhoPacote::CCabecalhoPacote(const ETipoPacote, const CIDPacote &, const std::string &, const std::string &, const ESistemaJE)
+comum::md::CCandidatura::CCandidatura(const TCargoID, const TPartidoID, const TCandidatoID, const CDadosCandidato &, const std::vector<CDadosCandidato> &)
+comum::md::CComparecimentoMesario::EstadoReconhecimentoBiometrico comum::dao::CComparecimentoMesarioDAO::ConverteEstadoBiometria(ueint32) const
+comum::md::CComplementosMunicipiosUF::CComplementosMunicipiosUF(const std::string &, const TVetorCM &)
+comum::md::CDadosCandidato::CDadosCandidato(std::string, std::string, CSexo::ESexo, ESituacao, uebyte)
+comum::md::CDadosCandidato::CDadosCandidato(std::string, std::string, std::string, CSexo::ESexo, ESituacao, uebyte)
+comum::md::CDadosDisponiveisCarga::CDadosDisponiveisCarga(EUrnaFase, comum::TProcessoEleitoralID, comum::TPleitoID, const std::string &, const std::string &, const std::string &, const std::string &, comum::TZonaID, const std::vector<CMunicipioDisponivel> &, const std::vector<CCabecalhoPacote> &)
+comum::md::CDataJE::CDataJE(const std::string &)
+comum::md::CDedo::CDedo(TipoDedo, uedword, const std::vector<api::SXYT> &)
+comum::md::CDedo::TipoDedo comum::dao::CComparecimentoMesarioDAO::ConverteDedoHabilitacao(const ueint32) const
+comum::md::CDependenciasContratos::CDependenciasContratos(const std::string &)
+comum::md::CDetalheConsulta::CDetalheConsulta(const std::string &, const std::string &, const TVectorRespostaConsulta &, const std::string &)
+comum::md::CEleicaoDataHora::CEleicaoDataHora(const api::CDate &, const api::CDateTime &, const api::CDateTime &, const api::CDateTime &, const api::CDateTime &)
+comum::md::CHorarioVerao::CHorarioVerao(const api::CDate &, const api::CDate &, int)
+comum::md::CIdentificacaoSecao::CIdentificacaoSecao(const EUrnaTipo, const TMunicipioID, const TZonaID, const TLocalID, const TSecaoID)
+comum::md::CIdentificacaoUrna::CIdentificacaoUrna(const EUrnaTipo, const TMunicipioID, const TZonaID)
+comum::md::CIdentificacaoUrnaContingencia::CIdentificacaoUrnaContingencia(const EUrnaTipo, const TMunicipioID, const TZonaID)
+comum::md::CMunicipio::CMunicipio(TMunicipioID, const std::string &, bool)
+comum::md::CNomesCargo::CNomesCargo(const std::string &, const std::string &, const std::string &, const std::string &)
+comum::md::CPleito::CPleito(const TPleitoID, const std::string &, const api::CDate &, const TVectorEleicaoPE &, const TMapVersaoPacoteEleicao &, const std::vector<CSituacoesEleicoes> &)
+comum::md::CRespostaConsulta::CRespostaConsulta(TCandidatoID, const std::string &, const std::string &)
+comum::md::CSecaoEleitoral::CSecaoEleitoral(ETipoLocalVotacao, const CIdentificacaoSecao &, const TVectorIdentificacaoAgregada &)
+comum::md::CSeguranca::CSeguranca(uebyte, uebyte, const std::vector<uebyte> &)
+comum::md::CTransferenciaTemporaria::CTransferenciaTemporaria(ETransferenciaTemporaria)
+comum::md::CVersoesContratos::CVersoesContratos(const std::string &)
+comum::md::CVoto::CVoto(ETipo, const std::string &)
+comum::md::CVotosCargos::CVotosCargos(TMapa)
+const CApresentacaoFotoEleitor &ecourna::app::dados::CEstadoComparecimento::GetApresentacaoFoto() const
+const CAutenticacao &ecourna::app::dados::CAplicativo::GetAutenticacao() const
+const CComplementoMunicipio &comum::md::CComplementosMunicipiosUF::GetCM(const TMunicipioID) const
+const CDadosBUSA &comum::md::CEntidadeBU::GetDadosSA() const
+const CDadosBUVota &comum::md::CEntidadeBU::GetDadosVota() const
+const CDadosCandidato &comum::md::CCandidatura::GetSuplente(uebyte) const
+const CDadosComparecimento &ecourna::app::dados::CResultadoUrnaCadastro::GetDadosComparecimento() const
+const CDadosComparecimentoCifrado &ecourna::app::dados::CResultadoUrnaCadastro::GetDadosComparecimentoCifrado() const
+const CDetalheCandidato &comum::md::CCargo::GetDetalheCandidato() const
+const CDetalheConsulta &comum::md::CCargo::GetDetalheConsulta() const
+const CEleicaoPE &comum::md::CPleito::GetEleicao(const TEleicaoID) const
+const CEleitorIdentidade &comum::md::CEleitorDadosHabilitacaoBiometrica::GetTituloMesario() const
+const CEleitorIdentidade &comum::md::CEleitorDinamico::GetTituloMesarioHabilitacao() const
+const CEstadoHabilitacaoPorCodigo &ecourna::app::dados::CHabilitacaoBiometrica::GetEstadoHabilitacaoPorCodigo() const
+const CHabilitacaoBiometrica &ecourna::app::dados::CEstadoComparecimento::GetHabilitacaoBiometrica() const
+const CHorarioVerao &comum::md::CComplementoMunicipio::GetHorarioVerao() const
+const CHorarioVerao &comum::md::CHorarioVeraoMunicipio::GetHorarioVerao() const
+const CHorarioVerao &comum::md::CInfoMunicipio::GetHorarioVerao() const
+const CIdentificacaoUrnaContingencia &comum::md::CLocal::GetContingencia() const
+const CIndexer &comum::md::CEleitor::GetOffsetBiometria() const
+const CIndiceFoto &comum::md::CIndicesFotos::at(size_t) const
+const CPleito &comum::md::CProcessoEleitoral::GetPleito2() const
+const CPleitoDTO &comum::md::CProcessoEleitoralDTO::GetPleito2() const
+const CRegistroIdentificacaoEleitor &ecourna::app::dados::CEstadoHabilitacaoPorCodigo::GetIdentificacaoMesario() const
+const CSecaoEleitoral &comum::md::CLocal::GetSecao() const
+const CSeguranca &comum::md::CEnvelopeGenerico::GetSeguranca() const
+const CSituacoesEleicoes &comum::md::CPleito::GetSituacoesEleicoes(const TEleicaoID) const
+const CSuplencia &comum::md::CDetalheCandidato::GetSuplente(uebyte) const
+const CUrna &comum::md::CEnvelopeGenerico::GetUrna() const
+const CVotos &comum::md::CVotosCargos::GetVotos(TCargoID) const
+const CVotosCargos &comum::md::CVotosEleicoesVota::GetVotos(TEleicaoID) const
+const ESTADO &comum::GetEstado(const std::string &, const std::optional<ESTADO> &) [ESTADO = comum::md::estadoaplicacao::CEstadoGeralGap]
+const ESTADO &comum::GetEstado(const std::string &, const std::optional<ESTADO> &) [ESTADO = comum::md::estadoaplicacao::CEstadoGeralVota]
+const ESTADO &comum::GetEstado(const std::string &, const std::optional<ESTADO> &) [ESTADO = comum::md::estadoaplicacao::CEstadoGeral]
+const IControladorRegistraMesarios &comum::CConfirmaFimRegistroMesarios::GetControlador()
+const IControladorRegistraMesarios &comum::CEncerraRegistroMesarios::GetControlador()
+const IControladorRegistraMesarios &comum::CLimiteMesariosRegistradosAtingido::GetControlador()
+const IControladorRegistraMesarios &comum::CMesarioRegistrado::GetControlador()
+const IControladorRegistraMesarios &comum::CPedeDigitalMesario::GetControlador()
+const IControladorRegistraMesarios &comum::CRegistrarMesarios::GetControlador()
+const IControladorRegistraMesarios &comum::CTituloMesarioInvalido::GetControlador()
+const IControladorRegistraMesarios &comum::CTituloMesarioJaRegistrado::GetControlador()
+const IControladorRegistraMesarios &comum::CTituloMesarioVazio::GetControlador()
+const IControladorRegistraMesarios &comum::IGestorDadoMesario::GetControlador()
+const SQtdeAptos &comum::CGeradorBUQRCode::GetQtdAptos(md::ETipoAbrangencia) const
+const TVectorAplicativo &ecourna::app::dados::CInformacaoMidia::GetAplicativos() const
+const TVectorCargo &comum::md::CEleicaoPE::GetCargos() const
+const TVectorComparecimentoMesario &ecourna::app::dados::CDadosComparecimento::GetMesariosAbertura() const
+const TVectorComparecimentoMesario &ecourna::app::dados::CDadosComparecimento::GetMesariosEncerramento() const
+const api::CDateTime &comum::md::estadoaplicacao::CEstadoGeralVota::GetDtHrEmissaoBU() const
+const api::CDateTime &comum::md::estadoaplicacao::CEstadoGeralVota::GetDtHrFimAquisicao() const
+const api::CDateTime &comum::md::estadoaplicacao::CEstadoGeralVota::GetDtHrInicioAquisicao() const
+const api::CDateTime &comum::md::estadoaplicacao::CEstadoGeralVota::GetDtHrUltimoVoto() const
+const auto vota::(anonymous namespace)::GetKeyboardLayout()
+const boost::posix_time::ptime &ecourna::app::dados::CAutenticacao::GetDataHoraFinal() const
+const boost::posix_time::ptime &ecourna::app::dados::CAutenticacao::GetDataHoraInicial() const
+const ecourna::app::dados::CDetalhamentoComparecimento &comum::md::CEntidadeBU::GetDetalhamentoComparecimento() const
+const ecourna::app::dados::CFoto &comum::md::CBiometriaEleitor::GetFoto() const
+const md::CCandidatura &comum::GetCandidaturaAtual(const std::string &)
+const md::CCargo &comum::CCargos::GetCurrent() const
+const md::CCargo &comum::CConfiguracaoEleicao::GetCargo(const TCargoID) const
+const md::CEleicaoPE &comum::CCargos::GetCurrentEleicao() const
+const md::CEleicaoPE &comum::CConfiguracaoEleicao::GetEleicao(const TEleicaoID) const
+const std::string &comum::md::CPleito::GetVersaoPacoteEleicao(const TEleicaoID) const
+const std::string comum::CArquivosResultado::operator[](EExtensaoArquivoResultado) const
+const std::string comum::CCandidaturas::RecuperaVersaoPacote(TCargoID) const
+const std::string comum::md::CDependenciasContratos::GetValor(const std::string &)
+const std::string comum::md::CVersoesContratos::GetValor(const std::string &)
+const std::vector<uebyte> api::hash::CalculaHashArquivo(const std::string &)
+directory_iterator::directory_iterator(...)
+ecourna::api::cepesc::CCipheredIn::CCipheredIn(uebyte, uebyte, uebyte, const std::vector<uebyte> &, const std::vector<uebyte> &, const std::vector<uebyte> &, const CInfoSalt &)
+ecourna::api::cepesc::CCipheredOut::CCipheredOut(const std::vector<uebyte> &, const std::vector<uebyte> &)
+ecourna::api::cepesc::CCipheredOut::CCipheredOut(const std::vector<uebyte> &, const std::vector<uebyte> &, const CInfoSalt &)
+ecourna::api::cepesc::CInfoSalt::CInfoSalt(const std::vector<uebyte> &, const std::vector<uebyte> &)
+ecourna::api::cepesc::CPlainText::CPlainText(const uebyte, const uebyte, const ueword, const ueword, std::vector<uebyte>, std::vector<uebyte>, std::vector<uebyte>, std::vector<uebyte>, std::shared_ptr<CInfoSalt>)
+ecourna::api::security::CAesCipher::CAesCipher(const EOperationModes, const ESymmetricCipherKeySize, std::shared_ptr<IRng>)
+ecourna::api::security::CKey::CKey(const std::string &, uedword, KeyType, const std::vector<uebyte> &, const std::string &)
+ecourna::api::security::CKeyData::CKeyData(const std::vector<uebyte> &)
+ecourna::api::security::ISymmetricCipher::ISymmetricCipher(const CAesKey &)
+ecourna::api::security::TSharedSymmetricCipher comum::(anonymous namespace)::GetCifradorCryptoTable(const std::vector<uebyte> &)
+ecourna::api::sql::sqlite::CSqlConnection::CSqlConnection(const std::string &)
+ecourna::app::dados::CConfiguracaoMunicipios::CConfiguracaoMunicipios(const CCabecalhoEntidade &, const TMapConfiguracaoMunicipio &)
+ecourna::app::dados::CDadosCifracao::CDadosCifracao(std::vector<uebyte>, std::vector<uebyte>, std::vector<uebyte>)
+ecourna::app::dados::CErroLeituraBiometria::CErroLeituraBiometria(EErroLeituraBiometria)
+ecourna::app::dados::CEstadoHabilitacaoPorCodigo::CEstadoHabilitacaoPorCodigo(ESituacaoReconhecimentoMesario)
+ecourna::app::dados::CEstadoHabilitacaoPorCodigo::CEstadoHabilitacaoPorCodigo(ESituacaoReconhecimentoMesario, const CRegistroIdentificacaoEleitor &)
+ecourna::app::dados::CFederacao::CFederacao(TFederacaoID, const std::string &, const std::string &, const TVectorNumeroPartido &)
+ecourna::app::dados::CInformacaoMidia::CInformacaoMidia(ETipoMidia, TFaseID, TProcessoEleitoralID, const std::string &, TTurno, const CDadosGeracaoMidia &)
+ecourna::app::dados::CNumeroCPF::CNumeroCPF(const std::string &)
+ecourna::app::dados::CNumeroIdentificacaoLivre::CNumeroIdentificacaoLivre(const std::string &)
+ecourna::app::dados::CNumeroInscricaoEleitoral::CNumeroInscricaoEleitoral(const std::string &)
+ecourna::app::dados::CRegistroIdentificacaoEleitor::CRegistroIdentificacaoEleitor(TSharedIdentificadorEleitor)
+ecourna::app::dados::CRegistroIdentificacaoEleitor::CRegistroIdentificacaoEleitor(TSharedIdentificadorEleitor, TSharedIdentificadorEleitor)
+ecourna::app::dados::CSerialMidia::CSerialMidia(const std::string &)
+ecourna::app::dados::IIdentificadorEleitor::IIdentificadorEleitor(TTipoIdentificadorEleitor, const std::string &, uebyte)
+ecourna::app::dados::TSharedIdentificadorEleitor comum::CGravadorRCSecao::CriaIdentidadeEleitor(const comum::md::CEleitorIdentidade &) const
+int (anonymous namespace)::CVotaWebEngine::Init(const char *)
+int comum::IInterfaceInit::DispositivoMR()
+int ecourna::api::compression::CZip::ConvertToCompressLevel()
+int ecourna::api::compression::CZip::ConvertToOpen()
+int ecourna::api::io::CFile::Flush() const
+int ecourna::api::sql::sqlite::CSqlResultSet::IndexForColumnName(const std::string &)
+long ecourna::api::io::CFile::Position() const
+md::CBiometriaEleitor comum::CEleitorDetalhe::GetBiometria() const
+md::CEleitorIdentidade comum::asn::CConversorImpedido::MontaEleitorIdentidade(const ModuloTiposEleitorais::IdentificadorEleitor &) const
+md::CEntidadeBU comum::CGravadorBU::MontaEntidadeBU(const md::CCabecalhoEntidade &, const md::CUrna &, const std::vector<md::CResultadoVotacaoPorEleicao> &, const std::vector<std::string> &) const
+md::CFotoCandidato comum::GetFotoPara(const std::string &, const SIndiceFoto &)
+md::CFotoCandidato comum::GetFotoPara(const std::string &, const std::string &)
+md::CTransferenciaTemporaria comum::asn::CConversorEntidadeEleitores::DesconverteTransferenciaTemporaria(const ModuloEleitores::EleitorSequencia &) const
+md::CTransferenciaTemporaria::ETransferenciaTemporaria comum::asn::CConversorEntidadeEleitores::DesconverteTipoTransferenciaTemporaria(const ModuloEleitores::EleitorSequencia &) const
+md::ETipoAbrangencia comum::CEleitores::GetCurrentAbrangenciaEleitor() const
+md::ETipoImpedimento comum::asn::CConversorImpedido::DesconverteTipoImpedimento(ModuloImpedidos::TipoImpedimento) const
+md::estadoaplicacao::CAjusteDataHora::ETipoDeltaT comum::asn::CConversorAjusteDataHora::DesconverteTipoAjusteDataHora(const ModuloEstadoGeralUrna::TipoAjusteDataHora &) const
+recursive_directory_iterator::operator++()
+size_t api::CGenericTags::TagSize(const std::string &) const
+size_t api::CGenericTags::WalkTreeTLV(const std::string &, const std::string &) const
+size_t api::EncodeTime(const std::string &)
+size_t api::EncodeTime(uebyte, uebyte, uebyte)
+static CApresentacaoFotoEleitor::EEstado ecourna::app::dados::asn::CConversorApresentacaoFotoEleitor::DeconverteEstado(ModuloResultadoUrnaCadastro::EstadoApresentacaoFotoEleitor)
+static CApresentacaoFotoEleitor::EResultado ecourna::app::dados::asn::CConversorApresentacaoFotoEleitor::DeconverteResultado(ModuloResultadoUrnaCadastro::ResultadoApresentacaoFotoEleitor)
+static CCargos &comum::CCargos::GetInst()
+static CConfiguracaoEleicao &comum::CConfiguracaoEleicao::GetInst()
+static CDateTime api::CDateTime::ConvertFromTimestamp(const std::string &)
+static CEleitores &comum::CEleitores::GetInst()
+static CFormInterativoTelaVota vota::CTelasVota::CriaTelaInputVazioConsulta(const comum::md::CCargo &)
+static CFormInterativoTelaVota vota::CTelasVota::CriaTelaInputVazioMajoritarioCom0(const comum::md::CCargo &)
+static CFormInterativoTelaVota vota::CTelasVota::CriaTelaInputVazioMajoritarioCom1(const comum::md::CCargo &)
+static CFormInterativoTelaVota vota::CTelasVota::CriaTelaInputVazioMajoritarioCom2(const comum::md::CCargo &)
+static CFormInterativoTelaVota vota::CTelasVota::CriaTelaInputVazioProporcional(const comum::md::CCargo &)
+static CFormInterativoTelaVota vota::CTelasVota::CriaTelaPartido(const comum::md::CCargo &)
+static CFormInterativoTelaVota vota::CTelasVota::CriaTelaVotoCargoSemCandidato(const comum::md::CCargo &, api::TPosition)
+static CFormInterativoTelaVota vota::CTelasVota::CriaTelaZeresimaTardia()
+static CGeracaoVersoesContratos &comum::CGeracaoVersoesContratos::GetInst()
+static CHV &comum::CHV::GetInst()
+static CHashDiretorio api::hash::CMontadorHash::CriaHashesDiretorio(const std::string &, const std::set<std::string> &)
+static CIDEleitoral comum::md::CIDEleitoral::CriaEleicao(uedword)
+static CIDEleitoral comum::md::CIDEleitoral::CriaPleito(uedword)
+static CIDEleitoral comum::md::CIDEleitoral::CriaProcessoEleitoral(uedword)
+static CLogVota &vota::CLogVota::GetInst()
+static CMonitoraAlimentacao &comum::util::CMonitoraAlimentacao::GetInst()
+static CPE &comum::CPE::GetInst()
+static CRdvVota &comum::CRdvVota::GetInst()
+static CRespostas &comum::CRespostas::GetInst()
+static CSubstituidorTitulo &comum::CSubstituidorTitulo::GetInst()
+static CTelasVota &vota::CTelasVota::GetInst()
+static CValidadorIdentidade &comum::md::CValidadorIdentidade::GetInst()
+static ESistemaJE comum::asn::Utils::DesconverteIdSistema(const ModuloTiposEleitorais::Sistema &)
+static ETipoArquivo comum::asn::CConversorUrna::DesconverteTipoArquivo(ModuloTiposResultadosEcoUrna::TipoArquivo::NamedNumber)
+static ETipoLocalVotacao comum::asn::Utils::DesconverteTipoLocalVotacao(ModuloTiposCadastro::TipoLocalVotacao)
+static EUrnaFase comum::CGravadorUtil::ConverteFase(const char)
+static EUrnaFase comum::asn::Utils::DesconverteFase(const ModuloTiposEleitorais::Fase &)
+static EUrnaTipo comum::asn::CConversorUrna::DesconverteTipoUrna(ModuloTiposResultadosEcoUrna::TipoUrna::NamedNumber)
+static EUrnaTurno comum::asn::Utils::DesconverteTurno(ModuloTiposEleitorais::Turno)
+static IAjusteInicial &vota::IAjusteInicial::GetInst()
+static IExecucaoVota &vota::IExecucaoVota::GetInst()
+static IGeradorTeclas &vota::testeteclado::impl::IGeradorTeclas::GetInst()
+static IInformacaoThreadOperador &vota::impl::IInformacaoThreadOperador::GetInst()
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::CEscritorLog]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IAjusteDataHora]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IBeep]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IFingerDetection]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IFingerMatcher]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IFingerPrepare]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IFingerScanner]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IGenericFactory<api::ISemaphore>]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IGenericFactory<api::ISyncCtl>]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IGenericFactory<api::IThreadImpl>]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IGenericFactory<ecourna::api::security::IHash>]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IGenericFactory<ecourna::api::security::ITextEncoding>]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IImpressoraRelatorios]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IInputKbd]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IInputMT]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IKernelHSM]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IPaperRelatorios]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IPaper]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IPower]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IResource]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IScreenMT]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IScreen]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::ISound]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::ISystemDateTime]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::ITextToSpeech]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::ITimerScheduler]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::IUrna]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = api::pkcs11::IPkcs11]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = comum::CCalculaCV]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = comum::CGeracaoVersoesContratos]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = comum::IControladorRegistraMesarios]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = comum::IEventosLog]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = comum::IInterfaceInit]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = comum::IInterfaceSavd]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = comum::impl::IValidaMidia]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = ecourna::api::security::IRng]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = ecourna::api::security::ISymmetricCipherFactory]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = vota::IAjusteInicial]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = vota::IExecucaoVota]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = vota::IQRCodeBUDS]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = vota::impl::IInformacaoThreadOperador]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = vota::impl::IPoliticaExecucaoEleitor]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = vota::impl::ISincronismoVotoEleitor]
+static INTERFACE &api::CPolySingletonList::instance(TPolySingletonsInfo &) [INTERFACE = vota::testeteclado::impl::IGeradorTeclas]
+static IPoliticaExecucaoEleitor &vota::impl::IPoliticaExecucaoEleitor::GetInst()
+static ISincronismoVotoEleitor &vota::impl::ISincronismoVotoEleitor::GetInst()
+static ISystemDateTime &api::ISystemDateTime::GetInst()
+static ITimerScheduler &api::ITimerScheduler::CreateInst() [T = api::CTimerScheduler]
+static ITimerScheduler &api::ITimerScheduler::CreateInst() [T = simulador::CWasmTimerScheduler]
+static ITimerScheduler &api::ITimerScheduler::GetInst()
+static IValidaMidia &comum::impl::IValidaMidia::GetInst()
+static ModuloBoletimUrna::TipoVoto::NamedNumber comum::asn::CConversorEntidadeBU::ConverteTipoVoto(md::CVoto::ETipo)
+static ModuloEnvelopeGenerico::TipoEnvelope::NamedNumber comum::asn::CConversorEnvelopeGenerico::ConverteTipoEnvelope(TDado::Tipo)
+static ModuloRegistroDigitalVoto::TipoVoto comum::asn::CConversorVoto::ConverteTipo(md::CVoto::ETipo)
+static ModuloResultadoUrnaCadastro::EstadoApresentacaoFotoEleitor ecourna::app::dados::asn::CConversorApresentacaoFotoEleitor::ConverteEstado(CApresentacaoFotoEleitor::EEstado)
+static ModuloResultadoUrnaCadastro::ResultadoApresentacaoFotoEleitor ecourna::app::dados::asn::CConversorApresentacaoFotoEleitor::ConverteResultado(CApresentacaoFotoEleitor::EResultado)
+static ModuloTiposCadastro::TipoLocalVotacao comum::asn::Utils::ConverteTipoLocalVotacao(ETipoLocalVotacao)
+static ModuloTiposEleitorais::Fase comum::asn::Utils::ConverteFase(const EUrnaFase &)
+static ModuloTiposEleitorais::IDPacote comum::asn::Utils::ConverteIdPacote(const md::CIDPacote &)
+static ModuloTiposEleitorais::Sistema comum::asn::Utils::ConverteIdSistema(const ESistemaJE &)
+static ModuloTiposEleitorais::TipoAbrangencia::NamedNumber comum::asn::Utils::ConverteAbrangencia(md::ETipoAbrangencia)
+static ModuloTiposEleitorais::TipoCargoConsulta::NamedNumber comum::asn::CConversorEntidadeBU::ConverteTipoCargo(md::CCargo::ETipo)
+static ModuloTiposEleitorais::Turno comum::asn::Utils::ConverteTurno(EUrnaTurno)
+static ModuloTiposPacotes::TipoPacote comum::asn::Utils::ConverteTipoPacote(const md::ETipoPacote &)
+static ModuloTiposResultadosEcoUrna::TipoArquivo::NamedNumber comum::asn::CConversorUrna::ConverteTipoArquivo(ETipoArquivo)
+static ModuloTiposResultadosEcoUrna::TipoUrna::NamedNumber comum::asn::CConversorUrna::ConverteTipoUrna(EUrnaTipo)
+static SPoint api::CFormBuilder::GetLabeledKeyPos(const SRect &, ETextAlignment, TPosition)
+static T &api::CPolySingleton<api::CEscritorLog>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::CEscritorLog]
+static T &api::CPolySingleton<api::IAjusteDataHora>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IAjusteDataHora]
+static T &api::CPolySingleton<api::IBeep>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IBeep]
+static T &api::CPolySingleton<api::IFingerDetection>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IFingerDetection]
+static T &api::CPolySingleton<api::IFingerMatcher>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IFingerMatcher]
+static T &api::CPolySingleton<api::IFingerPrepare>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IFingerPrepare]
+static T &api::CPolySingleton<api::IFingerScanner>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IFingerScanner]
+static T &api::CPolySingleton<api::IGenericFactory<api::ISemaphore>>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IGenericFactory<api::ISemaphore>]
+static T &api::CPolySingleton<api::IGenericFactory<api::ISyncCtl>>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IGenericFactory<api::ISyncCtl>]
+static T &api::CPolySingleton<api::IGenericFactory<api::IThreadImpl>>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IGenericFactory<api::IThreadImpl>]
+static T &api::CPolySingleton<api::IGenericFactory<ecourna::api::security::IHash>>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IGenericFactory<ecourna::api::security::IHash>]
+static T &api::CPolySingleton<api::IGenericFactory<ecourna::api::security::ITextEncoding>>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IGenericFactory<ecourna::api::security::ITextEncoding>]
+static T &api::CPolySingleton<api::IImpressoraRelatorios>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IImpressoraRelatorios]
+static T &api::CPolySingleton<api::IInputKbd>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IInputKbd]
+static T &api::CPolySingleton<api::IInputMT>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IInputMT]
+static T &api::CPolySingleton<api::IKernelHSM>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IKernelHSM]
+static T &api::CPolySingleton<api::IPaper>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IPaper]
+static T &api::CPolySingleton<api::IPaperRelatorios>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IPaperRelatorios]
+static T &api::CPolySingleton<api::IPower>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IPower]
+static T &api::CPolySingleton<api::IResource>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IResource]
+static T &api::CPolySingleton<api::IScreen>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IScreen]
+static T &api::CPolySingleton<api::IScreenMT>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IScreenMT]
+static T &api::CPolySingleton<api::ISound>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::ISound]
+static T &api::CPolySingleton<api::ISystemDateTime>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::ISystemDateTime]
+static T &api::CPolySingleton<api::ITextToSpeech>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::ITextToSpeech]
+static T &api::CPolySingleton<api::ITimerScheduler>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::ITimerScheduler]
+static T &api::CPolySingleton<api::IUrna>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::IUrna]
+static T &api::CPolySingleton<api::pkcs11::IPkcs11>::instance(TPolySingletonsInfo &, const std::source_location &) [T = api::pkcs11::IPkcs11]
+static T &api::CPolySingleton<comum::CCalculaCV>::instance(TPolySingletonsInfo &, const std::source_location &) [T = comum::CCalculaCV]
+static T &api::CPolySingleton<comum::CGeracaoVersoesContratos>::instance(TPolySingletonsInfo &, const std::source_location &) [T = comum::CGeracaoVersoesContratos]
+static T &api::CPolySingleton<comum::IControladorRegistraMesarios>::instance(TPolySingletonsInfo &, const std::source_location &) [T = comum::IControladorRegistraMesarios]
+static T &api::CPolySingleton<comum::IEventosLog>::instance(TPolySingletonsInfo &, const std::source_location &) [T = comum::IEventosLog]
+static T &api::CPolySingleton<comum::IInterfaceInit>::instance(TPolySingletonsInfo &, const std::source_location &) [T = comum::IInterfaceInit]
+static T &api::CPolySingleton<comum::IInterfaceSavd>::instance(TPolySingletonsInfo &, const std::source_location &) [T = comum::IInterfaceSavd]
+static T &api::CPolySingleton<comum::impl::IValidaMidia>::instance(TPolySingletonsInfo &, const std::source_location &) [T = comum::impl::IValidaMidia]
+static T &api::CPolySingleton<ecourna::api::security::IRng>::instance(TPolySingletonsInfo &, const std::source_location &) [T = ecourna::api::security::IRng]
+static T &api::CPolySingleton<ecourna::api::security::ISymmetricCipherFactory>::instance(TPolySingletonsInfo &, const std::source_location &) [T = ecourna::api::security::ISymmetricCipherFactory]
+static T &api::CPolySingleton<vota::IAjusteInicial>::instance(TPolySingletonsInfo &, const std::source_location &) [T = vota::IAjusteInicial]
+static T &api::CPolySingleton<vota::IExecucaoVota>::instance(TPolySingletonsInfo &, const std::source_location &) [T = vota::IExecucaoVota]
+static T &api::CPolySingleton<vota::IQRCodeBUDS>::instance(TPolySingletonsInfo &, const std::source_location &) [T = vota::IQRCodeBUDS]
+static T &api::CPolySingleton<vota::impl::IInformacaoThreadOperador>::instance(TPolySingletonsInfo &, const std::source_location &) [T = vota::impl::IInformacaoThreadOperador]
+static T &api::CPolySingleton<vota::impl::IPoliticaExecucaoEleitor>::instance(TPolySingletonsInfo &, const std::source_location &) [T = vota::impl::IPoliticaExecucaoEleitor]
+static T &api::CPolySingleton<vota::impl::ISincronismoVotoEleitor>::instance(TPolySingletonsInfo &, const std::source_location &) [T = vota::impl::ISincronismoVotoEleitor]
+static T &api::CPolySingleton<vota::testeteclado::impl::IGeradorTeclas>::instance(TPolySingletonsInfo &, const std::source_location &) [T = vota::testeteclado::impl::IGeradorTeclas]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloCandidatos::EntidadeCandidatos]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloComplementosMunicipios::EntidadeComplementosMunicipios]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloConfiguracaoMunicipios::EntidadeConfiguracaoMunicipios]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloDadosDisponiveisCarga::DadosDisponiveisCarga]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloEleicao::EntidadeEleicao]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloEleitores::BiometriaEleitorCifrada]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloEleitores::BiometriaEleitor]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloEstadoGeralGap::EstadoGeralGap]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloEstadoGeralUrna::EstadoGeralUrna]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloEstadoGeralVota::EstadoGeralVota]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloFederacoes::EntidadeFederacoes]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloFotosCandidatos::FotoCandidato]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloImpedidos::EntidadeImpedidos]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloInformacaoMidia::InformacaoMidia]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloLocal::Local]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloParametrizacaoUrna::EntidadeParametrizacaoUrna]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloPartidos::EntidadePartidos]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloProcessoEleitoral::EntidadeProcessoEleitoral]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloRegistroDigitalVoto::EntidadeRegistroDigitalVoto]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloSituacoesEleicoes::EntidadeSituacoesEleicoes]
+static T api::CFileASN::DecodeObjectFunction(const std::vector<char> &, const std::string &) [T = ModuloTiposEleitorais::CabecalhoPacote]
+static T api::CFileASN::ReadFromFile(const CFile &) [T = ModuloCandidatos::EntidadeCandidatos]
+static T api::CFileASN::ReadFromFile(const CFile &) [T = ModuloComplementosMunicipios::EntidadeComplementosMunicipios]
+static T api::CFileASN::ReadFromFile(const CFile &) [T = ModuloConfiguracaoMunicipios::EntidadeConfiguracaoMunicipios]
+static T api::CFileASN::ReadFromFile(const CFile &) [T = ModuloDadosDisponiveisCarga::DadosDisponiveisCarga]
+static T api::CFileASN::ReadFromFile(const CFile &) [T = ModuloEleicao::EntidadeEleicao]
+static T api::CFileASN::ReadFromFile(const CFile &) [T = ModuloEstadoGeralGap::EstadoGeralGap]
+static T api::CFileASN::ReadFromFile(const CFile &) [T = ModuloEstadoGeralUrna::EstadoGeralUrna]
+static T api::CFileASN::ReadFromFile(const CFile &) [T = ModuloEstadoGeralVota::EstadoGeralVota]
+static T api::CFileASN::ReadFromFile(const CFile &) [T = ModuloFederacoes::EntidadeFederacoes]
+static T api::CFileASN::ReadFromFile(const CFile &) [T = ModuloImpedidos::EntidadeImpedidos]
+static T api::CFileASN::ReadFromFile(const CFile &) [T = ModuloInformacaoMidia::InformacaoMidia]
+static T api::CFileASN::ReadFromFile(const CFile &) [T = ModuloLocal::Local]
+static T api::CFileASN::ReadFromFile(const CFile &) [T = ModuloParametrizacaoUrna::EntidadeParametrizacaoUrna]
+static T api::CFileASN::ReadFromFile(const CFile &) [T = ModuloPartidos::EntidadePartidos]
+static T api::CFileASN::ReadFromFile(const CFile &) [T = ModuloProcessoEleitoral::EntidadeProcessoEleitoral]
+static T api::CFileASN::ReadFromFile(const CFile &) [T = ModuloSituacoesEleicoes::EntidadeSituacoesEleicoes]
+static T api::CFileASN::ReadFromFile(const CFile &) [T = ModuloTiposEleitorais::CabecalhoPacote]
+static T api::CFileASN::ReadFromFile(const std::string &) [T = ModuloCandidatos::EntidadeCandidatos]
+static T api::CFileASN::ReadFromFile(const std::string &) [T = ModuloComplementosMunicipios::EntidadeComplementosMunicipios]
+static T api::CFileASN::ReadFromFile(const std::string &) [T = ModuloConfiguracaoMunicipios::EntidadeConfiguracaoMunicipios]
+static T api::CFileASN::ReadFromFile(const std::string &) [T = ModuloDadosDisponiveisCarga::DadosDisponiveisCarga]
+static T api::CFileASN::ReadFromFile(const std::string &) [T = ModuloEleicao::EntidadeEleicao]
+static T api::CFileASN::ReadFromFile(const std::string &) [T = ModuloEstadoGeralGap::EstadoGeralGap]
+static T api::CFileASN::ReadFromFile(const std::string &) [T = ModuloEstadoGeralUrna::EstadoGeralUrna]
+static T api::CFileASN::ReadFromFile(const std::string &) [T = ModuloEstadoGeralVota::EstadoGeralVota]
+static T api::CFileASN::ReadFromFile(const std::string &) [T = ModuloFederacoes::EntidadeFederacoes]
+static T api::CFileASN::ReadFromFile(const std::string &) [T = ModuloImpedidos::EntidadeImpedidos]
+static T api::CFileASN::ReadFromFile(const std::string &) [T = ModuloInformacaoMidia::InformacaoMidia]
+static T api::CFileASN::ReadFromFile(const std::string &) [T = ModuloLocal::Local]
+static T api::CFileASN::ReadFromFile(const std::string &) [T = ModuloParametrizacaoUrna::EntidadeParametrizacaoUrna]
+static T api::CFileASN::ReadFromFile(const std::string &) [T = ModuloPartidos::EntidadePartidos]
+static T api::CFileASN::ReadFromFile(const std::string &) [T = ModuloProcessoEleitoral::EntidadeProcessoEleitoral]
+static T api::CFileASN::ReadFromFile(const std::string &) [T = ModuloSituacoesEleicoes::EntidadeSituacoesEleicoes]
+static T api::CFileASN::ReadFromFile(const std::string &) [T = ModuloTiposEleitorais::CabecalhoPacote]
+static T api::CPartialFileASN::DecodeObjectFunction(ASN1::TSharedSeeder &, const ASN1::TVectorAbstractVisitor &, const std::string &) [T = ModuloEleitores::EntidadeEleitores]
+static T api::CPartialFileASN::DecodeObjectFunction(ASN1::TSharedSeeder &, const ASN1::TVectorAbstractVisitor &, const std::string &) [T = ModuloFotosCandidatos::EntidadeFotosCandidatos]
+static T api::CPartialFileASN::ReadFromFile(const CFile &, const ASN1::TVectorAbstractVisitor &) [T = ModuloEleitores::EntidadeEleitores]
+static T api::CPartialFileASN::ReadFromFile(const CFile &, const ASN1::TVectorAbstractVisitor &) [T = ModuloFotosCandidatos::EntidadeFotosCandidatos]
+static api::CDateTime comum::asn::Utils::DesconverteDataHoraJE(const ModuloTiposEleitorais::DataHoraJE &)
+static api::TPosition vota::CInfoEleitorAudioHabilitado::LarguraMaxima()
+static bool api::CSystem::AreFilesEqual(const std::string &, const std::string &)
+static bool api::CSystem::IsEmptyDir(const std::string &)
+static const ecourna::app::dados::CLabelParametrizado &comum::md::CTradutorFrase::RecuperaLabel(const std::string &)
+static const ueRespostaSavd *comum::IInterfaceSavd::DesconverteHeader(const std::vector<uebyte> &)
+static ecourna::api::cepesc::CCipheredOut comum::CControlaArmazenamentoDeImagens::CifrarWsq(const std::vector<uebyte> &)
+static ecourna::app::dados::CResultadoUrnaCadastro::ESituacaoArquivo comum::CGravadorUtil::ConverteSituacaoArquivoEcourna(char)
+static ecourna::app::dados::TFaseID comum::CGravadorUtil::ConverteFaseEcourna(char)
+static md::CCargo::ETipo comum::asn::CConversorCargo::DesconverteTipoCargo(ModuloTiposEleitorais::TipoCargoConsulta::NamedNumber)
+static md::CDedo::TipoDedo comum::asn::CConversorDedo::DesconverteTipo(ModuloTiposEleitorais::TipoDedo::NamedNumber)
+static md::CEleitor::ENecessidadeEspecial comum::asn::CConversorEntidadeEleitores::ConverteNecessidadeEspecial(ModuloEleitores::EleitorUrna)
+static md::CEnvelopeGenerico::Tipo comum::asn::CConversorEnvelopeGenerico::DesconverteTipoEnvelope(ModuloEnvelopeGenerico::TipoEnvelope::NamedNumber)
+static md::CIDEleitoral comum::asn::Utils::DesconverteIdEleitoral(const ModuloTiposEleitorais::IDEleitoral &)
+static md::CSexo::ESexo comum::asn::Utils::DesconverteSexo(ModuloTiposEleitorais::CodigoSexo::NamedNumber)
+static md::CVoto::ETipo comum::asn::CConversorVoto::DesconverteTipo(ModuloRegistroDigitalVoto::TipoVoto)
+static md::ETipoAbrangencia comum::asn::Utils::DesconverteAbrangencia(ModuloTiposEleitorais::TipoAbrangencia::NamedNumber)
+static md::ETipoPacote comum::asn::Utils::DesconverteTipoPacote(const ModuloTiposPacotes::TipoPacote &)
+static size_t comum::CAppInfo::IndiceTurno(const std::string &, EUrnaTurno)
+static std::filesystem::path comum::CPath::GetPathResult(EFlashOrigem, EUrnaTurno)
+static std::filesystem::path comum::CPath::GetPathRootSemSA(EFlashOrigem)
+static std::filesystem::path comum::CPath::GetPathTrab(EFlashOrigem, EUrnaTurno)
+static std::pair<CCandidaturas::Container, std::map<uedword, std::string>> comum::CCandidaturas::LoadFromFile(const std::filesystem::path &)
+static std::shared_ptr<I_DOMINIO_DAO> api::persistencia::CDAORepositorio::Entregar() [I_DOMINIO_DAO = comum::dao::IComparecimentoMesarioDAO, I_ORIGEM = comum::dao::IComparecimentoMesarioDAO]
+static std::shared_ptr<I_DOMINIO_DAO> api::persistencia::CDAORepositorio::Entregar() [I_DOMINIO_DAO = comum::dao::IJustificadorDAO, I_ORIGEM = comum::dao::IJustificadorDAO]
+static std::string api::CStringUtils::GetVersionNumber(const std::string &)
+static std::string api::CSystem::TemporaryPath(const std::string &)
+static std::string api::QRCodeSRC::build(const std::string &, const std::string &, EUrnaFase, const std::string &, const std::string &, const std::string &, const std::string &)
+static std::string api::hash::CMontadorHash::CalculaHash(const std::string &)
+static std::string api::hash::CMontadorHash::CalculaHashGeral(const std::string &, const std::string &)
+static std::string comum::(anonymous namespace)::CNomeMesariosUrnaDS::Text(const std::string &)
+static std::string comum::(anonymous namespace)::CTituloMesarioInvalidoDS::Text(const std::string &)
+static std::string comum::(anonymous namespace)::CTituloMesarioJaRegistradoDS::Text(const std::string &)
+static std::string comum::CCargoDSLabelRelatorio::HeaderDetalhe()
+static std::string comum::CCargoDSLabelRelatorio::HeaderDetalheZE()
+static std::string comum::CCargoDSLabelRelatorio::TotalVotoNominal()
+static std::string comum::CDataSourcesRelatorio<comum::CRdvVota, comum::CEleitores>::CodVerificador() [RDV = comum::CRdvVota, DSAptos = comum::CEleitores]
+static std::string comum::CDataSourcesRelatorio<comum::CRdvVota, comum::CEleitores>::DetalheCandidatoZE() [RDV = comum::CRdvVota, DSAptos = comum::CEleitores]
+static std::string comum::CDataSourcesRelatorio<comum::CRdvVota, comum::CEleitores>::TrailerMajoritario() [RDV = comum::CRdvVota, DSAptos = comum::CEleitores]
+static std::string comum::CDataSourcesRelatorio<comum::CRdvVota, comum::CEleitores>::TrailerProporcional() [RDV = comum::CRdvVota, DSAptos = comum::CEleitores]
+static std::string comum::CDataSourcesRelatorio<comum::CRdvVota, comum::CEleitores>::TrailerProporcionalPartido() [RDV = comum::CRdvVota, DSAptos = comum::CEleitores]
+static std::string comum::CEleitorDadoNomeParaUrna::Text(const std::string &)
+static std::string comum::CEleitorDadoSecao::Text(const std::string &)
+static std::string comum::CEleitorDadoSequencial::Text(const std::string &)
+static std::string comum::CEleitorDadoTTE::Text()
+static std::string comum::CGravadorUtil::DeterminaNomeArquivoSemLetra(TMunicipioID, TZonaID, TSecaoID, char)
+static std::string comum::CJustificadorDadoTitulo::Text()
+static std::string comum::CPacoteArquivos::RetornaNomeChave(ESavdChaveValidar)
+static std::string comum::CRelUtil::DSCodigoVerificador()
+static std::string comum::CRelUtil::GetIDCargaFormatado(const std::string &)
+static std::string comum::CRelUtil::GetSeparadorFase(const EUrnaFase)
+static std::string comum::IInterfaceSavd::DesconverteMensagem(const ueRespostaSavd *, const std::vector<uebyte> &)
+static std::string comum::md::CTradutorFrase::TraduzLabel(const std::string &)
+static std::string comum::md::CTradutorFrase::TraduzTexto(const std::string &)
+static std::string ecourna::api::io::CFile::ReadFileContent(const std::string &)
+static std::tuple<uint32_t, std::string, std::string> comum::CControlaArmazenamentoDeImagens::GerarCaminhosUnicos(const std::string &, const std::string &, const std::string &)
+static std::vector<std::string> comum::CFabricaConteudoMidiaStart::ConteudoIncializacao(const EAplicativosDeUrna, const EUrnaTurno)
+static std::vector<uebyte> api::CBmpConversor::CreateBitmapHeader(const unsigned long, const unsigned long, const unsigned long, const int)
+static std::vector<uebyte> api::CQRCodeImage::MontaImagem(const TPosition, const std::string &)
+static std::vector<uebyte> comum::CControlaArmazenamentoDeImagens::LeChavePublica()
+static std::vector<uebyte> comum::md::estadoaplicacao::CEstadoGeral::RecuperarCertificado()
+static std::vector<uebyte> ecourna::api::io::CFile::ReadFileBinary(const std::filesystem::path &)
+static std::vector<uebyte> ecourna::api::util::CStringUtils::HexStringToBytes(const std::string &)
+static uebyte ecourna::api::util::CStringUtils::ToByte(const std::string &)
+static uedword api::CSystem::GetFileSize(const std::string &)
+static uedword ecourna::api::util::CStringUtils::HexToInt(const std::string &)
+static uedword ecourna::api::util::CStringUtils::ToDWord(const std::string &)
+static ueint16 ecourna::api::util::CStringUtils::ToInt16(const std::string &)
+static ueint32 ecourna::api::util::CStringUtils::ToInt32(const std::string &)
+static ueqword ecourna::api::util::CStringUtils::HexToQWord(const std::string &)
+static ueqword ecourna::api::util::CStringUtils::ToQWord(const std::string &)
+static ueword ecourna::api::util::CStringUtils::ToWord(const std::string &)
+static void api::CApplication::EnterLoopDoingNothing()
+static void api::CApplication::LogExceptionMsg(const std::string &, const std::string &, const std::string &, const std::string &, const TExceptionStacktrace *)
+static void api::CApplication::ShowExceptionMsgScreen(EExceptionLevel, const std::string &, const std::string &, const std::string &, const std::string &, const TExceptionStacktrace *)
+static void api::CBmpConversor::InvertColors(unsigned char *, const int, const int)
+static void api::CBmpConversor::VerticalFlip(unsigned char *, const int, const int)
+static void api::CFileASN::CodeObjectFunction(std::vector<char> &, const T &, const std::string &) [T = ModuloBoletimUrna::EntidadeBoletimUrna]
+static void api::CFileASN::CodeObjectFunction(std::vector<char> &, const T &, const std::string &) [T = ModuloEnvelopeGenerico::EntidadeEnvelopeGenerico]
+static void api::CFileASN::CodeObjectFunction(std::vector<char> &, const T &, const std::string &) [T = ModuloEstadoGeralGap::EstadoGeralGap]
+static void api::CFileASN::CodeObjectFunction(std::vector<char> &, const T &, const std::string &) [T = ModuloEstadoGeralSA::EstadoGeralSA]
+static void api::CFileASN::CodeObjectFunction(std::vector<char> &, const T &, const std::string &) [T = ModuloEstadoGeralUrna::EstadoGeralUrna]
+static void api::CFileASN::CodeObjectFunction(std::vector<char> &, const T &, const std::string &) [T = ModuloEstadoGeralVota::EstadoGeralVota]
+static void api::CFileASN::CodeObjectFunction(std::vector<char> &, const T &, const std::string &) [T = ModuloHashes::EntidadeHashes]
+static void api::CFileASN::CodeObjectFunction(std::vector<char> &, const T &, const std::string &) [T = ModuloRegistroDigitalVoto::EntidadeRegistroDigitalVoto]
+static void api::CFileASN::CodeObjectFunction(std::vector<char> &, const T &, const std::string &) [T = ModuloRegistroDigitalVoto::EntidadeResultadoRDV]
+static void api::CFileASN::CodeObjectFunction(std::vector<char> &, const T &, const std::string &) [T = ModuloResultadoUrnaCadastro::DadosComparecimento]
+static void api::CFileASN::CodeObjectFunction(std::vector<char> &, const T &, const std::string &) [T = ModuloResultadoUrnaCadastro::EntidadeResultadoUrnaCadastro]
+static void api::CFileASN::CodeObjectFunction(std::vector<char> &, const T &, const std::string &) [T = ModuloVersaoArquivos::EntidadeVersaoArquivos]
+static void api::CIniStrings::ParseKeyLine(std::string &, std::string &, const std::string &)
+static void api::CLoga::loga(ELogAplicativos, ESeveridade, const std::string &)
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::CEscritorLog]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::IAjusteDataHora]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::IBeep]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::IFingerPrepare]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::IGenericFactory<api::IRWSyncCtl>]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::IGenericFactory<api::ISemaphore>]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::IGenericFactory<api::ISyncCtl>]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::IGenericFactory<api::IThreadImpl>]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::IImpressoraRelatorios]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::IInputKbd]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::IInputMT]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::IPaperRelatorios]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::IPower]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::IResource]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::IScreenMT]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::IScreen]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::ISound]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::ISystemDateTime]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::ITextToSpeech]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::ITimerScheduler]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = api::IUrna]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = comum::CCalculaCV]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = comum::CGeracaoVersoesContratos]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = comum::IControladorRegistraMesarios]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = comum::IEventosLog]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = comum::IInterfaceInit]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = comum::IInterfaceSavd]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = comum::impl::IValidaMidia]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = ecourna::api::security::IRng]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = ecourna::api::security::ISymmetricCipherFactory]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = vota::IAjusteInicial]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = vota::IExecucaoVota]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = vota::IQRCodeBUDS]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = vota::impl::IInformacaoThreadOperador]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = vota::impl::IPoliticaExecucaoEleitor]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = vota::impl::ISincronismoVotoEleitor]
+static void api::CPolySingletonList::push(std::unique_ptr<INTERFACE> &&, TPolySingletonsInfo &) [INTERFACE = vota::testeteclado::impl::IGeradorTeclas]
+static void api::CStringUtils::SetBit(std::vector<uebyte> &, const size_t, const bool)
+static void api::CStringUtils::SetBit(uebyte &, const uebyte, const bool)
+static void api::CSynchronizer::CreateInst(bool)
+static void api::CSystem::CopyFile(const std::string &, const std::string &, bool, bool)
+static void api::CSystem::Rename(const std::string &, const std::string &)
+static void api::CSystem::ZeroFill(const std::string &)
+static void api::ISystemDateTime::CreateInst() [T = api::CSystemDateTime]
+static void api::persistencia::CDAORepositorio::Registrar(I_DOMINIO_DAO *) [I_DOMINIO_DAO = comum::dao::IComparecimentoMesarioDAO, I_ORIGEM = comum::dao::IComparecimentoMesarioDAO]
+static void api::persistencia::CDAORepositorio::Registrar(I_DOMINIO_DAO *) [I_DOMINIO_DAO = comum::dao::IJustificadorDAO, I_ORIGEM = comum::dao::IJustificadorDAO]
+static void comum::CCandidaturas::AdicionaCandidato(std::map<uedword, md::CCandidatura> &, const std::vector<md::CCandidatura> &, const std::string &)
+static void comum::CCargos::CreateInst()
+static void comum::CConfiguracaoEleicao::CreateInst(const md::estadoaplicacao::CEstadoGeral &, const md::TVectorIdentificacaoAgregada &, const EFlashOrigem)
+static void comum::CGravadorBU::AcrescentaVotoVotavel(TVetorVotosVotaveis &, md::CVoto::ETipo, TCandidatoID, TQtdEleitor, const md::CCargo &)
+static void comum::CHV::CreateInst(const md::estadoaplicacao::CEstadoGeral &, const EFlashOrigem)
+static void comum::CInfoMTLCD::CreateInst()
+static void comum::CIntegridadeReferencial::Lanca(const TResultado &)
+static void comum::CPE::CreateInst(const md::estadoaplicacao::CEstadoGeral &, const EFlashOrigem)
+static void comum::CRdvVota::CreateInst()
+static void comum::CRelUtil::IncluiCabecalhoEleicoesMZS(api::CPaperFormBuilder &, const std::string &, const TMunicipioID, const TZonaID, const TSecaoID, const std::string &, const ETipoCabecalho, const bool)
+static void comum::CRespostas::CreateInst()
+static void comum::CSubstituidorTitulo::CreateInst(const std::map<std::string, std::string> &)
+static void comum::util::CMonitoraAlimentacao::CreateInst(ELogAplicativos)
+static void ecourna::api::util::CSynchronizer::CreateInst(bool)
+static void vota::CControlaReconhecimento::AvancaProximoDedo1x4()
+static void vota::CControlaReconhecimento::AvancaTentativa()
+static void vota::CControlaReconhecimento::AvancaVerificacao()
+static void vota::CImprimindoBU::ImprimeBU(uebyte, PrintMessageMode)
+static void vota::CMostraQRCodeBU::AjustaTela(CFormInterativoTelaVota &)
+static void vota::CSincronizaVota::SincronizaRelatorios(const std::string &)
+static void vota::CSincronizaVota::VerificaUrnaDesligando()
+static void vota::CTelasVota::CreateInst()
+static void vota::CVotacaoStateAudio::PlayFile(const std::string &)
+static void vota::CVotacaoStateAudio::PlayInterruptibleMessage(const std::string &)
+static void vota::CVotacaoStateAudio::PlayMessage(const std::string &)
+std::pair<bool, comum::TScoreHabilitacao> vota::CPedeDigital::VerificaDigital(const api::TSharedImageVector &, const long, const long)
+std::pair<bool, comum::TScoreHabilitacao> vota::CPedeDigital::VerificaDigitalTreinamento()
+std::shared_ptr<T> api::IForm<api::IScreen>::FindFieldAs(const std::string &) const [MEDIA = api::IScreen, T = api::CTextField]
+std::shared_ptr<api::IForm<api::IPaper>> comum::CriaQRCode(const TZonaID, const TSecaoID, const md::estadoaplicacao::CDadoCorrespondencia &, const std::vector<std::string> &, const bool, const api::CDateTime &, const bool, const bool)
+std::string api::(anonymous namespace)::PrepareReplace(const std::string &, const std::string &, const std::string &, bool (*)(const std::string &), const std::string &, const std::string &)
+std::string api::CDate::Format(const std::string &) const
+std::string api::CGenericTags::DecodeTLV(std::string &, const std::string &) const
+std::string api::CGenericTags::EncodeTLV(const std::string &, const std::string &, size_t) const
+std::string api::KeyName(char)
+std::string comum::(anonymous namespace)::ConverteTipoAlimentacao()
+std::string comum::(anonymous namespace)::FormataFase(EUrnaFase)
+std::string comum::(anonymous namespace)::FormataNumero(uedword, uedword)
+std::string comum::(anonymous namespace)::FormataUF(const std::string &)
+std::string comum::(anonymous namespace)::GetNomeAbreviadoCargo(const std::string &, uebyte)
+std::string comum::(anonymous namespace)::GetNomeCargoComGenero(const std::string &, md::CSexo::ESexo, uebyte)
+std::string comum::(anonymous namespace)::SituacaoEleitor()
+std::string comum::(anonymous namespace)::TituloPartido()
+std::string comum::CArquivosSavd::operator[](ESavdArquivoUE) const
+std::string comum::CArquivosSavd::operator[](ESavdPacote) const
+std::string comum::CCargoDSNome::operator()() const
+std::string comum::CCargoDSNomeSexoCandidato::operator()() const
+std::string comum::CCargos::GetCurrentEleicaoVersaoPacote() const
+std::string comum::CGeradorBUQRCode::RetornaBlocoAssinado(const std::string &) const
+std::string comum::CImprimirIdentificacaoMesariosFinal::GetNomeMesario(const std::string &)
+std::string comum::IEventosLog::ConverteERelatoriosUE(const ERelatoriosUE)
+std::string comum::IEventosLog::ConverteFonteAlim(const uebyte)
+std::string comum::IEventosLog::ConverteStatusBateria(const uebyte)
+std::string comum::IInterfaceInit::GetSerialNumberMR(int)
+std::string comum::asn::DesconverteSerialFlash(const std::vector<char> &)
+std::string comum::md::CCargo::GetOrdinalEscolha(TQtdEscolha) const
+std::string comum::md::CIDPacote::UF() const
+std::string ecourna::api::security::EncodeBase64(const std::vector<uebyte> &)
+std::string vota::(anonymous namespace)::DS_CandidatoNaoConcorre()
+std::string vota::CInstrucaoVotacaoAcessibilidade::GetKeyboardPosition() const
+std::string vota::CVotacaoStateAudio::FormatPartyName(const std::string &)
+std::string vota::NomeTela(const ETelaVotacao)
+std::string vota::TipoToStr(ecourna::app::dados::ETipoIdentificadorEleitor)
+std::tuple<std::string, std::string> api::CTextFieldDoubleLine::GetTextLines() const
+std::vector<char> comum::asn::ConverteSerialFlash(const std::string &)
+std::vector<md::CEleitorIdentidade> comum::asn::GetInscricoesEleitor(ModuloEleitores::EleitorSequencia)
+std::vector<std::filesystem::path> ecourna::api::compression::(anonymous namespace)::globToFileList(const std::filesystem::path &)
+std::vector<std::string> api::CTextFieldMultiLine::GetTextLines() const
+std::vector<std::string> comum::CGravadorWSQ::GetCaminhoCorretoExternal() const
+std::vector<std::string> comum::CGravadorWSQ::GetCaminhoCorretoInternal() const
+std::vector<uebyte> comum::CGravadorBU::LeChavePublica() const
+std::vector<uebyte> comum::CGravadorRCSecao::LeChavePublica() const
+std::vector<uebyte> comum::asn::CAssinaVotavelBu::Assinar(const std::vector<uebyte> &) const
+std::vector<uebyte> comum::asn::CConversorBiometriaEleitorCifrada::LeChave() const
+std::vector<uebyte> comum::util::(anonymous namespace)::LeChave(const std::filesystem::path &)
+std::vector<uebyte> ecourna::api::security::CHKDFSeed::GetSeed()
+std::vector<uebyte> ecourna::api::security::CKeyLoader::DecipherKeyIfNeeded(const T &) [T = ModuloEnvelopeChave::EntidadeChave]
+typename CONVERSOR::TDado (anonymous namespace)::LeEntidadeBiometria(const std::string &, const comum::md::CParametro &, const comum::md::CIndexer &, const std::string &) [CONVERSOR = comum::asn::CConversorBiometriaEleitorCifrada]
+typename CONVERSOR::TDado (anonymous namespace)::LeEntidadeEm(const std::string &, const comum::md::CIndexer &, const std::string &) [CONVERSOR = comum::asn::CConversorFotoCandidato]
+uebyte api::CTickManager::AddTick(size_t)
+uebyte api::CTickManager::SearchNextId()
+uedword api::CEncryptedFile::MemRead(void *, uedword)
+uedword api::CEncryptedFile::MemWrite(const void *, uedword)
+uedword ecourna::api::io::CFile::RawRead(void *, uedword) const
+uedword ecourna::api::io::CFile::RawWrite(const void *, uedword) const
+uedword ecourna::api::io::CFile::ReadLine(std::string &) const
+uedword ecourna::api::io::CFile::WriteLine(const std::string &) const
+ueword ecourna::api::util::CBitArray::GetValor(const uebyte)
+ueword ecourna::api::util::CBitArray::GetValor(const ueqword, const uebyte) const
+virtual ASN1::IAbstractVisitor::EVisitorResult comum::asn::CVisitanteEleitor::visit(int, const std::string &, ASN1::AbstractData &, size_t, size_t)
+virtual ASN1::IAbstractVisitor::EVisitorResult comum::asn::CVisitanteFoto::visit(int, const std::string &, ASN1::AbstractData &, size_t, size_t)
+virtual CCabecalhoEntidade ecourna::app::dados::asn::CConversorCabecalhoEntidade::DoDeconverte(const TEntidade &) const
+virtual CConversorAbrangencia::TEntidade comum::asn::CConversorAbrangencia::DoConverte(const TDado &) const
+virtual CConversorCabecalhoEntidade::TEntidade comum::asn::CConversorCabecalhoEntidade::DoConverte(const TDado &) const
+virtual CConversorCargoID::TDado ecourna::app::dados::asn::CConversorCargoID::DoDeconverte(const TEntidade &) const
+virtual CConversorCorrespResultado::TEntidade comum::asn::CConversorCorrespResultado::DoConverte(const TDado &) const
+virtual CConversorEntidadeBU::TEntidade comum::asn::CConversorEntidadeBU::DoConverte(const TDado &) const
+virtual CConversorEnvelopeGenerico::TEntidade comum::asn::CConversorEnvelopeGenerico::DoConverte(const TDado &) const
+virtual CConversorEstadoComparecimento::TDado ecourna::app::dados::asn::CConversorEstadoComparecimento::DoDeconverte(const TEntidade &) const
+virtual CConversorFase::TDado ecourna::app::dados::asn::CConversorFase::DoDeconverte(const TEntidade &) const
+virtual CConversorFase::TEntidade ecourna::app::dados::asn::CConversorFase::DoConverte(const TDado &) const
+virtual CConversorHabilitacaoBiometrica::TDado ecourna::app::dados::asn::CConversorHabilitacaoBiometrica::DoDeconverte(const TEntidade &) const
+virtual CConversorIdentificadorEleitor::TDado ecourna::app::dados::asn::CConversorIdentificadorEleitor::DoDeconverte(const TEntidade &) const
+virtual CConversorResultadoUrnaCadastro::TDado ecourna::app::dados::asn::CConversorResultadoUrnaCadastro::DoDeconverte(const TEntidade &) const
+virtual CConversorResultadoUrnaCadastro::TEntidade ecourna::app::dados::asn::CConversorResultadoUrnaCadastro::DoConverte(const TDado &) const
+virtual CConversorTipoApuracaoSA::TEntidade comum::asn::CConversorTipoApuracaoSA::DoConverte(const TDado &) const
+virtual EBootDeviceId comum::IInterfaceInit::CurrentBootDevice()
+virtual EInputResult api::CInputMenuField::Read(IInput &)
+virtual ESemaphoreResult api::CPosixSemaphore::Wait(size_t)
+virtual IPaper &api::IFormImpressao<api::IPaperRelatorios>::GetRenderForm() const [CLASS = api::IPaperRelatorios]
+virtual MEDIA &api::IForm<api::IPaper>::GetRenderForm() const [MEDIA = api::IPaper]
+virtual MEDIA &api::IForm<api::IScreen>::GetRenderForm() const [MEDIA = api::IScreen]
+virtual MEDIA &api::IForm<api::IScreenMT>::GetRenderForm() const [MEDIA = api::IScreenMT]
+virtual ModuloLocal::Local comum::asn::CConversorLocal::DoConverte(const TDado &) const
+virtual ModuloRegistroDigitalVoto::Eleicoes comum::asn::CConversorEleicoesVota::DoConverte(const TDado &) const
+virtual ModuloRegistroDigitalVoto::VotosCargo comum::asn::CConversorVotosCargo::DoConverte(const TDado &) const
+virtual ModuloTiposEleitorais::CabecalhoEntidade ecourna::app::dados::asn::CConversorCabecalhoEntidade::DoConverte(const CCabecalhoEntidade &) const
+virtual ModuloTiposEleitorais::CodigoCargoConsulta ecourna::app::dados::asn::CConversorCargoID::DoConverte(const TCargoID &) const
+virtual ModuloTiposEleitorais::TipoIdentificadorEleitor comum::asn::CConversorTipoIdentificadorEleitor::DoConverte(const TDado &) const
+virtual ModuloTiposEleitorais::Turno ecourna::app::dados::asn::CConversorTurno::DoConverte(const TDado &) const
+virtual SRect api::CImageField::Rect() const
+virtual SRect api::CImageFieldUpdate::Rect() const
+virtual SRect api::CMovieField::Rect() const
+virtual SRect api::CTextBox::Rect() const
+virtual SRect api::CTextField::Rect() const
+virtual SRect api::CTextFieldBlinking::Rect() const
+virtual SRect api::CTextFieldUpdate::Rect() const
+virtual SRect api::CTextRectField::Rect() const
+virtual TDado comum::asn::IConversorASN<ModuloBoletimUrna::EntidadeBoletimUrna, comum::md::CEntidadeBU>::DoDesconverte(const TEntidade &) const [ENTIDADE = ModuloBoletimUrna::EntidadeBoletimUrna, DADO = comum::md::CEntidadeBU]
+virtual TDado comum::asn::IConversorASN<ModuloBoletimUrna::HistoricoVotoImpresso, comum::md::CHistoricoVotoImpresso>::DoDesconverte(const TEntidade &) const [ENTIDADE = ModuloBoletimUrna::HistoricoVotoImpresso, DADO = comum::md::CHistoricoVotoImpresso]
+virtual TDado comum::asn::IConversorASN<ModuloHashes::EntidadeHashes, comum::md::CEntidadeHashes>::DoDesconverte(const TEntidade &) const [ENTIDADE = ModuloHashes::EntidadeHashes, DADO = comum::md::CEntidadeHashes]
+virtual TEntidade comum::asn::IConversorASN<ModuloCandidatos::Candidatura, comum::md::CCandidatura>::DoConverte(const TDado &) const [ENTIDADE = ModuloCandidatos::Candidatura, DADO = comum::md::CCandidatura]
+virtual TEntidade comum::asn::IConversorASN<ModuloCandidatos::DadosCandidato, comum::md::CDadosCandidato>::DoConverte(const TDado &) const [ENTIDADE = ModuloCandidatos::DadosCandidato, DADO = comum::md::CDadosCandidato]
+virtual TEntidade comum::asn::IConversorASN<ModuloCandidatos::EntidadeCandidatos, std::vector<comum::md::CCandidatura>>::DoConverte(const TDado &) const [ENTIDADE = ModuloCandidatos::EntidadeCandidatos, DADO = std::vector<comum::md::CCandidatura>]
+virtual TEntidade comum::asn::IConversorASN<ModuloComplementosMunicipios::EntidadeComplementosMunicipios, comum::md::CComplementosMunicipiosUF>::DoConverte(const TDado &) const [ENTIDADE = ModuloComplementosMunicipios::EntidadeComplementosMunicipios, DADO = comum::md::CComplementosMunicipiosUF]
+virtual TEntidade comum::asn::IConversorASN<ModuloEleicao::CargoPergunta, comum::md::CCargo>::DoConverte(const TDado &) const [ENTIDADE = ModuloEleicao::CargoPergunta, DADO = comum::md::CCargo]
+virtual TEntidade comum::asn::IConversorASN<ModuloEleicao::DetalheCargo, comum::md::CDetalheCandidato>::DoConverte(const TDado &) const [ENTIDADE = ModuloEleicao::DetalheCargo, DADO = comum::md::CDetalheCandidato]
+virtual TEntidade comum::asn::IConversorASN<ModuloEleicao::DetalhePergunta, comum::md::CDetalheConsulta>::DoConverte(const TDado &) const [ENTIDADE = ModuloEleicao::DetalhePergunta, DADO = comum::md::CDetalheConsulta]
+virtual TEntidade comum::asn::IConversorASN<ModuloEleicao::EntidadeEleicao, comum::md::CEleicaoPE>::DoConverte(const TDado &) const [ENTIDADE = ModuloEleicao::EntidadeEleicao, DADO = comum::md::CEleicaoPE]
+virtual TEntidade comum::asn::IConversorASN<ModuloEleicao::NomesCargo, comum::md::CNomesCargo>::DoConverte(const TDado &) const [ENTIDADE = ModuloEleicao::NomesCargo, DADO = comum::md::CNomesCargo]
+virtual TEntidade comum::asn::IConversorASN<ModuloEleicao::Suplencias, comum::md::CSuplencia>::DoConverte(const TDado &) const [ENTIDADE = ModuloEleicao::Suplencias, DADO = comum::md::CSuplencia]
+virtual TEntidade comum::asn::IConversorASN<ModuloEleitores::BiometriaEleitor, comum::md::CBiometriaEleitor>::DoConverte(const TDado &) const [ENTIDADE = ModuloEleitores::BiometriaEleitor, DADO = comum::md::CBiometriaEleitor]
+virtual TEntidade comum::asn::IConversorASN<ModuloEleitores::Dedo, comum::md::CDedo>::DoConverte(const TDado &) const [ENTIDADE = ModuloEleitores::Dedo, DADO = comum::md::CDedo]
+virtual TEntidade comum::asn::IConversorASN<ModuloFotosCandidatos::FotoCandidato, comum::md::CFotoCandidato>::DoConverte(const TDado &) const [ENTIDADE = ModuloFotosCandidatos::FotoCandidato, DADO = comum::md::CFotoCandidato]
+virtual TEntidade comum::asn::IConversorASN<ModuloImpedidos::EntidadeImpedidos, std::vector<comum::md::CImpedido>>::DoConverte(const TDado &) const [ENTIDADE = ModuloImpedidos::EntidadeImpedidos, DADO = std::vector<comum::md::CImpedido>]
+virtual TEntidade comum::asn::IConversorASN<ModuloProcessoEleitoral::EntidadeProcessoEleitoral, comum::md::CProcessoEleitoralDTO>::DoConverte(const TDado &) const [ENTIDADE = ModuloProcessoEleitoral::EntidadeProcessoEleitoral, DADO = comum::md::CProcessoEleitoralDTO]
+virtual TEntidade comum::asn::IConversorASN<ModuloProcessoEleitoral::Pleito, comum::md::CPleitoDTO>::DoConverte(const TDado &) const [ENTIDADE = ModuloProcessoEleitoral::Pleito, DADO = comum::md::CPleitoDTO]
+virtual TEntidade comum::asn::IConversorASN<ModuloSituacoesEleicoes::EntidadeSituacoesEleicoes, std::vector<comum::md::CSituacoesEleicoes>>::DoConverte(const TDado &) const [ENTIDADE = ModuloSituacoesEleicoes::EntidadeSituacoesEleicoes, DADO = std::vector<comum::md::CSituacoesEleicoes>]
+virtual TEntidade comum::asn::IConversorBiometriaASN<ModuloEleitores::BiometriaEleitorCifrada, comum::md::CBiometriaEleitor>::DoConverte(const TDado &, const md::CParametro &) const [ENTIDADE = ModuloEleitores::BiometriaEleitorCifrada, DADO = comum::md::CBiometriaEleitor]
+virtual TSharedSqlStatement ecourna::api::sql::sqlite::CSqlConnection::Prepare(const std::string &)
+virtual app::dados::TTurno ecourna::app::dados::asn::CConversorTurno::DoDeconverte(const TEntidade &) const
+virtual bool ecourna::api::security::CSiphashMac::DoVerify(const std::vector<uebyte> &, const std::vector<uebyte> &, const std::vector<uebyte> &) const
+virtual bool ecourna::api::sql::sqlite::CSqlResultSet::IsNull(int)
+virtual bool vota::CDefineRotaPosReinicio::NeedChangeState()
+virtual bool vota::CEleitorVotando::NeedChangeState()
+virtual comum::CAppState *vota::CPedeNulo::GetProximoEstado(const std::string &) const
+virtual comum::CAppState *vota::testeteclado::CPreZeresima::GetEstadoPassouNoTeste()
+virtual comum::md::CEleitorIdentidade vota::impl::CInformacaoThreadOperador::GetIdentidadeEleitor() const
+virtual comum::md::CEleitorIdentidade vota::impl::CInformacaoThreadOperador::GetIdentidadePrincipalEleitor() const
+virtual const std::vector<uebyte> ecourna::api::security::CSha::Finish()
+virtual double ecourna::api::sql::sqlite::CSqlResultSet::GetDouble(int)
+virtual ecourna::app::dados::ETipoIdentificadorEleitor comum::asn::CConversorTipoIdentificadorEleitor::DoDesconverte(const TEntidade &) const
+virtual ecourna::app::dados::ETipoIdentificadorEleitor vota::impl::CInformacaoThreadOperador::GetTipoIdentidadeDigitada() const
+virtual float api::IPower::BatIntMaxSocValue()
+virtual int api::CPosixSemaphore::GetValue() const
+virtual int ecourna::api::sql::sqlite::CSqlResultSet::GetInt(int)
+virtual md::CBiometriaEleitor comum::asn::CConversorBiometriaEleitor::DoDesconverte(const TEntidade &) const
+virtual md::CCabecalhoEntidade comum::asn::CConversorCabecalhoEntidade::DoDesconverte(const TEntidade &) const
+virtual md::CCargo comum::asn::CConversorCargo::DoDesconverte(const TEntidade &) const
+virtual md::CComplementosMunicipiosUF comum::asn::CConversorComplementosMunicipios::DoDesconverte(const TEntidade &) const
+virtual md::CCorrespondenciaResultado comum::asn::CConversorCorrespResultado::DoDesconverte(const TEntidade &) const
+virtual md::CDedo comum::asn::CConversorDedo::DoDesconverte(const TEntidade &) const
+virtual md::CDetalheCandidato comum::asn::CConversorDetalheCandidato::DoDesconverte(const TEntidade &) const
+virtual md::CEnvelopeGenerico comum::asn::CConversorEnvelopeGenerico::DoDesconverte(const TEntidade &) const
+virtual md::CLocal comum::asn::CConversorLocal::DoDesconverte(const TEntidade &) const
+virtual md::CProcessoEleitoralDTO comum::asn::CConversorProcessoEleitoral::DoDesconverte(const TEntidade &) const
+virtual md::CTipoApuracaoSA comum::asn::CConversorTipoApuracaoSA::DoDesconverte(const TEntidade &) const
+virtual md::CVotosEleicoesVota comum::asn::CConversorEleicoesVota::DoDesconverte(const TEntidade &) const
+virtual md::EOrigemConfiguracao comum::asn::CConversorOrigemConfiguracao::DoDesconverte(const TEntidade &) const
+virtual size_t api::CFileSeeder::decodeBlock(char *, size_t)
+virtual std::filesystem::path comum::CServicoEstadoGeralGap::GetPathArquivo()
+virtual std::filesystem::path comum::CServicoEstadoGeralSA::GetPathArquivo()
+virtual std::filesystem::path comum::CServicoEstadoGeralVota::GetPathArquivo()
+virtual std::pair<api::EInputResult, std::string> vota::CCompletaProporcional::EmiteEcoComInputField(const CFormInterativoTelaVota &) const
+virtual std::pair<api::EInputResult, std::string> vota::CConfirmaVotoSemCandidato::EmiteEcoComInputField(const CFormInterativoTelaVota &) const
+virtual std::pair<api::EInputResult, std::string> vota::CVotacaoStateAudio::EmiteEcoComInputField(const CFormInterativoTelaVota &) const
+virtual std::pair<md::CVotosCargos::SCargoInfo, md::CVotos> comum::asn::CConversorVotosCargo::DoDesconverte(const TEntidade &) const
+virtual std::string ecourna::api::sql::sqlite::CSqlResultSet::GetText(int)
+virtual std::string vota::impl::CInformacaoThreadOperador::GetIdentidadeDigitada() const
+virtual std::tuple<bool, float> api::IPower::BatIntStorageMode()
+virtual std::unique_ptr<AP> api::IGenericFactory<api::IRWSyncCtl>::Create(const std::string &) [AP = api::IRWSyncCtl]
+virtual std::unique_ptr<AP> api::IGenericFactory<api::IRWSyncCtl>::Create(size_t) [AP = api::IRWSyncCtl]
+virtual std::unique_ptr<AP> api::IGenericFactory<api::ISemaphore>::Create(const std::string &) [AP = api::ISemaphore]
+virtual std::unique_ptr<AP> api::IGenericFactory<api::ISemaphore>::Create(size_t) [AP = api::ISemaphore]
+virtual std::unique_ptr<AP> api::IGenericFactory<api::ISyncCtl>::Create(const std::string &) [AP = api::ISyncCtl]
+virtual std::unique_ptr<AP> api::IGenericFactory<api::ISyncCtl>::Create(size_t) [AP = api::ISyncCtl]
+virtual std::unique_ptr<AP> api::IGenericFactory<api::IThreadImpl>::Create(const std::string &) [AP = api::IThreadImpl]
+virtual std::unique_ptr<AP> api::IGenericFactory<api::IThreadImpl>::Create(size_t) [AP = api::IThreadImpl]
+virtual std::vector<uebyte> ecourna::api::sql::sqlite::CSqlResultSet::GetBlob(int)
+virtual ueint64 ecourna::api::sql::sqlite::CSqlResultSet::GetInt64(int)
+virtual unsigned char api::CFileSeeder::decodeByte()
+virtual void (anonymous namespace)::CPoliticaExecucaoEleitorWeb::LimpaBufferInput() const
+virtual void api::CEscritorLog::fazOperacao(ELogOperacoesLogD)
+virtual void api::CFileSeeder::seek(size_t)
+virtual void api::CFileSeeder::skip(size_t)
+virtual void api::CFramedText::MaskText(IScreen &, const std::string &) const
+virtual void api::CGrayedFramedText::MaskText(IScreen &, const std::string &) const
+virtual void api::CInputField<api::CFramedText>::SetLength(size_t) [MASK = api::CFramedText]
+virtual void api::CInputMenuField::Move(const SPoint &)
+virtual void api::CLedFieldMT::Draw(IScreenMT &) const
+virtual void api::CPosixMutex::Lock()
+virtual void api::CPosixMutex::Unlock()
+virtual void api::CPosixRWMutex::ReadLock()
+virtual void api::CPosixRWMutex::Unlock()
+virtual void api::CPosixRWMutex::WriteLock()
+virtual void api::CPosixSemaphore::Lock()
+virtual void api::CPosixSemaphore::Unlock()
+virtual void api::CTextBox::Draw(IScreen &) const
+virtual void api::CTextBox::Move(const SPoint &)
+virtual void api::IImpressora::DisableSensors(uebyte)
+virtual void api::IImpressora::EnableSensors(uebyte)
+virtual void api::IImpressoraRelatorios::SetStyle(ELPStyle)
+virtual void api::IPower::DisableBatIntStorageMode()
+virtual void api::IPower::EnableBatIntStorageMode(float)
+virtual void api::IPower::SetBatIntMaxSocValue(float)
+virtual void api::IScreen::GetFontMetrics(TPosition &, TPosition &, const SFont &, const std::string &)
+virtual void api::persistencia::IUenuxGenericDAO<comum::md::CComparecimentoMesario, comum::md::CComparecimentoMesarioPK>::Atualizar(const TDado &) const [DADO = comum::md::CComparecimentoMesario, ID = comum::md::CComparecimentoMesarioPK]
+virtual void api::persistencia::IUenuxGenericDAO<comum::md::CComparecimentoMesario, comum::md::CComparecimentoMesarioPK>::Excluir(const TDado &) const [DADO = comum::md::CComparecimentoMesario, ID = comum::md::CComparecimentoMesarioPK]
+virtual void api::persistencia::IUenuxGenericDAO<comum::md::CComparecimentoMesario, comum::md::CComparecimentoMesarioPK>::ExcluirID(const TDadoID &) const [DADO = comum::md::CComparecimentoMesario, ID = comum::md::CComparecimentoMesarioPK]
+virtual void api::persistencia::IUenuxGenericDAO<comum::md::CEleitorDinamico, std::string>::Excluir(const TDado &) const [DADO = comum::md::CEleitorDinamico, ID = std::string]
+virtual void api::persistencia::IUenuxGenericDAO<ecourna::app::dados::CIdentificacaoJustificativa, std::string>::Excluir(const TDado &) const [DADO = ecourna::app::dados::CIdentificacaoJustificativa, ID = std::string]
+virtual void comum::CGeradorBU::ImprimePreTexto() const
+virtual void comum::CGeradorBUBase<comum::CRdvVota, comum::CEleitores>::ImprimeConsulta() const [RDV = comum::CRdvVota, DSAptos = comum::CEleitores]
+virtual void comum::CGeradorBUBase<comum::CRdvVota, comum::CEleitores>::ImprimeMajoritario() const [RDV = comum::CRdvVota, DSAptos = comum::CEleitores]
+virtual void comum::CGeradorBUBase<comum::CRdvVota, comum::CEleitores>::ImprimeProporcionalPartido() const [RDV = comum::CRdvVota, DSAptos = comum::CEleitores]
+virtual void comum::CGestorDadoMesario::StartState()
+virtual void comum::CGravadorBU::GravaResultado(api::CFile &) const
+virtual void comum::CGravadorHashes::GravaResultado(api::CFile &) const
+virtual void comum::CGravadorRCSecao::GravaResultado(api::CFile &) const
+virtual void comum::CInfoMTLCD::Update(const api::SharedIImage &)
+virtual void comum::CParteCandidatosConsultas::Imprime() const
+virtual void comum::CParteCandidatosMajoritarios::Imprime() const
+virtual void comum::CPedeDigitalMesario::FinishState()
+virtual void comum::CPedeDigitalMesario::ProcessTick(uebyte)
+virtual void comum::CPedeDigitalMesario::StartState()
+virtual void comum::CPedeTituloMesario::StartState()
+virtual void comum::CRdvVota::Desconverte(const std::vector<uebyte> &)
+virtual void comum::CSigVerifier::Verify() const
+virtual void comum::CTituloMesarioJaRegistrado::StartState()
+virtual void comum::dao::CEleitorDinamicoDAO::ExcluirID(const TDadoID &) const
+virtual void comum::dao::CJustificadorDAO::Atualizar(const TDado &) const
+virtual void comum::dao::CJustificadorDAO::ExcluirID(const TDadoID &) const
+virtual void ecourna::api::compression::CLzmaCompress::DoAdd(const std::filesystem::path &, const std::filesystem::path &)
+virtual void ecourna::api::compression::CZip::Close()
+virtual void ecourna::api::compression::CZip::DoAdd(const std::filesystem::path &, const std::filesystem::path &)
+virtual void ecourna::api::security::CBlockCipher<ecourna::api::security::CAesCipher, ecourna::api::security::CTrng>::Decrypt(const std::vector<uebyte> &, std::vector<uebyte> &) const [ALGO = ecourna::api::security::CAesCipher, RANDOM = ecourna::api::security::CTrng]
+virtual void ecourna::api::security::CBlockCipher<ecourna::api::security::CAesCipher, ecourna::api::security::CTrng>::Encrypt(const std::vector<uebyte> &, std::vector<uebyte> &) const [ALGO = ecourna::api::security::CAesCipher, RANDOM = ecourna::api::security::CTrng]
+virtual void ecourna::api::security::CSha::Reset()
+virtual void ecourna::api::security::CSha::Update(const std::vector<uebyte> &)
+virtual void ecourna::api::security::CSiphashMac::DoMac(const std::vector<uebyte> &, std::vector<uebyte> &, const std::vector<uebyte> &) const
+virtual void ecourna::api::sql::sqlite::CSqlConnection::Close()
+virtual void ecourna::api::sql::sqlite::CSqlStatement::Close()
+virtual void ecourna::api::sql::sqlite::CSqlStatement::Reset()
+virtual void ecourna::api::sql::sqlite::CSqlStatement::SetBlob(int, const std::vector<uebyte> &)
+virtual void ecourna::api::sql::sqlite::CSqlStatement::SetDouble(int, double)
+virtual void ecourna::api::sql::sqlite::CSqlStatement::SetInt(int, int)
+virtual void ecourna::api::sql::sqlite::CSqlStatement::SetInt64(int, ueint64)
+virtual void ecourna::api::sql::sqlite::CSqlStatement::SetNull(int)
+virtual void ecourna::api::sql::sqlite::CSqlStatement::SetText(int, const std::string &)
+virtual void simulador::CWasmThread::Create(void *(*)(void *), void *)
+virtual void vota::CAguardaEleitoresVotarem::StartState()
+virtual void vota::CCompletaProporcional::ProcessInputAudio()
+virtual void vota::CCompletaProporcional::StartStateAudio()
+virtual void vota::CConfirmaVotoEmCargo::ProcessInputAudio()
+virtual void vota::CConfirmaVotoEmCargo::StartStateAudio()
+virtual void vota::CConfirmaVotoSemCandidato::ProcessInputAudio()
+virtual void vota::CConfirmaVotoSemCandidato::StartStateAudio()
+virtual void vota::CCopiaResultadoParaMR::StartState()
+virtual void vota::CDigitalNaoReconhecida::StartState()
+virtual void vota::CDigitalReconhecida::StartState()
+virtual void vota::CEleitorEncontrado::StartState()
+virtual void vota::CEmitirMaisBU::ProcessInput()
+virtual void vota::CEmitirMaisBU::StartState()
+virtual void vota::CEncerramentoHorarioInvalido::StartState()
+virtual void vota::CEscolheOpcao::StartState()
+virtual void vota::CExibeAlertaDesligamento::ProcessTick(uebyte)
+virtual void vota::CExibeAlertaDesligamento::StartState()
+virtual void vota::CFimVotoEleitor::StartState()
+virtual void vota::CGeraBU::StartState()
+virtual void vota::CGeraDadosDinamicos::StartState()
+virtual void vota::CGeraRelatorios::StartState()
+virtual void vota::CGravaResultado::StartState()
+virtual void vota::CImprimindoBEHB::StartState()
+virtual void vota::CImprimindoBU::StartState()
+virtual void vota::CImprimindoBim::StartState()
+virtual void vota::CImprimirBJust::StartState()
+virtual void vota::CImprimirBUOutrasObrigatorias::StartState()
+virtual void vota::CInformacaoZeresimaTardia::ProcessInput()
+virtual void vota::CInstrucaoVotacaoAcessibilidade::ProcessInputAudio()
+virtual void vota::CInstrucaoVotacaoAcessibilidade::StartStateAudio()
+virtual void vota::CLimiteCopiasBUAtingido::StartState()
+virtual void vota::CMenuFiltrarCandidatosPorCargo::StartState()
+virtual void vota::CMenuFiltrarCandidatosPorPartido::StartState()
+virtual void vota::CMenuVisualizarCandidatos::StartState()
+virtual void vota::CMostraEleitorVotando::ProcessInput()
+virtual void vota::CMostraQRCodeBU::ProcessInput()
+virtual void vota::CMostraQRCodeBU::StartState()
+virtual void vota::CMostraQRCodeCertificado::ProcessInput()
+virtual void vota::CPedeDigital::FinishState()
+virtual void vota::CPedeDigital::ProcessTick(uebyte)
+virtual void vota::CPedeDigital::StartState()
+virtual void vota::CPedeIdentidade::StartState()
+virtual void vota::CPedeMajoritario::ProcessInputAudio()
+virtual void vota::CPedeProporcional::ProcessInputAudio()
+virtual void vota::CQuerImprimirBU::StartState()
+virtual void vota::CQuerReimprimirZeresima::StartState()
+virtual void vota::CRegistraDigitalOperador::FinishState()
+virtual void vota::CRegistraDigitalOperador::ProcessTick(uebyte)
+virtual void vota::CRegistraDigitalOperador::StartState()
+virtual void vota::CRetirarMR::ProcessInput()
+virtual void vota::CRetirarMR::StartState()
+virtual void vota::CThreadOperador::Run()
+virtual void vota::CVerificaEleicaoPassou::StartState()
+virtual void vota::CVerificaHorarioZeresima::ProcessTickNaoDesligamento(uebyte)
+virtual void vota::CVerificaHorarioZeresima::StartState()
+virtual void vota::CVerificaQtdBUsAdicionais::StartState()
+virtual void vota::CVisualizarCandidatos::StartState()
+virtual void vota::CVotacaoStateAudio::ProcessInput()
+virtual void vota::CVotacaoStateAudio::ProcessTick(uebyte)
+virtual void vota::IConfereVotoEmCargo::ProcessInputAudio()
+virtual void vota::impl::CPoliticaExecucaoEleitor::LimpaBufferInput() const
+virtual void vota::testeteclado::CTesteTeclado::ProcessInput()
+virtual void vota::testeteclado::CTesteTeclado::StartState()
+void (anonymous namespace)::CVotaWebEngine::SetAudioEnabled(bool)
+void api::(anonymous namespace)::ReplaceResource(const std::string &, const std::string &, const std::string &, const std::string &)
+void api::BatteryIconDataSource<api::CPowerInformation::IconOrientation::Horizontal>::UpdateBatteryIcon() [Orientation = api::CPowerInformation::IconOrientation::Horizontal]
+void api::BatteryIconDataSource<api::CPowerInformation::IconOrientation::Vertical>::UpdateBatteryIcon() [Orientation = api::CPowerInformation::IconOrientation::Vertical]
+void api::CDataMap<comum::md::CComparecimentoMesarioPK, comum::md::CComparecimentoMesario>::Add(const typename Container::value_type &) [KeyType = comum::md::CComparecimentoMesarioPK, RecordType = comum::md::CComparecimentoMesario]
+void api::CDataMap<comum::md::CComparecimentoMesarioPK, comum::md::CComparecimentoMesario>::Update(const KeyType &, const RecordType &) [KeyType = comum::md::CComparecimentoMesarioPK, RecordType = comum::md::CComparecimentoMesario]
+void api::CDataMap<comum::md::CEleitorIdentidade, comum::CEleitorDetalhe>::Next() [KeyType = comum::md::CEleitorIdentidade, RecordType = comum::CEleitorDetalhe]
+void api::CDataMap<ecourna::app::dados::CNumeroInscricaoEleitoral, comum::CJustificadorDetalhe>::Add(const typename Container::value_type &) [KeyType = ecourna::app::dados::CNumeroInscricaoEleitoral, RecordType = comum::CJustificadorDetalhe]
+void api::CDataMap<ecourna::app::dados::CNumeroInscricaoEleitoral, comum::CJustificadorDetalhe>::Next() [KeyType = ecourna::app::dados::CNumeroInscricaoEleitoral, RecordType = comum::CJustificadorDetalhe]
+void api::CDataMap<unsigned int, comum::md::CCandidatura>::Next() [KeyType = unsigned int, RecordType = comum::md::CCandidatura]
+void api::CDataMap<unsigned short, comum::md::CPartido>::Next() [KeyType = unsigned short, RecordType = comum::md::CPartido]
+void api::CDateTime::ConvertFromLocalTime(time_t)
+void api::CEncryptedFile::Load(const std::string &)
+void api::CEncryptedFile::Save(const std::string &) const
+void api::CFormBuilder::AddStatusHeader(StatusHeaderFields)
+void api::CGenericTags::AppendTLV(std::string &, const std::string &, const std::string &, size_t) const
+void api::CGenericTags::insert(const std::string &, size_t)
+void api::CInputMenuField::SetFormatString(const std::string &)
+void api::CInputMenuField::SetInstructionText(const std::string &)
+void api::CInteractiveForm<api::IScreen, api::IInputKbd>::ClearKeyboardInput() [MEDIA = api::IScreen, INPUT = api::IInputKbd]
+void api::CInteractiveForm<api::IScreenMT, api::IInputMT>::ClearKeyboardInput() [MEDIA = api::IScreenMT, INPUT = api::IInputMT]
+void api::CMenuItem::Draw() const
+void api::CMenuItem::SetFormatString(const std::string &)
+void api::CMenuItem::UpdateRect()
+void api::CThread::Start()
+void api::CTickManager::StartTick(uebyte)
+void api::CTickManager::StopTick(uebyte)
+void api::CTime::operator+=(int)
+void api::CTime::operator-=(int)
+void api::SRect::Bottom(TPosition)
+void api::SRect::Left(TPosition)
+void api::SRect::Right(TPosition)
+void api::SRect::Top(TPosition)
+void api::confereAppValida(const std::string &, ELogAplicativos)
+void api::hash::CHashArquivo::ValidaObjeto() const
+void api::hash::CHashDiretorio::ValidaObjeto() const
+void api::truncate(int, off_t, const std::string &)
+void comum::(anonymous namespace)::ajustaAbrangenciaUFMunicipio(TMunicipioID &, std::string &, const md::ETipoAbrangencia &)
+void comum::AssinarEcourna(IInterfaceSavd &, ESavdAplic, ueint32, ueint32)
+void comum::AssinarUE(IInterfaceSavd &, ESavdAplic, ueint32, ueint32)
+void comum::CAssinador::Assina(const ESavdArquivoUE) const
+void comum::CAssinador::AssinaArquivosResultado(const std::vector<ESavdArquivoUE> &) const
+void comum::CCalculaCV::IncluiString(const std::string &)
+void comum::CCargos::FiltraPorAbrangencia(md::ETipoAbrangencia)
+void comum::CCargos::Next()
+void comum::CEleitorDetalhe::ConfereDadosDinamicos(const std::string &) const
+void comum::CEleitores::CompleteLoad(const std::string &, const std::string &)
+void comum::CEleitores::DynamicCreate(const std::string &) const
+void comum::CEleitores::MarcaEleitorFoiHabilitado(const CEleitorDadosHabilitacao &)
+void comum::CEleitores::MarcaVotou()
+void comum::CEleitores::StaticLoad(const std::string &)
+void comum::CEleitores::ValidaIdentidadesEleitor(const md::CEleitorDecorator &) const
+void comum::CFederacoes::Load(const std::string &)
+void comum::CFotos::Load()
+void comum::CGeradorBUBase<comum::CRdvVota, comum::CEleitores>::ImprimeVotosCandidatos(const std::vector<TCandidatoID> &) const [RDV = comum::CRdvVota, DSAptos = comum::CEleitores]
+void comum::CGeradorBUJ::GeraBUJ(const std::string &)
+void comum::CGeradorRelBase<comum::CRdvVota, comum::CEleitores>::GeraRelatorio(const std::string &) [RDV = comum::CRdvVota, DSAptos = comum::CEleitores]
+void comum::CGravadorWSQ::ValidaTipoBiometria() const
+void comum::CHV::VerificaEntraEmHorarioVerao(const std::string &) const
+void comum::CInfoMTLCD::MostrarImagemNoLCD(const api::IImage &, const api::SPoint &, bool)
+void comum::CJustificador::Justifica(const ecourna::app::dados::CNumeroInscricaoEleitoral &, ueword)
+void comum::CJustificador::SaveCurrentInternal()
+void comum::CLocal::VerificaEhSecao(const std::string &) const
+void comum::CLocal::VerificaLido(const std::string &) const
+void comum::CLogComum::LogaCopiandoArqResParaFI(EExtensaoArquivoResultado)
+void comum::CLogComum::LogaFinalizaSessaoMSD()
+void comum::CLogComum::LogaFinalizaSessaoMSE()
+void comum::CLogComum::LogaGerandoResultados(EExtensaoArquivoResultado, EStatusOperacaoRelatorio)
+void comum::CLogComum::LogaIniciaSessaoMSD()
+void comum::CLogComum::LogaIniciaSessaoMSE()
+void comum::CLogComum::LogaInicioProcedimentoAssinatura()
+void comum::CLogComum::LogaNivelBateria(uebyte, uebyte)
+void comum::CLogComum::LogaPreparandoAssinaturaArquivosResultado()
+void comum::CLogComum::LogaResultadoCopiadoResFE(EExtensaoArquivoResultado)
+void comum::CLogComum::LogaScoreReconhecimentoMesario(const ueint32)
+void comum::CLogComum::LogaSuspensoMonitoramenteRepeticao(uebyte)
+void comum::CLogComum::LogaTerminoProcedimentoAssinatura()
+void comum::CLogComum::LogaTipoBateria()
+void comum::CPacoteArquivos::TrataErroPacote(const IInterfaceSavd &) const
+void comum::CPacoteArquivos::TrataErroPacoteArquivo(const IInterfaceSavd &, const std::string &) const
+void comum::CPacoteArquivos::Validar(IInterfaceMensagem &) const
+void comum::CPacoteArquivos::ValidarChaveEAplicacaoValida()
+void comum::CRegistradorMesario::SaveCurrentInternal()
+void comum::EnviarAcaoHSM(IInterfaceSavd &, ESavdAplic, ESavdCmdHSM)
+void comum::IInterfaceInit::DesligarUrna()
+void comum::IInterfaceInit::DesmontarMRSemDesabilitar()
+void comum::IInterfaceInit::EnviarMensagemThrowVoid(ueint32, const std::string &)
+void comum::IInterfaceInit::LogDiskInfo()
+void comum::IInterfaceInit::MontarMRSemHabilitar()
+void comum::ValidarUE(IInterfaceSavd &, ESavdAplic, const std::string &)
+void comum::ValidarUE(IInterfaceSavd &, ESavdAplic, const std::string &, const std::string &)
+void comum::asn::(anonymous namespace)::CriaResultadosVotacoes(ModuloBoletimUrna::EntidadeBoletimUrna &, const md::CEntidadeBU &)
+void comum::md::CBiometriaEleitor::CriaComum(std::vector<CDedo>)
+void comum::md::CCarga::ValidaCriacao() const
+void comum::md::CCargo::Valida() const
+void comum::md::CComplementoMunicipio::ValidaCriacao() const
+void comum::md::CCorrespondenciaResultado::ValidaCriacao() const
+void comum::md::CEleicaoPE::ValidaCargos() const
+void comum::md::CEleicaoPE::ValidaNome() const
+void comum::md::CEleicaoPE::ValidaOrdem(std::set<uebyte> &, uebyte, const std::string &) const
+void comum::md::CEleitor::ValidaCriacao() const
+void comum::md::CEntidadeBU::ValidaCriacao() const
+void comum::md::CEntidadeHashes::ValidaCriacao() const
+void comum::md::CEnvelopeGenerico::ValidaCriacao() const
+void comum::md::CHorarioVeraoMunicipio::ValidaCriacao() const
+void comum::md::CIDPacoteValidar(EUrnaFase)
+void comum::md::CInfoMunicipio::ValidaCriacao() const
+void comum::md::CLocal::ValidaCriacao() const
+void comum::md::CPartido::ValidaCriacao() const
+void comum::md::CTipoApuracaoSA::ValidaCriacao() const
+void comum::md::CTipoApuracaoSA::ValidaMotivoApuracao() const
+void comum::md::CTransferenciaTemporaria::ValidaConstrucao(ETransferenciaTemporaria)
+void comum::md::CUrna::ValidaCriacao() const
+void comum::md::CValidadorIdentidade::Valida(ecourna::app::dados::ETipoIdentificadorEleitor, const std::string &) const
+void comum::md::CVersoesArquivos::ValidaCriacao() const
+void comum::md::CVotos::Insere(const CVoto &, size_t)
+void comum::md::CVotosCargos::ConfereCedula(const CCedula &) const
+void comum::md::CVotosCargos::InsereCedula(const CRdvPosicionador &, const CCedula &)
+void comum::md::CVotosEleicoesVota::RecebeCedula(const CRdvPosicionador &, TEleicaoID, const CCedula &)
+void comum::md::IRegraIdentidade::Valida(const std::string &) const
+void comum::md::estadoaplicacao::CAjusteDataHora::AdicionaDeltaT(const ueint32)
+void comum::md::estadoaplicacao::CDadoCarga::ValidaModelo(const EUrnaModelo)
+void comum::md::estadoaplicacao::CEstadoGeralVota::MarcaFimAquisicao()
+void comum::md::estadoaplicacao::CEstadoGeralVota::MarcaUltimoVoto()
+void comum::md::estadoaplicacao::CLocalidadeEleitoral::ValidaCriacao() const
+void comum::util::CMonitoraAlimentacao::VerificaAlimentacao()
+void ecourna::api::compression::CZip::AssertZipIsOpened()
+void ecourna::api::compression::CZip::CreateZipFile()
+void ecourna::api::io::CFile::Close()
+void ecourna::api::io::CFile::Sync() const
+void ecourna::api::io::DeserializeFromBuffer(ClasseASN1 &, const std::vector<char> &) [ClasseASN1 = ModuloEnvelopeChave::EntidadeChave]
+void ecourna::api::security::CAesCipher::Decrypt(const std::vector<uebyte> &, std::vector<uebyte> &)
+void ecourna::api::security::CAesCipher::Encrypt(const std::vector<uebyte> &, std::vector<uebyte> &)
+void ecourna::api::security::CAesCipher::SetKey(const CAesKey &)
+void ecourna::api::security::IMacAlgorithm::Mac(const std::vector<uebyte> &, std::vector<uebyte> &, const std::vector<uebyte> &) const
+void ecourna::api::sql::sqlite::CSqlResultSet::VerifyColumnIndex(int) const
+void ecourna::api::sql::sqlite::CSqlStatement::VerifyParameterIndex(int) const
+void vota::(anonymous namespace)::SincronizaRDVExternoSeguro()
+void vota::(anonymous namespace)::SincronizaRDVInternoSeguro()
+void vota::(anonymous namespace)::adicionaBaseTelaCandidatoInapto(api::CFormBuilder &, const std::string &, const comum::md::CCargo &)
+void vota::(anonymous namespace)::adicionaBaseTelaCandidatoInexistente(api::CFormBuilder &, const std::string &, const comum::md::CCargo &)
+void vota::(anonymous namespace)::adicionaBaseTelaCompletaCandidatoCom0(api::CFormBuilder &, const std::string &, const comum::md::CCargo &)
+void vota::(anonymous namespace)::adicionaBaseTelaCompletaCandidatoCom1(api::CFormBuilder &, const std::string &, const comum::md::CCargo &, api::TPosition &)
+void vota::(anonymous namespace)::adicionaBaseTelaCompletaCandidatoCom2(api::CFormBuilder &, const std::string &, const comum::md::CCargo &, api::TPosition &)
+void vota::(anonymous namespace)::adicionaBaseTelaCompletaConsulta(api::CFormBuilder &, const std::string &, const comum::md::CCargo &)
+void vota::(anonymous namespace)::adicionaBaseTelaVotoBrancoCandidato(api::CFormBuilder &, const std::string &, const comum::md::CCargo &, api::TPosition)
+void vota::(anonymous namespace)::adicionaBaseTelaVotoBrancoConsulta(api::CFormBuilder &, const std::string &, const comum::md::CCargo &)
+void vota::(anonymous namespace)::adicionaBaseTelaVotoLegenda(api::CFormBuilder &, const std::string &, const comum::md::CCargo &)
+void vota::(anonymous namespace)::adicionaBaseTelaVotoNuloCandidato(api::CFormBuilder &, const std::string &, const comum::md::CCargo &, const std::string &, uebyte, api::TPosition, api::TPosition, api::TPosition, api::TPosition &, const bool)
+void vota::(anonymous namespace)::adicionaBaseTelaVotoNuloConsulta(api::CFormBuilder &, const std::string &, const comum::md::CCargo &, const std::string &)
+void vota::CAjusteInicial::AjustaDataHora()
+void vota::CAjusteInicial::InicioVota()
+void vota::CAjusteInicial::LimpaMidiaResultado()
+void vota::CAjusteInicial::ValidaTemposDesligamento()
+void vota::CCopiaResultadoParaMR::CopiaResultado()
+void vota::CEleitorVotando::ChamaEstadoProximoCargo()
+void vota::CEleitorVotando::DescartaVotos()
+void vota::CEleitorVotando::IniciaCiclo()
+void vota::CEleitorVotando::suspenderEleitor(const EOrigemSuspensao)
+void vota::CImprimindoBEHB::ImprimeRelatorio()
+void vota::CImprimindoBim::ImprimeRelatorio()
+void vota::CImprimindoZeresima::ImprimeResumoZeresima()
+void vota::CImprimindoZeresima::ImprimeZeresima()
+void vota::CImprimirBJust::imprimeBJust()
+void vota::CInformacaoEleitor::CarregarDadosEstaticos()
+void vota::CIniciodeCiclo::AjustaDataHora()
+void vota::CInstrucaoVotacaoAcessibilidade::CacheInstructionAudio() const
+void vota::CLogVota::LogaEleitorImpedido(comum::md::ETipoImpedimento)
+void vota::CMostraEleitorVotando::SalvaHabilitacaoEleitor()
+void vota::CNomeEleitor::NavegaAnoNascimento()
+void vota::CNomeEleitor::NavegaBiometrica()
+void vota::CPedeDigital::ObtemEstadoPosReconhecimentoBiometrico(const bool)
+void vota::CReimprimindoResumoZeresima::ImprimeResumoZeresima()
+void vota::CReimprimindoZeresima::ImprimeZeresima()
+void vota::CThreadMonitor::LogaEspaco() const
+void vota::CThreadMonitor::LogaStatusRedeAcBateria() const
+void vota::CThreadMonitor::MonitorFoneOuvido()
+void vota::CThreadMonitor::MostraMensagemDesligamento()
+void vota::CThreadMonitor::VerificaErroCriticoFlash()
+void vota::CThreadMonitor::VerificaErroCriticoKbdTE()
+void vota::CVotacaoStateAudio::IniciarEsperaFimAudio()
+void vota::CVotacaoStateAudio::PlayKey(const char) const
+void vota::IConfereVotoEmCargo::ExecutarAposAudioAtual(std::function<void ()>)
+void vota::VerificaAssinaturaMI(const std::string &)
+void vota::VerificaAssinaturaMV(const std::string &)
+vota::CTelasCargo::CTelasCargo(const comum::TCargoID, const TMapa &)
+vota::CTelasVota::CTelasVota()
+vota::CThreadMonitor::CThreadMonitor()
+vota::IConfirmaJustificativa::IConfirmaJustificativa(const std::string &)
+vota::IIniciaJustificativa::IIniciaJustificativa(IConfirmaJustificativa *)
+vota::IQRCodeBUDS::IQRCodeBUDS(std::vector<std::string>)

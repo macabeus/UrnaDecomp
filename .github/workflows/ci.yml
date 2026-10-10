@@ -1,0 +1,115 @@
+# The checks that run on a fresh clone without the toolchain image: the progress numbers, the source
+# encodings, the stubs of the functions not decompiled yet and the gaps (job repo), then asmlift-wasm's typecheck,
+# its three test suites, the benchmark's compile-setup check and the playground build.
+#
+# Not run here, and why (.github/README.md has the longer form):
+# - The C++ build (`make -C src link`) and the official meter (`make -C src splat`, which must print the
+#   target's sha256). They need the urna-emsdk:6.0.0 image (emscripten/emsdk:6.0.0 plus wabt), every
+#   upstream library of third_party/MANIFEST.md fetched at its revision, and a full link of the module.
+#   None of that is set up for a hosted runner.
+# - The source_location check (`make -C src check-srcloc`): it reads the records out of the app objects, which
+#   only that build writes.
+# - The tests gated on that image or on build/out/: they skip. Each suite's skip budget below is the
+#   number that skip in a fresh clone; a run that skips more fails.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  repo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: progress numbers agree with splat/scan.tsv and splat/matched.txt
+        run: python3 -I -B tools/round/status.py --check
+      - name: sources keep the charset .editorconfig gives them
+        if: ${{ !cancelled() }}
+        run: python3 -I -B tools/round/check_encoding.py
+      - name: every unmatched TSE function has its stub, where its evidence puts it, and every padding run is a gap
+        if: ${{ !cancelled() }}
+        run: python3 -I -B tools/round/stubs.py --check
+
+  asmlift-wasm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: asmlift-wasm
+    env:
+      REPORTS: ${{ github.workspace }}/.ci-reports
+    steps:
+      # The benchmark's frozen dataset is re-selected from the ledger and the registry at the commit
+      # benchmark/dataset/selection.json records, which a shallow clone does not have.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: asmlift-wasm/package.json
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: asmlift-wasm/pnpm-lock.yaml
+
+      - id: install
+        run: pnpm install --frozen-lockfile
+
+      # The setup check and the benchmark's setups tests run `make -n` over every object of src/Makefile,
+      # and the zlib objects' rules need zlib's sources; no other library's are read.
+      - id: zlib
+        name: fetch zlib 1.3.1 (third_party/MANIFEST.md)
+        working-directory: .
+        run: git clone --quiet --depth 1 --branch v1.3.1 https://github.com/madler/zlib third_party/zlib
+
+      # Each check below runs even when an earlier one failed, so one run reports all of them.
+      - name: pnpm typecheck
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: pnpm typecheck
+
+      # `pnpm test`, `pnpm test:bench` and `pnpm test:playground` are each package's `test` script; it is
+      # called directly so the JSON report options reach vitest.
+      - name: pnpm test
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: pnpm run test --reporter=default --reporter=json --outputFile.json="$REPORTS/test.json"
+      - name: pnpm test counts
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node ../.github/scripts/test-counts.mjs 'pnpm test' "$REPORTS/test.json" 41
+
+      - name: pnpm test:bench
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: pnpm --filter @asmlift/wasm-benchmark run test --reporter=default --reporter=json --outputFile.json="$REPORTS/test-bench.json"
+      - name: pnpm test:bench counts
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node ../.github/scripts/test-counts.mjs 'pnpm test:bench' "$REPORTS/test-bench.json" 9
+
+      - name: pnpm test:playground
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: pnpm --filter @asmlift/wasm-playground run test --reporter=default --reporter=json --outputFile.json="$REPORTS/test-playground.json"
+      - name: pnpm test:playground counts
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node ../.github/scripts/test-counts.mjs 'pnpm test:playground' "$REPORTS/test-playground.json" 0
+
+      # Setups whose flags only the image or a library build can confirm print as "unverified" and do not
+      # fail the check; a "drift" does.
+      - name: pnpm bench setups --check
+        if: ${{ !cancelled() && steps.install.outcome == 'success' && steps.zlib.outcome == 'success' }}
+        run: pnpm bench setups --check
+
+      - name: pnpm playground:build
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: pnpm playground:build

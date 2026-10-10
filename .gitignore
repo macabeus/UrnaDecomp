@@ -1,0 +1,12 @@
+build/dump/
+build/out/
+target/fs/
+third_party/*/
+!third_party/MANIFEST.md
+download/
+.DS_Store
+node_modules/
+build/probe/target.fns.jsonl
+ledger/bundles/
+__pycache__/
+ledger/lift-eval/

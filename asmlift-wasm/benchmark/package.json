@@ -1,0 +1,28 @@
+{
+  "name": "@asmlift/wasm-benchmark",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "The lifter benchmark over vota_web_wasm.wasm: target functions from every compile setup of the module, lifted, compiled with their own flags in the pinned image and scored",
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema.ts",
+    "./flags": "./src/flags.ts",
+    "./dataset/rows.json": "./dataset/rows.json",
+    "./dataset/setups.json": "./dataset/setups.json"
+  },
+  "scripts": {
+    "bench": "tsx src/cli.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@asmlift/wasm": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^6.0.2",
+    "vitest": "^3.2.0"
+  }
+}

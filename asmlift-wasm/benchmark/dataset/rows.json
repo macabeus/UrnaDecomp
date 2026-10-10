@@ -1,0 +1,5167 @@
+[
+  {
+    "id": "uenux2/1527",
+    "index": 1527,
+    "size": 1269,
+    "band": "large",
+    "component": "simulador",
+    "owner": "app",
+    "features": [
+      "leaf",
+      "loop",
+      "select"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "uenux2",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "name": "void std::__2::__tree_remove[abi:ne210108]<std::__2::__tree_node_base<void*>*>(std::__2::__tree_node_base<void*>*, std::__2::__tree_node_base<void*>*)",
+    "symbol": null,
+    "evidence": "component",
+    "object": null,
+    "reference": null
+  },
+  {
+    "id": "uenux2/2219",
+    "index": 2219,
+    "size": 20,
+    "band": "tiny",
+    "component": "api",
+    "owner": "rhvoice",
+    "features": [
+      "leaf",
+      "frame"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "uenux2",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "name": "api::CPosixSemaphore::Lock()",
+    "symbol": "_ZN3api15CPosixSemaphore4LockEv",
+    "evidence": "symbol",
+    "object": "build/out/app/uenux2/src/api/ipc/posix/cposixsemaphore.cpp.o",
+    "reference": {
+      "path": "src/uenux2/src/api/ipc/posix/cposixsemaphore.cpp",
+      "line": 87
+    }
+  },
+  {
+    "id": "uenux2/4785",
+    "index": 4785,
+    "size": 14,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "libcxx",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 1
+    },
+    "origin": "selected",
+    "setup": "uenux2",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "name": "api::CPosixSemaphore::~CPosixSemaphore()",
+    "symbol": "_ZN3api15CPosixSemaphoreD0Ev",
+    "evidence": "symbol",
+    "object": "build/out/app/uenux2/src/api/ipc/posix/cposixsemaphore.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "uenux2/5465",
+    "index": 5465,
+    "size": 258,
+    "band": "medium",
+    "component": "comum",
+    "owner": "app",
+    "features": [
+      "frame",
+      "inlined-frame",
+      "bulk-memory",
+      "select"
+    ],
+    "ledger": {
+      "kind": "none",
+      "score": null
+    },
+    "origin": "selected",
+    "setup": "uenux2",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "name": null,
+    "symbol": null,
+    "evidence": "component",
+    "object": null,
+    "reference": null
+  },
+  {
+    "id": "uenux2/6265",
+    "index": 6265,
+    "size": 123,
+    "band": "small",
+    "component": "vota",
+    "owner": "-",
+    "features": [
+      "loop",
+      "frame",
+      "i64",
+      "float"
+    ],
+    "ledger": {
+      "kind": "none",
+      "score": null
+    },
+    "origin": "selected",
+    "setup": "uenux2",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "name": null,
+    "symbol": null,
+    "evidence": "component",
+    "object": null,
+    "reference": null
+  },
+  {
+    "id": "uenux2/10248",
+    "index": 10248,
+    "size": 15,
+    "band": "tiny",
+    "component": "api",
+    "owner": "app",
+    "features": [
+      "call_indirect"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "uenux2",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "name": "api::ISemaphore::Wait()",
+    "symbol": "_ZN3api10ISemaphore4WaitEv",
+    "evidence": "symbol",
+    "object": "build/out/app/uenux2/src/api/ipc/posix/cposixsemaphore.cpp.o",
+    "reference": {
+      "path": "src/uenux2/src/api/ipc/posix/cposixsemaphore.cpp"
+    }
+  },
+  {
+    "id": "uenux2/10251",
+    "index": 10251,
+    "size": 35,
+    "band": "small",
+    "component": "api",
+    "owner": "app",
+    "features": [
+      "leaf",
+      "frame"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "uenux2",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "name": "api::CPosixMutex::Unlock()",
+    "symbol": "_ZN3api11CPosixMutex6UnlockEv",
+    "evidence": "symbol",
+    "object": "build/out/app/uenux2/src/api/ipc/posix/cposixmutex.cpp.o",
+    "reference": {
+      "path": "src/uenux2/src/api/ipc/posix/cposixmutex.cpp",
+      "line": 52
+    }
+  },
+  {
+    "id": "uenux2/10252",
+    "index": 10252,
+    "size": 35,
+    "band": "small",
+    "component": "api",
+    "owner": "app",
+    "features": [
+      "leaf",
+      "frame"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "uenux2",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "name": "api::CPosixMutex::Lock()",
+    "symbol": "_ZN3api11CPosixMutex4LockEv",
+    "evidence": "symbol",
+    "object": "build/out/app/uenux2/src/api/ipc/posix/cposixmutex.cpp.o",
+    "reference": {
+      "path": "src/uenux2/src/api/ipc/posix/cposixmutex.cpp",
+      "line": 43
+    }
+  },
+  {
+    "id": "uenux2/10307",
+    "index": 10307,
+    "size": 2480,
+    "band": "huge",
+    "component": "vota-web",
+    "owner": "app",
+    "features": [
+      "call_indirect",
+      "invoke",
+      "throw",
+      "frame",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "none",
+      "score": null
+    },
+    "origin": "selected",
+    "setup": "uenux2",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "name": null,
+    "symbol": null,
+    "evidence": "component",
+    "object": null,
+    "reference": null
+  },
+  {
+    "id": "uenux2/10740",
+    "index": 10740,
+    "size": 944,
+    "band": "large",
+    "component": "vota",
+    "owner": "app",
+    "features": [
+      "loop",
+      "switch",
+      "call_indirect",
+      "throw",
+      "frame",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "none",
+      "score": null
+    },
+    "origin": "selected",
+    "setup": "uenux2",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "name": null,
+    "symbol": null,
+    "evidence": "component",
+    "object": null,
+    "reference": null
+  },
+  {
+    "id": "uenux2/10949",
+    "index": 10949,
+    "size": 160,
+    "band": "medium",
+    "component": "vota-web",
+    "owner": "app",
+    "features": [
+      "invoke",
+      "throw",
+      "frame",
+      "alloca",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "none",
+      "score": null
+    },
+    "origin": "selected",
+    "setup": "uenux2",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "name": null,
+    "symbol": null,
+    "evidence": "component",
+    "object": null,
+    "reference": null
+  },
+  {
+    "id": "uenux2/11620",
+    "index": 11620,
+    "size": 4622,
+    "band": "huge",
+    "component": "comum",
+    "owner": "app",
+    "features": [
+      "loop",
+      "throw",
+      "frame",
+      "inlined-frame",
+      "i64",
+      "bulk-memory"
+    ],
+    "ledger": {
+      "kind": "none",
+      "score": null
+    },
+    "origin": "selected",
+    "setup": "uenux2",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "name": null,
+    "symbol": null,
+    "evidence": "component",
+    "object": null,
+    "reference": null
+  },
+  {
+    "id": "ecourna/424",
+    "index": 424,
+    "size": 54,
+    "band": "small",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "call_indirect"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "ecourna",
+    "lang": "c++",
+    "flags": "-O3 -fPIC -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow",
+    "name": "std::__2::shared_ptr<ecourna::api::cepesc::CInfoSalt>::~shared_ptr[abi:ne210108]()",
+    "symbol": "_ZNSt3__210shared_ptrIN7ecourna3api6cepesc9CInfoSaltEED2B8ne210108Ev",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_security_cepesc_ccipheredout.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "ecourna/1242",
+    "index": 1242,
+    "size": 32,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "sqlite",
+    "features": [],
+    "ledger": {
+      "kind": "addr",
+      "score": 1
+    },
+    "origin": "selected",
+    "setup": "ecourna",
+    "lang": "c++",
+    "flags": "-O3 -fPIC -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow",
+    "name": "std::__2::__tree<std::__2::__value_type<std::__2::pair<ecourna::api::security::EOperationModes, ecourna::api::security::ESymmetricCipherKeySize>, evp_cipher_st const* (*)()>, std::__2::__map_value_compare<std::__2::pair<ecourna::api::security::EOperationModes, ecourna::api::security::ESymmetricCipherKeySize>, std::__2::pair<std::__2::pair<ecourna::api::security::EOperationModes, ecourna::api::security::ESymmetricCipherKeySize> const, evp_cipher_st const* (*)()>, std::__2::less<std::__2::pair<ecourna::api::security::EOperationModes, ecourna::api::security::ESymmetricCipherKeySize>>, true>, std::__2::allocator<std::__2::pair<std::__2::pair<ecourna::api::security::EOperationModes, ecourna::api::security::ESymmetricCipherKeySize> const, evp_cipher_st const* (*)()>>>::destroy(std::__2::__tree_node<std::__2::__value_type<std::__2::pair<ecourna::api::security::EOperationModes, ecourna::api::security::ESymmetricCipherKeySize>, evp_cipher_st const* (*)()>, void*>*)",
+    "symbol": "_ZNSt3__26__treeINS_12__value_typeINS_4pairIN7ecourna3api8security15EOperationModesENS5_23ESymmetricCipherKeySizeEEEPFPK13evp_cipher_stvEEENS_19__map_value_compareIS8_NS2_IKS8_SD_EENS_4lessIS8_EELb1EEENS_9allocatorISH_EEE7destroyEPNS_11__tree_nodeISE_PvEE",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_security_caescipher.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "ecourna/3874",
+    "index": 3874,
+    "size": 49,
+    "band": "small",
+    "component": "api",
+    "owner": "app",
+    "features": [
+      "i64"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 1
+    },
+    "origin": "selected",
+    "setup": "ecourna",
+    "lang": "c++",
+    "flags": "-O3 -fPIC -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow",
+    "name": "ecourna::api::security::CSha::GetAlgoritmo() const",
+    "symbol": "_ZNK7ecourna3api8security4CSha12GetAlgoritmoEv",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_security_csha.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "ecourna/5170",
+    "index": 5170,
+    "size": 84,
+    "band": "small",
+    "component": "unknown",
+    "owner": "app",
+    "features": [],
+    "ledger": {
+      "kind": "addr",
+      "score": 3
+    },
+    "origin": "selected",
+    "setup": "ecourna",
+    "lang": "c++",
+    "flags": "-O3 -fPIC -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow",
+    "name": "std::__2::unique_ptr<ecourna::api::cepesc::CInfoSalt, std::__2::default_delete<ecourna::api::cepesc::CInfoSalt>>::~unique_ptr[abi:ne210108]()",
+    "symbol": "_ZNSt3__210unique_ptrIN7ecourna3api6cepesc9CInfoSaltENS_14default_deleteIS4_EEED2B8ne210108Ev",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_security_cepesc_ccipheredout.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "ecourna/5174",
+    "index": 5174,
+    "size": 610,
+    "band": "large",
+    "component": "libc++",
+    "owner": "app",
+    "features": [
+      "leaf",
+      "loop",
+      "select"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "ecourna",
+    "lang": "c++",
+    "flags": "-O3 -fPIC -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow",
+    "name": "std::__2::__tree_node_base<void*>*& std::__2::__tree<std::__2::__value_type<std::__2::pair<ecourna::api::security::EOperationModes, ecourna::api::security::ESymmetricCipherKeySize>, evp_cipher_st const* (*)()>, std::__2::__map_value_compare<std::__2::pair<ecourna::api::security::EOperationModes, ecourna::api::security::ESymmetricCipherKeySize>, std::__2::pair<std::__2::pair<ecourna::api::security::EOperationModes, ecourna::api::security::ESymmetricCipherKeySize> const, evp_cipher_st const* (*)()>, std::__2::less<std::__2::pair<ecourna::api::security::EOperationModes, ecourna::api::security::ESymmetricCipherKeySize>>, true>, std::__2::allocator<std::__2::pair<std::__2::pair<ecourna::api::security::EOperationModes, ecourna::api::security::ESymmetricCipherKeySize> const, evp_cipher_st const* (*)()>>>::__find_equal<std::__2::pair<ecourna::api::security::EOperationModes, ecourna::api::security::ESymmetricCipherKeySize>>(std::__2::__tree_const_iterator<std::__2::__value_type<std::__2::pair<ecourna::api::security::EOperationModes, ecourna::api::security::ESymmetricCipherKeySize>, evp_cipher_st const* (*)()>, std::__2::__tree_node<std::__2::__value_type<std::__2::pair<ecourna::api::security::EOperationModes, ecourna::api::security::ESymmetricCipherKeySize>, evp_cipher_st const* (*)()>, void*>*, long>, std::__2::__tree_end_node<std::__2::__tree_node_base<void*>*>*&, std::__2::__tree_node_base<void*>*&, std::__2::pair<ecourna::api::security::EOperationModes, ecourna::api::security::ESymmetricCipherKeySize> const&)",
+    "symbol": "_ZNSt3__26__treeINS_12__value_typeINS_4pairIN7ecourna3api8security15EOperationModesENS5_23ESymmetricCipherKeySizeEEEPFPK13evp_cipher_stvEEENS_19__map_value_compareIS8_NS2_IKS8_SD_EENS_4lessIS8_EELb1EEENS_9allocatorISH_EEE12__find_equalIS8_EERPNS_16__tree_node_baseIPvEENS_21__tree_const_iteratorISE_PNS_11__tree_nodeISE_SQ_EElEERPNS_15__tree_end_nodeISS_EEST_RKT_",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_security_caescipher.cpp.o",
+    "reference": {
+      "path": "src/ecourna/api/security/caescipher.cpp"
+    }
+  },
+  {
+    "id": "ecourna/5176",
+    "index": 5176,
+    "size": 117,
+    "band": "small",
+    "component": "ecourna",
+    "owner": "app",
+    "features": [
+      "invoke"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 7
+    },
+    "origin": "selected",
+    "setup": "ecourna",
+    "lang": "c++",
+    "flags": "-O3 -fPIC -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow",
+    "name": "ecourna::api::security::CSha512::~CSha512()",
+    "symbol": "_ZN7ecourna3api8security7CSha512D0Ev",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_security_csha.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "ecourna/5354",
+    "index": 5354,
+    "size": 14,
+    "band": "tiny",
+    "component": "api",
+    "owner": "app",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 1
+    },
+    "origin": "selected",
+    "setup": "ecourna",
+    "lang": "c++",
+    "flags": "-O3 -fPIC -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow",
+    "name": "std::__2::__shared_ptr_emplace<ecourna::api::cepesc::CInfoSalt, std::__2::allocator<ecourna::api::cepesc::CInfoSalt>>::~__shared_ptr_emplace()",
+    "symbol": "_ZNSt3__220__shared_ptr_emplaceIN7ecourna3api6cepesc9CInfoSaltENS_9allocatorIS4_EEED0Ev",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_security_cepesc_cplaintext.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "ecourna/7137",
+    "index": 7137,
+    "size": 17,
+    "band": "tiny",
+    "component": "libc++",
+    "owner": "app",
+    "features": [
+      "leaf",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 1
+    },
+    "origin": "selected",
+    "setup": "ecourna",
+    "lang": "c++",
+    "flags": "-O3 -fPIC -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow",
+    "name": "std::__2::__shared_ptr_pointer<ecourna::api::cepesc::CInfoSalt*, std::__2::shared_ptr<ecourna::api::cepesc::CInfoSalt>::__shared_ptr_default_delete<ecourna::api::cepesc::CInfoSalt, ecourna::api::cepesc::CInfoSalt>, std::__2::allocator<ecourna::api::cepesc::CInfoSalt>>::__get_deleter(std::type_info const&) const",
+    "symbol": "_ZNKSt3__220__shared_ptr_pointerIPN7ecourna3api6cepesc9CInfoSaltENS_10shared_ptrIS4_E27__shared_ptr_default_deleteIS4_S4_EENS_9allocatorIS4_EEE13__get_deleterERKSt9type_info",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_security_cepesc_ccipheredout.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "ecourna/9462",
+    "index": 9462,
+    "size": 60,
+    "band": "small",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [],
+    "ledger": {
+      "kind": "addr",
+      "score": 2
+    },
+    "origin": "selected",
+    "setup": "ecourna",
+    "lang": "c++",
+    "flags": "-O3 -fPIC -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow",
+    "name": "std::__2::__shared_ptr_emplace<ecourna::api::cepesc::CInfoSalt, std::__2::allocator<ecourna::api::cepesc::CInfoSalt>>::__on_zero_shared()",
+    "symbol": "_ZNSt3__220__shared_ptr_emplaceIN7ecourna3api6cepesc9CInfoSaltENS_9allocatorIS4_EEE16__on_zero_sharedEv",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_security_cepesc_cplaintext.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "ecourna/9469",
+    "index": 9469,
+    "size": 75,
+    "band": "small",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [],
+    "ledger": {
+      "kind": "addr",
+      "score": 3
+    },
+    "origin": "selected",
+    "setup": "ecourna",
+    "lang": "c++",
+    "flags": "-O3 -fPIC -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow",
+    "name": "std::__2::__shared_ptr_pointer<ecourna::api::cepesc::CInfoSalt*, std::__2::shared_ptr<ecourna::api::cepesc::CInfoSalt>::__shared_ptr_default_delete<ecourna::api::cepesc::CInfoSalt, ecourna::api::cepesc::CInfoSalt>, std::__2::allocator<ecourna::api::cepesc::CInfoSalt>>::__on_zero_shared()",
+    "symbol": "_ZNSt3__220__shared_ptr_pointerIPN7ecourna3api6cepesc9CInfoSaltENS_10shared_ptrIS4_E27__shared_ptr_default_deleteIS4_S4_EENS_9allocatorIS4_EEE16__on_zero_sharedEv",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_security_cepesc_ccipheredout.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "ecourna-nopic/1081",
+    "index": 1081,
+    "size": 18,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "ecourna-nopic",
+    "lang": "c++",
+    "flags": "-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fno-pic",
+    "name": "ecourna::app::dados::CApresentacaoFotoEleitor::CApresentacaoFotoEleitor(ecourna::app::dados::CApresentacaoFotoEleitor::EEstado, ecourna::app::dados::CApresentacaoFotoEleitor::EResultado)",
+    "symbol": "_ZN7ecourna3app5dados24CApresentacaoFotoEleitorC1ENS2_7EEstadoENS2_10EResultadoE",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/app_dados_resultadournacadastro_capresentacaofotoeleitor.cpp.o",
+    "reference": {
+      "path": "src/ecourna/app/dados/resultadournacadastro/capresentacaofotoeleitor.cpp",
+      "line": 5
+    }
+  },
+  {
+    "id": "ecourna-nopic/3482",
+    "index": 3482,
+    "size": 365,
+    "band": "medium",
+    "component": "unknown",
+    "owner": "app",
+    "features": [
+      "leaf",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "ecourna-nopic",
+    "lang": "c++",
+    "flags": "-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fno-pic",
+    "name": "ecourna::app::dados::CResultadoUrnaCadastro::CResultadoUrnaCadastro(ecourna::app::dados::CCabecalhoEntidade, ecourna::app::dados::CFaseID, std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>, ecourna::app::dados::CResultadoUrnaCadastro::ESituacaoArquivo, std::__2::optional<ecourna::app::dados::CDadosComparecimentoCifrado>)",
+    "symbol": "_ZN7ecourna3app5dados22CResultadoUrnaCadastroC1ENS1_18CCabecalhoEntidadeENS1_7CFaseIDENSt3__212basic_stringIcNS5_11char_traitsIcEENS5_9allocatorIcEEEENS2_16ESituacaoArquivoENS5_8optionalINS1_27CDadosComparecimentoCifradoEEE",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/app_dados_resultadournacadastro_cresultadournacadastro.cpp.o",
+    "reference": {
+      "path": "src/ecourna/app/dados/resultadournacadastro/cresultadournacadastro.cpp"
+    }
+  },
+  {
+    "id": "ecourna-nopic/3483",
+    "index": 3483,
+    "size": 445,
+    "band": "medium",
+    "component": "unknown",
+    "owner": "app",
+    "features": [
+      "leaf",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "ecourna-nopic",
+    "lang": "c++",
+    "flags": "-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fno-pic",
+    "name": "ecourna::app::dados::CResultadoUrnaCadastro::CResultadoUrnaCadastro(ecourna::app::dados::CCabecalhoEntidade, ecourna::app::dados::CFaseID, std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>, ecourna::app::dados::CResultadoUrnaCadastro::ESituacaoArquivo, std::__2::optional<ecourna::app::dados::CDadosComparecimento>)",
+    "symbol": "_ZN7ecourna3app5dados22CResultadoUrnaCadastroC1ENS1_18CCabecalhoEntidadeENS1_7CFaseIDENSt3__212basic_stringIcNS5_11char_traitsIcEENS5_9allocatorIcEEEENS2_16ESituacaoArquivoENS5_8optionalINS1_20CDadosComparecimentoEEE",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/app_dados_resultadournacadastro_cresultadournacadastro.cpp.o",
+    "reference": {
+      "path": "src/ecourna/app/dados/resultadournacadastro/cresultadournacadastro.cpp"
+    }
+  },
+  {
+    "id": "ecourna-nopic/5093",
+    "index": 5093,
+    "size": 1288,
+    "band": "large",
+    "component": "ecourna",
+    "owner": "app",
+    "features": [
+      "leaf",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "ecourna-nopic",
+    "lang": "c++",
+    "flags": "-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fno-pic",
+    "name": "ecourna::app::dados::CParametrosUrna::CParametrosUrna(ecourna::app::dados::CParametrosUrna::EFormaSuspenderSemVoto, ecourna::app::dados::CParametrosUrna::EFormaSuspenderComVoto, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, bool, bool, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, std::__2::vector<ecourna::app::dados::CTituloRelatorio, std::__2::allocator<ecourna::app::dados::CTituloRelatorio>>, std::__2::vector<ecourna::app::dados::CTituloRelatorio, std::__2::allocator<ecourna::app::dados::CTituloRelatorio>>, std::__2::vector<ecourna::app::dados::CTituloRelatorio, std::__2::allocator<ecourna::app::dados::CTituloRelatorio>>, std::__2::vector<ecourna::app::dados::CTituloRelatorio, std::__2::allocator<ecourna::app::dados::CTituloRelatorio>>, std::__2::vector<ecourna::app::dados::CTituloRelatorio, std::__2::allocator<ecourna::app::dados::CTituloRelatorio>>, std::__2::vector<ecourna::app::dados::CTituloRelatorio, std::__2::allocator<ecourna::app::dados::CTituloRelatorio>>, std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>, ecourna::app::dados::CLabelParametrizado, ecourna::app::dados::CLabelParametrizado, ecourna::app::dados::CLabelParametrizado, ecourna::app::dados::CLabelParametrizado, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool)",
+    "symbol": "_ZN7ecourna3app5dados15CParametrosUrnaC1ENS2_22EFormaSuspenderSemVotoENS2_22EFormaSuspenderComVotoEjjjjjjjjjjjjjjjjbbjjjjjjNSt3__26vectorINS1_16CTituloRelatorioENS5_9allocatorIS7_EEEESA_SA_SA_SA_SA_NS5_12basic_stringIcNS5_11char_traitsIcEENS8_IcEEEENS1_19CLabelParametrizadoESG_SG_SG_bbbbbbbbbb",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/app_dados_parametrizacaourna_cparametrosurna.cpp.o",
+    "reference": {
+      "path": "src/ecourna/app/dados/parametrizacaourna/cparametrosurna.cpp",
+      "line": 7
+    }
+  },
+  {
+    "id": "ecourna-nopic/9073",
+    "index": 9073,
+    "size": 503,
+    "band": "medium",
+    "component": "ecourna",
+    "owner": "app",
+    "features": [
+      "call_indirect",
+      "invoke",
+      "throw",
+      "frame"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 25
+    },
+    "origin": "selected",
+    "setup": "ecourna-nopic",
+    "lang": "c++",
+    "flags": "-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fno-pic",
+    "name": "ecourna::app::dados::asn::CConversorEstadoHabilitacaoPorCodigo::DoDeconverte(ModuloResultadoUrnaCadastro::EstadoHabilitacaoPorCodigo const&) const",
+    "symbol": "_ZNK7ecourna3app5dados3asn36CConversorEstadoHabilitacaoPorCodigo12DoDeconverteERKN27ModuloResultadoUrnaCadastro26EstadoHabilitacaoPorCodigoE",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/app_dados_asn_resultadournacadastro_cconversorestadohabilitacaoporcodigo.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "ecourna-nopic/9112",
+    "index": 9112,
+    "size": 613,
+    "band": "large",
+    "component": "ecourna",
+    "owner": "app",
+    "features": [
+      "call_indirect",
+      "invoke",
+      "throw",
+      "frame",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 20
+    },
+    "origin": "selected",
+    "setup": "ecourna-nopic",
+    "lang": "c++",
+    "flags": "-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fno-pic",
+    "name": "ecourna::app::dados::asn::CConversorRegistroIdentificacaoEleitor::DoDeconverte(ModuloTiposEcoUrna::RegistroIdentificacaoEleitor const&) const",
+    "symbol": "_ZNK7ecourna3app5dados3asn38CConversorRegistroIdentificacaoEleitor12DoDeconverteERKN18ModuloTiposEcoUrna28RegistroIdentificacaoEleitorE",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/app_dados_asn_cconversorregistroidentificacaoeleitor.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "ecourna-nopic/9529",
+    "index": 9529,
+    "size": 105,
+    "band": "small",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "loop",
+      "call_indirect"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "ecourna-nopic",
+    "lang": "c++",
+    "flags": "-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fno-pic",
+    "name": "ecourna::api::compression::ICompressor::Add(std::__2::map<std::__2::filesystem::path, std::__2::filesystem::path, std::__2::less<std::__2::filesystem::path>, std::__2::allocator<std::__2::pair<std::__2::filesystem::path const, std::__2::filesystem::path>>> const&)",
+    "symbol": "_ZN7ecourna3api11compression11ICompressor3AddERKNSt3__23mapINS3_10filesystem4pathES6_NS3_4lessIS6_EENS3_9allocatorINS3_4pairIKS6_S6_EEEEEE",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_compression_icompressor.cpp.o",
+    "reference": {
+      "path": "src/ecourna/api/compression/icompressor.cpp"
+    }
+  },
+  {
+    "id": "ecourna-nopic/13816",
+    "index": 13816,
+    "size": 28,
+    "band": "tiny",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [
+      "leaf",
+      "select"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "ecourna-nopic",
+    "lang": "c++",
+    "flags": "-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fno-pic",
+    "name": "std::__2::__alternate<char>::__exec_split(bool, std::__2::__state<char>&) const",
+    "symbol": "_ZNKSt3__211__alternateIcE12__exec_splitEbRNS_7__stateIcEE",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_compression_icompressor.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "ecourna-nopic/13838",
+    "index": 13838,
+    "size": 20,
+    "band": "tiny",
+    "component": "libc++",
+    "owner": "-",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "ecourna-nopic",
+    "lang": "c++",
+    "flags": "-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fno-pic",
+    "name": "std::__2::__repeat_one_loop<char>::__exec(std::__2::__state<char>&) const",
+    "symbol": "_ZNKSt3__217__repeat_one_loopIcE6__execERNS_7__stateIcEE",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_compression_icompressor.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "ecourna-nopic/13875",
+    "index": 13875,
+    "size": 67,
+    "band": "small",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "ecourna-nopic",
+    "lang": "c++",
+    "flags": "-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fno-pic",
+    "name": "std::__2::__end_marked_subexpression<char>::__exec(std::__2::__state<char>&) const",
+    "symbol": "_ZNKSt3__226__end_marked_subexpressionIcE6__execERNS_7__stateIcEE",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_compression_icompressor.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "ecourna-nopic/14295",
+    "index": 14295,
+    "size": 104,
+    "band": "small",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [
+      "leaf",
+      "switch"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "ecourna-nopic",
+    "lang": "c++",
+    "flags": "-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fno-pic",
+    "name": "std::__2::__r_anchor_multiline<char>::__exec(std::__2::__state<char>&) const",
+    "symbol": "_ZNKSt3__220__r_anchor_multilineIcE6__execERNS_7__stateIcEE",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_compression_icompressor.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "ecourna-nopic/14367",
+    "index": 14367,
+    "size": 10,
+    "band": "tiny",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "ecourna-nopic",
+    "lang": "c++",
+    "flags": "-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fno-pic",
+    "name": "std::__2::__end_state<char>::__exec(std::__2::__state<char>&) const",
+    "symbol": "_ZNKSt3__211__end_stateIcE6__execERNS_7__stateIcEE",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_compression_icompressor.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "asn1/670",
+    "index": 670,
+    "size": 45,
+    "band": "small",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "call_indirect"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "asn1",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG",
+    "name": "ASN1::CHOICE::setSelection(int, ASN1::AbstractData*)",
+    "symbol": "_ZN4ASN16CHOICE12setSelectionEiPNS_12AbstractDataE",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/asn1.o",
+    "reference": {
+      "path": "src/asn1/asn1.cxx",
+      "line": 1263
+    }
+  },
+  {
+    "id": "asn1/936",
+    "index": 936,
+    "size": 252,
+    "band": "medium",
+    "component": "ASN1",
+    "owner": "-",
+    "features": [
+      "leaf",
+      "loop"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "asn1",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG",
+    "name": "bool ASN1::PERDecoder::decodeMultiBit<unsigned int>(unsigned int, unsigned int&)",
+    "symbol": "_ZN4ASN110PERDecoder14decodeMultiBitIjEEbjRT_",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/PERDecoder.o",
+    "reference": {
+      "path": "src/asn1/PERDecoder.cxx"
+    }
+  },
+  {
+    "id": "asn1/2187",
+    "index": 2187,
+    "size": 133,
+    "band": "medium",
+    "component": "ASN1",
+    "owner": "asn1",
+    "features": [
+      "call_indirect",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "asn1",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG",
+    "name": "ASN1::CHOICE::createSelection()",
+    "symbol": "_ZN4ASN16CHOICE15createSelectionEv",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/asn1.o",
+    "reference": {
+      "path": "src/asn1/asn1.cxx",
+      "line": 1301
+    }
+  },
+  {
+    "id": "asn1/2191",
+    "index": 2191,
+    "size": 97,
+    "band": "small",
+    "component": "ASN1",
+    "owner": "asn1",
+    "features": [
+      "loop",
+      "call_indirect",
+      "bulk-memory"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "asn1",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG",
+    "name": "ASN1::SEQUENCE_OF_Base::erase(std::__2::__wrap_iter<ASN1::AbstractData**>, std::__2::__wrap_iter<ASN1::AbstractData**>)",
+    "symbol": "_ZN4ASN116SEQUENCE_OF_Base5eraseENSt3__211__wrap_iterIPPNS_12AbstractDataEEES6_",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/asn1.o",
+    "reference": {
+      "path": "src/asn1/asn1.cxx",
+      "line": 1618
+    }
+  },
+  {
+    "id": "asn1/3468",
+    "index": 3468,
+    "size": 157,
+    "band": "medium",
+    "component": "ASN1",
+    "owner": "asn1",
+    "features": [
+      "loop",
+      "frame"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "asn1",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG",
+    "name": "ASN1::PERDecoder::decodeBitMap(std::__2::vector<char, std::__2::allocator<char>>&, unsigned int)",
+    "symbol": "_ZN4ASN110PERDecoder12decodeBitMapERNSt3__26vectorIcNS1_9allocatorIcEEEEj",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/PERDecoder.o",
+    "reference": {
+      "path": "src/asn1/PERDecoder.cxx",
+      "line": 53
+    }
+  },
+  {
+    "id": "asn1/3478",
+    "index": 3478,
+    "size": 120,
+    "band": "small",
+    "component": "ASN1",
+    "owner": "asn1",
+    "features": [
+      "leaf",
+      "loop",
+      "select"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "asn1",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG",
+    "name": "ASN1::BMPString::first_illegal_at() const",
+    "symbol": "_ZNK4ASN19BMPString16first_illegal_atEv",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/ValidChecker.o",
+    "reference": {
+      "path": "src/asn1/ValidChecker.cxx",
+      "line": 142
+    }
+  },
+  {
+    "id": "asn1/8755",
+    "index": 8755,
+    "size": 34,
+    "band": "small",
+    "component": "ASN1",
+    "owner": "asn1",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "asn1",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG",
+    "name": "ASN1::DataFree::do_visit(ASN1::BIT_STRING&)",
+    "symbol": "_ZN4ASN18DataFree8do_visitERNS_10BIT_STRINGE",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/DataFree.o",
+    "reference": {
+      "path": "src/asn1/DataFree.cxx"
+    }
+  },
+  {
+    "id": "asn1/8756",
+    "index": 8756,
+    "size": 17,
+    "band": "tiny",
+    "component": "ASN1",
+    "owner": "asn1",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "asn1",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG",
+    "name": "ASN1::DataFree::do_visit(ASN1::INTEGER&)",
+    "symbol": "_ZN4ASN18DataFree8do_visitERNS_7INTEGERE",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/DataFree.o",
+    "reference": {
+      "path": "src/asn1/DataFree.cxx"
+    }
+  },
+  {
+    "id": "asn1/8781",
+    "index": 8781,
+    "size": 141,
+    "band": "medium",
+    "component": "ASN1",
+    "owner": "asn1",
+    "features": [
+      "switch"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 1
+    },
+    "origin": "selected",
+    "setup": "asn1",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG",
+    "name": "ASN1::PEREncoder::do_visit(ASN1::OCTET_STRING const&)",
+    "symbol": "_ZN4ASN110PEREncoder8do_visitERKNS_12OCTET_STRINGE",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/PEREncoder.o",
+    "reference": null
+  },
+  {
+    "id": "asn1/8880",
+    "index": 8880,
+    "size": 22,
+    "band": "tiny",
+    "component": "ASN1",
+    "owner": "asn1",
+    "features": [
+      "call_indirect"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "asn1",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG",
+    "name": "ASN1::AVNDecoder::do_visit(ASN1::TypeConstrainedOpenData&)",
+    "symbol": "_ZN4ASN110AVNDecoder8do_visitERNS_23TypeConstrainedOpenDataE",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/AVNDecoder.o",
+    "reference": {
+      "path": "src/asn1/AVNDecoder.cxx"
+    }
+  },
+  {
+    "id": "asn1/8990",
+    "index": 8990,
+    "size": 17,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "asn1",
+    "features": [
+      "call_indirect"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "asn1",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG",
+    "name": "ASN1::UTCTime::do_accept(ASN1::ConstVisitor&) const",
+    "symbol": "_ZNK4ASN17UTCTime9do_acceptERNS_12ConstVisitorE",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/asn1.o",
+    "reference": {
+      "path": "src/asn1/asn1.cxx"
+    }
+  },
+  {
+    "id": "asn1/8996",
+    "index": 8996,
+    "size": 17,
+    "band": "tiny",
+    "component": "ASN1",
+    "owner": "app",
+    "features": [
+      "call_indirect"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "asn1",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG",
+    "name": "ASN1::BMPString::do_accept(ASN1::ConstVisitor&) const",
+    "symbol": "_ZNK4ASN19BMPString9do_acceptERNS_12ConstVisitorE",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/asn1.o",
+    "reference": {
+      "path": "src/asn1/asn1.cxx"
+    }
+  },
+  {
+    "id": "asn1-eh/1668",
+    "index": 1668,
+    "size": 335,
+    "band": "medium",
+    "component": "ASN1",
+    "owner": "asn1",
+    "features": [
+      "loop",
+      "call_indirect"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "asn1-eh",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG -fexceptions -fignore-exceptions",
+    "name": "ASN1::BERDecoderPartial::decodeHeader(unsigned int&, bool&, unsigned int&)",
+    "symbol": "_ZN4ASN117BERDecoderPartial12decodeHeaderERjRbS1_",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/BERDecoderPartial.o",
+    "reference": {
+      "path": "src/asn1/BERDecoderPartial.cxx"
+    }
+  },
+  {
+    "id": "asn1-eh/5051",
+    "index": 5051,
+    "size": 95,
+    "band": "small",
+    "component": "ASN1",
+    "owner": "asn1",
+    "features": [
+      "i64"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 1
+    },
+    "origin": "selected",
+    "setup": "asn1-eh",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG -fexceptions -fignore-exceptions",
+    "name": "ASN1::BERDecoderPartial::Visitante::Visitante(std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>> const&, std::__2::shared_ptr<ASN1::IAbstractVisitor> const&)",
+    "symbol": "_ZN4ASN117BERDecoderPartial9VisitanteC2ERKNSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEERKNS2_10shared_ptrINS_16IAbstractVisitorEEE",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/BERDecoderPartial.o",
+    "reference": null
+  },
+  {
+    "id": "asn1-eh/5057",
+    "index": 5057,
+    "size": 13,
+    "band": "tiny",
+    "component": "ASN1",
+    "owner": "asn1",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "asn1-eh",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG -fexceptions -fignore-exceptions",
+    "name": "ASN1::BufferSeeder::tell() const",
+    "symbol": "_ZNK4ASN112BufferSeeder4tellEv",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/BERDecoderPartial.o",
+    "reference": {
+      "path": "src/asn1/BERDecoderPartial.cxx"
+    }
+  },
+  {
+    "id": "asn1-eh/5059",
+    "index": 5059,
+    "size": 156,
+    "band": "medium",
+    "component": "unknown",
+    "owner": "asn1",
+    "features": [
+      "loop",
+      "call_indirect"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "asn1-eh",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG -fexceptions -fignore-exceptions",
+    "name": "std::__2::pair<std::__2::__wrap_iter<ASN1::BERDecoderPartial::Visitante const*>, ASN1::BERDecoderPartial::Visitante*> std::__2::__copy_move_unwrap_iters[abi:ne210108]<std::__2::__copy_impl, std::__2::__wrap_iter<ASN1::BERDecoderPartial::Visitante const*>, std::__2::__wrap_iter<ASN1::BERDecoderPartial::Visitante const*>, ASN1::BERDecoderPartial::Visitante*, 0>(std::__2::__wrap_iter<ASN1::BERDecoderPartial::Visitante const*>, std::__2::__wrap_iter<ASN1::BERDecoderPartial::Visitante const*>, ASN1::BERDecoderPartial::Visitante*)",
+    "symbol": "_ZNSt3__224__copy_move_unwrap_itersB8ne210108INS_11__copy_implENS_11__wrap_iterIPKN4ASN117BERDecoderPartial9VisitanteEEES8_PS5_TnNS_9enable_ifIXsr12__can_rewrapIT0_T2_EE5valueEiE4typeELi0EEENS_4pairISB_SC_EESB_T1_SC_",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/BERDecoderPartial.o",
+    "reference": {
+      "path": "src/asn1/BERDecoderPartial.cxx"
+    }
+  },
+  {
+    "id": "asn1-eh/8894",
+    "index": 8894,
+    "size": 15,
+    "band": "tiny",
+    "component": "ASN1",
+    "owner": "asn1",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "asn1-eh",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG -fexceptions -fignore-exceptions",
+    "name": "ASN1::BufferSeeder::resize(unsigned int)",
+    "symbol": "_ZN4ASN112BufferSeeder6resizeEj",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/BERDecoderPartial.o",
+    "reference": {
+      "path": "src/asn1/BERDecoderPartial.cxx"
+    }
+  },
+  {
+    "id": "asn1-eh/8895",
+    "index": 8895,
+    "size": 13,
+    "band": "tiny",
+    "component": "ASN1",
+    "owner": "asn1",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "asn1-eh",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG -fexceptions -fignore-exceptions",
+    "name": "ASN1::BufferSeeder::remaining() const",
+    "symbol": "_ZNK4ASN112BufferSeeder9remainingEv",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/BERDecoderPartial.o",
+    "reference": {
+      "path": "src/asn1/BERDecoderPartial.cxx"
+    }
+  },
+  {
+    "id": "asn1-eh/8896",
+    "index": 8896,
+    "size": 13,
+    "band": "tiny",
+    "component": "ASN1",
+    "owner": "asn1",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "asn1-eh",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG -fexceptions -fignore-exceptions",
+    "name": "ASN1::BufferSeeder::size() const",
+    "symbol": "_ZNK4ASN112BufferSeeder4sizeEv",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/BERDecoderPartial.o",
+    "reference": {
+      "path": "src/asn1/BERDecoderPartial.cxx"
+    }
+  },
+  {
+    "id": "asn1-eh/8901",
+    "index": 8901,
+    "size": 13,
+    "band": "tiny",
+    "component": "ASN1",
+    "owner": "asn1",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "asn1-eh",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG -fexceptions -fignore-exceptions",
+    "name": "ASN1::BufferSeeder::eof() const",
+    "symbol": "_ZNK4ASN112BufferSeeder3eofEv",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/BERDecoderPartial.o",
+    "reference": {
+      "path": "src/asn1/BERDecoderPartial.cxx"
+    }
+  },
+  {
+    "id": "asn1-eh/10038",
+    "index": 10038,
+    "size": 17,
+    "band": "tiny",
+    "component": "libc++",
+    "owner": "app",
+    "features": [
+      "leaf",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 1
+    },
+    "origin": "selected",
+    "setup": "asn1-eh",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG -fexceptions -fignore-exceptions",
+    "name": "std::__2::__shared_ptr_pointer<ASN1::BufferSeeder*, std::__2::shared_ptr<ASN1::ISeeder>::__shared_ptr_default_delete<ASN1::ISeeder, ASN1::BufferSeeder>, std::__2::allocator<ASN1::BufferSeeder>>::__get_deleter(std::type_info const&) const",
+    "symbol": "_ZNKSt3__220__shared_ptr_pointerIPN4ASN112BufferSeederENS_10shared_ptrINS1_7ISeederEE27__shared_ptr_default_deleteIS5_S2_EENS_9allocatorIS2_EEE13__get_deleterERKSt9type_info",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/BERDecoderPartial.o",
+    "reference": null
+  },
+  {
+    "id": "asn1-eh/10039",
+    "index": 10039,
+    "size": 17,
+    "band": "tiny",
+    "component": "libc++",
+    "owner": "app",
+    "features": [
+      "leaf",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 1
+    },
+    "origin": "selected",
+    "setup": "asn1-eh",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG -fexceptions -fignore-exceptions",
+    "name": "std::__2::__shared_ptr_pointer<char*, std::__2::shared_ptr<char []>::__shared_ptr_default_delete<char [], char>, std::__2::allocator<char>>::__get_deleter(std::type_info const&) const",
+    "symbol": "_ZNKSt3__220__shared_ptr_pointerIPcNS_10shared_ptrIA_cE27__shared_ptr_default_deleteIS3_cEENS_9allocatorIcEEE13__get_deleterERKSt9type_info",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/BERDecoderPartial.o",
+    "reference": null
+  },
+  {
+    "id": "asn1-eh/10041",
+    "index": 10041,
+    "size": 17,
+    "band": "tiny",
+    "component": "libc++",
+    "owner": "app",
+    "features": [
+      "leaf",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 1
+    },
+    "origin": "selected",
+    "setup": "asn1-eh",
+    "lang": "c++",
+    "flags": "-Os -fno-exceptions -std=c++17 -DNDEBUG -fexceptions -fignore-exceptions",
+    "name": "std::__2::__shared_ptr_pointer<ASN1::IAbstractVisitor*, std::__2::shared_ptr<ASN1::IAbstractVisitor>::__shared_ptr_default_delete<ASN1::IAbstractVisitor, ASN1::IAbstractVisitor>, std::__2::allocator<ASN1::IAbstractVisitor>>::__get_deleter(std::type_info const&) const",
+    "symbol": "_ZNKSt3__220__shared_ptr_pointerIPN4ASN116IAbstractVisitorENS_10shared_ptrIS2_E27__shared_ptr_default_deleteIS2_S2_EENS_9allocatorIS2_EEE13__get_deleterERKSt9type_info",
+    "evidence": "symbol",
+    "object": "build/out/app/asn1/BERDecoderPartial.o",
+    "reference": null
+  },
+  {
+    "id": "zlib/931",
+    "index": 931,
+    "size": 70,
+    "band": "small",
+    "component": "ecourna",
+    "owner": "sqlite",
+    "features": [
+      "call_indirect",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "zlib",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DNDEBUG -D_LARGEFILE64_SOURCE=1",
+    "name": "call_zseek64",
+    "symbol": "call_zseek64",
+    "evidence": "symbol",
+    "object": "build/out/zlib/O3pic/minizip_ioapi.o",
+    "reference": {
+      "path": "third_party/zlib/contrib/minizip/ioapi.c",
+      "line": 40
+    }
+  },
+  {
+    "id": "zlib/990",
+    "index": 990,
+    "size": 2434,
+    "band": "huge",
+    "component": "ecourna",
+    "owner": "app",
+    "features": [
+      "loop",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 25
+    },
+    "origin": "selected",
+    "setup": "zlib",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DNDEBUG -D_LARGEFILE64_SOURCE=1",
+    "name": "_tr_flush_block",
+    "symbol": "_tr_flush_block",
+    "evidence": "symbol",
+    "object": "build/out/zlib/O3pic/trees.o",
+    "reference": {
+      "path": "third_party/zlib/trees.c",
+      "line": 995
+    }
+  },
+  {
+    "id": "zlib/1508",
+    "index": 1508,
+    "size": 55,
+    "band": "small",
+    "component": "ecourna",
+    "owner": "app",
+    "features": [
+      "call_indirect",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "zlib",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DNDEBUG -D_LARGEFILE64_SOURCE=1",
+    "name": "call_ztell64",
+    "symbol": "call_ztell64",
+    "evidence": "symbol",
+    "object": "build/out/zlib/O3pic/minizip_ioapi.o",
+    "reference": {
+      "path": "third_party/zlib/contrib/minizip/ioapi.c",
+      "line": 53
+    }
+  },
+  {
+    "id": "zlib/1848",
+    "index": 1848,
+    "size": 147,
+    "band": "medium",
+    "component": "ecourna",
+    "owner": "app",
+    "features": [
+      "bulk-memory",
+      "select"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "zlib",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DNDEBUG -D_LARGEFILE64_SOURCE=1",
+    "name": "flush_pending",
+    "symbol": "flush_pending",
+    "evidence": "symbol",
+    "object": "build/out/zlib/O3pic/deflate.o",
+    "reference": {
+      "path": "third_party/zlib/deflate.c",
+      "line": 915
+    }
+  },
+  {
+    "id": "zlib/1849",
+    "index": 1849,
+    "size": 600,
+    "band": "large",
+    "component": "ecourna",
+    "owner": "app",
+    "features": [
+      "call_indirect",
+      "frame",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "zlib",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DNDEBUG -D_LARGEFILE64_SOURCE=1",
+    "name": "zip64local_getLong64",
+    "symbol": "zip64local_getLong64",
+    "evidence": "symbol",
+    "object": "build/out/zlib/O3pic/minizip_zip.o",
+    "reference": {
+      "path": "third_party/zlib/contrib/minizip/zip.c",
+      "line": 401
+    }
+  },
+  {
+    "id": "zlib/3377",
+    "index": 3377,
+    "size": 2618,
+    "band": "huge",
+    "component": "ecourna",
+    "owner": "app",
+    "features": [
+      "leaf",
+      "loop",
+      "frame",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 24
+    },
+    "origin": "selected",
+    "setup": "zlib",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DNDEBUG -D_LARGEFILE64_SOURCE=1",
+    "name": "build_tree",
+    "symbol": "build_tree",
+    "evidence": "symbol",
+    "object": "build/out/zlib/O3pic/trees.o",
+    "reference": {
+      "path": "third_party/zlib/trees.c",
+      "line": 625
+    }
+  },
+  {
+    "id": "zlib/4823",
+    "index": 4823,
+    "size": 474,
+    "band": "medium",
+    "component": "ecourna",
+    "owner": "app",
+    "features": [
+      "leaf",
+      "loop",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "zlib",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DNDEBUG -D_LARGEFILE64_SOURCE=1",
+    "name": "init_block",
+    "symbol": "init_block",
+    "evidence": "symbol",
+    "object": "build/out/zlib/O3pic/trees.o",
+    "reference": {
+      "path": "third_party/zlib/trees.c",
+      "line": 439
+    }
+  },
+  {
+    "id": "zlib/4824",
+    "index": 4824,
+    "size": 548,
+    "band": "large",
+    "component": "unknown",
+    "owner": "app",
+    "features": [
+      "leaf",
+      "loop",
+      "select"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "zlib",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DNDEBUG -D_LARGEFILE64_SOURCE=1",
+    "name": "longest_match",
+    "symbol": "longest_match",
+    "evidence": "symbol",
+    "object": "build/out/zlib/O3pic/deflate.o",
+    "reference": {
+      "path": "third_party/zlib/deflate.c"
+    }
+  },
+  {
+    "id": "zlib/8121",
+    "index": 8121,
+    "size": 81,
+    "band": "small",
+    "component": "unknown",
+    "owner": "app",
+    "features": [
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 4
+    },
+    "origin": "selected",
+    "setup": "zlib",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DNDEBUG -D_LARGEFILE64_SOURCE=1",
+    "name": "fopen64_file_func",
+    "symbol": "fopen64_file_func",
+    "evidence": "symbol",
+    "object": "build/out/zlib/O3pic/minizip_ioapi.o",
+    "reference": {
+      "path": "third_party/zlib/contrib/minizip/ioapi.c",
+      "line": 100
+    }
+  },
+  {
+    "id": "zlib/8123",
+    "index": 8123,
+    "size": 27,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "app",
+    "features": [
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 1
+    },
+    "origin": "selected",
+    "setup": "zlib",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DNDEBUG -D_LARGEFILE64_SOURCE=1",
+    "name": "fseek64_file_func",
+    "symbol": "fseek64_file_func",
+    "evidence": "symbol",
+    "object": "build/out/zlib/O3pic/minizip_ioapi.o",
+    "reference": {
+      "path": "third_party/zlib/contrib/minizip/ioapi.c",
+      "line": 171
+    }
+  },
+  {
+    "id": "zlib/8124",
+    "index": 8124,
+    "size": 13,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "app",
+    "features": [],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "zlib",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DNDEBUG -D_LARGEFILE64_SOURCE=1",
+    "name": "fread_file_func",
+    "symbol": "fread_file_func",
+    "evidence": "symbol",
+    "object": "build/out/zlib/O3pic/minizip_ioapi.o",
+    "reference": {
+      "path": "third_party/zlib/contrib/minizip/ioapi.c",
+      "line": 119
+    }
+  },
+  {
+    "id": "zlib/8125",
+    "index": 8125,
+    "size": 13,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "app",
+    "features": [],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "zlib",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DNDEBUG -D_LARGEFILE64_SOURCE=1",
+    "name": "fwrite_file_func",
+    "symbol": "fwrite_file_func",
+    "evidence": "symbol",
+    "object": "build/out/zlib/O3pic/minizip_ioapi.o",
+    "reference": {
+      "path": "third_party/zlib/contrib/minizip/ioapi.c",
+      "line": 126
+    }
+  },
+  {
+    "id": "sqlite/623",
+    "index": 623,
+    "size": 3445,
+    "band": "huge",
+    "component": "sqlite",
+    "owner": "sqlite",
+    "features": [
+      "loop",
+      "switch",
+      "call_indirect",
+      "frame",
+      "i64",
+      "bulk-memory",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 92
+    },
+    "origin": "selected",
+    "setup": "sqlite",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_UNLOCK_NOTIFY -DHAVE_FDATASYNC -DHAVE_GMTIME_R -DHAVE_LOCALTIME_R -DHAVE_POSIX_FALLOCATE -DHAVE_STRERROR_R -DHAVE_USLEEP",
+    "name": "sqlite3InitOne",
+    "symbol": "sqlite3InitOne",
+    "evidence": "symbol",
+    "object": "build/out/sqlite/O3pic2/sqlite3.o",
+    "reference": {
+      "path": "third_party/sqlite/sqlite3.c",
+      "line": 143944
+    }
+  },
+  {
+    "id": "sqlite/1184",
+    "index": 1184,
+    "size": 414,
+    "band": "medium",
+    "component": "sqlite",
+    "owner": "sqlite",
+    "features": [
+      "leaf",
+      "loop",
+      "frame",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "sqlite",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_UNLOCK_NOTIFY -DHAVE_FDATASYNC -DHAVE_GMTIME_R -DHAVE_LOCALTIME_R -DHAVE_POSIX_FALLOCATE -DHAVE_STRERROR_R -DHAVE_USLEEP",
+    "name": "putVarint64",
+    "symbol": "putVarint64",
+    "evidence": "symbol",
+    "object": "build/out/sqlite/O3pic2/sqlite3.o",
+    "reference": {
+      "path": "third_party/sqlite/sqlite3.c",
+      "line": 36698
+    }
+  },
+  {
+    "id": "sqlite/1297",
+    "index": 1297,
+    "size": 2919,
+    "band": "huge",
+    "component": "sqlite",
+    "owner": "sqlite",
+    "features": [
+      "loop",
+      "switch",
+      "frame",
+      "i64",
+      "bulk-memory",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 46
+    },
+    "origin": "selected",
+    "setup": "sqlite",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_UNLOCK_NOTIFY -DHAVE_FDATASYNC -DHAVE_GMTIME_R -DHAVE_LOCALTIME_R -DHAVE_POSIX_FALLOCATE -DHAVE_STRERROR_R -DHAVE_USLEEP",
+    "name": "jsonTranslateBlobToText",
+    "symbol": "jsonTranslateBlobToText",
+    "evidence": "symbol",
+    "object": "build/out/sqlite/O3pic2/sqlite3.o",
+    "reference": {
+      "path": "third_party/sqlite/sqlite3.c",
+      "line": 210027
+    }
+  },
+  {
+    "id": "sqlite/3050",
+    "index": 3050,
+    "size": 515,
+    "band": "large",
+    "component": "sqlite",
+    "owner": "-",
+    "features": [
+      "leaf",
+      "loop",
+      "frame",
+      "bulk-memory"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "sqlite",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_UNLOCK_NOTIFY -DHAVE_FDATASYNC -DHAVE_GMTIME_R -DHAVE_LOCALTIME_R -DHAVE_POSIX_FALLOCATE -DHAVE_STRERROR_R -DHAVE_USLEEP",
+    "name": "sqlite3PcacheDirtyList",
+    "symbol": "sqlite3PcacheDirtyList",
+    "evidence": "symbol",
+    "object": "build/out/sqlite/O3pic2/sqlite3.o",
+    "reference": {
+      "path": "third_party/sqlite/sqlite3.c",
+      "line": 55987
+    }
+  },
+  {
+    "id": "sqlite/4001",
+    "index": 4001,
+    "size": 456,
+    "band": "medium",
+    "component": "unknown",
+    "owner": "sqlite",
+    "features": [
+      "loop",
+      "float",
+      "bulk-memory"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "sqlite",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_UNLOCK_NOTIFY -DHAVE_FDATASYNC -DHAVE_GMTIME_R -DHAVE_LOCALTIME_R -DHAVE_POSIX_FALLOCATE -DHAVE_STRERROR_R -DHAVE_USLEEP",
+    "name": "SortByDimension",
+    "symbol": "SortByDimension",
+    "evidence": "symbol",
+    "object": "build/out/sqlite/O3pic2/sqlite3.o",
+    "reference": {
+      "path": "third_party/sqlite/sqlite3.c",
+      "line": 215837
+    }
+  },
+  {
+    "id": "sqlite/12331",
+    "index": 12331,
+    "size": 1232,
+    "band": "large",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "loop",
+      "switch",
+      "frame",
+      "inlined-frame",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 21
+    },
+    "origin": "selected",
+    "setup": "sqlite",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_UNLOCK_NOTIFY -DHAVE_FDATASYNC -DHAVE_GMTIME_R -DHAVE_LOCALTIME_R -DHAVE_POSIX_FALLOCATE -DHAVE_STRERROR_R -DHAVE_USLEEP",
+    "name": "jsonEachColumn",
+    "symbol": "jsonEachColumn",
+    "evidence": "symbol",
+    "object": "build/out/sqlite/O3pic2/sqlite3.o",
+    "reference": {
+      "path": "third_party/sqlite/sqlite3.c",
+      "line": 213037
+    }
+  },
+  {
+    "id": "sqlite/12638",
+    "index": 12638,
+    "size": 28,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "sqlite",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_UNLOCK_NOTIFY -DHAVE_FDATASYNC -DHAVE_GMTIME_R -DHAVE_LOCALTIME_R -DHAVE_POSIX_FALLOCATE -DHAVE_STRERROR_R -DHAVE_USLEEP",
+    "name": "sqlite3VdbeFrameMemDel",
+    "symbol": "sqlite3VdbeFrameMemDel",
+    "evidence": "symbol",
+    "object": "build/out/sqlite/O3pic2/sqlite3.o",
+    "reference": {
+      "path": "third_party/sqlite/sqlite3.c"
+    }
+  },
+  {
+    "id": "sqlite/12681",
+    "index": 12681,
+    "size": 11,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "sqlite",
+    "features": [
+      "leaf",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "sqlite",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_UNLOCK_NOTIFY -DHAVE_FDATASYNC -DHAVE_GMTIME_R -DHAVE_LOCALTIME_R -DHAVE_POSIX_FALLOCATE -DHAVE_STRERROR_R -DHAVE_USLEEP",
+    "name": "unixFetch",
+    "symbol": "unixFetch",
+    "evidence": "symbol",
+    "object": "build/out/sqlite/O3pic2/sqlite3.o",
+    "reference": {
+      "path": "third_party/sqlite/sqlite3.c",
+      "line": 44277
+    }
+  },
+  {
+    "id": "sqlite/12691",
+    "index": 12691,
+    "size": 88,
+    "band": "small",
+    "component": "unknown",
+    "owner": "sqlite",
+    "features": [
+      "call_indirect",
+      "frame",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 3
+    },
+    "origin": "selected",
+    "setup": "sqlite",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_UNLOCK_NOTIFY -DHAVE_FDATASYNC -DHAVE_GMTIME_R -DHAVE_LOCALTIME_R -DHAVE_POSIX_FALLOCATE -DHAVE_STRERROR_R -DHAVE_USLEEP",
+    "name": "unixFileSize",
+    "symbol": "unixFileSize",
+    "evidence": "symbol",
+    "object": "build/out/sqlite/O3pic2/sqlite3.o",
+    "reference": {
+      "path": "third_party/sqlite/sqlite3.c",
+      "line": 42697
+    }
+  },
+  {
+    "id": "sqlite/12783",
+    "index": 12783,
+    "size": 82,
+    "band": "small",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "leaf",
+      "select"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "sqlite",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_UNLOCK_NOTIFY -DHAVE_FDATASYNC -DHAVE_GMTIME_R -DHAVE_LOCALTIME_R -DHAVE_POSIX_FALLOCATE -DHAVE_STRERROR_R -DHAVE_USLEEP",
+    "name": "sqlite3_vtab_in",
+    "symbol": "sqlite3_vtab_in",
+    "evidence": "symbol",
+    "object": "build/out/sqlite/O3pic2/sqlite3.o",
+    "reference": {
+      "path": "third_party/sqlite/sqlite3.c",
+      "line": 168931
+    }
+  },
+  {
+    "id": "sqlite/12917",
+    "index": 12917,
+    "size": 44,
+    "band": "small",
+    "component": "unknown",
+    "owner": "sqlite",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "sqlite",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_UNLOCK_NOTIFY -DHAVE_FDATASYNC -DHAVE_GMTIME_R -DHAVE_LOCALTIME_R -DHAVE_POSIX_FALLOCATE -DHAVE_STRERROR_R -DHAVE_USLEEP",
+    "name": "sqlite3_str_value",
+    "symbol": "sqlite3_str_value",
+    "evidence": "symbol",
+    "object": "build/out/sqlite/O3pic2/sqlite3.o",
+    "reference": {
+      "path": "third_party/sqlite/sqlite3.c",
+      "line": 32824
+    }
+  },
+  {
+    "id": "sqlite/12918",
+    "index": 12918,
+    "size": 16,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "sqlite",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "sqlite",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_UNLOCK_NOTIFY -DHAVE_FDATASYNC -DHAVE_GMTIME_R -DHAVE_LOCALTIME_R -DHAVE_POSIX_FALLOCATE -DHAVE_STRERROR_R -DHAVE_USLEEP",
+    "name": "sqlite3_str_errcode",
+    "symbol": "sqlite3_str_errcode",
+    "evidence": "symbol",
+    "object": "build/out/sqlite/O3pic2/sqlite3.o",
+    "reference": {
+      "path": "third_party/sqlite/sqlite3.c",
+      "line": 32814
+    }
+  },
+  {
+    "id": "openssl/920",
+    "index": 920,
+    "size": 985,
+    "band": "large",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "leaf",
+      "loop",
+      "select"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "openssl",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG",
+    "name": "ChaCha20_ctr32",
+    "symbol": "ChaCha20_ctr32",
+    "evidence": "symbol",
+    "object": "build/out/openssl/O3/libcrypto.a:libcrypto-lib-chacha_enc.o",
+    "reference": {
+      "path": "third_party/openssl/crypto/chacha/chacha_enc.c",
+      "line": 71
+    }
+  },
+  {
+    "id": "openssl/1617",
+    "index": 1617,
+    "size": 474,
+    "band": "medium",
+    "component": "openssl",
+    "owner": "openssl",
+    "features": [
+      "leaf",
+      "loop",
+      "switch",
+      "i64",
+      "float",
+      "bulk-memory"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "openssl",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG",
+    "name": "OSSL_PARAM_get_uint64",
+    "symbol": "OSSL_PARAM_get_uint64",
+    "evidence": "symbol",
+    "object": "build/out/openssl/O3/libcrypto.a:libcrypto-lib-params.o",
+    "reference": {
+      "path": "third_party/openssl/crypto/params.c",
+      "line": 724
+    }
+  },
+  {
+    "id": "openssl/2040",
+    "index": 2040,
+    "size": 49,
+    "band": "small",
+    "component": "openssl",
+    "owner": "-",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "openssl",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG",
+    "name": "X509_PUBKEY_get0_param",
+    "symbol": "X509_PUBKEY_get0_param",
+    "evidence": "symbol",
+    "object": "build/out/openssl/O3/libcrypto.a:libcrypto-lib-x_pubkey.o",
+    "reference": {
+      "path": "third_party/openssl/crypto/x509/x_pubkey.c",
+      "line": 1021
+    }
+  },
+  {
+    "id": "openssl/2115",
+    "index": 2115,
+    "size": 26,
+    "band": "tiny",
+    "component": "openssl",
+    "owner": "openssl",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "openssl",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG",
+    "name": "ASN1_put_eoc",
+    "symbol": "ASN1_put_eoc",
+    "evidence": "symbol",
+    "object": "build/out/openssl/O3/libcrypto.a:libcrypto-lib-asn1_lib.o",
+    "reference": {
+      "path": "third_party/openssl/crypto/asn1/asn1_lib.c",
+      "line": 190
+    }
+  },
+  {
+    "id": "openssl/2118",
+    "index": 2118,
+    "size": 32,
+    "band": "tiny",
+    "component": "openssl",
+    "owner": "openssl",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "openssl",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG",
+    "name": "DH_get0_key",
+    "symbol": "DH_get0_key",
+    "evidence": "symbol",
+    "object": "build/out/openssl/O3/libcrypto.a:libcrypto-lib-dh_lib.o",
+    "reference": {
+      "path": "third_party/openssl/crypto/dh/dh_lib.c",
+      "line": 255
+    }
+  },
+  {
+    "id": "openssl/2526",
+    "index": 2526,
+    "size": 2088,
+    "band": "huge",
+    "component": "openssl",
+    "owner": "openssl",
+    "features": [
+      "loop",
+      "frame",
+      "alloca",
+      "i64",
+      "bulk-memory",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 26
+    },
+    "origin": "selected",
+    "setup": "openssl",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG",
+    "name": "bn_mod_exp_mont_fixed_top",
+    "symbol": "bn_mod_exp_mont_fixed_top",
+    "evidence": "symbol",
+    "object": "build/out/openssl/O3/libcrypto.a:libcrypto-lib-bn_exp.o",
+    "reference": {
+      "path": "third_party/openssl/crypto/bn/bn_exp.c",
+      "line": 609
+    }
+  },
+  {
+    "id": "openssl/3094",
+    "index": 3094,
+    "size": 8190,
+    "band": "huge",
+    "component": "unknown",
+    "owner": "openssl",
+    "features": [
+      "leaf",
+      "loop"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "openssl",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG",
+    "name": "ossl_sm3_block_data_order",
+    "symbol": "ossl_sm3_block_data_order",
+    "evidence": "symbol",
+    "object": "build/out/openssl/O3/libcrypto.a:libcrypto-lib-sm3.o",
+    "reference": {
+      "path": "third_party/openssl/crypto/sm3/sm3.c",
+      "line": 29
+    }
+  },
+  {
+    "id": "openssl/6819",
+    "index": 6819,
+    "size": 101,
+    "band": "small",
+    "component": "openssl",
+    "owner": "openssl",
+    "features": [
+      "call_indirect",
+      "frame",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "openssl",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG",
+    "name": "print_error",
+    "symbol": "print_error",
+    "evidence": "symbol",
+    "object": "build/out/openssl/O3/libcrypto.a:libcrypto-lib-ui_lib.o",
+    "reference": {
+      "path": "third_party/openssl/crypto/ui/ui_lib.c",
+      "line": 481
+    }
+  },
+  {
+    "id": "openssl/7089",
+    "index": 7089,
+    "size": 367,
+    "band": "medium",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "leaf",
+      "frame",
+      "i64",
+      "bulk-memory"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "openssl",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG",
+    "name": "chacha20_poly1305_init_key",
+    "symbol": "chacha20_poly1305_init_key",
+    "evidence": "symbol",
+    "object": "build/out/openssl/O3/libcrypto.a:libcrypto-lib-e_chacha20_poly1305.o",
+    "reference": {
+      "path": "third_party/openssl/crypto/evp/e_chacha20_poly1305.c",
+      "line": 167
+    }
+  },
+  {
+    "id": "openssl/7719",
+    "index": 7719,
+    "size": 34,
+    "band": "small",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "leaf",
+      "select"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "openssl",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG",
+    "name": "err_string_data_hash",
+    "symbol": "err_string_data_hash",
+    "evidence": "symbol",
+    "object": "build/out/openssl/O3/libcrypto.a:libcrypto-lib-err.o",
+    "reference": {
+      "path": "third_party/openssl/crypto/err/err.c",
+      "line": 172
+    }
+  },
+  {
+    "id": "openssl/14039",
+    "index": 14039,
+    "size": 1216,
+    "band": "large",
+    "component": "unknown",
+    "owner": "openssl",
+    "features": [
+      "loop",
+      "switch",
+      "call_indirect",
+      "frame",
+      "inlined-frame",
+      "i64",
+      "bulk-memory",
+      "select"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "openssl",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG",
+    "name": "ossl_cipher_cbc_cts_block_update",
+    "symbol": "ossl_cipher_cbc_cts_block_update",
+    "evidence": "symbol",
+    "object": "build/out/openssl/O3/libcrypto.a:libdefault-lib-cipher_cts.o",
+    "reference": null
+  },
+  {
+    "id": "openssl/14191",
+    "index": 14191,
+    "size": 17,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "openssl",
+    "features": [
+      "leaf",
+      "select"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "openssl",
+    "lang": "c",
+    "flags": "-O3 -fPIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG",
+    "name": "aes_siv_setspeed",
+    "symbol": "aes_siv_setspeed",
+    "evidence": "symbol",
+    "object": "build/out/openssl/O3/libcrypto.a:libdefault-lib-cipher_aes_siv_hw.o",
+    "reference": null
+  },
+  {
+    "id": "7zip/847",
+    "index": 847,
+    "size": 17,
+    "band": "tiny",
+    "component": "7zip",
+    "owner": "7zip",
+    "features": [
+      "throw"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 2
+    },
+    "origin": "selected",
+    "setup": "7zip",
+    "lang": "c++",
+    "flags": "-Oz -fexceptions -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_7ZIP_ST -O3 -DPROG_VARIANT_R",
+    "name": "NArchive::N7z::ThrowIncorrect()",
+    "symbol": "_ZN8NArchive3N7zL14ThrowIncorrectEv",
+    "evidence": "symbol",
+    "object": "build/out/7zip/21.02-st-O3/obj/CPP_7zip_Archive_7z_7zIn.cpp.o",
+    "reference": {
+      "path": "third_party/7zip/CPP/7zip/Archive/7z/7zIn.cpp"
+    }
+  },
+  {
+    "id": "7zip/1366",
+    "index": 1366,
+    "size": 19,
+    "band": "tiny",
+    "component": "7zip",
+    "owner": "7zip",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "7zip",
+    "lang": "c++",
+    "flags": "-Oz -fexceptions -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_7ZIP_ST -O3 -DPROG_VARIANT_R",
+    "name": "CArchiveExtractCallback::AddRef()",
+    "symbol": "_ZN23CArchiveExtractCallback6AddRefEv",
+    "evidence": "symbol",
+    "object": "build/out/7zip/21.02-st-O3/obj/CPP_7zip_UI_Common_ArchiveExtractCallback.cpp.o",
+    "reference": {
+      "path": "third_party/7zip/CPP/7zip/UI/Common/ArchiveExtractCallback.cpp"
+    }
+  },
+  {
+    "id": "7zip/1379",
+    "index": 1379,
+    "size": 16,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "sqlite",
+    "features": [
+      "leaf",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "7zip",
+    "lang": "c",
+    "flags": "-Oz -fexceptions -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_7ZIP_ST -O3",
+    "name": "Xzs_Construct",
+    "symbol": "Xzs_Construct",
+    "evidence": "symbol",
+    "object": "build/out/7zip/21.02-st-O3/obj/C_XzIn.c.o",
+    "reference": {
+      "path": "third_party/7zip/C/XzIn.c",
+      "line": 246
+    }
+  },
+  {
+    "id": "7zip/1859",
+    "index": 1859,
+    "size": 366,
+    "band": "medium",
+    "component": "7zip",
+    "owner": "7zip",
+    "features": [
+      "leaf",
+      "loop"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "7zip",
+    "lang": "c++",
+    "flags": "-Oz -fexceptions -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_7ZIP_ST -O3 -DPROG_VARIANT_R",
+    "name": "CStdOutStream::Normalize_UString(UString&)",
+    "symbol": "_ZN13CStdOutStream17Normalize_UStringER7UString",
+    "evidence": "symbol",
+    "object": "build/out/7zip/21.02-st-O3/obj/CPP_Common_StdOutStream.cpp.o",
+    "reference": {
+      "path": "third_party/7zip/CPP/Common/StdOutStream.cpp",
+      "line": 90
+    }
+  },
+  {
+    "id": "7zip/2172",
+    "index": 2172,
+    "size": 91,
+    "band": "small",
+    "component": "7zip",
+    "owner": "7zip",
+    "features": [
+      "leaf",
+      "bulk-memory",
+      "select"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "7zip",
+    "lang": "c++",
+    "flags": "-Oz -fexceptions -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_7ZIP_ST -O3 -DPROG_VARIANT_R",
+    "name": "UString::Delete(unsigned int, unsigned int)",
+    "symbol": "_ZN7UString6DeleteEjj",
+    "evidence": "symbol",
+    "object": "build/out/7zip/21.02-st-O3/obj/CPP_Common_MyString.cpp.o",
+    "reference": {
+      "path": "third_party/7zip/CPP/Common/MyString.cpp"
+    }
+  },
+  {
+    "id": "7zip/2630",
+    "index": 2630,
+    "size": 421,
+    "band": "medium",
+    "component": "7zip",
+    "owner": "7zip",
+    "features": [
+      "loop",
+      "call_indirect",
+      "frame",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "7zip",
+    "lang": "c++",
+    "flags": "-Oz -fexceptions -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_7ZIP_ST -O3 -DPROG_VARIANT_R",
+    "name": "CFilterCoder::Flush2()",
+    "symbol": "_ZN12CFilterCoder6Flush2Ev",
+    "evidence": "symbol",
+    "object": "build/out/7zip/21.02-st-O3/obj/CPP_7zip_Common_FilterCoder.cpp.o",
+    "reference": {
+      "path": "third_party/7zip/CPP/7zip/Common/FilterCoder.cpp",
+      "line": 169
+    }
+  },
+  {
+    "id": "7zip/2646",
+    "index": 2646,
+    "size": 526,
+    "band": "large",
+    "component": "unknown",
+    "owner": "7zip",
+    "features": [
+      "leaf",
+      "loop",
+      "frame",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "7zip",
+    "lang": "c++",
+    "flags": "-Oz -fexceptions -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_7ZIP_ST -O3 -DPROG_VARIANT_R",
+    "name": "ConvertInt64ToString(long long, char*)",
+    "symbol": "_Z20ConvertInt64ToStringxPc",
+    "evidence": "symbol",
+    "object": "build/out/7zip/21.02-st-O3/obj/CPP_Common_IntToString.cpp.o",
+    "reference": {
+      "path": "third_party/7zip/CPP/Common/IntToString.cpp"
+    }
+  },
+  {
+    "id": "7zip/3424",
+    "index": 3424,
+    "size": 376,
+    "band": "medium",
+    "component": "unknown",
+    "owner": "7zip",
+    "features": [
+      "leaf",
+      "loop",
+      "select"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "7zip",
+    "lang": "c",
+    "flags": "-Oz -fexceptions -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_7ZIP_ST -O3",
+    "name": "GetMatchesSpec1",
+    "symbol": "GetMatchesSpec1",
+    "evidence": "symbol",
+    "object": "build/out/7zip/21.02-st-O3/obj/C_LzFind.c.o",
+    "reference": {
+      "path": "third_party/7zip/C/LzFind.c",
+      "line": 534
+    }
+  },
+  {
+    "id": "7zip/4897",
+    "index": 4897,
+    "size": 636,
+    "band": "large",
+    "component": "7zip",
+    "owner": "7zip",
+    "features": [
+      "leaf",
+      "loop",
+      "frame",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "7zip",
+    "lang": "c++",
+    "flags": "-Oz -fexceptions -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_7ZIP_ST -O3 -DPROG_VARIANT_R",
+    "name": "CRecordVector<NArchive::N7z::CFilterMode2>::SortRefDown2(NArchive::N7z::CFilterMode2*, unsigned int, unsigned int)",
+    "symbol": "_ZN13CRecordVectorIN8NArchive3N7z12CFilterMode2EE12SortRefDown2EPS2_jj",
+    "evidence": "symbol",
+    "object": "build/out/7zip/21.02-st-O3/obj/CPP_7zip_Archive_7z_7zUpdate.cpp.o",
+    "reference": {
+      "path": "third_party/7zip/CPP/7zip/Archive/7z/7zUpdate.cpp"
+    }
+  },
+  {
+    "id": "7zip/4943",
+    "index": 4943,
+    "size": 2246,
+    "band": "huge",
+    "component": "7zip",
+    "owner": "-",
+    "features": [
+      "leaf",
+      "loop",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 50
+    },
+    "origin": "selected",
+    "setup": "7zip",
+    "lang": "c",
+    "flags": "-Oz -fexceptions -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_7ZIP_ST -O3",
+    "name": "LzmaEnc_Init",
+    "symbol": "LzmaEnc_Init",
+    "evidence": "symbol",
+    "object": "build/out/7zip/21.02-st-O3/obj/C_LzmaEnc.c.o",
+    "reference": {
+      "path": "third_party/7zip/C/LzmaEnc.c",
+      "line": 2637
+    }
+  },
+  {
+    "id": "7zip/8438",
+    "index": 8438,
+    "size": 103,
+    "band": "small",
+    "component": "7zip",
+    "owner": "7zip",
+    "features": [
+      "leaf",
+      "switch",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "7zip",
+    "lang": "c++",
+    "flags": "-Oz -fexceptions -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_7ZIP_ST -O3 -DPROG_VARIANT_R",
+    "name": "COutMultiVolStream::Seek(long long, unsigned int, unsigned long long*)",
+    "symbol": "_ZN18COutMultiVolStream4SeekExjPy",
+    "evidence": "symbol",
+    "object": "build/out/7zip/21.02-st-O3/obj/CPP_7zip_UI_Common_Update.cpp.o",
+    "reference": {
+      "path": "third_party/7zip/CPP/7zip/UI/Common/Update.cpp",
+      "line": 224
+    }
+  },
+  {
+    "id": "7zip/8473",
+    "index": 8473,
+    "size": 40,
+    "band": "small",
+    "component": "7zip",
+    "owner": "7zip",
+    "features": [
+      "call_indirect"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "7zip",
+    "lang": "c++",
+    "flags": "-Oz -fexceptions -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_7ZIP_ST -O3 -DPROG_VARIANT_R",
+    "name": "CArchiveUpdateCallback::Release()",
+    "symbol": "_ZN22CArchiveUpdateCallback7ReleaseEv",
+    "evidence": "symbol",
+    "object": "build/out/7zip/21.02-st-O3/obj/CPP_7zip_UI_Common_UpdateCallback.cpp.o",
+    "reference": {
+      "path": "third_party/7zip/CPP/7zip/UI/Common/UpdateCallback.cpp"
+    }
+  },
+  {
+    "id": "rhvoice/394",
+    "index": 394,
+    "size": 123,
+    "band": "small",
+    "component": "RHVoice",
+    "owner": "rhvoice",
+    "features": [
+      "frame"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 8
+    },
+    "origin": "selected",
+    "setup": "rhvoice",
+    "lang": "c",
+    "flags": "-Oz -fexceptions -DRHVOICE=1 '-DPACKAGE=\"RHVoice\"' -O3 -DNDEBUG",
+    "name": "HTS_error",
+    "symbol": "HTS_error",
+    "evidence": "symbol",
+    "object": "build/out/rhvoice/1.14.0-cxx14-O3-ndebug/obj/HTS_misc.c.o",
+    "reference": {
+      "path": "third_party/RHVoice/src/hts_engine/HTS_misc.c",
+      "line": 601
+    }
+  },
+  {
+    "id": "rhvoice/755",
+    "index": 755,
+    "size": 198,
+    "band": "medium",
+    "component": "RHVoice",
+    "owner": "rhvoice",
+    "features": [
+      "leaf",
+      "loop"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "rhvoice",
+    "lang": "c",
+    "flags": "-Oz -fexceptions -DRHVOICE=1 '-DPACKAGE=\"RHVoice\"' -O3 -DNDEBUG",
+    "name": "HTS_get_token_from_string_with_separator",
+    "symbol": "HTS_get_token_from_string_with_separator",
+    "evidence": "symbol",
+    "object": "build/out/rhvoice/1.14.0-cxx14-O3-ndebug/obj/HTS_misc.c.o",
+    "reference": {
+      "path": "third_party/RHVoice/src/hts_engine/HTS_misc.c",
+      "line": 496
+    }
+  },
+  {
+    "id": "rhvoice/902",
+    "index": 902,
+    "size": 16,
+    "band": "tiny",
+    "component": "RHVoice",
+    "owner": "libcxx",
+    "features": [
+      "leaf",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "rhvoice",
+    "lang": "c++",
+    "flags": "-Oz -fexceptions -DRHVOICE=1 '-DPACKAGE=\"RHVoice\"' -O3 -std=c++14 -DNDEBUG",
+    "name": "RHVoice::language_info::get_country() const",
+    "symbol": "_ZNK7RHVoice13language_info11get_countryEv",
+    "evidence": "symbol",
+    "object": "build/out/rhvoice/1.14.0-cxx14-O3-ndebug/obj/esperanto.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "rhvoice/1069",
+    "index": 1069,
+    "size": 923,
+    "band": "large",
+    "component": "RHVoice",
+    "owner": "rhvoice",
+    "features": [
+      "loop",
+      "switch"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 18
+    },
+    "origin": "selected",
+    "setup": "rhvoice",
+    "lang": "c",
+    "flags": "-Oz -fexceptions -DRHVOICE=1 '-DPACKAGE=\"RHVoice\"' -O3 -DNDEBUG",
+    "name": "HTS_get_pattern_token",
+    "symbol": "HTS_get_pattern_token",
+    "evidence": "symbol",
+    "object": "build/out/rhvoice/1.14.0-cxx14-O3-ndebug/obj/HTS_misc.c.o",
+    "reference": {
+      "path": "third_party/RHVoice/src/hts_engine/HTS_misc.c",
+      "line": 352
+    }
+  },
+  {
+    "id": "rhvoice/1680",
+    "index": 1680,
+    "size": 312,
+    "band": "medium",
+    "component": "RHVoice",
+    "owner": "rhvoice",
+    "features": [
+      "switch",
+      "bulk-memory"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 19
+    },
+    "origin": "selected",
+    "setup": "rhvoice",
+    "lang": "c",
+    "flags": "-Oz -fexceptions -DRHVOICE=1 '-DPACKAGE=\"RHVoice\"' -O3 -DNDEBUG",
+    "name": "HTS_fopen_from_fp",
+    "symbol": "HTS_fopen_from_fp",
+    "evidence": "symbol",
+    "object": "build/out/rhvoice/1.14.0-cxx14-O3-ndebug/obj/HTS_misc.c.o",
+    "reference": {
+      "path": "third_party/RHVoice/src/hts_engine/HTS_misc.c",
+      "line": 117
+    }
+  },
+  {
+    "id": "rhvoice/2697",
+    "index": 2697,
+    "size": 45,
+    "band": "small",
+    "component": "RHVoice",
+    "owner": "rhvoice",
+    "features": [
+      "leaf",
+      "loop",
+      "select"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "rhvoice",
+    "lang": "c",
+    "flags": "-Oz -fexceptions -DRHVOICE=1 '-DPACKAGE=\"RHVoice\"' -O3 -DNDEBUG",
+    "name": "HTS_Label_get_parsed",
+    "symbol": "HTS_Label_get_parsed",
+    "evidence": "symbol",
+    "object": "build/out/rhvoice/1.14.0-cxx14-O3-ndebug/obj/HTS_label.c.o",
+    "reference": {
+      "path": "third_party/RHVoice/src/hts_engine/HTS_label.c",
+      "line": 250
+    }
+  },
+  {
+    "id": "rhvoice/3544",
+    "index": 3544,
+    "size": 211,
+    "band": "medium",
+    "component": "RHVoice",
+    "owner": "rhvoice",
+    "features": [
+      "leaf",
+      "loop",
+      "switch"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "rhvoice",
+    "lang": "c",
+    "flags": "-Oz -fexceptions -DRHVOICE=1 '-DPACKAGE=\"RHVoice\"' -O3 -DNDEBUG",
+    "name": "HTS_get_token_from_string",
+    "symbol": "HTS_get_token_from_string",
+    "evidence": "symbol",
+    "object": "build/out/rhvoice/1.14.0-cxx14-O3-ndebug/obj/HTS_misc.c.o",
+    "reference": {
+      "path": "third_party/RHVoice/src/hts_engine/HTS_misc.c",
+      "line": 470
+    }
+  },
+  {
+    "id": "rhvoice/5225",
+    "index": 5225,
+    "size": 17,
+    "band": "tiny",
+    "component": "RHVoice",
+    "owner": "rhvoice",
+    "features": [
+      "leaf",
+      "select"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "rhvoice",
+    "lang": "c",
+    "flags": "-Oz -fexceptions -DRHVOICE=1 '-DPACKAGE=\"RHVoice\"' -O3 -DNDEBUG",
+    "name": "HTS_Engine_set_fperiod",
+    "symbol": "HTS_Engine_set_fperiod",
+    "evidence": "symbol",
+    "object": "build/out/rhvoice/1.14.0-cxx14-O3-ndebug/obj/HTS_engine.c.o",
+    "reference": {
+      "path": "third_party/RHVoice/src/hts_engine/HTS_engine.c",
+      "line": 207
+    }
+  },
+  {
+    "id": "rhvoice/5236",
+    "index": 5236,
+    "size": 22,
+    "band": "tiny",
+    "component": "RHVoice",
+    "owner": "rhvoice",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "rhvoice",
+    "lang": "c",
+    "flags": "-Oz -fexceptions -DRHVOICE=1 '-DPACKAGE=\"RHVoice\"' -O3 -DNDEBUG",
+    "name": "HTS_SStreamSet_get_gv_switch",
+    "symbol": "HTS_SStreamSet_get_gv_switch",
+    "evidence": "symbol",
+    "object": "build/out/rhvoice/1.14.0-cxx14-O3-ndebug/obj/HTS_sstream.c.o",
+    "reference": {
+      "path": "third_party/RHVoice/src/hts_engine/HTS_sstream.c",
+      "line": 519
+    }
+  },
+  {
+    "id": "rhvoice/5237",
+    "index": 5237,
+    "size": 34,
+    "band": "small",
+    "component": "RHVoice",
+    "owner": "rhvoice",
+    "features": [
+      "leaf",
+      "float"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "rhvoice",
+    "lang": "c",
+    "flags": "-Oz -fexceptions -DRHVOICE=1 '-DPACKAGE=\"RHVoice\"' -O3 -DNDEBUG",
+    "name": "HTS_SStreamSet_get_vari",
+    "symbol": "HTS_SStreamSet_get_vari",
+    "evidence": "symbol",
+    "object": "build/out/rhvoice/1.14.0-cxx14-O3-ndebug/obj/HTS_sstream.c.o",
+    "reference": {
+      "path": "third_party/RHVoice/src/hts_engine/HTS_sstream.c",
+      "line": 489
+    }
+  },
+  {
+    "id": "rhvoice/9626",
+    "index": 9626,
+    "size": 95,
+    "band": "small",
+    "component": "RHVoice",
+    "owner": "rhvoice",
+    "features": [
+      "loop",
+      "call_indirect"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "rhvoice",
+    "lang": "c++",
+    "flags": "-Oz -fexceptions -DRHVOICE=1 '-DPACKAGE=\"RHVoice\"' -O3 -std=c++14 -DNDEBUG",
+    "name": "RHVoice::(anonymous namespace)::notifier::on_finished()",
+    "symbol": "_ZN7RHVoice12_GLOBAL__N_18notifier11on_finishedEv",
+    "evidence": "symbol",
+    "object": "build/out/rhvoice/1.14.0-cxx14-O3-ndebug/obj/hts_engine_call.cpp.o",
+    "reference": {
+      "path": "third_party/RHVoice/src/core/hts_engine_call.cpp"
+    }
+  },
+  {
+    "id": "rhvoice/10196",
+    "index": 10196,
+    "size": 9,
+    "band": "tiny",
+    "component": "RHVoice",
+    "owner": "rhvoice",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "rhvoice",
+    "lang": "c++",
+    "flags": "-Oz -fexceptions -DRHVOICE=1 '-DPACKAGE=\"RHVoice\"' -O3 -std=c++14 -DNDEBUG",
+    "name": "RHVoice::sentence::append_token::set_eos()",
+    "symbol": "_ZN7RHVoice8sentence12append_token7set_eosEv",
+    "evidence": "symbol",
+    "object": "build/out/rhvoice/1.14.0-cxx14-O3-ndebug/obj/document.cpp.o",
+    "reference": {
+      "path": "third_party/RHVoice/src/core/document.cpp"
+    }
+  },
+  {
+    "id": "boost/355",
+    "index": 355,
+    "size": 15,
+    "band": "tiny",
+    "component": "api",
+    "owner": "libcxx",
+    "features": [
+      "call_indirect"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "boost",
+    "lang": "c++",
+    "flags": "-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fno-pic",
+    "instantiatedBy": "ecourna-nopic",
+    "name": "boost::detail::sp_counted_base::destroy()",
+    "symbol": "_ZN5boost6detail15sp_counted_base7destroyEv",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_compression_icompressor.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "boost/1946",
+    "index": 1946,
+    "size": 17,
+    "band": "tiny",
+    "component": "boost",
+    "owner": "libcxx",
+    "features": [],
+    "ledger": {
+      "kind": "addr",
+      "score": 1
+    },
+    "origin": "selected",
+    "setup": "boost",
+    "lang": "c++",
+    "flags": "-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fno-pic",
+    "instantiatedBy": "ecourna-nopic",
+    "name": "boost::detail::sp_counted_impl_p<boost::signals2::optional_last_value<void>>::dispose()",
+    "symbol": "_ZN5boost6detail17sp_counted_impl_pINS_8signals219optional_last_valueIvEEE7disposeEv",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_compression_icompressor.cpp.o",
+    "reference": null
+  },
+  {
+    "id": "boost/9285",
+    "index": 9285,
+    "size": 24,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "boost",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "instantiatedBy": "uenux2",
+    "name": "boost::re_detail_600::perl_matcher<char const*, std::__2::allocator<boost::sub_match<char const*>>, boost::regex_traits<char, boost::cpp_regex_traits<char>>>::unwind_recursion_stopper(bool)",
+    "symbol": "_ZN5boost13re_detail_60012perl_matcherIPKcNSt3__29allocatorINS_9sub_matchIS3_EEEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE24unwind_recursion_stopperEb",
+    "evidence": "symbol",
+    "object": "build/out/app/roots_boost.o",
+    "reference": null
+  },
+  {
+    "id": "boost/9287",
+    "index": 9287,
+    "size": 11,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "boost",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "instantiatedBy": "uenux2",
+    "name": "boost::re_detail_600::perl_matcher<char const*, std::__2::allocator<boost::sub_match<char const*>>, boost::regex_traits<char, boost::cpp_regex_traits<char>>>::unwind_end(bool)",
+    "symbol": "_ZN5boost13re_detail_60012perl_matcherIPKcNSt3__29allocatorINS_9sub_matchIS3_EEEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE10unwind_endEb",
+    "evidence": "symbol",
+    "object": "build/out/app/roots_boost.o",
+    "reference": null
+  },
+  {
+    "id": "boost/9301",
+    "index": 9301,
+    "size": 40,
+    "band": "small",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "boost",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "instantiatedBy": "uenux2",
+    "name": "boost::re_detail_600::perl_matcher<char const*, std::__2::allocator<boost::sub_match<char const*>>, boost::regex_traits<char, boost::cpp_regex_traits<char>>>::match_restart_continue()",
+    "symbol": "_ZN5boost13re_detail_60012perl_matcherIPKcNSt3__29allocatorINS_9sub_matchIS3_EEEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE22match_restart_continueEv",
+    "evidence": "symbol",
+    "object": "build/out/app/roots_boost.o",
+    "reference": null
+  },
+  {
+    "id": "boost/9306",
+    "index": 9306,
+    "size": 17,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "boost",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "instantiatedBy": "uenux2",
+    "name": "boost::re_detail_600::perl_matcher<char const*, std::__2::allocator<boost::sub_match<char const*>>, boost::regex_traits<char, boost::cpp_regex_traits<char>>>::match_jump()",
+    "symbol": "_ZN5boost13re_detail_60012perl_matcherIPKcNSt3__29allocatorINS_9sub_matchIS3_EEEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE10match_jumpEv",
+    "evidence": "symbol",
+    "object": "build/out/app/roots_boost.o",
+    "reference": null
+  },
+  {
+    "id": "boost/9308",
+    "index": 9308,
+    "size": 120,
+    "band": "small",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "call_indirect"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "boost",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "instantiatedBy": "uenux2",
+    "name": "boost::re_detail_600::perl_matcher<char const*, std::__2::allocator<boost::sub_match<char const*>>, boost::regex_traits<char, boost::cpp_regex_traits<char>>>::match_set()",
+    "symbol": "_ZN5boost13re_detail_60012perl_matcherIPKcNSt3__29allocatorINS_9sub_matchIS3_EEEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE9match_setEv",
+    "evidence": "symbol",
+    "object": "build/out/app/roots_boost.o",
+    "reference": null
+  },
+  {
+    "id": "boost/9311",
+    "index": 9311,
+    "size": 49,
+    "band": "small",
+    "component": "unknown",
+    "owner": "boost",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "boost",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "instantiatedBy": "uenux2",
+    "name": "boost::re_detail_600::perl_matcher<char const*, std::__2::allocator<boost::sub_match<char const*>>, boost::regex_traits<char, boost::cpp_regex_traits<char>>>::match_buffer_end()",
+    "symbol": "_ZN5boost13re_detail_60012perl_matcherIPKcNSt3__29allocatorINS_9sub_matchIS3_EEEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE16match_buffer_endEv",
+    "evidence": "symbol",
+    "object": "build/out/app/roots_boost.o",
+    "reference": null
+  },
+  {
+    "id": "boost/9312",
+    "index": 9312,
+    "size": 49,
+    "band": "small",
+    "component": "unknown",
+    "owner": "boost",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "boost",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "instantiatedBy": "uenux2",
+    "name": "boost::re_detail_600::perl_matcher<char const*, std::__2::allocator<boost::sub_match<char const*>>, boost::regex_traits<char, boost::cpp_regex_traits<char>>>::match_buffer_start()",
+    "symbol": "_ZN5boost13re_detail_60012perl_matcherIPKcNSt3__29allocatorINS_9sub_matchIS3_EEEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE18match_buffer_startEv",
+    "evidence": "symbol",
+    "object": "build/out/app/roots_boost.o",
+    "reference": null
+  },
+  {
+    "id": "boost/9321",
+    "index": 9321,
+    "size": 161,
+    "band": "medium",
+    "component": "unknown",
+    "owner": "boost",
+    "features": [
+      "loop",
+      "call_indirect"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "boost",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "instantiatedBy": "uenux2",
+    "name": "boost::re_detail_600::perl_matcher<char const*, std::__2::allocator<boost::sub_match<char const*>>, boost::regex_traits<char, boost::cpp_regex_traits<char>>>::match_literal()",
+    "symbol": "_ZN5boost13re_detail_60012perl_matcherIPKcNSt3__29allocatorINS_9sub_matchIS3_EEEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13match_literalEv",
+    "evidence": "symbol",
+    "object": "build/out/app/roots_boost.o",
+    "reference": null
+  },
+  {
+    "id": "boost/9357",
+    "index": 9357,
+    "size": 75,
+    "band": "small",
+    "component": "boost",
+    "owner": "boost",
+    "features": [
+      "leaf",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "boost",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "instantiatedBy": "uenux2",
+    "name": "boost::re_detail_600::parser_buf<char, std::__2::char_traits<char>>::seekpos(std::__2::fpos<__mbstate_t>, unsigned int)",
+    "symbol": "_ZN5boost13re_detail_60010parser_bufIcNSt3__211char_traitsIcEEE7seekposENS2_4fposI11__mbstate_tEEj",
+    "evidence": "symbol",
+    "object": "build/out/app/roots_boost.o",
+    "reference": null
+  },
+  {
+    "id": "boost/9522",
+    "index": 9522,
+    "size": 42,
+    "band": "small",
+    "component": "boost",
+    "owner": "boost",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "boost",
+    "lang": "c++",
+    "flags": "-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fno-pic",
+    "instantiatedBy": "ecourna-nopic",
+    "name": "boost::signals2::signal<void (unsigned long, unsigned long, std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>> const&), boost::signals2::optional_last_value<void>, int, std::__2::less<int>, boost::function<void (unsigned long, unsigned long, std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>> const&)>, boost::function<void (boost::signals2::connection const&, unsigned long, unsigned long, std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>> const&)>, boost::signals2::mutex>::lock_pimpl() const",
+    "symbol": "_ZNK5boost8signals26signalIFvmmRKNSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEENS0_19optional_last_valueIvEEiNS2_4lessIiEENS_8functionISB_EENSG_IFvRKNS0_10connectionEmmSA_EEENS0_5mutexEE10lock_pimplEv",
+    "evidence": "symbol",
+    "object": "build/out/app/ecourna/api_compression_icompressor.cpp.o",
+    "reference": {
+      "path": "src/ecourna/api/compression/icompressor.cpp"
+    }
+  },
+  {
+    "id": "libc/390",
+    "index": 390,
+    "size": 133,
+    "band": "medium",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "loop",
+      "switch",
+      "select"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -DNDEBUG",
+    "name": "atoi",
+    "symbol": "atoi",
+    "evidence": "symbol",
+    "object": "emsdk:libc.a:atoi.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libc/musl/src/stdlib/atoi.c"
+    }
+  },
+  {
+    "id": "libc/955",
+    "index": 955,
+    "size": 573,
+    "band": "large",
+    "component": "unknown",
+    "owner": "openssl",
+    "features": [
+      "frame",
+      "inlined-frame",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 21
+    },
+    "origin": "selected",
+    "setup": "libc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -DNDEBUG",
+    "name": "fopen",
+    "symbol": "fopen",
+    "evidence": "symbol",
+    "object": "emsdk:libc.a:fopen.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libc/musl/src/stdio/fopen.c"
+    }
+  },
+  {
+    "id": "libc/1169",
+    "index": 1169,
+    "size": 65,
+    "band": "small",
+    "component": "RHVoice",
+    "owner": "app",
+    "features": [
+      "leaf",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -DNDEBUG",
+    "name": "__shlim",
+    "symbol": "__shlim",
+    "evidence": "symbol",
+    "object": "emsdk:libc.a:shgetc.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libc/musl/src/internal/shgetc.c"
+    }
+  },
+  {
+    "id": "libc/1171",
+    "index": 1171,
+    "size": 16,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -DNDEBUG",
+    "name": "__isspace",
+    "symbol": "__isspace",
+    "evidence": "symbol",
+    "object": "emsdk:libc.a:atoi.o",
+    "reference": null
+  },
+  {
+    "id": "libc/2321",
+    "index": 2321,
+    "size": 13,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -DNDEBUG",
+    "name": "ferror",
+    "symbol": "ferror",
+    "evidence": "symbol",
+    "object": "emsdk:libc.a:ferror.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libc/musl/src/stdio/ferror.c"
+    }
+  },
+  {
+    "id": "libc/2325",
+    "index": 2325,
+    "size": 146,
+    "band": "medium",
+    "component": "RHVoice",
+    "owner": "rhvoice",
+    "features": [
+      "leaf",
+      "float"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -DNDEBUG",
+    "name": "__cos",
+    "symbol": "__cos",
+    "evidence": "symbol",
+    "object": "emsdk:libc.a:__cos.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libc/musl/src/math/__cos.c"
+    }
+  },
+  {
+    "id": "libc/2959",
+    "index": 2959,
+    "size": 590,
+    "band": "large",
+    "component": "openssl",
+    "owner": "-",
+    "features": [
+      "loop",
+      "frame",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -DNDEBUG",
+    "name": "__qsort_r",
+    "symbol": "__qsort_r",
+    "evidence": "symbol",
+    "object": "emsdk:libc.a:qsort.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libc/musl/src/stdlib/qsort.c"
+    }
+  },
+  {
+    "id": "libc/2968",
+    "index": 2968,
+    "size": 24,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "leaf",
+      "frame",
+      "float"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -DNDEBUG",
+    "name": "__math_xflow",
+    "symbol": "__math_xflow",
+    "evidence": "symbol",
+    "object": "emsdk:libc.a:__math_xflow.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libc/musl/src/math/__math_xflow.c"
+    }
+  },
+  {
+    "id": "libc/3987",
+    "index": 3987,
+    "size": 109,
+    "band": "small",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [
+      "call_indirect",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -DNDEBUG",
+    "name": "__ftello_unlocked",
+    "symbol": "__ftello_unlocked",
+    "evidence": "symbol",
+    "object": "emsdk:libc.a:ftell.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libc/musl/src/stdio/ftell.c"
+    }
+  },
+  {
+    "id": "libc/3991",
+    "index": 3991,
+    "size": 89,
+    "band": "small",
+    "component": "libc++",
+    "owner": "-",
+    "features": [
+      "leaf",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -DNDEBUG",
+    "name": "__towrite",
+    "symbol": "__towrite",
+    "evidence": "symbol",
+    "object": "emsdk:libc.a:__towrite.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libc/musl/src/stdio/__towrite.c"
+    }
+  },
+  {
+    "id": "libc/3996",
+    "index": 3996,
+    "size": 2908,
+    "band": "huge",
+    "component": "RHVoice",
+    "owner": "-",
+    "features": [
+      "loop",
+      "switch",
+      "frame",
+      "inlined-frame",
+      "i64",
+      "float",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 11
+    },
+    "origin": "selected",
+    "setup": "libc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -DNDEBUG",
+    "name": "__rem_pio2",
+    "symbol": "__rem_pio2",
+    "evidence": "symbol",
+    "object": "emsdk:libc.a:__rem_pio2.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libc/musl/src/math/__rem_pio2.c"
+    }
+  },
+  {
+    "id": "libc/6229",
+    "index": 6229,
+    "size": 3961,
+    "band": "huge",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "loop",
+      "switch",
+      "frame",
+      "inlined-frame",
+      "i64",
+      "float",
+      "bulk-memory",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 26
+    },
+    "origin": "selected",
+    "setup": "libc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -DNDEBUG",
+    "name": "vsscanf",
+    "symbol": "vsscanf",
+    "evidence": "symbol",
+    "object": "emsdk:libc.a:vsscanf.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libc/musl/src/stdio/vsscanf.c"
+    }
+  },
+  {
+    "id": "libc-optz/159",
+    "index": 159,
+    "size": 67,
+    "band": "small",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "leaf",
+      "loop"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libc-optz",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -Os -fno-inline-functions -fno-builtin -DEMSCRIPTEN_OPTIMIZE_FOR_OZ -DNDEBUG",
+    "name": "memcmp",
+    "symbol": "memcmp",
+    "evidence": "symbol",
+    "object": "emsdk:libc_optz.a:memcmp.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libc/musl/src/string/memcmp.c"
+    }
+  },
+  {
+    "id": "libc-optz/504",
+    "index": 504,
+    "size": 19,
+    "band": "tiny",
+    "component": "ecourna",
+    "owner": "app",
+    "features": [
+      "leaf",
+      "bulk-memory"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libc-optz",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -Os -fno-inline-functions -fno-builtin -DEMSCRIPTEN_OPTIMIZE_FOR_OZ -DNDEBUG",
+    "name": "__memcpy",
+    "symbol": "__memcpy",
+    "evidence": "symbol",
+    "object": "emsdk:libc_optz.a:emscripten_memcpy.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libc/emscripten_memcpy.c"
+    }
+  },
+  {
+    "id": "libc-optz/865",
+    "index": 865,
+    "size": 397,
+    "band": "medium",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "leaf",
+      "i64",
+      "float"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 2
+    },
+    "origin": "selected",
+    "setup": "libc-optz",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -Os -fno-inline-functions -fno-builtin -DEMSCRIPTEN_OPTIMIZE_FOR_OZ -DNDEBUG",
+    "name": "log",
+    "symbol": "log",
+    "evidence": "symbol",
+    "object": "emsdk:libc_optz.a:log_small.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libc/musl/src/math/log_small.c"
+    }
+  },
+  {
+    "id": "libc-optz/1172",
+    "index": 1172,
+    "size": 2020,
+    "band": "large",
+    "component": "RHVoice",
+    "owner": "rhvoice",
+    "features": [
+      "switch",
+      "i64",
+      "float",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 16
+    },
+    "origin": "selected",
+    "setup": "libc-optz",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -Os -fno-inline-functions -fno-builtin -DEMSCRIPTEN_OPTIMIZE_FOR_OZ -DNDEBUG",
+    "name": "pow",
+    "symbol": "pow",
+    "evidence": "symbol",
+    "object": "emsdk:libc_optz.a:pow_small.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libc/musl/src/math/pow_small.c"
+    }
+  },
+  {
+    "id": "libc-optz/1421",
+    "index": 1421,
+    "size": 23,
+    "band": "tiny",
+    "component": "RHVoice",
+    "owner": "-",
+    "features": [
+      "leaf",
+      "bulk-memory"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libc-optz",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -std=c99 -D_XOPEN_SOURCE=700 -Os -fno-inline-functions -fno-builtin -Os -fno-inline-functions -fno-builtin -DEMSCRIPTEN_OPTIMIZE_FOR_OZ -DNDEBUG",
+    "name": "__memset",
+    "symbol": "__memset",
+    "evidence": "symbol",
+    "object": "emsdk:libc_optz.a:emscripten_memset.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libc/emscripten_memset.c"
+    }
+  },
+  {
+    "id": "dlmalloc/136",
+    "index": 136,
+    "size": 1571,
+    "band": "large",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "leaf",
+      "loop",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 35
+    },
+    "origin": "selected",
+    "setup": "dlmalloc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG",
+    "name": "emscripten_builtin_free",
+    "symbol": "emscripten_builtin_free",
+    "evidence": "symbol",
+    "object": "emsdk:libdlmalloc.a:dlmalloc.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/dlmalloc.c"
+    }
+  },
+  {
+    "id": "dlmalloc/262",
+    "index": 262,
+    "size": 5308,
+    "band": "huge",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "loop",
+      "frame",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 139
+    },
+    "origin": "selected",
+    "setup": "dlmalloc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG",
+    "name": "emscripten_builtin_malloc",
+    "symbol": "emscripten_builtin_malloc",
+    "evidence": "symbol",
+    "object": "emsdk:libdlmalloc.a:dlmalloc.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/dlmalloc.c"
+    }
+  },
+  {
+    "id": "dlmalloc/734",
+    "index": 734,
+    "size": 92,
+    "band": "small",
+    "component": "unknown",
+    "owner": "sqlite",
+    "features": [
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 2
+    },
+    "origin": "selected",
+    "setup": "dlmalloc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG",
+    "name": "emscripten_builtin_calloc",
+    "symbol": "emscripten_builtin_calloc",
+    "evidence": "symbol",
+    "object": "emsdk:libdlmalloc.a:dlmalloc.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/dlmalloc.c"
+    }
+  },
+  {
+    "id": "dlmalloc/908",
+    "index": 908,
+    "size": 1056,
+    "band": "large",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "loop",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 21
+    },
+    "origin": "selected",
+    "setup": "dlmalloc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG",
+    "name": "emscripten_builtin_realloc",
+    "symbol": "emscripten_builtin_realloc",
+    "evidence": "symbol",
+    "object": "emsdk:libdlmalloc.a:dlmalloc.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/dlmalloc.c"
+    }
+  },
+  {
+    "id": "dlmalloc/1975",
+    "index": 1975,
+    "size": 90,
+    "band": "small",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "i64"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 3
+    },
+    "origin": "selected",
+    "setup": "dlmalloc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG",
+    "name": "sbrk",
+    "symbol": "sbrk",
+    "evidence": "symbol",
+    "object": "emsdk:libdlmalloc.a:sbrk.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libc/sbrk.c"
+    }
+  },
+  {
+    "id": "dlmalloc/2943",
+    "index": 2943,
+    "size": 1483,
+    "band": "large",
+    "component": "libc++abi",
+    "owner": "-",
+    "features": [
+      "leaf",
+      "loop",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 32
+    },
+    "origin": "selected",
+    "setup": "dlmalloc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG",
+    "name": "dispose_chunk",
+    "symbol": "dispose_chunk",
+    "evidence": "symbol",
+    "object": "emsdk:libdlmalloc.a:dlmalloc.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/dlmalloc.c"
+    }
+  },
+  {
+    "id": "dlmalloc/6226",
+    "index": 6226,
+    "size": 417,
+    "band": "medium",
+    "component": "libc++abi",
+    "owner": "libcxx",
+    "features": [
+      "loop",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 4
+    },
+    "origin": "selected",
+    "setup": "dlmalloc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG",
+    "name": "internal_memalign",
+    "symbol": "internal_memalign",
+    "evidence": "symbol",
+    "object": "emsdk:libdlmalloc.a:dlmalloc.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/dlmalloc.c"
+    }
+  },
+  {
+    "id": "dlmalloc/6227",
+    "index": 6227,
+    "size": 23,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "-",
+    "features": [],
+    "ledger": {
+      "kind": "addr",
+      "score": 2
+    },
+    "origin": "selected",
+    "setup": "dlmalloc",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG",
+    "name": "emscripten_builtin_memalign",
+    "symbol": "emscripten_builtin_memalign",
+    "evidence": "symbol",
+    "object": "emsdk:libdlmalloc.a:dlmalloc.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/dlmalloc.c"
+    }
+  },
+  {
+    "id": "compiler-rt/206",
+    "index": 206,
+    "size": 117,
+    "band": "small",
+    "component": "ecourna",
+    "owner": "-",
+    "features": [
+      "leaf",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "compiler-rt",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG -DCOMPILER_RT_HAS_ATOMICS=1 -sSUPPORT_LONGJMP=emscripten -sDISABLE_EXCEPTION_THROWING=0",
+    "name": "__multi3",
+    "symbol": "__multi3",
+    "evidence": "symbol",
+    "object": "emsdk:libcompiler_rt.a:multi3.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/compiler-rt/lib/builtins/multi3.c"
+    }
+  },
+  {
+    "id": "compiler-rt/522",
+    "index": 522,
+    "size": 1361,
+    "band": "large",
+    "component": "RHVoice",
+    "owner": "-",
+    "features": [
+      "frame",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 6
+    },
+    "origin": "selected",
+    "setup": "compiler-rt",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG -DCOMPILER_RT_HAS_ATOMICS=1 -sSUPPORT_LONGJMP=emscripten -sDISABLE_EXCEPTION_THROWING=0",
+    "name": "__multf3",
+    "symbol": "__multf3",
+    "evidence": "symbol",
+    "object": "emsdk:libcompiler_rt.a:multf3.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/compiler-rt/lib/builtins/multf3.c"
+    }
+  },
+  {
+    "id": "compiler-rt/733",
+    "index": 733,
+    "size": 80,
+    "band": "small",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "leaf",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "compiler-rt",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG -DCOMPILER_RT_HAS_ATOMICS=1 -sSUPPORT_LONGJMP=emscripten -sDISABLE_EXCEPTION_THROWING=0",
+    "name": "__ashlti3",
+    "symbol": "__ashlti3",
+    "evidence": "symbol",
+    "object": "emsdk:libcompiler_rt.a:ashlti3.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/compiler-rt/lib/builtins/ashlti3.c"
+    }
+  },
+  {
+    "id": "compiler-rt/907",
+    "index": 907,
+    "size": 1236,
+    "band": "large",
+    "component": "RHVoice",
+    "owner": "sqlite",
+    "features": [
+      "frame",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 3
+    },
+    "origin": "selected",
+    "setup": "compiler-rt",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG -DCOMPILER_RT_HAS_ATOMICS=1 -sSUPPORT_LONGJMP=emscripten -sDISABLE_EXCEPTION_THROWING=0",
+    "name": "__addtf3",
+    "symbol": "__addtf3",
+    "evidence": "symbol",
+    "object": "emsdk:libcompiler_rt.a:addtf3.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/compiler-rt/lib/builtins/addtf3.c"
+    }
+  },
+  {
+    "id": "compiler-rt/1732",
+    "index": 1732,
+    "size": 80,
+    "band": "small",
+    "component": "RHVoice",
+    "owner": "-",
+    "features": [
+      "leaf",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "compiler-rt",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG -DCOMPILER_RT_HAS_ATOMICS=1 -sSUPPORT_LONGJMP=emscripten -sDISABLE_EXCEPTION_THROWING=0",
+    "name": "__lshrti3",
+    "symbol": "__lshrti3",
+    "evidence": "symbol",
+    "object": "emsdk:libcompiler_rt.a:lshrti3.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/compiler-rt/lib/builtins/lshrti3.c"
+    }
+  },
+  {
+    "id": "compiler-rt/1733",
+    "index": 1733,
+    "size": 219,
+    "band": "medium",
+    "component": "RHVoice",
+    "owner": "-",
+    "features": [
+      "leaf",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "compiler-rt",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG -DCOMPILER_RT_HAS_ATOMICS=1 -sSUPPORT_LONGJMP=emscripten -sDISABLE_EXCEPTION_THROWING=0",
+    "name": "__letf2",
+    "symbol": "__letf2",
+    "evidence": "symbol",
+    "object": "emsdk:libcompiler_rt.a:comparetf2.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/compiler-rt/lib/builtins/comparetf2.c"
+    }
+  },
+  {
+    "id": "compiler-rt/1972",
+    "index": 1972,
+    "size": 59,
+    "band": "small",
+    "component": "unknown",
+    "owner": "libcxx",
+    "features": [
+      "frame",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "compiler-rt",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG -DCOMPILER_RT_HAS_ATOMICS=1 -sSUPPORT_LONGJMP=emscripten -sDISABLE_EXCEPTION_THROWING=0",
+    "name": "__udivti3",
+    "symbol": "__udivti3",
+    "evidence": "symbol",
+    "object": "emsdk:libcompiler_rt.a:udivti3.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/compiler-rt/lib/builtins/udivti3.c"
+    }
+  },
+  {
+    "id": "compiler-rt/3961",
+    "index": 3961,
+    "size": 790,
+    "band": "large",
+    "component": "ecourna",
+    "owner": "libcxx",
+    "features": [
+      "loop",
+      "frame",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "compiler-rt",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG -DCOMPILER_RT_HAS_ATOMICS=1 -sSUPPORT_LONGJMP=emscripten -sDISABLE_EXCEPTION_THROWING=0",
+    "name": "__udivmodti4",
+    "symbol": "__udivmodti4",
+    "evidence": "symbol",
+    "object": "emsdk:libcompiler_rt.a:udivmodti4.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/compiler-rt/lib/builtins/udivmodti4.c"
+    }
+  },
+  {
+    "id": "compiler-rt/6223",
+    "index": 6223,
+    "size": 486,
+    "band": "medium",
+    "component": "unknown",
+    "owner": "libcxx",
+    "features": [
+      "frame",
+      "i64",
+      "float",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 4
+    },
+    "origin": "selected",
+    "setup": "compiler-rt",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG -DCOMPILER_RT_HAS_ATOMICS=1 -sSUPPORT_LONGJMP=emscripten -sDISABLE_EXCEPTION_THROWING=0",
+    "name": "__trunctfsf2",
+    "symbol": "__trunctfsf2",
+    "evidence": "symbol",
+    "object": "emsdk:libcompiler_rt.a:trunctfsf2.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/compiler-rt/lib/builtins/trunctfsf2.c"
+    }
+  },
+  {
+    "id": "compiler-rt/6224",
+    "index": 6224,
+    "size": 2076,
+    "band": "huge",
+    "component": "RHVoice",
+    "owner": "libcxx",
+    "features": [
+      "frame",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 7
+    },
+    "origin": "selected",
+    "setup": "compiler-rt",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG -DCOMPILER_RT_HAS_ATOMICS=1 -sSUPPORT_LONGJMP=emscripten -sDISABLE_EXCEPTION_THROWING=0",
+    "name": "__divtf3",
+    "symbol": "__divtf3",
+    "evidence": "symbol",
+    "object": "emsdk:libcompiler_rt.a:divtf3.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/compiler-rt/lib/builtins/divtf3.c"
+    }
+  },
+  {
+    "id": "compiler-rt/6225",
+    "index": 6225,
+    "size": 192,
+    "band": "medium",
+    "component": "RHVoice",
+    "owner": "libcxx",
+    "features": [
+      "leaf",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "compiler-rt",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG -DCOMPILER_RT_HAS_ATOMICS=1 -sSUPPORT_LONGJMP=emscripten -sDISABLE_EXCEPTION_THROWING=0",
+    "name": "__getf2",
+    "symbol": "__getf2",
+    "evidence": "symbol",
+    "object": "emsdk:libcompiler_rt.a:comparetf2.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/compiler-rt/lib/builtins/comparetf2.c"
+    }
+  },
+  {
+    "id": "compiler-rt/12119",
+    "index": 12119,
+    "size": 16,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "app",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "compiler-rt",
+    "lang": "c",
+    "flags": "-O2 -fno-unroll-loops -fno-builtin -DNDEBUG -DCOMPILER_RT_HAS_ATOMICS=1 -sSUPPORT_LONGJMP=emscripten -sDISABLE_EXCEPTION_THROWING=0",
+    "name": "_emscripten_stack_alloc",
+    "symbol": "_emscripten_stack_alloc",
+    "evidence": "symbol",
+    "object": "emsdk:libcompiler_rt.a:stack_ops.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/compiler-rt/stack_ops.S"
+    }
+  },
+  {
+    "id": "libcxx/2137",
+    "index": 2137,
+    "size": 11,
+    "band": "tiny",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libcxx",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -DLIBCXX_BUILDING_LIBCXXABI=1 -D_LIBCPP_BUILDING_LIBRARY -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -std=c++23 -DLIBC_NAMESPACE=__llvm_libc -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0",
+    "name": "std::__2::codecvt<char, char, __mbstate_t>::do_unshift(__mbstate_t&, char*, char*, char*&) const",
+    "symbol": "_ZNKSt3__27codecvtIcc11__mbstate_tE10do_unshiftERS1_PcS4_RS4_",
+    "evidence": "symbol",
+    "object": "emsdk:libc++.a:locale.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxx/src/locale.cpp"
+    }
+  },
+  {
+    "id": "libcxx/2239",
+    "index": 2239,
+    "size": 136,
+    "band": "medium",
+    "component": "unknown",
+    "owner": "libcxx",
+    "features": [
+      "leaf",
+      "bulk-memory"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libcxx",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -DLIBCXX_BUILDING_LIBCXXABI=1 -D_LIBCPP_BUILDING_LIBRARY -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -std=c++23 -DLIBC_NAMESPACE=__llvm_libc -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0",
+    "name": "std::__2::vector<std::__2::locale::facet*, std::__2::__sso_allocator<std::__2::locale::facet*, 30ul>>::__swap_out_circular_buffer(std::__2::__split_buffer<std::__2::locale::facet*, std::__2::__sso_allocator<std::__2::locale::facet*, 30ul>&>&)",
+    "symbol": "_ZNSt3__26vectorIPNS_6locale5facetENS_15__sso_allocatorIS3_Lm30EEEE26__swap_out_circular_bufferERNS_14__split_bufferIS3_RS5_EE",
+    "evidence": "symbol",
+    "object": "emsdk:libc++.a:locale.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxx/src/locale.cpp"
+    }
+  },
+  {
+    "id": "libcxx/2561",
+    "index": 2561,
+    "size": 539,
+    "band": "large",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [
+      "switch",
+      "frame",
+      "select"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libcxx",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -DLIBCXX_BUILDING_LIBCXXABI=1 -D_LIBCPP_BUILDING_LIBRARY -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -std=c++23 -DLIBC_NAMESPACE=__llvm_libc -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0",
+    "name": "std::__2::__num_get<char>::__stage2_float_loop(char, bool&, char&, char*, char*&, char, char, std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>> const&, unsigned int*, unsigned int*&, unsigned int&, char*)",
+    "symbol": "_ZNSt3__29__num_getIcE19__stage2_float_loopEcRbRcPcRS4_ccRKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEPjRSE_RjS4_",
+    "evidence": "symbol",
+    "object": "emsdk:libc++.a:locale.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxx/src/locale.cpp"
+    }
+  },
+  {
+    "id": "libcxx/2566",
+    "index": 2566,
+    "size": 49,
+    "band": "small",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [
+      "call_indirect"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libcxx",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -DLIBCXX_BUILDING_LIBCXXABI=1 -D_LIBCPP_BUILDING_LIBRARY -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -std=c++23 -DLIBC_NAMESPACE=__llvm_libc -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0",
+    "name": "std::__2::basic_streambuf<wchar_t, std::__2::char_traits<wchar_t>>::sbumpc[abi:ne210108]()",
+    "symbol": "_ZNSt3__215basic_streambufIwNS_11char_traitsIwEEE6sbumpcB8ne210108Ev",
+    "evidence": "symbol",
+    "object": "emsdk:libc++.a:ios.instantiations.o",
+    "reference": null
+  },
+  {
+    "id": "libcxx/4704",
+    "index": 4704,
+    "size": 18,
+    "band": "tiny",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libcxx",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -DLIBCXX_BUILDING_LIBCXXABI=1 -D_LIBCPP_BUILDING_LIBRARY -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -std=c++23 -DLIBC_NAMESPACE=__llvm_libc -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0",
+    "name": "std::__2::codecvt<char, char, __mbstate_t>::do_out(__mbstate_t&, char const*, char const*, char const*&, char*, char*, char*&) const",
+    "symbol": "_ZNKSt3__27codecvtIcc11__mbstate_tE6do_outERS1_PKcS5_RS5_PcS7_RS7_",
+    "evidence": "symbol",
+    "object": "emsdk:libc++.a:locale.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxx/src/locale.cpp"
+    }
+  },
+  {
+    "id": "libcxx/4775",
+    "index": 4775,
+    "size": 67,
+    "band": "small",
+    "component": "unknown",
+    "owner": "libcxx",
+    "features": [
+      "leaf",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libcxx",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -DLIBCXX_BUILDING_LIBCXXABI=1 -D_LIBCPP_BUILDING_LIBRARY -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -std=c++23 -DLIBC_NAMESPACE=__llvm_libc -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0",
+    "name": "std::__2::__mulShift[abi:ne210108](unsigned int, unsigned long long, int)",
+    "symbol": "_ZNSt3__210__mulShiftB8ne210108Ejyi",
+    "evidence": "symbol",
+    "object": "emsdk:libc++.a:f2s.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxx/src/ryu/f2s.cpp"
+    }
+  },
+  {
+    "id": "libcxx/4796",
+    "index": 4796,
+    "size": 3202,
+    "band": "huge",
+    "component": "unknown",
+    "owner": "libcxx",
+    "features": [
+      "loop",
+      "switch",
+      "frame",
+      "inlined-frame",
+      "i64",
+      "float",
+      "bulk-memory",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 50
+    },
+    "origin": "selected",
+    "setup": "libcxx",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -DLIBCXX_BUILDING_LIBCXXABI=1 -D_LIBCPP_BUILDING_LIBRARY -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -std=c++23 -DLIBC_NAMESPACE=__llvm_libc -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0",
+    "name": "std::__2::__d2s_buffered_n(char*, char*, double, std::__2::chars_format)",
+    "symbol": "_ZNSt3__216__d2s_buffered_nEPcS0_dNS_12chars_formatE",
+    "evidence": "symbol",
+    "object": "emsdk:libc++.a:d2s.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxx/src/ryu/d2s.cpp"
+    }
+  },
+  {
+    "id": "libcxx/7799",
+    "index": 7799,
+    "size": 556,
+    "band": "large",
+    "component": "unknown",
+    "owner": "libcxx",
+    "features": [
+      "loop",
+      "switch",
+      "throw",
+      "frame",
+      "inlined-frame",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 9
+    },
+    "origin": "selected",
+    "setup": "libcxx",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -DLIBCXX_BUILDING_LIBCXXABI=1 -D_LIBCPP_BUILDING_LIBRARY -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -std=c++23 -DLIBC_NAMESPACE=__llvm_libc -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0",
+    "name": "std::__2::codecvt<wchar_t, char, __mbstate_t>::do_out(__mbstate_t&, wchar_t const*, wchar_t const*, wchar_t const*&, char*, char*, char*&) const",
+    "symbol": "_ZNKSt3__27codecvtIwc11__mbstate_tE6do_outERS1_PKwS5_RS5_PcS7_RS7_",
+    "evidence": "symbol",
+    "object": "emsdk:libc++.a:locale.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxx/src/locale.cpp"
+    }
+  },
+  {
+    "id": "libcxx/7882",
+    "index": 7882,
+    "size": 3602,
+    "band": "huge",
+    "component": "unknown",
+    "owner": "libcxx",
+    "features": [
+      "loop",
+      "switch",
+      "invoke",
+      "throw",
+      "frame",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 166
+    },
+    "origin": "selected",
+    "setup": "libcxx",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -DLIBCXX_BUILDING_LIBCXXABI=1 -D_LIBCPP_BUILDING_LIBRARY -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -std=c++23 -DLIBC_NAMESPACE=__llvm_libc -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0",
+    "name": "std::__2::money_get<wchar_t, std::__2::istreambuf_iterator<wchar_t, std::__2::char_traits<wchar_t>>>::__do_get(std::__2::istreambuf_iterator<wchar_t, std::__2::char_traits<wchar_t>>&, std::__2::istreambuf_iterator<wchar_t, std::__2::char_traits<wchar_t>>, bool, std::__2::locale const&, unsigned int, unsigned int&, bool&, std::__2::ctype<wchar_t> const&, std::__2::unique_ptr<wchar_t, void (*)(void*)>&, wchar_t*&, wchar_t*)",
+    "symbol": "_ZNSt3__29money_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE8__do_getERS4_S4_bRKNS_6localeEjRjRbRKNS_5ctypeIwEERNS_10unique_ptrIwPFvPvEEERPwSM_",
+    "evidence": "symbol",
+    "object": "emsdk:libc++.a:locale.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxx/src/locale.cpp"
+    }
+  },
+  {
+    "id": "libcxx/8049",
+    "index": 8049,
+    "size": 150,
+    "band": "medium",
+    "component": "boost",
+    "owner": "libcxx",
+    "features": [
+      "loop",
+      "call_indirect",
+      "bulk-memory",
+      "select"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libcxx",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -DLIBCXX_BUILDING_LIBCXXABI=1 -D_LIBCPP_BUILDING_LIBRARY -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -std=c++23 -DLIBC_NAMESPACE=__llvm_libc -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0",
+    "name": "std::__2::basic_streambuf<char, std::__2::char_traits<char>>::xsputn(char const*, long)",
+    "symbol": "_ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE6xsputnEPKcl",
+    "evidence": "symbol",
+    "object": "emsdk:libc++.a:ios.instantiations.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxx/src/ios.instantiations.cpp"
+    }
+  },
+  {
+    "id": "libcxx/8068",
+    "index": 8068,
+    "size": 26,
+    "band": "tiny",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [
+      "leaf",
+      "select"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libcxx",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -DLIBCXX_BUILDING_LIBCXXABI=1 -D_LIBCPP_BUILDING_LIBRARY -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -std=c++23 -DLIBC_NAMESPACE=__llvm_libc -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0",
+    "name": "std::__2::filesystem::filesystem_error::what() const",
+    "symbol": "_ZNKSt3__210filesystem16filesystem_error4whatEv",
+    "evidence": "symbol",
+    "object": "emsdk:libc++.a:filesystem_error.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxx/src/filesystem/filesystem_error.cpp"
+    }
+  },
+  {
+    "id": "libcxx/8103",
+    "index": 8103,
+    "size": 117,
+    "band": "small",
+    "component": "libc++",
+    "owner": "-",
+    "features": [
+      "invoke",
+      "throw",
+      "frame",
+      "i64"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 8
+    },
+    "origin": "selected",
+    "setup": "libcxx",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -DLIBCXX_BUILDING_LIBCXXABI=1 -D_LIBCPP_BUILDING_LIBRARY -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -std=c++23 -DLIBC_NAMESPACE=__llvm_libc -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0",
+    "name": "void std::__2::filesystem::__throw_filesystem_error[abi:ne210108]<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>&, std::__2::filesystem::path const&, std::__2::error_code const&>(std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>&, std::__2::filesystem::path const&, std::__2::error_code const&)",
+    "symbol": "_ZNSt3__210filesystem24__throw_filesystem_errorB8ne210108IJRNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS0_4pathERKNS_10error_codeEEEEvDpOT_",
+    "evidence": "symbol",
+    "object": "emsdk:libc++.a:directory_entry.o",
+    "reference": null
+  },
+  {
+    "id": "libcxxabi/188",
+    "index": 188,
+    "size": 405,
+    "band": "medium",
+    "component": "unknown",
+    "owner": "-",
+    "features": [
+      "switch",
+      "call_indirect",
+      "i64",
+      "select"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libcxxabi",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -D_LIBCXXABI_USE_FUTEX -D_LIBCPP_BUILDING_LIBRARY -D_LIBCXXABI_BUILDING_LIBRARY -DLIBCXXABI_NON_DEMANGLING_TERMINATE -std=c++23 -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0 -D_LIBCXXABI_HAS_NO_THREADS -D__EMSCRIPTEN_EXCEPTIONS__ -DLIBCXXABI_SILENT_TERMINATE",
+    "name": "__dynamic_cast",
+    "symbol": "__dynamic_cast",
+    "evidence": "symbol",
+    "object": "emsdk:libc++abi.a:private_typeinfo.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxxabi/src/private_typeinfo.cpp"
+    }
+  },
+  {
+    "id": "libcxxabi/2930",
+    "index": 2930,
+    "size": 160,
+    "band": "medium",
+    "component": "unknown",
+    "owner": "libcxx",
+    "features": [
+      "invoke"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 15
+    },
+    "origin": "selected",
+    "setup": "libcxxabi",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -D_LIBCXXABI_USE_FUTEX -D_LIBCPP_BUILDING_LIBRARY -D_LIBCXXABI_BUILDING_LIBRARY -DLIBCXXABI_NON_DEMANGLING_TERMINATE -std=c++23 -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0 -D_LIBCXXABI_HAS_NO_THREADS -D__EMSCRIPTEN_EXCEPTIONS__ -DLIBCXXABI_SILENT_TERMINATE",
+    "name": "std::terminate()",
+    "symbol": "_ZSt9terminatev",
+    "evidence": "symbol",
+    "object": "emsdk:libc++abi.a:cxa_handlers.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxxabi/src/cxa_handlers.cpp"
+    }
+  },
+  {
+    "id": "libcxxabi/3947",
+    "index": 3947,
+    "size": 154,
+    "band": "medium",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libcxxabi",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -D_LIBCXXABI_USE_FUTEX -D_LIBCPP_BUILDING_LIBRARY -D_LIBCXXABI_BUILDING_LIBRARY -DLIBCXXABI_NON_DEMANGLING_TERMINATE -std=c++23 -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0 -D_LIBCXXABI_HAS_NO_THREADS -D__EMSCRIPTEN_EXCEPTIONS__ -DLIBCXXABI_SILENT_TERMINATE",
+    "name": "__cxxabiv1::__class_type_info::process_static_type_above_dst(__cxxabiv1::__dynamic_cast_info*, void const*, void const*, int) const",
+    "symbol": "_ZNK10__cxxabiv117__class_type_info29process_static_type_above_dstEPNS_19__dynamic_cast_infoEPKvS4_i",
+    "evidence": "symbol",
+    "object": "emsdk:libc++abi.a:private_typeinfo.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxxabi/src/private_typeinfo.cpp"
+    }
+  },
+  {
+    "id": "libcxxabi/3948",
+    "index": 3948,
+    "size": 118,
+    "band": "small",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libcxxabi",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -D_LIBCXXABI_USE_FUTEX -D_LIBCPP_BUILDING_LIBRARY -D_LIBCXXABI_BUILDING_LIBRARY -DLIBCXXABI_NON_DEMANGLING_TERMINATE -std=c++23 -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0 -D_LIBCXXABI_HAS_NO_THREADS -D__EMSCRIPTEN_EXCEPTIONS__ -DLIBCXXABI_SILENT_TERMINATE",
+    "name": "__cxxabiv1::__class_type_info::process_found_base_class(__cxxabiv1::__dynamic_cast_info*, void*, int) const",
+    "symbol": "_ZNK10__cxxabiv117__class_type_info24process_found_base_classEPNS_19__dynamic_cast_infoEPvi",
+    "evidence": "symbol",
+    "object": "emsdk:libc++abi.a:private_typeinfo.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxxabi/src/private_typeinfo.cpp"
+    }
+  },
+  {
+    "id": "libcxxabi/6173",
+    "index": 6173,
+    "size": 123,
+    "band": "small",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [
+      "call_indirect",
+      "select"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libcxxabi",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -D_LIBCXXABI_USE_FUTEX -D_LIBCPP_BUILDING_LIBRARY -D_LIBCXXABI_BUILDING_LIBRARY -DLIBCXXABI_NON_DEMANGLING_TERMINATE -std=c++23 -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0 -D_LIBCXXABI_HAS_NO_THREADS -D__EMSCRIPTEN_EXCEPTIONS__ -DLIBCXXABI_SILENT_TERMINATE",
+    "name": "__cxxabiv1::__base_class_type_info::has_unambiguous_public_base(__cxxabiv1::__dynamic_cast_info*, void*, int) const",
+    "symbol": "_ZNK10__cxxabiv122__base_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi",
+    "evidence": "symbol",
+    "object": "emsdk:libc++abi.a:private_typeinfo.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxxabi/src/private_typeinfo.cpp"
+    }
+  },
+  {
+    "id": "libcxxabi/12128",
+    "index": 12128,
+    "size": 67,
+    "band": "small",
+    "component": "unknown",
+    "owner": "app",
+    "features": [
+      "call_indirect",
+      "frame"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libcxxabi",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -D_LIBCXXABI_USE_FUTEX -D_LIBCPP_BUILDING_LIBRARY -D_LIBCXXABI_BUILDING_LIBRARY -DLIBCXXABI_NON_DEMANGLING_TERMINATE -std=c++23 -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0 -D_LIBCXXABI_HAS_NO_THREADS -D__EMSCRIPTEN_EXCEPTIONS__ -DLIBCXXABI_SILENT_TERMINATE",
+    "name": "__cxa_can_catch",
+    "symbol": "__cxa_can_catch",
+    "evidence": "symbol",
+    "object": "emsdk:libc++abi.a:private_typeinfo.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxxabi/src/private_typeinfo.cpp"
+    }
+  },
+  {
+    "id": "libcxxabi/12129",
+    "index": 12129,
+    "size": 28,
+    "band": "tiny",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libcxxabi",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -D_LIBCXXABI_USE_FUTEX -D_LIBCPP_BUILDING_LIBRARY -D_LIBCXXABI_BUILDING_LIBRARY -DLIBCXXABI_NON_DEMANGLING_TERMINATE -std=c++23 -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0 -D_LIBCXXABI_HAS_NO_THREADS -D__EMSCRIPTEN_EXCEPTIONS__ -DLIBCXXABI_SILENT_TERMINATE",
+    "name": "__cxxabiv1::__class_type_info::search_above_dst(__cxxabiv1::__dynamic_cast_info*, void const*, void const*, int, bool) const",
+    "symbol": "_ZNK10__cxxabiv117__class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib",
+    "evidence": "symbol",
+    "object": "emsdk:libc++abi.a:private_typeinfo.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxxabi/src/private_typeinfo.cpp"
+    }
+  },
+  {
+    "id": "libcxxabi/12135",
+    "index": 12135,
+    "size": 579,
+    "band": "large",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [
+      "loop",
+      "select"
+    ],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libcxxabi",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -D_LIBCXXABI_USE_FUTEX -D_LIBCPP_BUILDING_LIBRARY -D_LIBCXXABI_BUILDING_LIBRARY -DLIBCXXABI_NON_DEMANGLING_TERMINATE -std=c++23 -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0 -D_LIBCXXABI_HAS_NO_THREADS -D__EMSCRIPTEN_EXCEPTIONS__ -DLIBCXXABI_SILENT_TERMINATE",
+    "name": "__cxxabiv1::__vmi_class_type_info::search_below_dst(__cxxabiv1::__dynamic_cast_info*, void const*, int, bool) const",
+    "symbol": "_ZNK10__cxxabiv121__vmi_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib",
+    "evidence": "symbol",
+    "object": "emsdk:libc++abi.a:private_typeinfo.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxxabi/src/private_typeinfo.cpp"
+    }
+  },
+  {
+    "id": "libcxxabi/12136",
+    "index": 12136,
+    "size": 660,
+    "band": "large",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [
+      "loop",
+      "call_indirect",
+      "bulk-memory",
+      "select"
+    ],
+    "ledger": {
+      "kind": "addr",
+      "score": 24
+    },
+    "origin": "selected",
+    "setup": "libcxxabi",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -D_LIBCXXABI_USE_FUTEX -D_LIBCPP_BUILDING_LIBRARY -D_LIBCXXABI_BUILDING_LIBRARY -DLIBCXXABI_NON_DEMANGLING_TERMINATE -std=c++23 -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0 -D_LIBCXXABI_HAS_NO_THREADS -D__EMSCRIPTEN_EXCEPTIONS__ -DLIBCXXABI_SILENT_TERMINATE",
+    "name": "__cxxabiv1::__pointer_type_info::can_catch(__cxxabiv1::__shim_type_info const*, void*&) const",
+    "symbol": "_ZNK10__cxxabiv119__pointer_type_info9can_catchEPKNS_16__shim_type_infoERPv",
+    "evidence": "symbol",
+    "object": "emsdk:libc++abi.a:private_typeinfo.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxxabi/src/private_typeinfo.cpp"
+    }
+  },
+  {
+    "id": "libcxxabi/12139",
+    "index": 12139,
+    "size": 28,
+    "band": "tiny",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [],
+    "ledger": {
+      "kind": "fingerprint",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libcxxabi",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -D_LIBCXXABI_USE_FUTEX -D_LIBCPP_BUILDING_LIBRARY -D_LIBCXXABI_BUILDING_LIBRARY -DLIBCXXABI_NON_DEMANGLING_TERMINATE -std=c++23 -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0 -D_LIBCXXABI_HAS_NO_THREADS -D__EMSCRIPTEN_EXCEPTIONS__ -DLIBCXXABI_SILENT_TERMINATE",
+    "name": "__cxxabiv1::__class_type_info::has_unambiguous_public_base(__cxxabiv1::__dynamic_cast_info*, void*, int) const",
+    "symbol": "_ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi",
+    "evidence": "symbol",
+    "object": "emsdk:libc++abi.a:private_typeinfo.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxxabi/src/private_typeinfo.cpp"
+    }
+  },
+  {
+    "id": "libcxxabi/12141",
+    "index": 12141,
+    "size": 13,
+    "band": "tiny",
+    "component": "libc++",
+    "owner": "libcxx",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libcxxabi",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -D_LIBCXXABI_USE_FUTEX -D_LIBCPP_BUILDING_LIBRARY -D_LIBCXXABI_BUILDING_LIBRARY -DLIBCXXABI_NON_DEMANGLING_TERMINATE -std=c++23 -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0 -D_LIBCXXABI_HAS_NO_THREADS -D__EMSCRIPTEN_EXCEPTIONS__ -DLIBCXXABI_SILENT_TERMINATE",
+    "name": "__cxxabiv1::__fundamental_type_info::can_catch(__cxxabiv1::__shim_type_info const*, void*&) const",
+    "symbol": "_ZNK10__cxxabiv123__fundamental_type_info9can_catchEPKNS_16__shim_type_infoERPv",
+    "evidence": "symbol",
+    "object": "emsdk:libc++abi.a:private_typeinfo.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxxabi/src/private_typeinfo.cpp"
+    }
+  },
+  {
+    "id": "libcxxabi/12144",
+    "index": 12144,
+    "size": 25,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "app",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "libcxxabi",
+    "lang": "c++",
+    "flags": "-O2 -fno-unroll-loops -Oz -D_LIBCXXABI_USE_FUTEX -D_LIBCPP_BUILDING_LIBRARY -D_LIBCXXABI_BUILDING_LIBRARY -DLIBCXXABI_NON_DEMANGLING_TERMINATE -std=c++23 -DNDEBUG -sDISABLE_EXCEPTION_CATCHING=0 -D_LIBCXXABI_HAS_NO_THREADS -D__EMSCRIPTEN_EXCEPTIONS__ -DLIBCXXABI_SILENT_TERMINATE",
+    "name": "__cxa_increment_exception_refcount",
+    "symbol": "__cxa_increment_exception_refcount",
+    "evidence": "symbol",
+    "object": "emsdk:libc++abi.a:cxa_exception_emscripten.o",
+    "reference": {
+      "path": "emsdk:/emsdk/upstream/emscripten/system/lib/libcxxabi/src/cxa_exception_emscripten.cpp"
+    }
+  }
+]

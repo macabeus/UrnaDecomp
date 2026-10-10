@@ -1,0 +1,42 @@
+{
+  "name": "@asmlift/wasm-playground",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A browser playground over vota_web_wasm.wasm: any function's WAT, folded readout and lifted C++, computed in the page, and the lifter benchmark's results per compile setup",
+  "scripts": {
+    "data": "tsx scripts/prepare-data.ts",
+    "dev": "tsx scripts/prepare-data.ts && vite",
+    "build": "tsx scripts/prepare-data.ts && tsc --noEmit && tsc --noEmit -p tsconfig.node.json && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.node.json"
+  },
+  "dependencies": {
+    "@asmlift/wasm": "workspace:*",
+    "@asmlift/wasm-benchmark": "workspace:*",
+    "@codemirror/lang-cpp": "^6.0.2",
+    "@codemirror/language": "^6.10.6",
+    "@codemirror/legacy-modes": "^6.4.2",
+    "@codemirror/state": "^6.5.0",
+    "@codemirror/view": "^6.36.0",
+    "@uiw/react-codemirror": "^4.23.7",
+    "echarts": "^5.5.1",
+    "echarts-for-react": "^3.0.2",
+    "nuqs": "^2.10.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tailwindcss": "^4.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^6.0.2",
+    "vite": "^6.0.5",
+    "vitest": "^3.2.0"
+  }
+}

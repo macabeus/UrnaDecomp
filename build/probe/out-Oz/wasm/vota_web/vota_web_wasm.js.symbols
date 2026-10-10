@@ -1,0 +1,140 @@
+0:__cxa_find_matching_catch_2
+1:invoke_iii
+2:__cxa_find_matching_catch_3
+3:__resumeException
+4:__syscall_fcntl64
+5:invoke_vii
+6:invoke_iiii
+7:__cxa_throw
+8:__cxa_begin_catch
+9:invoke_viii
+10:invoke_v
+11:invoke_ii
+12:__wasi_fd_write
+13:__wasi_fd_close
+14:__syscall_socket
+15:strptime
+16:llvm_eh_typeid_for
+17:js_probe_log
+18:invoke_vi
+19:invoke_ji
+20:invoke_iiiiiii
+21:emscripten_resize_heap
+22:emscripten_date_now
+23:emscripten_async_call
+24:_tzset_js
+25:_mktime_js
+26:_localtime_js
+27:_gmtime_js
+28:_abort_js
+29:__wasi_fd_seek
+30:__wasi_fd_read
+31:__syscall_stat64
+32:__syscall_sendto
+33:__syscall_openat
+34:__syscall_ioctl
+35:__syscall_connect
+36:__cxa_end_catch
+37:emscripten_builtin_free
+38:is_equal(std::type_info const*, std::type_info const*, bool)
+39:pad
+40:strlen
+41:strchr
+42:std::__2::__shared_ptr_emplace<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>, std::__2::allocator<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>>>::__on_zero_shared_weak()
+43:sbrk
+44:out
+45:operator new(unsigned long)
+46:__wasi_syscall_ret
+47:__syscall_ret
+48:fflush
+49:emscripten_builtin_malloc
+50:__cxxabiv1::__base_class_type_info::search_below_dst(__cxxabiv1::__dynamic_cast_info*, void const*, int, bool) const
+51:__clang_call_terminate
+52:__abort_message
+53:std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>::~basic_string()
+54:std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>::__throw_length_error[abi:ne210108]()
+55:iprintf
+56:__tzset
+57:__towrite
+58:__cxxabiv1::__class_type_info::process_static_type_above_dst(__cxxabiv1::__dynamic_cast_info*, void const*, void const*, int) const
+59:__cxxabiv1::__class_type_info::process_found_base_class(__cxxabiv1::__dynamic_cast_info*, void*, int) const
+60:__cxxabiv1::__base_class_type_info::search_above_dst(__cxxabiv1::__dynamic_cast_info*, void const*, void const*, int, bool) const
+61:__cxa_free_exception
+62:__cxa_allocate_exception
+63:wctomb
+64:std::terminate()
+65:std::runtime_error::~runtime_error()
+66:std::logic_error::~logic_error()_212
+67:std::logic_error::~logic_error()
+68:std::logic_error::what() const
+69:std::__2::shared_ptr<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>>::~shared_ptr[abi:ne210108]()
+70:std::__2::__shared_ptr_emplace<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>, std::__2::allocator<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>>>::~__shared_ptr_emplace()
+71:std::__2::__libcpp_refstring::~__libcpp_refstring()
+72:std::__2::__allocation_guard<std::__2::allocator<std::__2::__shared_ptr_emplace<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>, std::__2::allocator<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>>>>>::__destroy[abi:ne210108]()
+73:printf_core
+74:pop_arg
+75:memchr
+76:inet_addr
+77:htons
+78:getint
+79:dummy_76
+80:dummy
+81:dispose_chunk
+82:abort
+83:__memset
+84:__memcpy
+85:__fwritex
+86:__dynamic_cast
+87:__cxxabiv1::__base_class_type_info::has_unambiguous_public_base(__cxxabiv1::__dynamic_cast_info*, void*, int) const
+88:__cxxabiv1::__aligned_free_with_fallback(void*)
+89:__bswap_16
+90:time
+91:tick(void*)
+92:std::runtime_error::~runtime_error()_215
+93:std::runtime_error::runtime_error(char const*)
+94:std::length_error::length_error[abi:ne210108](char const*)
+95:std::bad_array_new_length::what() const
+96:std::bad_alloc::what() const
+97:std::__2::shared_ptr<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>> std::__2::make_shared[abi:ne210108]<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>, std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>&, 0>(std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>&)
+98:std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>::basic_string(std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>> const&)
+99:std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>::append(char const*)
+100:std::__2::__shared_weak_count::__get_deleter(std::type_info const&) const
+101:std::__2::__shared_ptr_emplace<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>, std::__2::allocator<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>>>::~__shared_ptr_emplace()_57
+102:std::__2::__shared_ptr_emplace<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>, std::__2::allocator<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>>>::__shared_ptr_emplace[abi:ne210108]<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>&, std::__2::allocator<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>>, 0>(std::__2::allocator<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>>, std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>&)
+103:std::__2::__shared_ptr_emplace<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>, std::__2::allocator<std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>>>::__on_zero_shared()
+104:std::__2::__libcpp_refstring::__libcpp_refstring(char const*)
+105:socket
+106:setThrew
+107:sendto
+108:probeKeepAlive
+109:probeExported
+110:main
+111:emscripten_stack_get_current
+112:connect
+113:_emscripten_tempret_set
+114:_emscripten_stack_restore
+115:_emscripten_stack_alloc
+116:__wasm_call_ctors
+117:__stdio_write
+118:__stdio_seek
+119:__stdio_read
+120:__stdio_close
+121:__localtime_r
+122:__gmtime_r
+123:__emscripten_stdout_seek
+124:__emscripten_stdout_close
+125:__cxxabiv1::__vmi_class_type_info::search_below_dst(__cxxabiv1::__dynamic_cast_info*, void const*, int, bool) const
+126:__cxxabiv1::__vmi_class_type_info::search_above_dst(__cxxabiv1::__dynamic_cast_info*, void const*, void const*, int, bool) const
+127:__cxxabiv1::__vmi_class_type_info::has_unambiguous_public_base(__cxxabiv1::__dynamic_cast_info*, void*, int) const
+128:__cxxabiv1::__si_class_type_info::search_below_dst(__cxxabiv1::__dynamic_cast_info*, void const*, int, bool) const
+129:__cxxabiv1::__si_class_type_info::search_above_dst(__cxxabiv1::__dynamic_cast_info*, void const*, void const*, int, bool) const
+130:__cxxabiv1::__si_class_type_info::has_unambiguous_public_base(__cxxabiv1::__dynamic_cast_info*, void*, int) const
+131:__cxxabiv1::__class_type_info::search_below_dst(__cxxabiv1::__dynamic_cast_info*, void const*, int, bool) const
+132:__cxxabiv1::__class_type_info::search_above_dst(__cxxabiv1::__dynamic_cast_info*, void const*, void const*, int, bool) const
+133:__cxxabiv1::__class_type_info::has_unambiguous_public_base(__cxxabiv1::__dynamic_cast_info*, void*, int) const
+134:__cxxabiv1::__class_type_info::can_catch(__cxxabiv1::__shim_type_info const*, void*&) const
+135:__cxxabiv1::__aligned_malloc_with_fallback(unsigned long)
+136:__cxa_increment_exception_refcount
+137:__cxa_get_exception_ptr
+138:__cxa_decrement_exception_refcount
+139:__cxa_can_catch

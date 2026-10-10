@@ -1,0 +1,2 @@
+BERDecoderPartial.cxx	-fexceptions -fignore-exceptions
+driver.cpp	-fexceptions -fignore-exceptions
