@@ -1,7 +1,7 @@
 // Fingerprints on the real target: stable, self-matching, and sensitive to what they should be.
 import { describe, expect, it } from 'vitest';
 
-import { census } from '../src/census';
+import { type CensusFn, census } from '../src/census';
 import { dataRanges, dataSymbol, normalizeModule } from '../src/normalize';
 import { target } from './helpers';
 
@@ -9,11 +9,13 @@ describe('census', () => {
   const m = target();
 
   it('matches every function of the target to itself by fingerprint', () => {
+    // Each side keeps only its hashes: two whole normalisations of the target do not fit one default heap.
+    const hashes = (): CensusFn[] =>
+      normalizeModule(m).map(({ index, fingerprint, addr, shape }) => ({ index, fingerprint, addr, shape }));
     // CPU time, not wall time: other builds on the machine stretch the wall clock several times over. The budget is
     // about three times the cost on a laptop, so it catches a change of complexity, not a slower runner.
     const t0 = process.cpuUsage();
-    const n = normalizeModule(m);
-    const c = census(m, n, m, normalizeModule(m));
+    const c = census(m, hashes(), m, hashes());
     expect(c.pairs.length).toBe(14343);
     expect(c.counts.byFingerprint).toBe(14343);
     expect(c.counts.byAddr).toBe(0);

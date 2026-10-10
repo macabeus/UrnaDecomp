@@ -141,15 +141,18 @@ selected rows were selected from, enough to run that selection again:
 | --- | --- |
 | `version` | one more on every re-selection or references update |
 | `per` | rows per setup |
-| `commit` | the urna commit whose ledger, registry and tracked sources selection read |
+| `commit` | the urna commit selection ran at, whose files the ledger, the registry and the sources are |
 | `inputs.target`, `inputs.glue` | the pinned target and its glue, with their sha256 |
 | `inputs.ledger`, `inputs.setups` | `ledger/functions.tsv` and `dataset/setups.json`, with their git blob ids at `commit` |
+| `inputs.sources` | the other files `commit` tracked that selection read, the sources references were looked up in: repo path → git blob id |
 | `inputs.definitions` | `dataset/selection-definitions.json` and its sha256: the build's definitions (llvm-nm in the image) of the `names` selection looked up, with the objects, archive members and stand-ins they name; `build` is the commit checked out when they were read; `moved`, the link inputs the build has moved since (old path → new path), which the snapshot names at their new path |
 | `references` | after a references update: `rowsOf`, the version whose rows these are, and `note`, why the references moved |
 
-The build is not in git, so its definitions are kept beside the rows; everything else comes back from
-git at `commit` (a shallow clone needs the history). A `note` says where a version's record departs
-from that.
+The build is not in git, so its definitions are kept beside the rows. The ledger, the registry and the
+sources are kept too, as they were at `commit`: `dataset/selection-inputs/` holds a copy of each at its
+repo path, which must be the recorded blob, so any clone, shallow or not, re-runs the selection. References
+into the fetched and built library trees and the image are read from those, each pinned by its own
+revision. A `note` says where a version's record departs from that.
 
 **Today's repo** is checked against the rows instead (`test/dataset.test.ts`): every row's target
 function at its index with its size and features; its setup in the registry with the row's flags, and
@@ -177,11 +180,11 @@ with `--move` the moved snapshot and its `moved` paths; the other inputs and the
 
 **Re-selecting**: `pnpm bench select [--per N]` prints what selection from today's ledger and build
 would drop, add and change, and writes nothing. `pnpm bench select --write [--per N]` re-selects:
-`rows.json` (hand-added rows kept), `selection.json` at the next version recording HEAD, and the
-definitions snapshot. It refuses while the ledger, the registry, `src/` or the 7-Zip source list have
+`rows.json` (hand-added rows kept), `selection.json` at the next version recording HEAD, the
+definitions snapshot and the copies in `dataset/selection-inputs/`. It refuses while the ledger, the registry, `src/` or the 7-Zip source list have
 uncommitted changes, since it records HEAD as their commit. Then `pnpm bench run --label baseline`, and
-commit `rows.json`, `selection.json`, `selection-definitions.json` and `results/baseline.{json,md}`
-together.
+commit `rows.json`, `selection.json`, `selection-definitions.json`, `selection-inputs/` and
+`results/baseline.{json,md}` together.
 
 ## Results
 

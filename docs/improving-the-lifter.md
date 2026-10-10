@@ -57,7 +57,7 @@ pnpm bench diff baseline my-change       # per setup, then every row whose outco
 - **Tests** run on the real target, with no mocks or fakes: a lift test lifts a named target function and asserts
   what the draft must contain. Name the subject in `describe` and the behaviour in `it('<present verb> …')`, so it
   reads as a sentence ("lifts every defined function of the target …"). A test that needs the image or a build
-  output skips without it; CI's skip budget (`.github/README.md`) must then be raised in the same change.
+  output skips without it; CI's skip budget (`.github/CI.md`) must then be raised in the same change.
 - **The benchmark diff** goes in the commit message or pull request. A compile failure in a run is a lifter bug;
   its first error line is in the report's failures table.
 - **The baseline.** Refresh `benchmark/results/baseline.{json,md}` (`pnpm bench run --label baseline`) only from a

@@ -3,8 +3,8 @@
 // Prints a suite's passed, failed and skipped counts, names every skipped test, adds them to the job
 // summary, and exits 1 when more tests skip than the budget allows. In CI the gated tests skip because
 // there is no toolchain image and no build output; the budgets in ci.yml are those counts in a fresh
-// clone (.github/README.md lists what each one covers). A count above the budget means a test lost an
-// input it used to find, such as the target or the ledger, and passes by skipping.
+// clone (.github/CI.md lists what each one covers). A count above the budget means a test is missing
+// an input it needs, such as the target or the ledger, and passes by skipping.
 import { appendFileSync, existsSync, readFileSync } from 'node:fs';
 
 const [suite, reportPath, budgetArg] = process.argv.slice(2);

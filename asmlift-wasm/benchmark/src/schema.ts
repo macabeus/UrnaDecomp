@@ -105,14 +105,17 @@ export interface Selection {
   version: number;
   /** rows per setup */
   per: number;
-  /** the urna commit whose ledger, registry and tracked sources selection read */
+  /** the urna commit selection ran at, whose files the ledger, the registry and the sources below are */
   commit: string;
   inputs: {
     target: { path: string; sha256: string };
     glue: { path: string; sha256: string };
-    /** git blob ids at `commit` */
+    /** git blob ids at `commit`; dataset/selection-inputs/ keeps a copy of each file at its repo path */
     ledger: { path: string; blob: string };
     setups: { path: string; blob: string };
+    /** the other files `commit` tracked that selection read, the sources references were looked up in: repo
+     *  path → git blob id, each kept the same way */
+    sources: Record<string, string>;
     /** the build's definitions of the names selection looked up: `names` of them, read with llvm-nm
      *  from the objects built in the checkout at `build`; `moved`: link inputs the build has moved since
      *  (old path → new path), which the snapshot names at their new path */

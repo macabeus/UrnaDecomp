@@ -6,6 +6,9 @@
 import type { NormalizedFn } from './normalize';
 import type { Module } from './parse';
 
+/** What the census reads of a normalised function: its index and its three hashes. */
+export type CensusFn = Pick<NormalizedFn, 'index' | 'fingerprint' | 'addr' | 'shape'>;
+
 export interface Pair {
   a: number;
   b: number;
@@ -30,8 +33,8 @@ export interface Census {
 }
 
 function groups(
-  norm: NormalizedFn[],
-  key: (n: NormalizedFn) => string,
+  norm: CensusFn[],
+  key: (n: CensusFn) => string,
   only: Set<number> | null,
 ): Map<string, number[]> {
   const g = new Map<string, number[]>();
@@ -72,7 +75,7 @@ function pairUp(
   }
 }
 
-export function census(a: Module, na: NormalizedFn[], b: Module, nb: NormalizedFn[]): Census {
+export function census(a: Module, na: CensusFn[], b: Module, nb: CensusFn[]): Census {
   const pairs: Pair[] = [];
   const leftA = new Set(na.map((n) => n.index));
   const leftB = new Set(nb.map((n) => n.index));

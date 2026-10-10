@@ -12,3 +12,7 @@ charset = utf-8
 # Latin-1 literals outside the TSE trees
 [{src/units/12-ecourna-api-sql-sqlite-externs.cpp,src/asn1/InvalidTracer.cxx}]
 charset = latin1
+
+# the benchmark's copies of the TSE sources its dataset was selected from
+[asmlift-wasm/benchmark/dataset/selection-inputs/src/{uenux2,ecourna}/**]
+charset = latin1

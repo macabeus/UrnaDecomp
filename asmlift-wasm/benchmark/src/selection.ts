@@ -1,25 +1,34 @@
 // The frozen dataset. rows.json is selected once and then kept: project progress changes the ledger
 // and the build, which would make a re-run of selection pick other rows and break the comparison with
 // the committed baseline. dataset/selection.json records the dataset's version and exactly what its
-// selected rows were selected from: the pinned target, the ledger and the registry at a commit (git
-// keeps them), and the build's definitions of the names selection looked up (kept beside it, since the
-// build is not in git). `recordedContext` puts those inputs back together; `writeSelection` records a
-// deliberate re-selection.
+// selected rows were selected from: the pinned target; the ledger, the registry and the sources references
+// were looked up in, as the commit selection ran at had them (copied into dataset/selection-inputs/); and
+// the build's definitions of the names selection looked up (kept beside it, since the build is not in
+// git). `recordedContext` puts those inputs back together; `writeSelection` records a deliberate
+// re-selection.
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { join, relative } from 'node:path';
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { dirname, join, relative } from 'node:path';
 
 import { parseLedgerTsv } from '@asmlift/wasm';
 
 import { type Context, contextOf, selectRows, selectionNames } from './dataset';
-import { LEDGER_TSV, SELECTION_DEFINITIONS_JSON, SELECTION_JSON, SETUPS_JSON, TARGET, URNA_ROOT } from './paths';
+import {
+  LEDGER_TSV,
+  SELECTION_DEFINITIONS_JSON,
+  SELECTION_INPUTS_DIR,
+  SELECTION_JSON,
+  SETUPS_JSON,
+  TARGET,
+  URNA_ROOT,
+} from './paths';
 import type { Definitions } from './provenance';
 import { type ReadRepoFile, readCheckout } from './reference';
 import type { DatasetRow, Selection, Setup } from './schema';
 
-function git(args: string[], encoding: BufferEncoding = 'utf8'): string | null {
-  const r = spawnSync('git', ['-C', URNA_ROOT, ...args], { encoding, maxBuffer: 1 << 28 });
+function git(args: string[]): string | null {
+  const r = spawnSync('git', ['-C', URNA_ROOT, ...args], { encoding: 'utf8', maxBuffer: 1 << 28 });
   return r.status === 0 ? r.stdout : null;
 }
 
@@ -35,25 +44,25 @@ export function readSelection(path = SELECTION_JSON): Selection {
   return JSON.parse(readFileSync(path, 'utf8')) as Selection;
 }
 
-/** `path`'s blob id at `commit`, or null when the clone has no such commit or file. */
-export function blobAt(commit: string, path: string): string | null {
-  return git(['rev-parse', '--verify', '--quiet', `${commit}:${path}`])?.trim() || null;
+/** The id git gives a file of these bytes. */
+export function blobId(bytes: Uint8Array): string {
+  return createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
 }
 
-/** The repo's files as they were at `commit`: git's copy of every file it tracked there, the checkout's
- *  for the rest (the fetched and built trees, each pinned by its own revision). */
-export function readAtCommit(commit: string): ReadRepoFile {
-  const tracked = new Set((git(['ls-tree', '-r', '--name-only', commit]) ?? '').split('\n'));
-  const cache = new Map<string, string | null>();
-  return (path) => {
-    if (!tracked.has(path)) {
-      return readCheckout(path);
-    }
-    if (!cache.has(path)) {
-      cache.set(path, git(['show', `${commit}:${path}`], 'latin1'));
-    }
-    return cache.get(path)!;
-  };
+/** Where dataset/selection-inputs/ keeps its copy of repo file `path`. */
+export const recordedCopy = (path: string): string => join(SELECTION_INPUTS_DIR, path);
+
+/** The recorded copy of `path`. Throws when it is not there or is not blob `blob`. */
+function recordedFile(sel: Selection, path: string, blob: string): Buffer {
+  const copy = recordedCopy(path);
+  if (!existsSync(copy)) {
+    throw new Error(`${repoRel(copy)}, the copy of ${path} dataset version ${sel.version} was selected from, is missing`);
+  }
+  const bytes = readFileSync(copy);
+  if (blobId(bytes) !== blob) {
+    throw new Error(`${repoRel(copy)} is blob ${blobId(bytes)}, not the recorded ${blob}`);
+  }
+  return bytes;
 }
 
 /** The definitions snapshot as written: one line per object, per symbol and per map entry, so a
@@ -166,30 +175,25 @@ function checkMoves(d: Definitions, moves: Moves): void {
 }
 
 /** The inputs `sel` recorded, checked against what it recorded of them. Throws when one is not there
- *  or differs: a clone without the commit, a changed target, an edited snapshot. With `moves`, the
- *  snapshot's objects are taken at their moved paths. */
+ *  or differs: a changed target, an edited copy or snapshot. References are looked up in the recorded
+ *  sources, and in the checkout for every other file (the fetched and built trees, each pinned by its own
+ *  revision). With `moves`, the snapshot's objects are taken at their moved paths. */
 export function recordedContext(sel: Selection = readSelection(), moves: Moves = new Map()): Context {
-  const { commit, inputs } = sel;
+  const { inputs } = sel;
   for (const f of [inputs.target, inputs.glue]) {
     if (fileSha256(f.path) !== f.sha256) {
       throw new Error(`${f.path} is not the file dataset version ${sel.version} was selected from`);
     }
   }
-  const atCommit = (f: { path: string; blob: string }): string => {
-    const blob = blobAt(commit, f.path);
-    if (blob === null) {
-      throw new Error(`${f.path} at ${commit} is not in this clone; a shallow clone needs the history (git fetch --unshallow)`);
-    }
-    if (blob !== f.blob) {
-      throw new Error(`${f.path} at ${commit} is blob ${blob}, not the recorded ${f.blob}`);
-    }
-    return git(['show', `${commit}:${f.path}`])!;
-  };
-  const ledger = parseLedgerTsv(atCommit(inputs.ledger));
-  const setups = JSON.parse(atCommit(inputs.setups)) as Setup[];
+  const ledger = parseLedgerTsv(recordedFile(sel, inputs.ledger.path, inputs.ledger.blob).toString('utf8'));
+  const setups = JSON.parse(recordedFile(sel, inputs.setups.path, inputs.setups.blob).toString('utf8')) as Setup[];
+  const sources = new Map(
+    Object.entries(inputs.sources).map(([path, blob]) => [path, recordedFile(sel, path, blob).toString('latin1')]),
+  );
+  const read: ReadRepoFile = (path) => sources.get(path) ?? readCheckout(path);
   const recorded = recordedDefinitions(sel);
   checkMoves(recorded, moves);
-  return contextOf({ ledger, setups, defs: movedDefinitions(recorded, moves), read: readAtCommit(commit) });
+  return contextOf({ ledger, setups, defs: movedDefinitions(recorded, moves), read });
 }
 
 /** The committed rows with the references selection gives them today on the inputs `sel` recorded, and with
@@ -238,9 +242,10 @@ export function uncommittedInputs(): string[] {
   return (git(['status', '--porcelain', '--', ...RECORDED_PATHS]) ?? '').split('\n').filter((l) => l !== '');
 }
 
-/** Record a re-selection from today's inputs (`ctx` from `loadContext` over a clean checkout): the
- *  definitions snapshot and selection.json at the next version. */
-export function writeSelection(ctx: Context, per: number, previous: Selection | null): Selection {
+/** Record a re-selection from today's inputs (`ctx` from `loadContext` over a clean checkout, `reads` the
+ *  repo files selection read through it): the definitions snapshot, a copy of every tracked input, and
+ *  selection.json at the next version. */
+export function writeSelection(ctx: Context, per: number, previous: Selection | null, reads: ReadonlySet<string>): Selection {
   const head = git(['rev-parse', 'HEAD'])?.trim();
   if (head === undefined) {
     throw new Error('the urna checkout has no HEAD commit to record');
@@ -248,7 +253,21 @@ export function writeSelection(ctx: Context, per: number, previous: Selection | 
   const snapshot = snapshotDefinitions(ctx);
   const text = renderDefinitions(snapshot);
   writeFileSync(SELECTION_DEFINITIONS_JSON, text);
-  const tracked = (abs: string): { path: string; blob: string } => ({ path: repoRel(abs), blob: blobAt(head, repoRel(abs))! });
+  rmSync(SELECTION_INPUTS_DIR, { recursive: true, force: true });
+  const copy = (path: string): string => {
+    const bytes = readFileSync(join(URNA_ROOT, path));
+    mkdirSync(dirname(recordedCopy(path)), { recursive: true });
+    writeFileSync(recordedCopy(path), bytes);
+    return blobId(bytes);
+  };
+  const tracked = (abs: string): { path: string; blob: string } => ({ path: repoRel(abs), blob: copy(repoRel(abs)) });
+  const trackedNow = new Set((git(['ls-files', '-z']) ?? '').split('\0'));
+  const sources = Object.fromEntries(
+    [...reads]
+      .filter((path) => trackedNow.has(path))
+      .sort()
+      .map((path) => [path, copy(path)]),
+  );
   const sel: Selection = {
     version: (previous?.version ?? 0) + 1,
     per,
@@ -258,6 +277,7 @@ export function writeSelection(ctx: Context, per: number, previous: Selection | 
       glue: { path: repoRel(TARGET).replace(/\.wasm$/, '.js'), sha256: fileSha256(repoRel(TARGET).replace(/\.wasm$/, '.js')) },
       ledger: tracked(LEDGER_TSV),
       setups: tracked(SETUPS_JSON),
+      sources,
       definitions: {
         path: repoRel(SELECTION_DEFINITIONS_JSON),
         sha256: sha256(text),

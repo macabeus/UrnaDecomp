@@ -23,9 +23,8 @@ Its `asmlift-wasm` job runs, in `asmlift-wasm/`:
 
 Every check runs even when an earlier one failed. The setup check and the benchmark's `setups` tests run
 `make -n` over `src/Makefile`'s objects, and the zlib rules need zlib's sources, so the job first clones
-zlib 1.3.1 into `third_party/zlib`. No other library is fetched. The checkout takes the whole history: the
-benchmark re-runs its frozen dataset's selection on the ledger and registry at the commit
-`asmlift-wasm/benchmark/dataset/selection.json` records.
+zlib 1.3.1 into `third_party/zlib`. No other library is fetched. It also installs wabt 1.0.42's release
+build: the toolkit's parser, decoder and splat tests compare against its `wasm-objdump` and `wasm-validate`.
 
 ## Skipped tests
 
@@ -36,11 +35,11 @@ job summary, with every skipped test listed. The suite fails when more tests ski
 
 | suite | budget | what skips, and what it needs |
 | --- | ---: | --- |
-| `pnpm test` | 41 | 32 in `splat-sub` and `splat-symbols` (`build/out/wasm-map/` from `make -C src link-map`, and for `splat-sub` the pieces from `make -C src splat-split`); 4 in `lift` (`build/out/wasm/vota_web/symbols.mangled.txt`, which `make -C src link` writes); 4 in `lift`, `lift-eval` and `rank` (the image); 1 in `report` (the plain link, `build/out/wasm/vota_web/vota_web_wasm.wasm`) |
+| `pnpm test` | 48 | 39 in `splat-sub` and `splat-symbols` (`build/out/wasm-map/` from `make -C src link-map`, and for `splat-sub` the pieces from `make -C src splat-split`); 4 in `lift` (`build/out/wasm/vota_web/symbols.mangled.txt`, which `make -C src link` writes); 4 in `lift`, `lift-eval` and `rank` (the image); 1 in `report` (the plain link, `build/out/wasm/vota_web/vota_web_wasm.wasm`) |
 | `pnpm test:bench` | 9 | 6 in `dataset`, `run` and `setups` (the image); 2 in `dataset` (the library trees the rows' references point into: `third_party/` fetched, `build/out/` built); 1 in `setups` (the SQLite build's recorded flags in `build/out/sqlite/`) |
 | `pnpm test:playground` | 0 | nothing |
 
-A run that skips more than the budget has lost an input it used to find, such as the target or the
+A run that skips more than the budget is missing an input it needs, such as the target or the
 ledger, and its tests are passing by skipping. A run that skips fewer prints a notice to lower the budget.
 When a change adds a gated test, raise the budget in the same change.
 

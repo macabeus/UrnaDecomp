@@ -5,3 +5,4 @@ splat/symbol_addrs.txt linguist-generated
 docs/reference/tu-slices.md linguist-generated
 src/asn1/modules/** linguist-generated
 splat/scan.tsv linguist-generated
+asmlift-wasm/benchmark/dataset/selection-inputs/** linguist-generated

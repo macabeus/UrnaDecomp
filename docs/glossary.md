@@ -495,7 +495,7 @@ selection can be re-run and checked. The rows change only by `pnpm bench add`, b
 decided: `symbol` (the object that defines its ledger name) or `component` (uenux2 rows, from the ledger's
 attribution, with no object). `pnpm bench setups --check` prints a setup as `unverified` when only the image or a
 library build could confirm its flags, and as `drift` when the build's flags are not the registry's; only drift
-fails. *Where:* `asmlift-wasm/benchmark/README.md`, `.github/README.md`.
+fails. *Where:* `asmlift-wasm/benchmark/README.md`, `.github/CI.md`.
 
 **playground** — the web app in `asmlift-wasm/playground/` that shows any target function's WAT, readout, lift and
 ledger data, and the benchmark runs. *Where:* `asmlift-wasm/playground/README.md`.

@@ -2,7 +2,7 @@
 # encodings, the stubs of the functions not decompiled yet and the gaps (job repo), then asmlift-wasm's typecheck,
 # its three test suites, the benchmark's compile-setup check and the playground build.
 #
-# Not run here, and why (.github/README.md has the longer form):
+# Not run here, and why (.github/CI.md has the longer form):
 # - The C++ build (`make -C src link`) and the official meter (`make -C src splat`, which must print the
 #   target's sha256). They need the urna-emsdk:6.0.0 image (emscripten/emsdk:6.0.0 plus wabt), every
 #   upstream library of third_party/MANIFEST.md fetched at its revision, and a full link of the module.
@@ -50,11 +50,7 @@ jobs:
     env:
       REPORTS: ${{ github.workspace }}/.ci-reports
     steps:
-      # The benchmark's frozen dataset is re-selected from the ledger and the registry at the commit
-      # benchmark/dataset/selection.json records, which a shallow clone does not have.
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - uses: pnpm/action-setup@v4
         with:
@@ -76,6 +72,17 @@ jobs:
         working-directory: .
         run: git clone --quiet --depth 1 --branch v1.3.1 https://github.com/madler/zlib third_party/zlib
 
+      # The parser, decoder and splat tests check the toolkit against wasm-objdump and wasm-validate, from the
+      # wabt release docs/getting-started.md recommends: other releases print the dump differently.
+      - id: wabt
+        name: install wabt 1.0.42
+        working-directory: ${{ runner.temp }}
+        run: |
+          curl -fsSL -o wabt.tar.gz https://github.com/WebAssembly/wabt/releases/download/1.0.42/wabt-1.0.42-linux-x64.tar.gz
+          echo '84895407a6bbb80e918f33b16b2fb2206021c150b6bc9ff6f761263a745ab131  wabt.tar.gz' | sha256sum -c -
+          tar xzf wabt.tar.gz
+          echo "$PWD/wabt-1.0.42/bin" >> "$GITHUB_PATH"
+
       # Each check below runs even when an earlier one failed, so one run reports all of them.
       - name: pnpm typecheck
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
@@ -84,11 +91,11 @@ jobs:
       # `pnpm test`, `pnpm test:bench` and `pnpm test:playground` are each package's `test` script; it is
       # called directly so the JSON report options reach vitest.
       - name: pnpm test
-        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.install.outcome == 'success' && steps.wabt.outcome == 'success' }}
         run: pnpm run test --reporter=default --reporter=json --outputFile.json="$REPORTS/test.json"
       - name: pnpm test counts
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
-        run: node ../.github/scripts/test-counts.mjs 'pnpm test' "$REPORTS/test.json" 41
+        run: node ../.github/scripts/test-counts.mjs 'pnpm test' "$REPORTS/test.json" 48
 
       - name: pnpm test:bench
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}

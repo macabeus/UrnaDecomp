@@ -18,7 +18,7 @@ function usage(): never {
   select [--per N]                 what selection from today's ledger and build would change in the frozen dataset
                                    (N rows per setup, default the recorded one); writes nothing
   select --write [--per N]         re-select: a new dataset version in rows.json and selection.json, its
-                                   definitions snapshot; hand-added rows stay; then re-run the baseline
+                                   definitions snapshot and input copies; hand-added rows stay; then re-run the baseline
   select --references              the committed rows' references as selection gives them today on the recorded
          [--move <old>=<new>]…     inputs (the same rows); --move takes a link input the build has moved at its new
                                    path; writes nothing
@@ -143,7 +143,15 @@ function main(argv: string[]): void {
         throw new Error(`a re-selection records the commit it read its inputs at; commit these first:\n${dirty.join('\n')}`);
       }
       const committed = existsSync(ROWS_JSON) ? readRows() : [];
-      const ctx = loadContext({ rebuildDefinitions: true });
+      const loaded = loadContext({ rebuildDefinitions: true });
+      const reads = new Set<string>();
+      const ctx = {
+        ...loaded,
+        read: (path: string): string | null => {
+          reads.add(path);
+          return loaded.read(path);
+        },
+      };
       const rows = selectDataset(ctx, committed, per);
       const before = new Map(committed.map((r) => [r.id, JSON.stringify(r)]));
       const after = new Set(rows.map((r) => r.id));
@@ -160,11 +168,11 @@ function main(argv: string[]): void {
         return;
       }
       writeRows(rows);
-      const sel = writeSelection(ctx, per, previous);
+      const sel = writeSelection(ctx, per, previous, reads);
       const manual = rows.filter((r) => r.origin === 'manual').length;
       process.stdout.write(
         `dataset version ${sel.version}: ${rows.length} rows (${manual} hand-added): ${countBySetup(rows)}; selected at ${sel.commit.slice(0, 7)}\n` +
-          'now `pnpm bench run --label baseline`, and commit rows.json, selection.json, selection-definitions.json and results/baseline.{json,md} together\n',
+          'now `pnpm bench run --label baseline`, and commit rows.json, selection.json, selection-definitions.json, selection-inputs/ and results/baseline.{json,md} together\n',
       );
       return;
     }

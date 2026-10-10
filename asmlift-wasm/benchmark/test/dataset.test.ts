@@ -1,19 +1,19 @@
 // The committed dataset: its rows still valid against today's target, registry, build and sources, and
 // its selection run again on the inputs dataset/selection.json recorded.
 import { createHash } from 'node:crypto';
-import { existsSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { join, relative } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 import { MAX_SIZE, MIN_SIZE, buildRow, loadContext, readRows, selectRows } from '../src/dataset';
 import { featuresOf } from '../src/features';
 import { liftCompileFlags } from '../src/flags';
-import { TARGET, URNA_ROOT } from '../src/paths';
+import { SELECTION_INPUTS_DIR, TARGET, URNA_ROOT } from '../src/paths';
 import { glueNamesFor, parseModule } from '@asmlift/wasm';
 import { loadDefinitions } from '../src/provenance';
 import { definitionLine } from '../src/reference';
 import type { DatasetRow } from '../src/schema';
-import { blobAt, readSelection, recordedContext } from '../src/selection';
+import { blobId, readSelection, recordedContext, recordedCopy } from '../src/selection';
 import { classifyObjects, loadSetups } from '../src/setups';
 import {
   imageReferenceProblems,
@@ -94,14 +94,24 @@ describe('rows.json against today’s repo', () => {
 });
 
 describe('selection.json', () => {
-  it('records the target, the ledger, the registry and the definitions the rows were selected from', () => {
+  const { inputs } = selection;
+  const recorded = { [inputs.ledger.path]: inputs.ledger.blob, [inputs.setups.path]: inputs.setups.blob, ...inputs.sources };
+
+  it('records the target, the ledger, the registry, the sources and the definitions the rows were selected from', () => {
     const sha = (path: string): string => createHash('sha256').update(readFileSync(join(URNA_ROOT, path))).digest('hex');
-    const { inputs } = selection;
     expect(sha(inputs.target.path)).toBe(inputs.target.sha256);
     expect(sha(inputs.glue.path)).toBe(inputs.glue.sha256);
-    expect(blobAt(selection.commit, inputs.ledger.path)).toBe(inputs.ledger.blob);
-    expect(blobAt(selection.commit, inputs.setups.path)).toBe(inputs.setups.blob);
+    for (const [path, blob] of Object.entries(recorded)) {
+      expect(blobId(readFileSync(recordedCopy(path))), path).toBe(blob);
+    }
     expect(sha(inputs.definitions.path)).toBe(inputs.definitions.sha256);
+  });
+
+  it('keeps a copy of the files it records and of no other', () => {
+    const copies = readdirSync(SELECTION_INPUTS_DIR, { recursive: true, withFileTypes: true })
+      .filter((e) => e.isFile())
+      .map((e) => relative(SELECTION_INPUTS_DIR, join(e.parentPath, e.name)));
+    expect(copies.sort()).toEqual(Object.keys(recorded).sort());
   });
 });
 

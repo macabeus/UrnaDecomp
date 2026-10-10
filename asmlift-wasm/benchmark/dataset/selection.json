@@ -19,6 +19,21 @@
       "path": "asmlift-wasm/benchmark/dataset/setups.json",
       "blob": "23fe96f0c217b3dcf47b52efd1c995d236215d2d"
     },
+    "sources": {
+      "src/asn1/AVNDecoder.cxx": "763af3ce5d6453b479effd0ed4fc6daf438332d7",
+      "src/asn1/BERDecoderPartial.cxx": "a56b3aa50362f2357d589bb1f031ae974d5a325a",
+      "src/asn1/DataFree.cxx": "1d767a9553177e6afce3a5704aa87207a4420ff2",
+      "src/asn1/PERDecoder.cxx": "10b6e2361064a026d16553c416186911162175ee",
+      "src/asn1/ValidChecker.cxx": "87f3b30da3ef7487d6dd06112a46b15abcda5808",
+      "src/asn1/asn1.cxx": "44153280e2364312ac1bd430679246bf0f60cc6c",
+      "src/ecourna/api/compression/icompressor.cpp": "bcd99ab0524df5ba3136a6188131ad67fe47b960",
+      "src/ecourna/api/security/caescipher.cpp": "23cd8a6a2a15655c2ff260e3cba8399e2a2f0276",
+      "src/ecourna/app/dados/parametrizacaourna/cparametrosurna.cpp": "6876a658873836b495f7d8747ef10ee49a9ee9a0",
+      "src/ecourna/app/dados/resultadournacadastro/capresentacaofotoeleitor.cpp": "50a308989ba7a69d4aa4af4fb8599b316660c586",
+      "src/ecourna/app/dados/resultadournacadastro/cresultadournacadastro.cpp": "40abbf2cbf0d6bee9118d71d02479969723807b9",
+      "src/uenux2/src/api/ipc/posix/cposixmutex.cpp": "eb53bb387292ca15dd8d0422edcc76242dcd1db8",
+      "src/uenux2/src/api/ipc/posix/cposixsemaphore.cpp": "6a89e931ba07bbd6feccf076365e8bb08409e186"
+    },
     "definitions": {
       "path": "asmlift-wasm/benchmark/dataset/selection-definitions.json",
       "sha256": "956ec875496fc3c119e52be79f673ee192c6a9a3a21408ba8179227b1a2cdb08",

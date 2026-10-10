@@ -13,6 +13,9 @@ export const ROWS_JSON = join(BENCH_DIR, 'dataset/rows.json');
 export const SELECTION_JSON = join(BENCH_DIR, 'dataset/selection.json');
 /** The build's definitions of the names that selection looked up, as it read them. */
 export const SELECTION_DEFINITIONS_JSON = join(BENCH_DIR, 'dataset/selection-definitions.json');
+/** A copy of every tracked file selection read (the ledger, the registry, the sources references were looked up
+ *  in), each at its repo path. */
+export const SELECTION_INPUTS_DIR = join(BENCH_DIR, 'dataset/selection-inputs');
 export const RESULTS_DIR = join(BENCH_DIR, 'results');
 /** Scratch under the checkout's gitignored build tree: lifted sources, objects, the definitions cache.
  *  Docker mounts it, so it must not live under macOS's per-user `$TMPDIR`. */
