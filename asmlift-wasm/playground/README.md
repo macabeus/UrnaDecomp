@@ -2,6 +2,9 @@
 
 A web app over `target/vota_web_wasm.wasm`, the decompilation meter and the lifter benchmark, with four pages:
 Progress (the default), Playground, Benchmark and UrnaEmu (a link to the emulator that runs the same module).
+Above them, on every page, a folded notice (`src/shared/components/Notice.tsx`, in English and Portuguese): the
+project is an independent matching decompilation of the TSE's unmodified files, why it exists, how the TSE or another
+competent authority asks for its takedown (a GitHub issue), and the press coverage of the simulator's code.
 `.github/workflows/pages.yml` deploys it to GitHub Pages on every push to `main` (`.github/CI.md` "Deployment").
 Everything the Playground shows about a function is computed in the browser from the real module with the toolkit's
 own modules (`parse`, `disasm`, `fold`, `lift`, `imports`, `strings`); nothing is precomputed per function and there

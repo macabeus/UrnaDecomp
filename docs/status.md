@@ -9,7 +9,7 @@ Everything else that counts functions, such as the census tiers at the end of th
 **7,217 of 14,343 functions matched (50.32%), 2,116,747 of 5,883,903 code bytes (35.98%).**
 <!-- /status:headline -->
 
-Every block between `status:` markers on this page and in the README's Status section is written by
+Every block between `status:` markers on this page is written by
 `make -C src status` from two committed files: `splat/matched.txt` and `splat/scan.tsv`, the scan that
 `make -C src splat-match` writes together with the match list. CI runs `python3 -I -B tools/round/status.py --check`,
 which fails when the scan's `match` rows are not exactly the lines of `splat/matched.txt` or when a block here is

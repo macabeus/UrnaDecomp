@@ -5,7 +5,7 @@ TMPDIR=/tmp make -C src libs     # the upstream libraries, through tools/libs/*/
 TMPDIR=/tmp make -C src link     # the app objects, the plain link and its --emit-symbol-map twin
 TMPDIR=/tmp make -C src census   # census of the plain link → ledger/functions.tsv and a snapshot in ledger/history/
 TMPDIR=/tmp make -C src splat    # the official check: the target's sha256 and the meter (docs/reference/splat.md)
-make -C src status               # the progress blocks of README.md and docs/status.md, from splat/scan.tsv
+make -C src status               # the progress blocks of docs/status.md, from splat/scan.tsv
 make -C src stubs                # the stub of every TSE function not decompiled yet, and the gaps (below); stubs-check checks them
 TMPDIR=/tmp make -C src check-srcloc   # the source_location records of the app objects against the target's
 make -C src print-APP_CXXFLAGS   # any Makefile variable, for scripts (print-APP_INCLUDES, print-LINK_OBJS, …)

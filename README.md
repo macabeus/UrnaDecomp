@@ -1,4 +1,20 @@
-# urna — matching decompilation of the TSE voting simulator
+# UrnaDecomp <img src="./asmlift-wasm/playground/src/assets/urnadecomp.png" align="right" height="125px" />
+
+🗳️ _Matching decompilation of the TSE voting simulator_
+
+> ⚠️ **Notice:** This is an independent matching decompilation of the TSE's unmodified files.
+>
+> **Matching decompilation.** UrnaDecomp rebuilds C++ source that compiles back, byte for byte, to `vota_web_wasm.wasm`: VOTA, the voting application of the TSE's voting simulator. The target files belong to the TSE and are used and redistributed unmodified.
+>
+> **Independent.** The files are the ones the TSE publishes in its Voting Simulator. The project is not affiliated with or endorsed by the TSE or the Electoral Justice.
+>
+> **Why.** To document, openly and verifiably, how VOTA works as the TSE publishes it in the simulator: anyone can rebuild the matched code and check it against the module, byte for byte.
+>
+> **No evidence of fraud.** Nothing in this project is evidence of electoral fraud, and it cannot be: it studies the simulator's module, not the software sealed into the voting machines, and says nothing about the result of any election. Presenting this code as evidence of fraud misrepresents it; where the reconstruction and the module disagree, the reconstruction is wrong.
+>
+> **Takedown.** The TSE or another competent authority can ask for this project, or the TSE files in it, to be taken down by opening an [issue on GitHub](https://github.com/macabeus/UrnaDecomp/issues).
+>
+> In the news: [Estadão / TecMundo](https://www.estadao.com.br/tecmundo/ciberseguranca/simulador-de-votacao-exibe-codigo-do-app-da-urna-eletronica-tse-afirma-intencao/) (in Portuguese). The TSE told the outlet that reusing the voting machine's C++ code in the WebAssembly simulator was a deliberate choice, that code reconstructed from it reveals no secrets, and that it does not intend to ask for its removal.
 
 Brazil's electoral court, the TSE (Tribunal Superior Eleitoral), publishes a voting simulator that runs the urna's
 voter-facing software in a browser. Its core is one WebAssembly module, `target/vota_web_wasm.wasm`: 7.7 MB and
@@ -14,23 +30,13 @@ The project is not affiliated with the TSE.
 
 ## Status
 
-<!-- status:readme -->
-**7,217 of 14,343 target functions matched (50.32%), 35.98% of the code bytes.** Most of these matches are upstream libraries rebuilt from their own sources. TSE's own code, which this project exists to recover, is 378 of 3,285 functions matched: 3.18% of its code bytes.
-
-| origin | components | functions matched | code bytes matched |
-| --- | --- | ---: | ---: |
-| TSE code: uenux2 | `vota`, `comum`, `api`, `simulador`, `vota-web` | 74 / 2,050 | 0.75% |
-| TSE code: ecourna | `ecourna` | 131 / 799 | 5.89% |
-| TSE code: ASN.1 types | `asn1-modules` (generated from TSE's schemas) | 19 / 59 | 7.96% |
-| TSE code: ASN.1 runtime | `ASN1` (TSE's fork of the III ASN.1 runtime) | 154 / 377 | 24.18% |
-| **TSE code** | | **378 / 3,285** | **3.18%** |
-| upstream libraries | `openssl`, `sqlite`, `libc++`, `7zip`, `RHVoice`, `boost`, `libc++abi`, `libc`, `utf8cpp`, `rapidxml` | 5,513 / 8,299 | 58.35% |
-| not attributed | `app`, `unknown` | 1,326 / 2,759 | 37.31% |
-<!-- /status:readme -->
+The progress is on the [web app](https://macabeus.github.io/urnadecomp): matched functions and code bytes per
+origin, per component and per function, and how they grew over time. [docs/status.md](docs/status.md) has the same
+numbers as tables.
 
 A match is a line of `splat/matched.txt` that `TMPDIR=/tmp make -C src splat` verifies on every run; their count is
-the only progress number this project reports. The table is written by `make -C src status` from the committed scan
-`splat/scan.tsv`, and CI checks it.
+the only progress number this project reports. `docs/status.md` is written by `make -C src status` from the committed
+scan `splat/scan.tsv`, and CI checks it.
 
 A component records which part of the program calls a function, not which library its code came from
 ([glossary](docs/glossary.md#component-and-owner)); "not attributed" is mostly OpenSSL, SQLite and emscripten's own

@@ -1,5 +1,5 @@
 // The decompilation meter as the Progress page draws it: matched functions and code bytes per origin, per
-// component and per function, summed the way tools/round/status.py sums them for the README (a function counts
+// component and per function, summed the way tools/round/status.py sums them for docs/status.md (a function counts
 // when the scan's verdict is `match`, which is exactly a line of splat/matched.txt). The origins and the TSE
 // components' descriptions are status.py's; the tests check every number against docs/status.md.
 import { type ProgressData, type ProgressPoint, VERDICTS, type Verdict } from './progress-data';

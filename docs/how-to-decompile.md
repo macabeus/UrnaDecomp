@@ -357,7 +357,7 @@ git diff splat/matched.txt
 
 `splat-match` scans every target function, re-points each candidate body of ours into the target's index and
 address spaces, appends every new byte-identical match to `splat/matched.txt` as `<target index> <our symbol>`,
-rewrites `splat/scan.tsv`, regenerates the status blocks of `README.md` and `docs/status.md`
+rewrites `splat/scan.tsv`, regenerates the status blocks of `docs/status.md`
 (`make -C src status`), and rewrites the stubs and gaps (`make -C src stubs`): a function with a match or a body of ours
 has no stub, so yours goes, and a stub-only file whose last stub goes is removed. A pending member's stub goes too,
 although its body is only a trap: `stubs.py` counts a function in a slot of a vtable our link holds as code of

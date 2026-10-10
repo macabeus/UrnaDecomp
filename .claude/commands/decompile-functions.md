@@ -61,7 +61,7 @@ Put this list in every brief, word for word. It is the standard a match is judge
    a `-pending.cpp` holds trapping members, as `src/units/README.md` "Companion files" says. Nothing else
    changes to make a match land.
 6. **Generated files are regenerated, never edited**: stubs and gaps, `splat/scan.tsv`, `splat/symbol_addrs.txt`
-   above its hand-edit marker, the status blocks of `README.md` and `docs/status.md`, `ledger/functions.tsv` and
+   above its hand-edit marker, the status blocks of `docs/status.md`, `ledger/functions.tsv` and
    its snapshot. The commands that write them are how-to steps 7 to 9.
 7. **House rules** ([docs/agents.md](../../docs/agents.md)): `TMPDIR=/tmp` on every docker command, no wildcard
    `rm`, no `git stash`, `/usr/bin/grep` over the Latin-1 sources, never push. Commit messages end with the

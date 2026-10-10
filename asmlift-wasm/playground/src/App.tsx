@@ -5,6 +5,7 @@ import { useQueryState, useQueryStates } from 'nuqs';
 import { Suspense, lazy, useCallback, useEffect, useState } from 'react';
 
 import logoUrl from './assets/urnadecomp.png';
+import { Notice } from './shared/components/Notice';
 import { PageIntro } from './shared/components/PageIntro';
 import { SETUPS } from './shared/data/dataset';
 import { type View, fnParser, viewParser } from './shared/utils/url-state';
@@ -20,13 +21,6 @@ const NAV: { id: View; label: string }[] = [
   { id: 'benchmark', label: 'Benchmark' },
   { id: 'urnaemu', label: 'UrnaEmu' },
 ];
-
-const SUBTITLE: Record<View, string> = {
-  progress: 'the decompilation of vota_web_wasm.wasm, by origin, component and function',
-  playground: 'any function of vota_web_wasm.wasm: WAT, folded readout and lifted C++, computed in your browser',
-  benchmark: 'the lifter over every compile setup of vota_web_wasm.wasm',
-  urnaemu: 'the emulator that runs vota_web_wasm.wasm in your browser',
-};
 
 export function App() {
   const [view, setView] = useQueryState('view', viewParser.withOptions({ history: 'push' }));
@@ -68,22 +62,17 @@ export function App() {
               </div>
               <div className="min-w-0">
                 <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-                  <span className="bg-gradient-to-r from-teal-300 via-teal-200 to-amber-300 bg-clip-text text-transparent">
-                    Urna
-                  </span>
-                  <span className="text-slate-400">Decomp</span>
+                  <span className="text-teal-300">Urna</span>
+                  <span className="text-amber-300">Decomp</span>
                 </h1>
-                <p className="mt-0.5 truncate text-sm font-medium text-slate-400">{SUBTITLE[view]}</p>
+                <p className="mt-0.5 truncate text-sm font-medium text-slate-400">Matching decompilation of the TSE voting simulator</p>
               </div>
             </div>
-            <span className="hidden text-right font-mono text-xs leading-relaxed text-slate-500 md:block">
-              target/vota_web_wasm.wasm
-              <br />
-              built with asmlift-wasm
-            </span>
           </div>
           <div className="h-1 bg-gradient-to-r from-teal-600 via-amber-400 to-blue-500" />
         </header>
+
+        <Notice />
 
         <nav className="mb-6 flex items-center gap-2">
           {NAV.map((n) => (
@@ -165,9 +154,10 @@ function BenchmarkIntro() {
       title="What the Benchmark is"
       lead={
         <>
-          How good asmlift's lifter is, measured on a frozen set of target functions, about a dozen from each of the{' '}
-          {SETUPS.length} compile setups the module was built with: TSE's code, its libraries and emscripten's system
-          libraries. It measures the tool, not the decompilation: an exact row is not a matched function.
+          asmlift is this project's WebAssembly toolkit: its lifter turns a target function into compilable C++, the first
+          draft an AI agent then refines until the function matches. The benchmark measures how good that draft is, on a
+          frozen set of target functions, about a dozen from each of the {SETUPS.length} compile setups the module was
+          built with: TSE's code, its libraries and emscripten's system libraries. It measures the tool, not the decompilation: an exact row is not a matched function.
         </>
       }
       parts={[

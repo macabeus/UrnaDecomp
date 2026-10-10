@@ -6,12 +6,12 @@
 // waffle squares touch on every side): lightness band, chroma and contrast pass, normal vision ΔE 19.9, and CVD
 // ΔE 6.9, in the floor band that is legal only with a secondary encoding, which the 1–3 px gaps between squares and
 // bar segments and the counts beside every legend provide. Outcome colours are shared by the benchmark chart, its
-// tables and the playground's row card: green for exact, gold for differs, blue for failed.
+// tables and the playground's row card: green for exact, blue for differs, gold for failed.
 import type { Outcome } from '@asmlift/wasm-benchmark/schema';
 
 export const EXACT = '#1fae55';
-export const DIFFERS = '#ad720d';
-export const FAILED = '#4886fe';
+export const DIFFERS = '#4886fe';
+export const FAILED = '#ad720d';
 
 export function outcomeColor(o: Outcome): string {
   return o === 'exact' ? EXACT : o === 'differs' ? DIFFERS : FAILED;
@@ -31,13 +31,13 @@ export const EXACT_TINT = '#7ee2a2';
 
 /** The outcome's colour for text on a pill: a lighter step of the same hue, readable on the surfaces. */
 export function outcomeTint(o: Outcome): string {
-  return o === 'exact' ? EXACT_TINT : o === 'differs' ? '#e8b25a' : '#9dbcff';
+  return o === 'exact' ? EXACT_TINT : o === 'differs' ? '#9dbcff' : '#e8b25a';
 }
 
 /** The progress page's verdict colours, in VERDICTS order: matched, differs and unresolved as the outcomes above,
  *  and no candidate, the "not yet" state, an empty slot a step above the surfaces rather than a fourth hue. */
 export const VERDICT_COLORS = [EXACT, DIFFERS, FAILED, '#22366d'] as const;
-export const VERDICT_TINTS = [EXACT_TINT, '#e8b25a', '#9dbcff', '#aab8dc'] as const;
+export const VERDICT_TINTS = [EXACT_TINT, '#9dbcff', '#e8b25a', '#aab8dc'] as const;
 export const VERDICT_LABELS = ['matched', 'differs', 'unresolved', 'no candidate'] as const;
 
 /** Line colours for the progress history: the total in white, then one per series, the flag's yellow, green and

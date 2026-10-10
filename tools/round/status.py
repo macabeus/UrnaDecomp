@@ -1,4 +1,4 @@
-"""Write the progress numbers into README.md and docs/status.md from the committed scan.
+"""Write the progress numbers into docs/status.md from the committed scan.
 
     python3 -I -B tools/round/status.py           # rewrite the generated blocks (make -C src status)
     python3 -I -B tools/round/status.py --check   # exit 1 when a block or the scan disagrees with the matches (CI)
@@ -20,7 +20,6 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 MATCHES = os.path.join(ROOT, 'splat', 'matched.txt')
 SCAN = os.path.join(ROOT, 'splat', 'scan.tsv')
 TARGET = os.path.join(ROOT, 'target', 'vota_web_wasm.wasm')
-README = os.path.join(ROOT, 'README.md')
 STATUS = os.path.join(ROOT, 'docs', 'status.md')
 
 UENUX2 = [
@@ -189,26 +188,6 @@ def blocks(rows, listed):
     code = lambda xs: ', '.join(f'`{x}`' for x in xs)
     out = {}
 
-    out['readme'] = '\n'.join([
-        f'**{n(every[0])} of {n(every[1])} target functions matched ({pct(every[0], every[1])}), '
-        f'{pct(every[2], every[3])} of the code bytes.** Most of these matches are upstream libraries rebuilt from '
-        f"their own sources. TSE's own code, which this project exists to recover, is {n(tse[0])} of {n(tse[1])} "
-        f'functions matched: {pct(tse[2], tse[3])} of its code bytes.',
-        '',
-        '| origin | components | functions matched | code bytes matched |',
-        '| --- | --- | ---: | ---: |',
-        f'| TSE code: uenux2 | {code(c for c, _ in UENUX2)} | {n(ue[0])} / {n(ue[1])} | {pct(ue[2], ue[3])} |',
-        f'| TSE code: ecourna | `ecourna` | {n(t["ecourna"][0])} / {n(t["ecourna"][1])} | '
-        f'{pct(t["ecourna"][2], t["ecourna"][3])} |',
-        f"| TSE code: ASN.1 types | `asn1-modules` (generated from TSE's schemas) | {n(t['asn1-modules'][0])} / "
-        f"{n(t['asn1-modules'][1])} | {pct(t['asn1-modules'][2], t['asn1-modules'][3])} |",
-        f"| TSE code: ASN.1 runtime | `ASN1` (TSE's fork of the III ASN.1 runtime) | {n(t['ASN1'][0])} / "
-        f"{n(t['ASN1'][1])} | {pct(t['ASN1'][2], t['ASN1'][3])} |",
-        f'| **TSE code** | | **{n(tse[0])} / {n(tse[1])}** | **{pct(tse[2], tse[3])}** |',
-        f'| upstream libraries | {code(libs)} | {n(lib[0])} / {n(lib[1])} | {pct(lib[2], lib[3])} |',
-        f'| not attributed | `app`, `unknown` | {n(na[0])} / {n(na[1])} | {pct(na[2], na[3])} |',
-    ])
-
     out['headline'] = (f'**{n(every[0])} of {n(every[1])} functions matched ({pct(every[0], every[1])}), '
                        f'{n(every[2])} of {n(every[3])} code bytes ({pct(every[2], every[3])}).**')
 
@@ -303,7 +282,7 @@ def main(argv):
         problems.append(f'splat/scan.tsv has {len(matches)} match rows but splat/matched.txt has {len(listed)} matches '
                         f'(scan only: {extra}, matched.txt only: {missing}); run TMPDIR=/tmp make -C src splat-match')
     generated = blocks(rows, listed)
-    for path, (old, new) in [(p, substitute(p, generated)) for p in (README, STATUS)]:
+    for path, (old, new) in [(p, substitute(p, generated)) for p in (STATUS,)]:
         if old != new:
             if check:
                 problems.append(f'{os.path.relpath(path, ROOT)} is not what the scan gives; run make -C src status')
@@ -314,7 +293,7 @@ def main(argv):
     for p in problems:
         print(p, file=sys.stderr)
     if not problems:
-        print(f'{len(listed)} matches; README.md and docs/status.md agree with splat/scan.tsv')
+        print(f'{len(listed)} matches; docs/status.md agrees with splat/scan.tsv')
     return 1 if problems else 0
 
 

@@ -1,5 +1,5 @@
 // The shape of public/data/progress.json, written by scripts/progress.ts from splat/scan.tsv (the verdict of
-// every target function, the file `make -C src status` sums into the README's meter) and the history of
+// every target function, the file `make -C src status` sums into docs/status.md's meter) and the history of
 // splat/matched.txt. Per-function arrays are indexed by `index - first`.
 
 export const VERDICTS = ['match', 'differs', 'unresolved', 'no-candidate'] as const;

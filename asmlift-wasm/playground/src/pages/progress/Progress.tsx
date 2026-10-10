@@ -89,7 +89,7 @@ function ProgressView({ data, onOpenInPlayground }: { data: ProgressData; onOpen
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
         <Panel
           title={component ? `Every function of ${component.id}` : level ? `Every function of ${label(level)}` : 'Every function in the module'}
-          subtitle="one square per target function, coloured by its verdict in splat/scan.tsv; hover to name it, click to select it"
+          subtitle="one square per target function, coloured by its verdict"
           aside={
             <Toggle
               value={sort}
@@ -142,8 +142,7 @@ function Hero({ m, data }: { m: Meter; data: ProgressData }) {
             Recovering TSE's code is the project's goal. <span className="font-mono text-slate-200">{num(matched(tse, 'functions'))}</span>{' '}
             of its <span className="font-mono text-slate-200">{num(total(tse, 'functions'))}</span> functions in{' '}
             <span className="font-mono">vota_web_wasm.wasm</span> are built byte for byte by our link (
-            <span className="font-mono text-slate-200">{pct(share(tse, 'bytes'))}</span> of its code bytes). A match is a line
-            of <span className="font-mono">splat/matched.txt</span>, checked by the splat build on every run.
+            <span className="font-mono text-slate-200">{pct(share(tse, 'bytes'))}</span> of its code bytes).
           </p>
           <VerdictBar tally={tse} metric="functions" className="mt-5" />
         </div>
@@ -300,7 +299,6 @@ function CardGrid({
             subtitle={o.blurb}
             tally={m.byOrigin.get(o.id)!}
             metric={metric}
-            accent={ORIGIN_COLOR[o.id]}
             onClick={() => onGo(o.id, null)}
             big
           />
@@ -323,7 +321,6 @@ function Card({
   tally,
   metric,
   onClick,
-  accent,
   big = false,
   mono = false,
 }: {
@@ -332,7 +329,6 @@ function Card({
   tally: Tally;
   metric: Metric;
   onClick: () => void;
-  accent?: string;
   big?: boolean;
   mono?: boolean;
 }) {
@@ -346,10 +342,7 @@ function Card({
     >
       <Waffle values={values} size={big ? 132 : 96} label={`${title}: ${pct(share(tally, metric))} matched`} />
       <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
-          {accent && <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: accent }} />}
-          <h3 className={`truncate font-semibold text-slate-100 ${mono ? 'font-mono text-sm' : 'text-base'}`}>{title}</h3>
-        </div>
+        <h3 className={`truncate font-semibold text-slate-100 ${mono ? 'font-mono text-sm' : 'text-base'}`}>{title}</h3>
         <div className={`mt-1 font-mono font-bold text-teal-200 ${big ? 'text-3xl' : 'text-2xl'}`}>{pct(share(tally, metric), 1)}</div>
         <div className="font-mono text-xs text-slate-400">
           {num(matched(tally, metric))} / {num(total(tally, metric))} {unit}

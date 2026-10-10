@@ -1,5 +1,5 @@
 // The Progress page's data: every target function's verdict, component, size and name from splat/scan.tsv (what
-// `make -C src status` sums into the README's meter), a name for it, and the matches of splat/matched.txt at every
+// `make -C src status` sums into docs/status.md's meter), a name for it, and the matches of splat/matched.txt at every
 // point of main's history that changed them, summed per component by today's scan. The points that main's history
 // does not hold are read from matches-earlier.json, the commits from git, so a shallow clone has fewer points.
 import { execFileSync } from 'node:child_process';

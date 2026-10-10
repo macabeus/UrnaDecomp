@@ -8,7 +8,7 @@
 #   make -C src splat-scan      # every target function against our candidate → splat/scan.tsv, then `status` and `stubs`
 #   make -C src splat-match     # splat-scan, then append its new matches to splat/matched.txt, then `status` and `stubs`
 #   make -C src splat-symbols   # regenerate splat/symbol_addrs.txt from the current link (hand edits below the marker kept)
-#   make -C src status          # the progress numbers in README.md and docs/status.md, from splat/scan.tsv
+#   make -C src status          # the progress numbers in docs/status.md, from splat/scan.tsv
 #   make -C src stubs           # the comment stub of every TSE function with no match and no code of ours, and the gaps (src/README.md)
 #   make -C src stubs-check     # fails on a stub or gap that is missing, extra, stale or out of place (CI runs it)
 #
