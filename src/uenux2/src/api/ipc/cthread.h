@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 namespace api {
 
 class IThreadImpl;
@@ -21,8 +23,8 @@ private:
     int m_estado;
     bool m_iniciada;
     bool m_parar;
-    IThreadImpl* m_impl;
-    IThreadImpl* m_implEspera;
+    std::unique_ptr<IThreadImpl> m_impl;
+    std::unique_ptr<IThreadImpl> m_implEspera;
 };
 
 } // namespace api
