@@ -15,7 +15,7 @@ The project is not affiliated with the TSE.
 ## Status
 
 <!-- status:readme -->
-**7,210 of 14,343 target functions claimed (50.27%), 35.96% of the code bytes.** Most of these claims are upstream libraries rebuilt from their own sources. TSE's own code, which this project exists to recover, is 370 of 3,285 functions claimed: 3.13% of its code bytes.
+**7,209 of 14,343 target functions claimed (50.26%), 35.96% of the code bytes.** Most of these claims are upstream libraries rebuilt from their own sources. TSE's own code, which this project exists to recover, is 370 of 3,285 functions claimed: 3.13% of its code bytes.
 
 | origin | components | functions claimed | code bytes claimed |
 | --- | --- | ---: | ---: |
@@ -24,7 +24,7 @@ The project is not affiliated with the TSE.
 | TSE code: ASN.1 types | `asn1-modules` (generated from TSE's schemas) | 19 / 59 | 7.96% |
 | TSE code: ASN.1 runtime | `ASN1` (TSE's fork of the III ASN.1 runtime) | 154 / 377 | 24.18% |
 | **TSE code** | | **370 / 3,285** | **3.13%** |
-| upstream libraries | `openssl`, `sqlite`, `libc++`, `7zip`, `RHVoice`, `boost`, `libc++abi`, `libc`, `utf8cpp`, `rapidxml` | 5,514 / 8,299 | 58.35% |
+| upstream libraries | `openssl`, `sqlite`, `libc++`, `7zip`, `RHVoice`, `boost`, `libc++abi`, `libc`, `utf8cpp`, `rapidxml` | 5,513 / 8,299 | 58.35% |
 | not attributed | `app`, `unknown` | 1,326 / 2,759 | 37.31% |
 <!-- /status:readme -->
 

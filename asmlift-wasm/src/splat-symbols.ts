@@ -1383,6 +1383,9 @@ export function gatherEvidence({ ours, target, ledgerDir, trivial = 8 }: Generat
     const r = resolveDataAddress(ours, ourImage, target, vo);
     return r.ok ? r.addr : null;
   };
+  const tTypes = typeMap(om, tm);
+  const sameSignature = (o: number, t: number): boolean =>
+    t >= tFirst && tTypes.get(om.funcs[o - oFirst].typeIndex) === tm.funcs[t - tFirst].typeIndex;
   const votes: VoteBox = { fn: new Map(), table: new Map(), data: new Map(), voters: new Map(), fnVoters: new Map() };
   const aligned = new Set<string>();
   const pairOf = new Map<number, number>(pairs.map(([t, o]) => [o, t]));
@@ -1407,8 +1410,10 @@ export function gatherEvidence({ ours, target, ledgerDir, trivial = 8 }: Generat
       if (pairOf.has(o)) {
         continue;
       }
+      // a call or a table slot reaches only a function of the caller's signature: votes for another one are a
+      // coincidence of the aligned operands
       const t = agreed(o);
-      if (t === null || t < tFirst) {
+      if (t === null || t < tFirst || !sameSignature(o, t)) {
         continue;
       }
       pairOf.set(o, t);
@@ -1432,9 +1437,6 @@ export function gatherEvidence({ ours, target, ledgerDir, trivial = 8 }: Generat
     voters: new Map(),
     fnVoters: new Map(),
   };
-  const tTypes = typeMap(om, tm);
-  const sameSignature = (o: number, t: number): boolean =>
-    t >= tFirst && tTypes.get(om.funcs[o - oFirst].typeIndex) === tm.funcs[t - tFirst].typeIndex;
   const namedT = new Set(pairOf.values());
   const anchoredT = new Set<number>();
   const anchorEvidence = new Map<number, string>();

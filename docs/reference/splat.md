@@ -69,7 +69,8 @@ keeps data where wasm-ld put it.
 
 - `glue`, `export`: import and export names from `target/vota_web_wasm.js`.
 - `pair-fingerprint`, `pair-addr`: a census pair that is unique on both sides.
-- `call`, `table`: aligned call operands and function-pointer constants.
+- `call`, `table`: aligned call operands and function-pointer constants. They name a function only when
+  every vote agrees and our function has the target function's signature.
 - `vote:N`: aligned address operands. `by:` lists up to 4 target functions that cast a vote. `vote:N+rtti` is a
   vote that the RTTI decoding agrees with.
 - `rtti`: vtables and typeinfos decoded from the target's bytes.

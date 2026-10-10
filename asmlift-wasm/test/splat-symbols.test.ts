@@ -459,4 +459,21 @@ describe('symbol file', () => {
       expect(checked).toBeGreaterThanOrEqual(6);
     },
   );
+
+  it.skipIf(!real)('names a target function by call or table votes only after a function of ours of its signature', () => {
+    const target = parseModule(new Uint8Array(readFileSync(TARGET)));
+    const ours = loadOurSide(PLAIN, MAP_DIR);
+    const om = ours.module;
+    const signature = (m: typeof om, i: number) => JSON.stringify(m.types[m.funcs[i - m.importedFuncCount].typeIndex]);
+    const voted = parseSymbolFile(readFileSync(SYMBOLS, 'utf8')).generated.filter(
+      (e) => e.at.kind === 'func' && (e.evidence === 'call' || e.evidence === 'table'),
+    );
+    const differing = voted.filter((e) => {
+      const o = ours.fnByKey.get(e.name);
+      const t = (e.at as { index: number }).index;
+      return o !== undefined && o >= om.importedFuncCount && signature(om, o) !== signature(target, t);
+    });
+    expect(voted.length).toBeGreaterThan(100);
+    expect(differing.map((e) => e.name)).toEqual([]);
+  });
 });

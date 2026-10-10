@@ -3232,7 +3232,7 @@ index	symbol	ours	source	verdict	detail	size	ledger_kind	group	tried	object
 3366	_ZNSt3__212__pow5FactorB8ne210108Ej	3133	symbol	match	readings: literal	35	byte	libc++	1	sysroot:libc++.a(f2s.o)
 3367	-	-	-	no-candidate	no symbol and no ledger pair	10	none	libc++	0	-
 3368	-	-	-	no-candidate	no symbol and no ledger pair	374	none	libc++	0	-
-3369	_ZNSt3__220__shared_ptr_emplaceINS_10filesystem16filesystem_error8_StorageENS_9allocatorIS3_EEEC2B8ne210108IJNS1_4pathES8_ES5_TnNS_9enable_ifIXntsr7is_sameINT0_10value_typeENS_19__for_overwrite_tagEEE5valueEiE4typeELi0EEES5_DpOT_	3134	symbol	match	readings: address content-repointed,address symbol,table slot,literal	77	addr	libc++	1	sysroot:libc++.a(directory_iterator.o)
+3369	_ZNSt3__220__shared_ptr_emplaceINS_10filesystem16filesystem_error8_StorageENS_9allocatorIS3_EEEC2B8ne210108IJNS1_4pathES8_ES5_TnNS_9enable_ifIXntsr7is_sameINT0_10value_typeENS_19__for_overwrite_tagEEE5valueEiE4typeELi0EEES5_DpOT_	3134	symbol	match	readings: address symbol,table slot,literal	77	addr	libc++	1	sysroot:libc++.a(directory_iterator.o)
 3370	-	-	-	no-candidate	no symbol and no ledger pair	23	none	libc++	0	-
 3371	-	-	-	no-candidate	no symbol and no ledger pair	275	none	libc++	0	-
 3372	-	-	-	no-candidate	no symbol and no ledger pair	244	none	comum	0	-
@@ -4648,7 +4648,7 @@ index	symbol	ours	source	verdict	detail	size	ledger_kind	group	tried	object
 4782	-	-	-	no-candidate	no symbol and no ledger pair	79	none	libc++	0	-
 4783	_ZNSt9bad_allocC2Ev	2280	ledger	differs	+0x4 target +0x3 i32.const 1292724 | ours +0x3 i32.const 1525816 [ours 1201720 = _ZTVSt9bad_alloc+8: address symbol _ZTVSt9bad_alloc → 0x174838]	14	addr	libc++	1	sysroot:libc++abi.a(stdlib_exception.o)
 4784	_ZN3api15CPosixSemaphoreD2Ev	4026	ledger	differs	+0x5 target +0x3 i32.const 1292600 | ours +0x3 i32.const 1600184 [ours 1210388 = _ZTVN3api15CPosixSemaphoreE+8: address symbol _ZTVN3api15CPosixSemaphoreE → 0x186ab8]	14	addr	libc++	1	app/uenux2/src/api/ipc/posix/cposixsemaphore.cpp.o
-4785	_ZNSt3__220__shared_ptr_emplaceINS_10filesystem16filesystem_error8_StorageENS_9allocatorIS3_EEED2Ev	5306	symbol	match	readings: address content-repointed	14	addr	libc++	2	sysroot:libc++.a(directory_iterator.o)
+4785	_ZNSt3__220__shared_ptr_emplaceINS_10filesystem16filesystem_error8_StorageENS_9allocatorIS3_EEED2Ev	5306	symbol	match	readings: address symbol	14	addr	libc++	2	sysroot:libc++.a(directory_iterator.o)
 4786	_ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE14__erase_to_endB8ne210108Em	5308	symbol	match	-	53	byte	ASN1	1	sysroot:libc++.a(directory_iterator.o)
 4787	-	-	-	no-candidate	no symbol and no ledger pair	13	none	ecourna	0	-
 4788	-	-	-	no-candidate	no symbol and no ledger pair	576	none	libc++	0	-
@@ -5216,7 +5216,7 @@ index	symbol	ours	source	verdict	detail	size	ledger_kind	group	tried	object
 5350	-	-	-	no-candidate	no symbol and no ledger pair	276	none	ecourna	0	-
 5351	-	-	-	no-candidate	no symbol and no ledger pair	1632	none	ecourna	0	-
 5352	-	-	-	no-candidate	no symbol and no ledger pair	7	none	ecourna	0	-
-5353	_ZNSt3__220__shared_ptr_emplaceINS_10filesystem16filesystem_error8_StorageENS_9allocatorIS3_EEED2Ev	5306	ledger	differs	+0x4 target +0x3 i32.const 1600340 | ours +0x3 i32.const 1292464 [ours 1188576 = _ZTVNSt3__220__shared_ptr_emplaceINS_10filesystem16filesystem_error8_StorageENS_9allocatorIS3_EEEE+8: address content-repointed → 0x13b8b0]	14	addr	api	1	sysroot:libc++.a(directory_iterator.o)
+5353	_ZNSt3__220__shared_ptr_emplaceINS_10filesystem16filesystem_error8_StorageENS_9allocatorIS3_EEED2Ev	5306	ledger	differs	+0x4 target +0x3 i32.const 1600340 | ours +0x3 i32.const 1292464 [ours 1188576 = _ZTVNSt3__220__shared_ptr_emplaceINS_10filesystem16filesystem_error8_StorageENS_9allocatorIS3_EEEE+8: address symbol _ZTVNSt3__220__shared_ptr_emplaceINS_10filesystem16filesystem_error8_StorageENS_9allocatorIS3_EEEE → 0x13b8b0]	14	addr	api	1	sysroot:libc++.a(directory_iterator.o)
 5354	_ZN3api15CPosixSemaphoreD2Ev	4026	symbol	match	readings: address symbol	14	addr	api	2	app/uenux2/src/api/ipc/posix/cposixsemaphore.cpp.o
 5355	_ZN3api11CPosixMutexD2Ev	4036	symbol	match	readings: address symbol	14	addr	api	2	app/uenux2/src/api/ipc/posix/cposixmutex.cpp.o
 5356	-	-	-	no-candidate	no symbol and no ledger pair	666	none	app	0	-
@@ -5985,7 +5985,7 @@ index	symbol	ours	source	verdict	detail	size	ledger_kind	group	tried	object
 6119	byn$mgfn-shared$_ZNSt11logic_errorC2ERKS_	5138	symbol	match	readings: literal	41	byte	libc++	1	<binaryen>
 6120	byn$mgfn-shared$_ZNSt11logic_errorC2EPKc	5139	symbol	match	readings: address symbol,table slot,literal	65	addr	libc++	1	<binaryen>
 6121	byn$mgfn-shared$_ZNSt11logic_errorC2ERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE	5140	symbol	match	readings: address symbol,table slot,literal	89	addr	libc++	1	<binaryen>
-6122	byn$mgfn-shared$_ZNSt3__28time_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEEC2B8ne210108Em	5141	symbol	match	readings: address content-repointed,address symbol,table slot	88	addr	libc++	1	<binaryen>
+6122	byn$mgfn-shared$_ZNSt3__28time_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEEC2B8ne210108Em	5141	symbol	unresolved	self-voted +0x5 i32.const 1298880: _ZTVNSt3__26locale5facetE = 0x13d1b8 (evidence:vote:1 by:6122) comes from this function's own operand; our object's bytes say nothing (zeros, or pointers that do not resolve) and no other match re-points through it	88	addr	libc++	1	<binaryen>
 6123	byn$mgfn-shared$_ZNKSt3__27num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjRx	5142	symbol	match	readings: literal,address symbol,table slot	919	addr	libc++	1	<binaryen>
 6124	byn$mgfn-shared$_ZNKSt3__27num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjRx	5143	symbol	match	readings: literal,address symbol,table slot	910	shape	libc++	1	<binaryen>
 6125	byn$mgfn-shared$_ZNKSt3__27num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjRb	5144	symbol	match	readings: literal,address symbol	525	addr	libc++	1	<binaryen>
@@ -11230,7 +11230,7 @@ index	symbol	ours	source	verdict	detail	size	ledger_kind	group	tried	object
 11364	-	-	-	no-candidate	no symbol and no ledger pair	29	none	comum	0	-
 11365	-	-	-	no-candidate	no symbol and no ledger pair	214	none	comum	0	-
 11366	-	-	-	no-candidate	no symbol and no ledger pair	23	none	comum	0	-
-11367	_ZNK5comum3asn28CConversorOrigemConfiguracao10DoConverteERKNS_2md19EOrigemConfiguracaoE	7145	content	match	readings: address content-repointed,address symbol,literal	44	none	comum	1	app/uenux2/src/app/comum/dados/asn/processoeleitoral/cconversororigemconfiguracao.cpp.o
+11367	_ZNK5comum3asn28CConversorOrigemConfiguracao10DoConverteERKNS_2md19EOrigemConfiguracaoE	7145	symbol	match	readings: address content-repointed,address symbol,literal	44	none	comum	1	app/uenux2/src/app/comum/dados/asn/processoeleitoral/cconversororigemconfiguracao.cpp.o
 11368	-	-	-	no-candidate	no symbol and no ledger pair	29	none	comum	0	-
 11369	-	-	-	no-candidate	no symbol and no ledger pair	871	none	comum	0	-
 11370	-	-	-	no-candidate	no symbol and no ledger pair	29	none	comum	0	-
