@@ -2012,14 +2012,6 @@
 // f11385 · 391 B · unmatched · placement: link order · name unknown
 // void f11385(i32, i32, i32) { ... }
 
-// link-order cluster 452 · uses=1 · neighbours' file uenux2/src/app/comum/dados/asn/estadoaplicacao/cconversornumviasimpressasrelatorios.cpp
-
-// f11387 · 44 B · unmatched · placement: link order · name unknown
-// void f11387(i32, i32, i32) { ... }
-
-// f11386 · 86 B · unmatched · placement: link order · name unknown
-// void f11386(i32, i32, i32) { ... }
-
 // link-order cluster 453 · uses=1 · neighbours' file uenux2/src/app/comum/dados/asn/estadoaplicacao/cconversorlocalidadeeleitoral.cpp
 
 // f11389 · 36 B · unmatched · placement: link order · name unknown
@@ -2368,9 +2360,6 @@
 
 // f5630 · 275 B · unmatched · placement: link order · name unknown
 // ? f5630(i32, i32, i32, i32, i32, i32, i32, i32) { ... }
-
-// f5629 · 30 B · unmatched · placement: link order · name unknown
-// void f5629(i32, i32, i32, i32, i32) { ... }
 
 // f5628 · 151 B · unmatched · placement: link order · name unknown
 // void f5628(i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32) { ... }

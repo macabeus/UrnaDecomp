@@ -15,15 +15,15 @@ The project is not affiliated with the TSE.
 ## Status
 
 <!-- status:readme -->
-**7,211 of 14,343 target functions matched (50.28%), 35.96% of the code bytes.** Most of these matches are upstream libraries rebuilt from their own sources. TSE's own code, which this project exists to recover, is 372 of 3,285 functions matched: 3.14% of its code bytes.
+**7,214 of 14,343 target functions matched (50.30%), 35.97% of the code bytes.** Most of these matches are upstream libraries rebuilt from their own sources. TSE's own code, which this project exists to recover, is 375 of 3,285 functions matched: 3.15% of its code bytes.
 
 | origin | components | functions matched | code bytes matched |
 | --- | --- | ---: | ---: |
-| TSE code: uenux2 | `vota`, `comum`, `api`, `simulador`, `vota-web` | 71 / 2,050 | 0.74% |
+| TSE code: uenux2 | `vota`, `comum`, `api`, `simulador`, `vota-web` | 74 / 2,050 | 0.75% |
 | TSE code: ecourna | `ecourna` | 128 / 799 | 5.81% |
 | TSE code: ASN.1 types | `asn1-modules` (generated from TSE's schemas) | 19 / 59 | 7.96% |
 | TSE code: ASN.1 runtime | `ASN1` (TSE's fork of the III ASN.1 runtime) | 154 / 377 | 24.18% |
-| **TSE code** | | **372 / 3,285** | **3.14%** |
+| **TSE code** | | **375 / 3,285** | **3.15%** |
 | upstream libraries | `openssl`, `sqlite`, `libc++`, `7zip`, `RHVoice`, `boost`, `libc++abi`, `libc`, `utf8cpp`, `rapidxml` | 5,513 / 8,299 | 58.35% |
 | not attributed | `app`, `unknown` | 1,326 / 2,759 | 37.31% |
 <!-- /status:readme -->
