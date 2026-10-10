@@ -1,7 +1,50 @@
-// <stubs>
-// f11367 · 44 B · unmatched · placement: link order · name unknown
-// void f11367(i32, i32, i32) { ... }
+#include "app/comum/dados/asn/processoeleitoral/cconversororigemconfiguracao.h"
 
-// f11366 · 23 B · unmatched · name unknown
-// ? f11366(i32, i32) { ... }
-// </stubs>
+namespace comum::asn {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CConversorOrigemConfiguracao::TEntidade CConversorOrigemConfiguracao::DoConverte(const TDado& origem) const
+{
+    return origem == md::ORIGEM_COMUNITARIA ? TEntidade::comunitaria : TEntidade::oficial;
+}
+
+} // namespace comum::asn
