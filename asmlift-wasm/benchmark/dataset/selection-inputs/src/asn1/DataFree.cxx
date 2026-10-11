@@ -119,3 +119,8 @@ bool DataFree::do_visit(GeneralizedTime& value)
 }
 
 }//namespace
+
+// <stubs>
+// f2182 · 683 B · unmatched · placement: link order · name unknown
+// void f2182(i32, i32, i32, i32, i32, i32, i32) { ... }
+// </stubs>

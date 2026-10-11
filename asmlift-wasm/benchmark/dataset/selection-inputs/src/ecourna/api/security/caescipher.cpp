@@ -39,17 +39,8 @@ CAesCipher::CAesCipher(const EOperationModes modo, const ESymmetricCipherKeySize
 
     const auto cifra = CIFRAS.find(std::make_pair(modo, tamanho));
 
-
-
-
-
-
-
-
-
-
-
-
+    // (original lines 42-52: content not recovered)
+#line 53
     if (cifra == CIFRAS.end()) {
         throw CSecurityError(ESE_AES_CHAVE_TAMANHO, "Chave AES de tamanho inválido.");
     }
@@ -61,11 +52,8 @@ CAesCipher::CAesCipher(const EOperationModes modo, const ESymmetricCipherKeySize
 void CAesCipher::SetKey(const CAesKey& chave)
 {
 
-
-
-
-
-
+    // (original lines 64-68: content not recovered)
+#line 69
     if (EVP_CIPHER_get_key_length(m_cipher) != static_cast<int>(chave.GetBytes().size())) {
         throw CSecurityError(ESE_AES_CHAVE_TAMANHO_SETKEY, "Chave AES de tamanho inválido.");
     }
@@ -90,8 +78,8 @@ void CAesCipher::Encrypt(const std::vector<uebyte>& entrada, std::vector<uebyte>
         iv.assign(m_chave.GetIV().begin(), m_chave.GetIV().end());
     }
 
-
-
+    // (original lines 93-94: content not recovered)
+#line 95
     if (!EVP_EncryptInit_ex(ctx.get(), m_cipher, nullptr, m_chave.GetBytes().data(), iv.data())) {
         throw CSecurityError(ESE_AES_ENCRYPT_INIT, "EncryptInit_ex falhou.");
     }
@@ -133,10 +121,8 @@ void CAesCipher::Decrypt(const std::vector<uebyte>& entrada, std::vector<uebyte>
         dados.assign(entrada.begin(), entrada.end());
     }
 
-
-
-
-
+    // (original lines 136-139: content not recovered)
+#line 140
     if (!EVP_DecryptInit_ex(ctx.get(), m_cipher, nullptr, m_chave.GetBytes().data(), iv.data())) {
         throw CSecurityError(ESE_AES_DECRYPT_INIT, "DecryptInit_ex falhou.");
     }

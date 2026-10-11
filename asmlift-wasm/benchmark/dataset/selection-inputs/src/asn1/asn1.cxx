@@ -1772,3 +1772,11 @@ bool ConstVisitor::visit(const SEQUENCE& value)
 }
 
 } // namespace ASN1
+
+// <stubs>
+// f9063 · 141 B · unmatched · placement: link order · name unknown
+// void f9063(i32, i32) { ... }
+
+// f8967 · 12 B · unmatched · placement: link order · name unknown
+// ? f8967(i32) { ... }
+// </stubs>

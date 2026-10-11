@@ -1,8 +1,8 @@
 # Benchmark: baseline
 
-Target `target/vota_web_wasm.wasm` (sha256 `8579ef8d1a938191…`), image `urna-emsdk:6.0.0`, 190 rows (rows.json `304c8f887d32`, setups.json `227d111aa60d`), urna `4fc3fee`, 2026-10-09T23:54:57.166Z. Lift 220 ms, compile and optimise 26.0 s, total 45.7 s.
+Target `target/vota_web_wasm.wasm` (sha256 `8579ef8d1a938191…`), image `urna-emsdk:6.0.0`, 190 rows (rows.json `44761a2a53a4`, setups.json `3d4d1ab2e594`), urna `37d004d+dirty`, 2026-10-11T14:11:46.309Z. Lift 232 ms, compile and optimise 9.6 s, total 20.2 s.
 
-Each row is lifted, compiled with `em++ -c` at its setup's flags, and scored against the target at depth 0 with callees, data addresses, the stack pointer and the indirect table canonicalised on both sides (raw); then the object is linked alone and put through the target link's wasm-opt -Oz passes and scored again (-Oz). The ratio is differing rows over target rows; exact is a -Oz score of 0. An isolated function misses what the whole-program link does to it, so no score here is a byte match.
+Each row is lifted, compiled with `em++ -c` at its setup's flags, and scored against the target at depth 0 with callees, data addresses, the stack pointer and the indirect table canonicalised on both sides (raw); then the object is linked alone and put through the target link's wasm-opt -Oz passes and scored again (-Oz). The ratio is differing rows over target rows; exact is a -Oz score of 0. An isolated function misses what the whole-program link does to it, so no score here means byte-identical.
 
 ## Overall
 
@@ -48,10 +48,10 @@ A row counts under every feature it has.
 
 | feature | rows | lifted | compiled | -Oz linked | exact raw | exact -Oz | exact share | median ratio | median -Oz | mean -Oz |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| leaf | 100 | 100 | 100 | 100 | 30 | 59 | 59.0% | 0.310 | 0.000 | 0.159 |
+| leaf | 101 | 101 | 101 | 101 | 31 | 60 | 59.4% | 0.308 | 0.000 | 0.158 |
 | loop | 56 | 56 | 56 | 56 | 0 | 7 | 12.5% | 0.583 | 0.307 | 0.346 |
 | switch | 21 | 21 | 21 | 21 | 0 | 1 | 4.8% | 0.617 | 0.287 | 0.296 |
-| call_indirect | 35 | 35 | 35 | 35 | 4 | 20 | 57.1% | 0.310 | 0.000 | 0.104 |
+| call_indirect | 34 | 34 | 34 | 34 | 3 | 19 | 55.9% | 0.313 | 0.000 | 0.107 |
 | invoke | 8 | 8 | 8 | 8 | 0 | 3 | 37.5% | 0.711 | 0.010 | 0.086 |
 | throw | 10 | 10 | 10 | 10 | 1 | 2 | 20.0% | 0.710 | 0.135 | 0.179 |
 | frame | 46 | 46 | 46 | 46 | 0 | 7 | 15.2% | 0.611 | 0.257 | 0.289 |

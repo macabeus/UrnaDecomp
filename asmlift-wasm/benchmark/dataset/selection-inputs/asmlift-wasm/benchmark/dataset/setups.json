@@ -3,10 +3,10 @@
     "key": "uenux2",
     "title": "uenux2, the TSE application",
     "flags": {
-      "c++": "-O2 -fPIC -std=c++20 -DNDEBUG"
+      "c++": "-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing"
     },
     "image": "urna-emsdk:6.0.0",
-    "source": "src/Makefile UENUX2_CXXFLAGS; docs/toolchain-report.md §3",
+    "source": "src/Makefile UENUX2_CXXFLAGS; docs/reference/toolchain.md §3",
     "truth": {
       "kind": "make",
       "vars": [
@@ -28,7 +28,7 @@
       "c++": "-O3 -fPIC -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow"
     },
     "image": "urna-emsdk:6.0.0",
-    "source": "src/Makefile ECOURNA_CXXFLAGS + src/units/00-ecourna-flags.mk",
+    "source": "src/Makefile ECOURNA_CXXFLAGS + src/mk/ecourna-flags.mk",
     "truth": {
       "kind": "make",
       "vars": [
@@ -43,7 +43,7 @@
       "c++": "-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fno-pic"
     },
     "image": "urna-emsdk:6.0.0",
-    "source": "src/Makefile ECOURNA_CXXFLAGS + the -fno-PIC rules of src/units/00-ecourna-flags.mk, R-COMP.mk, R-ASNCORE.mk and the other unit fragments",
+    "source": "src/Makefile ECOURNA_CXXFLAGS + the -fno-PIC rules of src/mk/ecourna-flags.mk, 06-ecourna-api-compression.mk, 04-ecourna-app-dados-asn.mk and the other unit fragments",
     "truth": {
       "kind": "make",
       "vars": [
@@ -58,7 +58,7 @@
       "c++": "-Os -fno-exceptions -std=c++17 -DNDEBUG"
     },
     "image": "urna-emsdk:6.0.0",
-    "source": "src/units/asn1.mk ASN1_CXXFLAGS; src/units/R-ASNCORE.mk (modules)",
+    "source": "src/mk/asn1.mk ASN1_CXXFLAGS (the runtime and the modules)",
     "truth": {
       "kind": "make",
       "vars": [
@@ -74,7 +74,7 @@
       "c++": "-Os -fno-exceptions -std=c++17 -DNDEBUG -fexceptions -fignore-exceptions"
     },
     "image": "urna-emsdk:6.0.0",
-    "source": "src/units/asn1.mk ASN1_CXXFLAGS + ASN1_FLAGS_<unit>",
+    "source": "src/mk/asn1.mk ASN1_CXXFLAGS + ASN1_FLAGS_<unit>",
     "truth": {
       "kind": "make",
       "vars": [
@@ -89,7 +89,7 @@
       "c": "-O3 -fPIC -DNDEBUG -D_LARGEFILE64_SOURCE=1"
     },
     "image": "urna-emsdk:6.0.0",
-    "source": "src/units/R-COMP.mk ZLIB_CFLAGS",
+    "source": "src/units/06-ecourna-api-compression.mk ZLIB_CFLAGS",
     "truth": {
       "kind": "make",
       "vars": [
@@ -105,7 +105,7 @@
       "c": "-O3 -fPIC -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_UNLOCK_NOTIFY -DHAVE_FDATASYNC -DHAVE_GMTIME_R -DHAVE_LOCALTIME_R -DHAVE_POSIX_FALLOCATE -DHAVE_STRERROR_R -DHAVE_USLEEP"
     },
     "image": "urna-emsdk:6.0.0",
-    "source": "build/libs/sqlite/build.sh DEFAULT_CFLAGS, run by src/Makefile (variant O3pic2)",
+    "source": "tools/libs/sqlite/build.sh DEFAULT_CFLAGS, run by src/Makefile (variant O3pic2)",
     "truth": {
       "kind": "artefact",
       "vars": [
@@ -122,13 +122,13 @@
       "c": "-O3 -fPIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG"
     },
     "image": "urna-emsdk:6.0.0",
-    "source": "build/libs/openssl/configure.sh (URNA_OSSL_CFLAGS=-O3 from src/Makefile, -fPIC) → the configured Makefile's CFLAGS and CNF_CPPFLAGS",
+    "source": "tools/libs/openssl/configure.sh (URNA_OSSL_CFLAGS=-O3 from src/Makefile, -fPIC) → the configured Makefile's CFLAGS and CNF_CPPFLAGS",
     "truth": {
       "kind": "artefact",
       "vars": [
         "LIBCRYPTO"
       ],
-      "file": "build/out/openssl/O3/src/Makefile",
+      "file": "build/out/openssl/O3/Makefile",
       "format": "make-var",
       "fileVars": [
         "CNF_CFLAGS",
@@ -146,7 +146,7 @@
       "c++": "-Oz -fexceptions -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_7ZIP_ST -O3 -DPROG_VARIANT_R"
     },
     "image": "urna-emsdk:6.0.0",
-    "source": "build/libs/7zip/build.sh COMMON + the -O3 src/Makefile passes (variant st-O3)",
+    "source": "tools/libs/7zip/build.sh COMMON + the -O3 src/Makefile passes (variant st-O3)",
     "truth": {
       "kind": "artefact",
       "vars": [
@@ -167,7 +167,7 @@
       "c++": "-Oz -fexceptions -DRHVOICE=1 '-DPACKAGE=\"RHVoice\"' -O3 -std=c++14 -DNDEBUG"
     },
     "image": "urna-emsdk:6.0.0",
-    "source": "build/libs/rhvoice/build.sh COMMON + the flags src/Makefile passes (variant cxx14-O3-ndebug)",
+    "source": "tools/libs/rhvoice/build.sh COMMON + the flags src/Makefile passes (variant cxx14-O3-ndebug)",
     "truth": {
       "kind": "artefact",
       "vars": [
@@ -182,12 +182,30 @@
     "title": "Boost 1.89.0, header-only",
     "flags": null,
     "image": "urna-emsdk:6.0.0",
-    "source": "build/libs/boost/build.sh; compiled by each including translation unit",
+    "source": "tools/libs/boost/build.sh; compiled by each including translation unit",
     "truth": {
       "kind": "header-only",
       "namespace": "boost::"
     },
     "note": "A row's flags are those of the setup whose objects instantiate it (`instantiatedBy`)."
+  },
+  {
+    "key": "app-stand-ins",
+    "title": "the stand-ins: hand-written roots, drivers and probes (src/app, the units' -roots.cpp)",
+    "flags": {
+      "c++": "-O2 -fPIC -std=c++20 -DNDEBUG",
+      "c": "-O2 -fPIC -DNDEBUG"
+    },
+    "image": "urna-emsdk:6.0.0",
+    "source": "src/Makefile APP_CXXFLAGS, APP_CFLAGS; docs/reference/facts/app-flags.md §F6",
+    "truth": {
+      "kind": "stand-ins",
+      "vars": {
+        "c++": "APP_CXXFLAGS",
+        "c": "APP_CFLAGS"
+      }
+    },
+    "note": "No row of its own: only the `instantiatedBy` of a Boost function that only the probe stand-in (roots_boost.o) instantiates. uenux2's flags without -fno-strict-aliasing: the stand-ins come first on the link line, their libc++ template copies win, and the target's copies have TBAA (matches 152, 1383, 1527, 3501, 3639, 5150)."
   },
   {
     "key": "libc",

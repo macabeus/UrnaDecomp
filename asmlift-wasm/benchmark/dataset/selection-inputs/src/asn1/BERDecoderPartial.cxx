@@ -636,3 +636,8 @@ bool BERDecoderPartial::decodeHeader(AbstractData & obj, unsigned & len)
 }
 
 }//namespace
+
+// <stubs>
+// f3469 · 117 B · unmatched · placement: link order · name unknown
+// ? f3469(i32, i32, i32) { ... }
+// </stubs>

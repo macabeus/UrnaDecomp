@@ -44,11 +44,8 @@ std::string globToRegex(const std::string& glob)
     return regex;
 }
 
-
-
-
-
-
+// (original lines 47-51: content not recovered)
+#line 52
 std::vector<std::filesystem::path> globToFileList(const std::filesystem::path& glob)
 {
     std::filesystem::path caminho = glob;
@@ -116,3 +113,8 @@ void ICompressor::Add(const std::filesystem::path& arquivo)
 }
 
 } // namespace ecourna::api::compression
+
+// <stubs>
+// f5192 · 205 B · unmatched · placement: link order · name unknown
+// ? f5192(i32) { ... }
+// </stubs>

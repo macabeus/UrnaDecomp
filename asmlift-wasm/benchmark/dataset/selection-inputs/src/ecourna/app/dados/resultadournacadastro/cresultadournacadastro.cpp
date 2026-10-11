@@ -22,24 +22,8 @@ CResultadoUrnaCadastro::CResultadoUrnaCadastro(CCabecalhoEntidade cabecalho, CFa
 {
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// (original lines 25-42: content not recovered)
+#line 43
 const CDadosComparecimento& CResultadoUrnaCadastro::GetDadosComparecimento() const
 {
     if (!m_dadosComparecimento) {
@@ -49,8 +33,8 @@ const CDadosComparecimento& CResultadoUrnaCadastro::GetDadosComparecimento() con
     return *m_dadosComparecimento;
 }
 
-
-
+// (original lines 52-53: content not recovered)
+#line 54
 const CDadosComparecimentoCifrado& CResultadoUrnaCadastro::GetDadosComparecimentoCifrado() const
 {
     if (!m_dadosComparecimentoCifrado) {

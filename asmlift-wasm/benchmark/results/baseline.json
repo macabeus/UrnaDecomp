@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "label": "baseline",
- "createdAt": "2026-10-09T23:54:57.166Z",
+ "createdAt": "2026-10-11T14:11:46.309Z",
  "target": {
   "path": "target/vota_web_wasm.wasm",
   "sha256": "8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2"
@@ -9,14 +9,14 @@
  "image": "urna-emsdk:6.0.0",
  "dataset": {
   "rows": 190,
-  "rowsSha256": "304c8f887d329cb3c7758e09c2d2f7cfc5705bbe5f459cb111c99b1d6417ea60",
-  "setupsSha256": "227d111aa60d9acf4c772bd348ba17dd88197bcf2565af270d8a89bbec9e2acf"
+  "rowsSha256": "44761a2a53a401ac446154fddc1f9d9616dab3946c3668e954a324e1338c0b73",
+  "setupsSha256": "3d4d1ab2e594c11ead7a6b75ee72626daf3011b7faae14ab4bb1b9c2b65443ce"
  },
- "commit": "4fc3fee",
+ "commit": "37d004d+dirty",
  "durationMs": {
-  "lift": 220,
-  "compileAndOptimise": 26020,
-  "total": 45673
+  "lift": 232,
+  "compileAndOptimise": 9645,
+  "total": 20230
  },
  "totals": {
   "overall": {
@@ -352,31 +352,6 @@
    ]
   },
   {
-   "id": "uenux2/4785",
-   "index": 4785,
-   "setup": "uenux2",
-   "size": 14,
-   "band": "tiny",
-   "features": [
-    "leaf"
-   ],
-   "lifted": true,
-   "compiled": true,
-   "targetRows": 5,
-   "raw": {
-    "score": 0,
-    "ratio": 0
-   },
-   "opt": {
-    "score": 0,
-    "ratio": 0
-   },
-   "exact": true,
-   "outcome": "exact",
-   "failure": null,
-   "standIns": []
-  },
-  {
    "id": "uenux2/5465",
    "index": 5465,
    "setup": "uenux2",
@@ -409,6 +384,31 @@
    ]
   },
   {
+   "id": "uenux2/5629",
+   "index": 5629,
+   "setup": "uenux2",
+   "size": 30,
+   "band": "tiny",
+   "features": [
+    "leaf"
+   ],
+   "lifted": true,
+   "compiled": true,
+   "targetRows": 13,
+   "raw": {
+    "score": 0,
+    "ratio": 0
+   },
+   "opt": {
+    "score": 0,
+    "ratio": 0
+   },
+   "exact": true,
+   "outcome": "exact",
+   "failure": null,
+   "standIns": []
+  },
+  {
    "id": "uenux2/6265",
    "index": 6265,
    "setup": "uenux2",
@@ -437,31 +437,6 @@
    "standIns": [
     "unused frame"
    ]
-  },
-  {
-   "id": "uenux2/10248",
-   "index": 10248,
-   "setup": "uenux2",
-   "size": 15,
-   "band": "tiny",
-   "features": [
-    "call_indirect"
-   ],
-   "lifted": true,
-   "compiled": true,
-   "targetRows": 6,
-   "raw": {
-    "score": 0,
-    "ratio": 0
-   },
-   "opt": {
-    "score": 0,
-    "ratio": 0
-   },
-   "exact": true,
-   "outcome": "exact",
-   "failure": null,
-   "standIns": []
   },
   {
    "id": "uenux2/10251",
@@ -617,6 +592,31 @@
     "arm tail kept from the join",
     "goto"
    ]
+  },
+  {
+   "id": "uenux2/11317",
+   "index": 11317,
+   "setup": "uenux2",
+   "size": 10,
+   "band": "tiny",
+   "features": [
+    "leaf"
+   ],
+   "lifted": true,
+   "compiled": true,
+   "targetRows": 5,
+   "raw": {
+    "score": 0,
+    "ratio": 0
+   },
+   "opt": {
+    "score": 0,
+    "ratio": 0
+   },
+   "exact": true,
+   "outcome": "exact",
+   "failure": null,
+   "standIns": []
   },
   {
    "id": "uenux2/11620",
@@ -1763,60 +1763,60 @@
    "standIns": []
   },
   {
+   "id": "asn1-eh/10036",
+   "index": 10036,
+   "setup": "asn1-eh",
+   "size": 17,
+   "band": "tiny",
+   "features": [
+    "leaf",
+    "select"
+   ],
+   "lifted": true,
+   "compiled": true,
+   "targetRows": 8,
+   "raw": {
+    "score": 0,
+    "ratio": 0
+   },
+   "opt": {
+    "score": 0,
+    "ratio": 0
+   },
+   "exact": true,
+   "outcome": "exact",
+   "failure": null,
+   "standIns": []
+  },
+  {
+   "id": "asn1-eh/10037",
+   "index": 10037,
+   "setup": "asn1-eh",
+   "size": 17,
+   "band": "tiny",
+   "features": [
+    "leaf",
+    "select"
+   ],
+   "lifted": true,
+   "compiled": true,
+   "targetRows": 8,
+   "raw": {
+    "score": 0,
+    "ratio": 0
+   },
+   "opt": {
+    "score": 0,
+    "ratio": 0
+   },
+   "exact": true,
+   "outcome": "exact",
+   "failure": null,
+   "standIns": []
+  },
+  {
    "id": "asn1-eh/10038",
    "index": 10038,
-   "setup": "asn1-eh",
-   "size": 17,
-   "band": "tiny",
-   "features": [
-    "leaf",
-    "select"
-   ],
-   "lifted": true,
-   "compiled": true,
-   "targetRows": 8,
-   "raw": {
-    "score": 0,
-    "ratio": 0
-   },
-   "opt": {
-    "score": 0,
-    "ratio": 0
-   },
-   "exact": true,
-   "outcome": "exact",
-   "failure": null,
-   "standIns": []
-  },
-  {
-   "id": "asn1-eh/10039",
-   "index": 10039,
-   "setup": "asn1-eh",
-   "size": 17,
-   "band": "tiny",
-   "features": [
-    "leaf",
-    "select"
-   ],
-   "lifted": true,
-   "compiled": true,
-   "targetRows": 8,
-   "raw": {
-    "score": 0,
-    "ratio": 0
-   },
-   "opt": {
-    "score": 0,
-    "ratio": 0
-   },
-   "exact": true,
-   "outcome": "exact",
-   "failure": null,
-   "standIns": []
-  },
-  {
-   "id": "asn1-eh/10041",
-   "index": 10041,
    "setup": "asn1-eh",
    "size": 17,
    "band": "tiny",

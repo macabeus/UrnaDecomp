@@ -18,7 +18,7 @@
     "origin": "selected",
     "setup": "uenux2",
     "lang": "c++",
-    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing",
     "name": "void std::__2::__tree_remove[abi:ne210108]<std::__2::__tree_node_base<void*>*>(std::__2::__tree_node_base<void*>*, std::__2::__tree_node_base<void*>*)",
     "symbol": null,
     "evidence": "component",
@@ -43,7 +43,7 @@
     "origin": "selected",
     "setup": "uenux2",
     "lang": "c++",
-    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing",
     "name": "api::CPosixSemaphore::Lock()",
     "symbol": "_ZN3api15CPosixSemaphore4LockEv",
     "evidence": "symbol",
@@ -52,30 +52,6 @@
       "path": "src/uenux2/src/api/ipc/posix/cposixsemaphore.cpp",
       "line": 87
     }
-  },
-  {
-    "id": "uenux2/4785",
-    "index": 4785,
-    "size": 14,
-    "band": "tiny",
-    "component": "unknown",
-    "owner": "libcxx",
-    "features": [
-      "leaf"
-    ],
-    "ledger": {
-      "kind": "addr",
-      "score": 1
-    },
-    "origin": "selected",
-    "setup": "uenux2",
-    "lang": "c++",
-    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
-    "name": "api::CPosixSemaphore::~CPosixSemaphore()",
-    "symbol": "_ZN3api15CPosixSemaphoreD0Ev",
-    "evidence": "symbol",
-    "object": "build/out/app/uenux2/src/api/ipc/posix/cposixsemaphore.cpp.o",
-    "reference": null
   },
   {
     "id": "uenux2/5465",
@@ -97,12 +73,39 @@
     "origin": "selected",
     "setup": "uenux2",
     "lang": "c++",
-    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing",
     "name": null,
     "symbol": null,
     "evidence": "component",
     "object": null,
     "reference": null
+  },
+  {
+    "id": "uenux2/5629",
+    "index": 5629,
+    "size": 30,
+    "band": "tiny",
+    "component": "comum",
+    "owner": "app",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "uenux2",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing",
+    "name": "comum::md::estadoaplicacao::CNumViasImpressasRelatorios::CNumViasImpressasRelatorios(unsigned char, unsigned char, unsigned char, unsigned char)",
+    "symbol": "_ZN5comum2md15estadoaplicacao27CNumViasImpressasRelatoriosC1Ehhhh",
+    "evidence": "symbol",
+    "object": "build/out/app/uenux2/src/app/comum/dados/md/estadoaplicacao/cnumviasimpressasrelatorios.cpp.o",
+    "reference": {
+      "path": "src/uenux2/src/app/comum/dados/md/estadoaplicacao/cnumviasimpressasrelatorios.cpp",
+      "line": 5
+    }
   },
   {
     "id": "uenux2/6265",
@@ -124,38 +127,12 @@
     "origin": "selected",
     "setup": "uenux2",
     "lang": "c++",
-    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing",
     "name": null,
     "symbol": null,
     "evidence": "component",
     "object": null,
     "reference": null
-  },
-  {
-    "id": "uenux2/10248",
-    "index": 10248,
-    "size": 15,
-    "band": "tiny",
-    "component": "api",
-    "owner": "app",
-    "features": [
-      "call_indirect"
-    ],
-    "ledger": {
-      "kind": "byte",
-      "score": 0
-    },
-    "origin": "selected",
-    "setup": "uenux2",
-    "lang": "c++",
-    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
-    "name": "api::ISemaphore::Wait()",
-    "symbol": "_ZN3api10ISemaphore4WaitEv",
-    "evidence": "symbol",
-    "object": "build/out/app/uenux2/src/api/ipc/posix/cposixsemaphore.cpp.o",
-    "reference": {
-      "path": "src/uenux2/src/api/ipc/posix/cposixsemaphore.cpp"
-    }
   },
   {
     "id": "uenux2/10251",
@@ -175,7 +152,7 @@
     "origin": "selected",
     "setup": "uenux2",
     "lang": "c++",
-    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing",
     "name": "api::CPosixMutex::Unlock()",
     "symbol": "_ZN3api11CPosixMutex6UnlockEv",
     "evidence": "symbol",
@@ -203,7 +180,7 @@
     "origin": "selected",
     "setup": "uenux2",
     "lang": "c++",
-    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing",
     "name": "api::CPosixMutex::Lock()",
     "symbol": "_ZN3api11CPosixMutex4LockEv",
     "evidence": "symbol",
@@ -234,7 +211,7 @@
     "origin": "selected",
     "setup": "uenux2",
     "lang": "c++",
-    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing",
     "name": null,
     "symbol": null,
     "evidence": "component",
@@ -263,7 +240,7 @@
     "origin": "selected",
     "setup": "uenux2",
     "lang": "c++",
-    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing",
     "name": null,
     "symbol": null,
     "evidence": "component",
@@ -291,12 +268,39 @@
     "origin": "selected",
     "setup": "uenux2",
     "lang": "c++",
-    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing",
     "name": null,
     "symbol": null,
     "evidence": "component",
     "object": null,
     "reference": null
+  },
+  {
+    "id": "uenux2/11317",
+    "index": 11317,
+    "size": 10,
+    "band": "tiny",
+    "component": "unknown",
+    "owner": "app",
+    "features": [
+      "leaf"
+    ],
+    "ledger": {
+      "kind": "byte",
+      "score": 0
+    },
+    "origin": "selected",
+    "setup": "uenux2",
+    "lang": "c++",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing",
+    "name": "comum::md::CVoto::EhLegenda() const",
+    "symbol": "_ZNK5comum2md5CVoto9EhLegendaEv",
+    "evidence": "symbol",
+    "object": "build/out/app/uenux2/src/app/comum/dados/md/rdv/cvoto.cpp.o",
+    "reference": {
+      "path": "src/uenux2/src/app/comum/dados/md/rdv/cvoto.cpp",
+      "line": 15
+    }
   },
   {
     "id": "uenux2/11620",
@@ -320,7 +324,7 @@
     "origin": "selected",
     "setup": "uenux2",
     "lang": "c++",
-    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
+    "flags": "-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing",
     "name": null,
     "symbol": null,
     "evidence": "component",
@@ -1408,8 +1412,8 @@
     }
   },
   {
-    "id": "asn1-eh/10038",
-    "index": 10038,
+    "id": "asn1-eh/10036",
+    "index": 10036,
     "size": 17,
     "band": "tiny",
     "component": "libc++",
@@ -1433,8 +1437,8 @@
     "reference": null
   },
   {
-    "id": "asn1-eh/10039",
-    "index": 10039,
+    "id": "asn1-eh/10037",
+    "index": 10037,
     "size": 17,
     "band": "tiny",
     "component": "libc++",
@@ -1458,8 +1462,8 @@
     "reference": null
   },
   {
-    "id": "asn1-eh/10041",
-    "index": 10041,
+    "id": "asn1-eh/10038",
+    "index": 10038,
     "size": 17,
     "band": "tiny",
     "component": "libc++",
@@ -3249,7 +3253,7 @@
     "setup": "boost",
     "lang": "c++",
     "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
-    "instantiatedBy": "uenux2",
+    "instantiatedBy": "app-stand-ins",
     "name": "boost::re_detail_600::perl_matcher<char const*, std::__2::allocator<boost::sub_match<char const*>>, boost::regex_traits<char, boost::cpp_regex_traits<char>>>::unwind_recursion_stopper(bool)",
     "symbol": "_ZN5boost13re_detail_60012perl_matcherIPKcNSt3__29allocatorINS_9sub_matchIS3_EEEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE24unwind_recursion_stopperEb",
     "evidence": "symbol",
@@ -3274,7 +3278,7 @@
     "setup": "boost",
     "lang": "c++",
     "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
-    "instantiatedBy": "uenux2",
+    "instantiatedBy": "app-stand-ins",
     "name": "boost::re_detail_600::perl_matcher<char const*, std::__2::allocator<boost::sub_match<char const*>>, boost::regex_traits<char, boost::cpp_regex_traits<char>>>::unwind_end(bool)",
     "symbol": "_ZN5boost13re_detail_60012perl_matcherIPKcNSt3__29allocatorINS_9sub_matchIS3_EEEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE10unwind_endEb",
     "evidence": "symbol",
@@ -3299,7 +3303,7 @@
     "setup": "boost",
     "lang": "c++",
     "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
-    "instantiatedBy": "uenux2",
+    "instantiatedBy": "app-stand-ins",
     "name": "boost::re_detail_600::perl_matcher<char const*, std::__2::allocator<boost::sub_match<char const*>>, boost::regex_traits<char, boost::cpp_regex_traits<char>>>::match_restart_continue()",
     "symbol": "_ZN5boost13re_detail_60012perl_matcherIPKcNSt3__29allocatorINS_9sub_matchIS3_EEEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE22match_restart_continueEv",
     "evidence": "symbol",
@@ -3324,7 +3328,7 @@
     "setup": "boost",
     "lang": "c++",
     "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
-    "instantiatedBy": "uenux2",
+    "instantiatedBy": "app-stand-ins",
     "name": "boost::re_detail_600::perl_matcher<char const*, std::__2::allocator<boost::sub_match<char const*>>, boost::regex_traits<char, boost::cpp_regex_traits<char>>>::match_jump()",
     "symbol": "_ZN5boost13re_detail_60012perl_matcherIPKcNSt3__29allocatorINS_9sub_matchIS3_EEEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE10match_jumpEv",
     "evidence": "symbol",
@@ -3349,7 +3353,7 @@
     "setup": "boost",
     "lang": "c++",
     "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
-    "instantiatedBy": "uenux2",
+    "instantiatedBy": "app-stand-ins",
     "name": "boost::re_detail_600::perl_matcher<char const*, std::__2::allocator<boost::sub_match<char const*>>, boost::regex_traits<char, boost::cpp_regex_traits<char>>>::match_set()",
     "symbol": "_ZN5boost13re_detail_60012perl_matcherIPKcNSt3__29allocatorINS_9sub_matchIS3_EEEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE9match_setEv",
     "evidence": "symbol",
@@ -3374,7 +3378,7 @@
     "setup": "boost",
     "lang": "c++",
     "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
-    "instantiatedBy": "uenux2",
+    "instantiatedBy": "app-stand-ins",
     "name": "boost::re_detail_600::perl_matcher<char const*, std::__2::allocator<boost::sub_match<char const*>>, boost::regex_traits<char, boost::cpp_regex_traits<char>>>::match_buffer_end()",
     "symbol": "_ZN5boost13re_detail_60012perl_matcherIPKcNSt3__29allocatorINS_9sub_matchIS3_EEEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE16match_buffer_endEv",
     "evidence": "symbol",
@@ -3399,7 +3403,7 @@
     "setup": "boost",
     "lang": "c++",
     "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
-    "instantiatedBy": "uenux2",
+    "instantiatedBy": "app-stand-ins",
     "name": "boost::re_detail_600::perl_matcher<char const*, std::__2::allocator<boost::sub_match<char const*>>, boost::regex_traits<char, boost::cpp_regex_traits<char>>>::match_buffer_start()",
     "symbol": "_ZN5boost13re_detail_60012perl_matcherIPKcNSt3__29allocatorINS_9sub_matchIS3_EEEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE18match_buffer_startEv",
     "evidence": "symbol",
@@ -3425,7 +3429,7 @@
     "setup": "boost",
     "lang": "c++",
     "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
-    "instantiatedBy": "uenux2",
+    "instantiatedBy": "app-stand-ins",
     "name": "boost::re_detail_600::perl_matcher<char const*, std::__2::allocator<boost::sub_match<char const*>>, boost::regex_traits<char, boost::cpp_regex_traits<char>>>::match_literal()",
     "symbol": "_ZN5boost13re_detail_60012perl_matcherIPKcNSt3__29allocatorINS_9sub_matchIS3_EEEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13match_literalEv",
     "evidence": "symbol",
@@ -3451,7 +3455,7 @@
     "setup": "boost",
     "lang": "c++",
     "flags": "-O2 -fPIC -std=c++20 -DNDEBUG",
-    "instantiatedBy": "uenux2",
+    "instantiatedBy": "app-stand-ins",
     "name": "boost::re_detail_600::parser_buf<char, std::__2::char_traits<char>>::seekpos(std::__2::fpos<__mbstate_t>, unsigned int)",
     "symbol": "_ZN5boost13re_detail_60010parser_bufIcNSt3__211char_traitsIcEEE7seekposENS2_4fposI11__mbstate_tEEj",
     "evidence": "symbol",
@@ -4687,7 +4691,7 @@
     ],
     "ledger": {
       "kind": "addr",
-      "score": 50
+      "score": 51
     },
     "origin": "selected",
     "setup": "libcxx",

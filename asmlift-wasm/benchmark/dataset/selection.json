@@ -1,7 +1,7 @@
 {
-  "version": 3,
+  "version": 4,
   "per": 12,
-  "commit": "205388eb9b75778085d7a3cefba3b0666b4e8126",
+  "commit": "37d004d5115ad11bffd655beb00019448b637d4a",
   "inputs": {
     "target": {
       "path": "target/vota_web_wasm.wasm",
@@ -13,40 +13,35 @@
     },
     "ledger": {
       "path": "ledger/functions.tsv",
-      "blob": "a4026531f35c3dc7a12fc4cfc55a28bfcbb25b25"
+      "blob": "21f0bf26e3ed2c1df91df2058c7d37fe75daa9d7"
     },
     "setups": {
       "path": "asmlift-wasm/benchmark/dataset/setups.json",
-      "blob": "23fe96f0c217b3dcf47b52efd1c995d236215d2d"
+      "blob": "7d3a00ed7676723ba9c20d4ce4db0ece55e5659c"
     },
     "sources": {
       "src/asn1/AVNDecoder.cxx": "763af3ce5d6453b479effd0ed4fc6daf438332d7",
-      "src/asn1/BERDecoderPartial.cxx": "a56b3aa50362f2357d589bb1f031ae974d5a325a",
-      "src/asn1/DataFree.cxx": "1d767a9553177e6afce3a5704aa87207a4420ff2",
+      "src/asn1/BERDecoderPartial.cxx": "9ae2eccb91346cba917518199dccae52310013b9",
+      "src/asn1/DataFree.cxx": "e4602a162b55f0cbf3f3f4cdc9f5039dc1eac164",
       "src/asn1/PERDecoder.cxx": "10b6e2361064a026d16553c416186911162175ee",
       "src/asn1/ValidChecker.cxx": "87f3b30da3ef7487d6dd06112a46b15abcda5808",
-      "src/asn1/asn1.cxx": "44153280e2364312ac1bd430679246bf0f60cc6c",
-      "src/ecourna/api/compression/icompressor.cpp": "bcd99ab0524df5ba3136a6188131ad67fe47b960",
-      "src/ecourna/api/security/caescipher.cpp": "23cd8a6a2a15655c2ff260e3cba8399e2a2f0276",
+      "src/asn1/asn1.cxx": "17bce332320d2e12ba9ece621455e3997ecf4000",
+      "src/ecourna/api/compression/icompressor.cpp": "a35d7d5cb7710cc4d4a38810004dcd5770e93f87",
+      "src/ecourna/api/security/caescipher.cpp": "8b2b576f69a3ff340606e67ca8de41422199b369",
       "src/ecourna/app/dados/parametrizacaourna/cparametrosurna.cpp": "6876a658873836b495f7d8747ef10ee49a9ee9a0",
       "src/ecourna/app/dados/resultadournacadastro/capresentacaofotoeleitor.cpp": "50a308989ba7a69d4aa4af4fb8599b316660c586",
-      "src/ecourna/app/dados/resultadournacadastro/cresultadournacadastro.cpp": "40abbf2cbf0d6bee9118d71d02479969723807b9",
+      "src/ecourna/app/dados/resultadournacadastro/cresultadournacadastro.cpp": "8fb90cebc4bdc5f8dc9f6f3c0abcdfd7e965c561",
       "src/uenux2/src/api/ipc/posix/cposixmutex.cpp": "eb53bb387292ca15dd8d0422edcc76242dcd1db8",
-      "src/uenux2/src/api/ipc/posix/cposixsemaphore.cpp": "6a89e931ba07bbd6feccf076365e8bb08409e186"
+      "src/uenux2/src/api/ipc/posix/cposixsemaphore.cpp": "6a89e931ba07bbd6feccf076365e8bb08409e186",
+      "src/uenux2/src/app/comum/dados/md/estadoaplicacao/cnumviasimpressasrelatorios.cpp": "a6f17507ef04dd8f820eedd70ce2fd8b5ad80d25",
+      "src/uenux2/src/app/comum/dados/md/rdv/cvoto.cpp": "62b6f6e8daf7b1eb0fc12f3b4a55dfba073d29fc",
+      "tools/libs/7zip/sources.txt": "de7f5cdbcc930f24960d18ab7e1631df01d330b4"
     },
     "definitions": {
       "path": "asmlift-wasm/benchmark/dataset/selection-definitions.json",
-      "sha256": "956ec875496fc3c119e52be79f673ee192c6a9a3a21408ba8179227b1a2cdb08",
-      "names": 6364,
-      "build": "ca64ddd7c678f7fb6bd82a9e0b61558e13a5b9f8",
-      "note": "rows.json was selected at 205388e, whose definitions table was not kept; these were read from the build at ca64ddd and select the committed rows exactly",
-      "moved": {
-        "build/out/openssl/O3/src/libcrypto.a": "build/out/openssl/O3/libcrypto.a"
-      }
+      "sha256": "624f85624ff73280687ca754bf93e1488fb900eaab692fac99f3743c45e86e7b",
+      "names": 6407,
+      "build": "37d004d5115ad11bffd655beb00019448b637d4a"
     }
-  },
-  "references": {
-    "rowsOf": 1,
-    "note": "third_party/sqlite is the SQLite 3.50.4 amalgamation (third_party/sqlite-amalgamation/sqlite-amalgamation-3500400 is gone), and OpenSSL builds out of tree in build/out/openssl/O3, so libcrypto.a moved there from build/out/openssl/O3/src; the SQLite references and the OpenSSL rows' objects follow, read from the working tree"
   }
 }
