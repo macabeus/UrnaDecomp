@@ -32,7 +32,7 @@ target's sha256, `8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007
 | our operand kinds | `make -C src link-kinds` | the plain link's `link.cmd` and objects, link-map's map | the shifted link `build/out/wasm-kinds/vota_web/{vota_web_wasm.wasm,names.tsv}` and `kinds.json` |
 | target symbols | `make -C src splat-symbols` | the target, the plain link, its map, `ledger/` | `splat/symbol_addrs.txt` (committed) |
 | scan | `make -C src splat-scan` | all of the above | `splat/scan.tsv` (committed) and the status blocks (`make -C src status`) |
-| match | `make -C src splat-match` | the scan | appends its new matches to `splat/matched.txt` (committed) |
+| match | `make -C src splat-match` | the scan | appends its new matches to `splat/matched.txt` (committed), renames a twin whose name moved |
 | build | `make -C src splat` | pieces, plain link, maps, operand kinds, symbol file, match list | `build/out/splat/vota_web_wasm.wasm` + meter |
 
 Everything under `build/out/` is generated from the target and our link, and is gitignored. The committed outputs
@@ -199,8 +199,8 @@ match line in the same commit and say why in the commit message. Never edit a pi
 symbol-file hand edit to make a match pass.
 
 One failure is not drift: `our link has no function <symbol>` for a byte-identical twin whose surviving name moved,
-because a new unit's identical body comes first in the link. The body still verifies under the new name; delete the
-line, run `make -C src splat-match` to add it back under that name, and say so in the commit
+because a new unit's identical body comes first in the link. The body still verifies under the new name, and
+`make -C src splat-match` rewrites the line to it in place and prints the rename; say so in the commit
 ([../how-to-decompile.md](../how-to-decompile.md) step 10, "A twin whose name moved").
 
 ## Matching a function
@@ -307,36 +307,68 @@ What no check here rejects, so a reviewer of a TSE function reads it in the sour
 
 [facts/splat.md](facts/splat.md) §S5 has the measurements behind these lists and the cases the tests pin.
 
-A reviewer who wants to see the matched bytes come from our link, with the target's body gone, has no command for
-it. The pieces are checked against `manifest.json`, so blanking a piece makes `splat-build` refuse, and
-`splat-assemble --substitute` takes a `<index>.bin` body that no command writes. The reviews of 9131 and 9132 used
-a script against the toolkit's exports (`remapBody`, `verifyMatches` and `loadTargetSide` from
-`asmlift-wasm/src/splat-*.ts`, `assembleSplit` from `splat.ts`):
+A reviewer who wants to see the matched bytes come from our link, with the target's body gone, runs the
+**blanked-target check**: `splat-review` (`asmlift-wasm/src/splat-review.ts`), from `asmlift-wasm/`, with the target
+index of the match. It takes about five seconds, reuses the split in `build/out/splat/pieces` and relinks nothing:
 
-1. copy the pieces, replace the matched piece with a valid body of the same size (a `0x00` local count,
-   `unreachable` bytes, a final `0x0b`: random bytes make the module fail to parse), and write its new sha256
-   into the copy's `manifest.json`;
-2. take our body for it, in one of two ways (below);
-3. assemble the blanked split with that body, and compare the sha256 with the target's.
+1. it blanks the matched piece in a copy of the split: a valid body of the same size (a `0x00` local count,
+   `unreachable` bytes, a final `0x0b`; random bytes would make the module fail to parse), with its sha256 in the
+   copy's manifest. The copy is held in memory, so `build/out/splat/pieces` is never changed;
+2. it takes our body for that function in two ways (below);
+3. it assembles the blanked split with each body and compares the sha256 with the target's.
 
 The two ways differ in what picks the readings of the ambiguous operands:
 
 - **The match's own bytes.** `verifyMatches` on the real split gives the bytes the build substitutes, with the
   readings the target body picked. This checks that the build's output comes from our link, under the match rule.
-- **Preferred readings.** Assemble the blanked split into a module, copy `target/vota_web_wasm.js` beside it
-  (`loadTargetSide` takes the import names from the glue next to the wasm it reads; without it every `invoke_*`
-  call is `UNRESOLVED`), load that module as the target side, and take `remapBody(...).bytes`, every operand at
-  its preferred reading. No target body exists anywhere in that run, so this is stricter than the match rule. With
-  operand kinds, the preferred bytes of 9131, 9132 and 9218 are their pieces. Without them (`--no-kinds`), 9218's are
-  313 B against its 311 B piece, because then the target body had to pick its operands' kinds.
+  It is the gate: the command exits non-zero only when this way does not give the target's sha256 (or when the
+  build would refuse the match: it differs, is unresolved, or is `UNCONFIRMED`).
+- **Preferred readings.** The blanked split, assembled into a module with `target/vota_web_wasm.js` copied beside
+  it, is loaded as the target side (`loadTargetSide` takes the import names from the glue next to the wasm it reads;
+  without it every `invoke_*` call is `UNRESOLVED`), and `remapBody(...).bytes` sets every operand at its preferred
+  (first) reading. No target body exists anywhere in that run, so this is stricter than the match rule. A match whose
+  operands need the target body's choice among our readings (which copy, which table slot of a function, and in a
+  kind-unverified function which kind: §3) fails it legitimately. The command then lists each such operand, the
+  reading the target body picked and the first one. With operand kinds, the preferred bytes of 9131, 9132 and 9218 are
+  their pieces. Without them (`--no-kinds`), 9218's are 313 B against its 311 B piece, because the target body then
+  picks its operands' kinds.
 
-In both ways, give the maps the matches of `splat/matched.txt` first, `withMatches(maps, matches)` with the
-`matches` of `parseMatchList` (both in `splat-sub.ts`), as the build does (`buildSplat`): each matched symbol then
-names its target function, and a call to a function that only its match names re-points as in the build. Without
-them such a call can resolve elsewhere or not at all, and the review checks something other than the build.
+In both ways the maps get the matches of `splat/matched.txt` first (`withMatches(maps, matches)` with the `matches` of
+`parseMatchList`, both in `splat-sub.ts`), as the build does (`buildSplat`): each matched symbol then names its
+target function, and a call to a function that only its match names re-points as in the build. Without them such a
+call can resolve elsewhere or not at all, and the review checks something other than the build. `--matches <f>`
+reviews against another match list, `--no-kinds` checks without the operand-kind table, and `-o <dir>` is where the
+blanked module and the glue copy go (default `build/out/splat-review/<index>/`).
 
-Say which way a review used. A TypeScript script with top-level `await` runs under `pnpm exec tsx` only as an
-`.mts` file.
+9218 passes both ways:
+
+```sh
+pnpm --silent wasm splat-review ../target/vota_web_wasm.wasm ../build/out/wasm/vota_web/vota_web_wasm.wasm 9218
+# function 9218 ← _ZNK7ecourna3app5dados3asn27CConversorCabecalhoEntidade12DoDeconverteERKN21ModuloTiposEleitorais17CabecalhoEntidadeE (ours 6934), line 7210 of ../splat/matched.txt; operand kinds verified
+# blanked: asm/ecourna/9218.bin (311 B) → no locals, unreachable, end; the blanked split is sha256 aea686604b44fb4816e9655670966099fe352a00ed5d9de77e5c6569b9b816c2, written to ../build/out/splat-review/9218/vota_web_wasm.wasm
+# the match's own bytes: REPRODUCES the target, sha256 8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2 (311 B; 16 ambiguous operands at the readings the target body picked, 0 of them not the first)
+# preferred readings:    REPRODUCES the target, sha256 8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2 (311 B; every operand at its first reading, the blanked module as the target side)
+# the gate is the match's own bytes: pass (3.4 s)
+```
+
+12829 `sqlite3_bind_pointer` passes the gate and fails the preferred-readings way legitimately. Its `i32.const 2044`
+points to the function in our slot 2044 (named `probe_client::done` in our link), which the target's table holds in
+126 slots, binaryen's merged empty function ([facts/splat.md](facts/splat.md) §S5 item 4). The target body picked
+slot 11892, and the first reading is slot 316:
+
+```sh
+pnpm --silent wasm splat-review ../target/vota_web_wasm.wasm ../build/out/wasm/vota_web/vota_web_wasm.wasm 12829
+# function 12829 (sqlite3_bind_pointer) ← sqlite3_bind_pointer (ours 4854), line 7225 of ../splat/matched.txt; operand kinds verified
+# blanked: asm/libc++/12829-sqlite3_bind_pointer.bin (135 B) → no locals, unreachable, end; the blanked split is sha256 737990be702d6a69184e193f64fe5b8ff96ec3db8960233f2f46ec8b1b1d6520, written to ../build/out/splat-review/12829/vota_web_wasm.wasm
+# the match's own bytes: REPRODUCES the target, sha256 8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2 (135 B; 3 ambiguous operands at the readings the target body picked, 1 of them not the first)
+# preferred readings:    DIFFERS, sha256 96a6cbe5d01c21a6ab560dae90dbdddc6f4bf7587f40c9556c5a26c85f40017a (134 B against the match's 135 B, from body byte 43)
+#   legitimately: the match needs the target body's choice among our readings of 1 operand (docs/reference/splat.md §3):
+#   ours +0x2a i32.const 2044 (target body byte 43): the target body read table slot copy 11892 of symbol _ZN12_GLOBAL__N_112probe_client4doneEv; the first reading is table slot copy 316 of symbol _ZN12_GLOBAL__N_112probe_client4doneEv
+# the gate is the match's own bytes: pass (1.7 s)
+```
+
+A preferred-readings failure with no such operand listed (`NOT explained by a reading the target picked`) is not
+legitimate: report it. Say which way gave which result.
 
 ## The meter
 

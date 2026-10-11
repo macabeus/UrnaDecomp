@@ -69,40 +69,45 @@ target files were fetched through a browser.
    argument of the `CBaseError` constructor, through 3707), and its siblings 3749, 2814, 2813 and 5732 list 4726 to
    4729 the same way. The `addr` tier does not see it either: the row is `i32.const data:<seg>+3701` on both sides.
 
-## X6. `try-tu.sh --single` compiles every TU with `-fexceptions`
+## X6. `try-tu.sh --single` and exceptions
 
-The rank template of `--single` starts `em++ -Oz -fexceptions …` and appends the TU's own flags
-(`tools/round/try-tu.sh`, the `tmpl=` line), so a uenux2 TU, built without `-fexceptions` (app-flags.md §F6), gets
-landing pads when scored alone. Measured on 2026-10-11 (main a0225a3) with the landed `api::CDirReader::NextEntry`:
+The rank template of `--single` compiles and links in one `em++ -Oz -fexceptions …` (the build's link has
+`-fexceptions` too). A uenux2 TU is compiled without it (app-flags.md §F6), so `--single` adds `-fignore-exceptions`
+to a TU whose own flags lack `-fexceptions`. Without it a uenux2 TU scored alone grows landing pads. With the
+reconstructed `api::CDirReader::NextEntry`:
 
 ```sh
 TMPDIR=/tmp tools/round/try-tu.sh --single 1260 --extract export:_ZN3api10CDirReader9NextEntryEv \
   src/uenux2/src/api/util/cdirreader.cpp
-# score 162 over 184 rows (same 22, replaced 17 [7 operand-only], inserted 145, deleted 0)
-#   with call import:invoke_iii, invoke_iiiii, invoke_viii and __resumeException in the candidate column
-TMPDIR=/tmp tools/round/try-tu.sh --single 1260 --extract export:_ZN3api10CDirReader9NextEntryEv \
-  --flags '-fignore-exceptions' src/uenux2/src/api/util/cdirreader.cpp
-# score 224 over 250 rows (same 26, replaced 13 [6 operand-only], inserted 211, deleted 0), no invoke_* row
+# flags: -O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing … -I/work/src/asn1  -fignore-exceptions
+# score 224 over 250 rows (same 26, replaced 13 [6 operand-only], inserted 211, deleted 0)
 ```
 
-The rest of the difference is what binaryen inlines into a body linked alone; the splat build matches this source.
+No `invoke_*` row is left (without `-fignore-exceptions` the same TU scores 162 over 184 rows, with `invoke_iii`,
+`invoke_iiiii`, `invoke_viii` and `__resumeException` calls). The rest of the difference is what binaryen inlines
+into a body linked alone; the splat build matches this source.
 
-## X7. A uenux2 TU compiled at its relative path records the wrong file
+## X7. A TSE file name the path map does not rewrite
 
-The generic uenux2 rule of `src/Makefile` compiles `-c src/uenux2/<path>`, and `UENUX2_PREFIX_MAP` maps only
-`/work/src/uenux2`, so `__FILE__` and every `std::source_location` record of such an object say `src/uenux2/…`, not
-the target's `/home/rubio/tse/uenux2/…`. A fragment fixes it for its own objects (units 13, 21 and 22 add
-`-ffile-prefix-map=src/uenux2=/home/rubio/tse/uenux2`; 02 and 14 compile from `/work`), and try-tu reads that
-addition from the fragment's recipe. A source no fragment lists yet gets the bare recipe:
+`-ffile-prefix-map` rewrites a path as clang spells it. A source compiled from a relative `src/uenux2/…` path, or a
+header found through `-Isrc` (`src/ecourna/api/asn/iconversorasn.hpp`), is spelled relatively, so a map of
+`/work/src/…` alone leaves `__FILE__` and the `std::source_location` records at `src/…` instead of the target's
+`/home/rubio/tse/uenux2/…` or conan path. Compiled from relative paths with only `/work/src/…` mapped, three
+objects of unit 01 (`cinikey`, `cposixmutex`, `cposixsemaphore`) hold 10 such records, and eleven ecourna objects
+35 more from those two headers. So every uenux2 and ecourna compile runs from `/work/src/…`, `UENUX2_PREFIX_MAP` and
+`ECOURNA_PREFIX_MAP` map both spellings, and `check-srcloc` fails with `UNMAPPED` on a record named `src/…`:
 
 ```sh
 TMPDIR=/tmp tools/round/try-tu.sh --print-flags src/uenux2/src/app/vota/eleitor/cvotacaostateaudio.cpp
-# … -ffile-prefix-map=/work/src/uenux2=/home/rubio/tse/uenux2 -Isrc -Isrc/uenux2/src -Isrc/asn1 -c src/uenux2/src/app/vota/eleitor/cvotacaostateaudio.cpp
-TMPDIR=/tmp tools/round/try-tu.sh --print-flags --flags '-ffile-prefix-map=src/uenux2=/home/rubio/tse/uenux2' \
-  src/uenux2/src/app/vota/eleitor/cvotacaostateaudio.cpp
-# … -Isrc/asn1 -ffile-prefix-map=src/uenux2=/home/rubio/tse/uenux2 -c src/uenux2/src/app/vota/eleitor/cvotacaostateaudio.cpp
+# … -ffile-prefix-map=/work/src/uenux2=/home/rubio/tse/uenux2 -ffile-prefix-map=src/uenux2=/home/rubio/tse/uenux2
+#   -Isrc -Isrc/uenux2/src -Isrc/asn1  -c /work/src/uenux2/src/app/vota/eleitor/cvotacaostateaudio.cpp
+TMPDIR=/tmp make -C src check-srcloc
+# prints, for example, 280 source_location records in 184 objects (69 files): 259 are records of the target;
+#   0 that matched functions load are not; 21 that only unmatched functions load are not; 0 name an unmapped file
 ```
 
-In DECOMP3 the try link of `cdirreader.cpp` before its fragment existed held `src/uenux2/src/api/util/cdirreader.cpp`
-(`strings -a` of the try wasm), `splat-remap` stopped at the record's `i32.const` (`source_location not in the
-target`), and the same source matched once landed with the map.
+A function that loads a record with the wrong file name does not match: most of the functions that need the mapped
+records are `ecourna::api::asn::IConversorASN<…>::Converte` and `Deconverte` instantiations. A uenux2 TU that
+includes an ecourna header needs a third spelling: the target names those `…/libecea1da310e5107/p/include/ecourna/…`,
+the conan package's installed headers (13 records in `ledger/source-locations.tsv`). No uenux2 TU in `src/uenux2`
+holds such a record, so no map has that spelling.

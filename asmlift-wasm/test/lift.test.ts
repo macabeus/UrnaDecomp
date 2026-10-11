@@ -8,8 +8,19 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 import { glueNamesFor } from '../src/glue-file';
-import { ledgerNames, readLedgerTsv, readMangledPairs } from '../src/ledger';
-import { COMPONENT_FLAGS, type LiftOptions, cName, liftFunction, liftNames } from '../src/lift';
+import { ledgerNames, readAttribution, readLedgerTsv, readMangledPairs } from '../src/ledger';
+import {
+  COMPONENT_FLAGS,
+  type LiftOptions,
+  TREE_FLAGS,
+  type TreeEvidence,
+  cName,
+  liftFlags,
+  liftFunction,
+  liftNames,
+  recordTree,
+} from '../src/lift';
+import { liftInputs, readTreeEvidence } from '../src/lift-inputs';
 import { DEFAULT_IMAGE, compileLifted } from '../src/rank';
 import { TARGET, target, URNA_ROOT } from './helpers';
 
@@ -354,6 +365,63 @@ describe('liftFunction', () => {
     },
     300_000,
   );
+});
+
+describe('liftFlags', () => {
+  const trees = readTreeEvidence(URNA_ROOT)!;
+  const component = (index: number) => readAttribution(`${URNA_ROOT}/ledger/func-attribution.tsv`).get(index)?.component;
+
+  it("gives a uenux2 function in group ecourna uenux2's flags, by its source_location record", () => {
+    expect(component(1260)).toBe('ecourna');
+    const f = liftFlags(1260, 'ecourna', trees);
+    expect(f).toMatchObject({ flags: TREE_FLAGS.uenux2, by: 'record', of: 'uenux2' });
+    expect(f.flags).toBe('-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing');
+    expect(f.why).toBe("uenux2's flags: a std::source_location record names /home/rubio/tse/uenux2/src/api/util/cdirreader.cpp");
+    const head = liftFunction(target(), 1260, { ...opts(), flags: f.flags, flagsWhy: f.why }).source.split('\n');
+    expect(head.slice(1, 3)).toEqual([`// em++ ${f.flags}`, `// ${f.why}`]);
+  });
+
+  it("keeps ecourna's flags for ecourna's own code, by its record or, with none, by its component", () => {
+    expect(liftFlags(336, component(336), trees)).toMatchObject({ flags: COMPONENT_FLAGS.ecourna, by: 'record', of: 'ecourna' });
+    expect(liftFlags(170, component(170), trees)).toMatchObject({ flags: COMPONENT_FLAGS.ecourna, by: 'component', of: 'ecourna' });
+  });
+
+  it("keeps a library function's component flags", () => {
+    expect(component(241)).toBe('sqlite');
+    expect(liftFlags(241, 'sqlite', trees)).toEqual({
+      flags: '-O3 -fPIC',
+      by: 'component',
+      of: 'sqlite',
+      why: "component sqlite's flags: no record or stub names its tree",
+    });
+    expect(liftFlags(172, component(172), trees)).toMatchObject({ flags: TREE_FLAGS.uenux2, by: 'component', of: 'libc++' });
+  });
+
+  it('takes the tree of the stub when no record decides, and records that name two trees decide nothing', () => {
+    const conan = '/home/rubio/.conan2/p/b/libecea1da310e5107';
+    const ev: TreeEvidence = {
+      records: new Map([
+        [1, [`${conan}/b/src/ecourna/api/io/cfile.cpp`, '/home/rubio/tse/uenux2/src/api/io/cinistrings.cpp']],
+        [2, [`${conan}/p/include/ecourna/api/asn/iconversorasn.hpp`]],
+      ]),
+      stubs: new Map([[1, 'src/asn1/BEREncoder.cxx']]),
+    };
+    expect(liftFlags(1, 'ecourna', ev)).toMatchObject({ flags: TREE_FLAGS.asn1, by: 'stub', of: 'asn1' });
+    expect(liftFlags(2, 'vota', ev)).toMatchObject({ flags: COMPONENT_FLAGS.vota, by: 'component' });
+    expect(liftFlags(1, 'ecourna', { ...ev, stubs: new Map() }).why).toBe(
+      "component ecourna's flags: its records name ecourna and uenux2",
+    );
+    expect(recordTree(`${conan}/p/include/ecourna/api/pattern/cbasetype.hpp`)).toBeNull();
+    expect(recordTree(`${conan}/b/src/ecourna/api/pattern/cbasetype.hpp`)).toBe('ecourna');
+    expect(recordTree('/home/rubio/tse/uenux2/mock/app/comum/cappinfobuilder.cpp')).toBe('uenux2');
+  });
+
+  it('reads the stubs of src/ but not those of a tree unplaced.cpp, and liftInputs hands the evidence to the CLI', () => {
+    expect(trees.stubs.size).toBeGreaterThan(0);
+    expect([...trees.stubs.values()].some((f) => f.endsWith('unplaced.cpp'))).toBe(false);
+    const inputs = liftInputs(TARGET, {}, () => {});
+    expect(liftFlags(1260, inputs.attribution?.get(1260)?.component, inputs.trees).by).toBe('record');
+  });
 });
 
 describe('liftNames', () => {

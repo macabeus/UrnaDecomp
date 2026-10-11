@@ -408,9 +408,9 @@ describe('classifyFunction', { timeout: 180_000 }, () => {
     const { shifted } = load();
     const s = indexOf(shifted, NEXT_ENTRY);
     const at = shiftedAt(indexOf(load().plain, NEXT_ENTRY), s, 0x23);
-    expect(valueAt(shifted.module, s, at)).toBe(63903 + D);
-    const k = kindsOf(NEXT_ENTRY, undefined, patched(shifted.module, s, at, 63903 + D + 4));
-    expect(k).toEqual({ verified: false, why: `+0x23 i32.const 63903 moved to ${63903 + D + 4}, by neither shift` });
+    expect(valueAt(shifted.module, s, at)).toBe(64029 + D);
+    const k = kindsOf(NEXT_ENTRY, undefined, patched(shifted.module, s, at, 64029 + D + 4));
+    expect(k).toEqual({ verified: false, why: `+0x23 i32.const 64029 moved to ${64029 + D + 4}, by neither shift` });
   });
 
   it.skipIf(!real)('leaves a function kind-unverified when the relink has another shape', () => {
@@ -516,9 +516,9 @@ const CASES: Case[] = [
   // our slot 1440 holds the function the target keeps in slot 7010
   { name: 'c2 enum 1440', symbol: NEXT_ENTRY, target: 1260, at: 0x1b, was: 7010, plain: 1440, shifted: 1440 },
   { name: 'c3 enum 1622', symbol: INVERT_COLORS, target: 3663, at: 0xc7, was: 4903, plain: 1622, shifted: 1622 },
-  { name: 'c4 wrong string', symbol: NEXT_ENTRY, target: 1260, at: 0x23, was: 63903, plain: 65174, shifted: 65174 + D },
-  // 124328 is the target's address of the right string, and one of our RHVoice strings' address
-  { name: 'c5 string at the target number', symbol: NEXT_ENTRY, target: 1260, at: 0x23, was: 63903, plain: 124328, shifted: 124328 + D },
+  { name: 'c4 wrong string', symbol: NEXT_ENTRY, target: 1260, at: 0x23, was: 64029, plain: 65300, shifted: 65300 + D },
+  // 124328 is the target's address of the right string, and an address inside our merged strings
+  { name: 'c5 string at the target number', symbol: NEXT_ENTRY, target: 1260, at: 0x23, was: 64029, plain: 124328, shifted: 124328 + D },
   {
     name: 'c6 wrong callee',
     symbol: NEXT_ENTRY,
@@ -531,11 +531,11 @@ const CASES: Case[] = [
   // 69 is the target's slot of the destructor
   { name: 'c8 slot 69, the target number', symbol: NEXT_ENTRY, target: 1260, at: 0x37, was: 16, plain: 69, shifted: 69 + T },
   // the target's vtable address written as an integer: past our data, so no reading of ours names it
-  { name: 'c9 the target vtable address', symbol: DO_CONVERTE, target: 11386, at: 0xc, was: 1212756, plain: 1569340, shifted: 1569340 },
-  { name: 'c10 vtable + 4', symbol: DO_CONVERTE, target: 11386, at: 0xc, was: 1212756, plain: 1212760, shifted: 1212760 + D },
+  { name: 'c9 the target vtable address', symbol: DO_CONVERTE, target: 11386, at: 0xc, was: 1212884, plain: 1569340, shifted: 1569340 },
+  { name: 'c10 vtable + 4', symbol: DO_CONVERTE, target: 11386, at: 0xc, was: 1212884, plain: 1212888, shifted: 1212888 + D },
   // the target's numbers written as integers: the string's address, the destructor's slot, a packed string view
   // (length 9 << 32 | the target's address 3395) and a string's address in a binaryen thunk
-  { name: 'c5L the string address as an integer', symbol: NEXT_ENTRY, target: 1260, at: 0x23, was: 63903, plain: 124328, shifted: 124328 },
+  { name: 'c5L the string address as an integer', symbol: NEXT_ENTRY, target: 1260, at: 0x23, was: 64029, plain: 124328, shifted: 124328 },
   { name: 'c8L the slot as an integer', symbol: NEXT_ENTRY, target: 1260, at: 0x37, was: 16, plain: 69, shifted: 69 },
   {
     name: 'I2 the string view as an integer',
@@ -546,7 +546,7 @@ const CASES: Case[] = [
     plain: (9n << 32n) | 3395n,
     shifted: (9n << 32n) | 3395n,
   },
-  { name: 'TH2 a thunk string as an integer', symbol: DSA_PEM_THUNK, target: 1724, at: 0x3a, was: 105611, plain: 187586, shifted: 187586 },
+  { name: 'TH2 a thunk string as an integer', symbol: DSA_PEM_THUNK, target: 1724, at: 0x3a, was: 105737, plain: 187586, shifted: 187586 },
   // the enum 7010 written as a pointer to the function in our slot 1440, which the target keeps in slot 7010
   { name: 'c2S the enum as a pointer', symbol: NEXT_ENTRY, target: 1260, at: 0x1b, was: 7010, plain: 1440, shifted: 1440 + T },
   // integers over vdbeSorterSort's relative slots: the table reads them as table-rel, relative to the base, and the
@@ -630,7 +630,7 @@ describe('the perturbation cases', { timeout: 300_000 }, () => {
     const c5 = caseMaps(byName('c5'));
     expect(operandKind(c5.kinds, 0x23)).toBe('address');
     expect(failure(byName('c5'), c5.maps)).toMatch(
-      /function 1260 .* DIFFERS at \+0x24 target \+0x23 i32\.const 124328 \| ours \+0x23 i32\.const 207620 \[ours 124328 = .*: address string/,
+      /function 1260 .* DIFFERS at \+0x24 target \+0x23 i32\.const 124328 \| ours \+0x23 i32\.const 207494 \[ours 124328 = .*: address string/,
     );
     // c8: a table slot whose literal is the target's slot number
     const c8 = caseMaps(byName('c8'));

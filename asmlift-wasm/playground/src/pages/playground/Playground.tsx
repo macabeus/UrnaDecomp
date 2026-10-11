@@ -73,13 +73,14 @@ function FunctionView({ t, index, onPick }: { t: Target; index: number; onPick: 
   const callers = useCallers(t);
   const fn = funcAt(t.m, index)!;
   const row = DATASET_ROWS.find((r) => r.index === index) ?? null;
-  const flags = row === null ? defaultLiftFlags(t, index) : liftCompileFlags(row.flags);
+  const chosen = useMemo(() => (row === null ? defaultLiftFlags(t, index) : null), [t, index, row]);
+  const flags = chosen?.flags ?? liftCompileFlags(row!.flags);
 
   const view = useMemo(() => {
     const instrs = instructions(t, index);
     let lifted: Lifted | { error: string };
     try {
-      lifted = lift(t, index, flags);
+      lifted = lift(t, index, chosen ?? flags);
     } catch (e) {
       lifted = { error: e instanceof Error ? e.message : String(e) };
     }
@@ -91,7 +92,7 @@ function FunctionView({ t, index, onPick }: { t: Target; index: number; onPick: 
       callees: calleesOf(t, instrs),
       strings: stringsOf(t, instrs),
     };
-  }, [t, index, flags]);
+  }, [t, index, flags, chosen]);
 
   const facts = ledgerFacts(t, index);
   const name = displayName(t, index);
@@ -193,7 +194,7 @@ function FunctionView({ t, index, onPick }: { t: Target; index: number; onPick: 
             <Fact term="lift flags">
               <span className="font-mono text-xs">{flags}</span>
               <div className="text-xs text-slate-500">
-                {row ? `the ${row.setup} setup's, as the benchmark compiles it` : `component ${facts.component}'s, as pnpm wasm lift writes them`}
+                {row ? `the ${row.setup} setup's, as the benchmark compiles it` : `${chosen?.why}, as pnpm wasm lift writes them`}
               </div>
             </Fact>
           </dl>

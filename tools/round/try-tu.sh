@@ -34,11 +34,9 @@
 # Several <tu.cpp> are rival candidates ranked against each other, not one program: a callee in another TU stays an
 # import. Undefined functions become imports but undefined data fails the link; pass
 # --flags '-Wl,--unresolved-symbols=ignore-all' for a TU that uses another TU's data (theInfo, vtables, typeinfo).
-# The --single template always compiles with -fexceptions; uenux2 is built without it (no landing pads), so pass
-# --flags '-fignore-exceptions' for a uenux2 TU, or its score counts invoke_* thunks the build never has.
-# A uenux2 TU with std::source_location records and no fragment yet compiles from its relative path, which
-# UENUX2_PREFIX_MAP does not rewrite: pass --flags '-ffile-prefix-map=src/uenux2=/home/rubio/tse/uenux2' so the
-# try link's records name the target's path (docs/how-to-decompile.md steps 4 and 5).
+# The --single template compiles and links in one em++ with -fexceptions, as the build links; a TU whose own flags
+# lack -fexceptions (every uenux2 TU: no landing pads) also gets -fignore-exceptions, so its throw sites call
+# __cxa_throw directly as in the build instead of growing invoke_* thunks (the flags line shows it).
 set -euo pipefail
 ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 cd "$ROOT"
@@ -179,6 +177,8 @@ if [ -n "$single" ]; then
   done
   # the rank template mounts the urna root at /work so the rule's root-relative include paths resolve
   single_flags=$(sed -E 's#(^| )-I([^/ ])#\1-I/work/\2#g' <<< "$single_flags")
+  # the template's -fexceptions is for the link; a TU the build compiles without it keeps its throws direct
+  case " $single_flags " in *" -fexceptions "*) ;; *) single_flags="$single_flags -fignore-exceptions";; esac
   echo "flags: $single_flags${flags:+ $flags}"
   tmpl="docker run --rm -v /tmp:/tmp -v $ROOT:/work -w /tmp $IMAGE em++ -Oz -fexceptions -sALLOW_MEMORY_GROWTH=1 -sSTACK_SIZE=8MB {{flags}} {{inputPath}} -o {{outputPath}}.js --no-entry -sERROR_ON_UNDEFINED_SYMBOLS=0 -sEXPORTED_FUNCTIONS=_{{symbol}} && mv {{outputPath}}.wasm {{outputPath}}"
   abs=(); for f in "${tus[@]}"; do abs+=("$(cd "$(dirname "$f")" && pwd)/$(basename "$f")"); done

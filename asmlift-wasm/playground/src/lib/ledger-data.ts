@@ -27,4 +27,10 @@ export interface LedgerData {
   mangled: Record<string, string>;
   /** [addr, len, enc, text] of every ledger string a function's `i32.const` points into */
   strings: [number, number, string, string][];
+  /** the files the tree evidence names, which `treeRecords` and `treeStubs` hold ids into */
+  treeFiles: string[];
+  /** index → the files of its std::source_location records (`readTreeEvidence`'s `records`) */
+  treeRecords: Record<string, number[]>;
+  /** index → the file of its stub (`readTreeEvidence`'s `stubs`) */
+  treeStubs: Record<string, number>;
 }

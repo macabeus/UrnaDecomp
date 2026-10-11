@@ -776,13 +776,59 @@ export function parseMatchList(text: string): { matches: ListedMatch[]; lines: s
   return { matches, lines };
 }
 
-/** The match list with a line added for every scan match it does not list yet; existing lines stay as written. */
-export function addMatches(text: string, rows: readonly ScanRow[]): { text: string; added: number } {
+/** A match line whose symbol left our link, renamed to the twin the scan matches its function with. */
+export interface Renamed {
+  index: number;
+  line: number;
+  from: string;
+  to: string;
+}
+
+export interface AddedMatches {
+  text: string;
+  added: number;
+  /** the lines rewritten in place: a twin whose name moved */
+  renamed: Renamed[];
+  /** the listed matches whose symbol is not in our link and that the scan matches under no other symbol: left as
+   *  written, for the build to refuse */
+  missing: ListedMatch[];
+}
+
+/**
+ * The match list with a line added for every scan match it does not list yet; existing lines stay as written, but
+ * one. When our link merges byte-identical bodies, binaryen keeps the first in link order, so a new unit whose body
+ * is a matched function's twin, linked before it, takes the merged body's name and the matched symbol leaves our
+ * link (docs/reference/facts/splat.md §S6). A listed line whose symbol `inOurLink` refuses is rewritten in place to
+ * the symbol the scan matches the same target function with (its body, re-pointed, is the target's bytes); any other
+ * line whose symbol is missing stays, and is reported in `missing`. Without `inOurLink` no line is touched.
+ */
+export function addMatches(
+  text: string,
+  rows: readonly ScanRow[],
+  inOurLink?: (symbol: string) => boolean,
+): AddedMatches {
   const { matches, lines } = parseMatchList(text);
   const listed = new Set(matches.map((m) => m.index));
+  const scanned = new Map(rows.map((r) => [r.index, r]));
+  const renamed: Renamed[] = [];
+  const missing: ListedMatch[] = [];
+  const out = [...lines];
+  const present = inOurLink ?? (() => true);
+  for (const m of matches) {
+    if (present(m.symbol)) {
+      continue;
+    }
+    const r = scanned.get(m.index);
+    if (r?.verdict === 'match' && r.symbol !== null && r.symbol !== m.symbol && present(r.symbol)) {
+      out[m.line - 1] = out[m.line - 1].replace(/^(\s*\d+\s+)\S+/, `$1${r.symbol}`);
+      renamed.push({ index: m.index, line: m.line, from: m.symbol, to: r.symbol });
+    } else {
+      missing.push(m);
+    }
+  }
   const fresh = rows.filter((r) => r.verdict === 'match' && !listed.has(r.index));
-  const out = [...lines, ...fresh.map((r) => `${r.index} ${r.symbol}`)];
-  return { text: `${out.join('\n')}\n`, added: fresh.length };
+  out.push(...fresh.map((r) => `${r.index} ${r.symbol}`));
+  return { text: `${out.join('\n')}\n`, added: fresh.length, renamed, missing };
 }
 
 // ---------------------------------------------------------------------------------------------------------------

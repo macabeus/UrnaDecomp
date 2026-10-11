@@ -49,10 +49,10 @@ The board is a folder **outside** the repository, created for one run; the run's
 - Measure a flag set in a **private link**: `make -C src link APP=build/out/<name>/app OUT=… OUT_NAMED=…`
   (`APP` moves every app object, so the first private link rebuilds them all). Never write the shared
   `build/out/app/…` objects with experimental flags: an object rule depends on the Makefile's mtime, not on the
-  flag value, so the object would survive into everyone's link. Pass a uenux2 flag through `UENUX2_PREFIX_MAP`,
-  not `UENUX2_CXXFLAGS`: a command-line `UENUX2_CXXFLAGS` also drops the fragments' target-specific additions, and
-  the stand-ins' `APP_CXXFLAGS` derive from it. [facts/app-flags.md](reference/facts/app-flags.md) §F9 item 6 has
-  the command and the splat check of such a link.
+  flag value, so the object would survive into everyone's link. Add the flag with `UENUX2_EXTRA=…` (or
+  `ECOURNA_EXTRA=…`), never a command-line `UENUX2_CXXFLAGS`, which drops the fragments' target-specific additions
+  and reaches the stand-ins. [facts/app-flags.md](reference/facts/app-flags.md) §F9 item 6 has the command and the
+  splat check of such a link.
 - A flag change in a `src/units/*.mk` fragment does not rebuild stale objects: touch the sources. An ecourna source
   deeper than `src/ecourna/*/*/` is no prerequisite of the generic rule at all, so an edit of it does not rebuild
   either, unless its fragment names it (`src/units/README.md` "What a fragment holds" item 3).
@@ -67,14 +67,14 @@ The board is a folder **outside** the repository, created for one run; the run's
 - A splat build or scan runs the toolkit's **working tree** (`asmlift-wasm/`). If another agent is editing the
   toolkit, a measurement can depend on code nobody committed; measure against a committed tree (`git archive
   <commit> asmlift-wasm | tar -x -C <dir>`) when that matters.
-- An archived tree is not a checkout `make -C src splat` can build. It lacks every ignored input: `third_party/*`
-  (the library sources), `target/fs/`, `asmlift-wasm/node_modules/` and the library outputs under `build/out/`
-  (without node_modules the split fails right after `splat-split` with no message). `tar` also gives every file the
-  commit's time, newer than any object, so the first link recompiles everything. To build an earlier commit, clone
-  those inputs in as Stage 0 of [decompile-functions](../.claude/commands/decompile-functions.md) does for a
-  worktree, copy the mtimes from a checkout at a close commit, and delete by name the objects of the files the two
-  commits differ in (`git diff --name-only <commit> HEAD`), and of the units that include a changed header: with the
-  copied mtimes, make would keep them.
+- To build an earlier commit, run `tools/round/build-at.sh <commit> <dir>` from a checkout whose build is current,
+  then `TMPDIR=/tmp make -C <dir>/src splat`. A bare `git worktree add` or `git archive` of the commit cannot build:
+  it lacks every ignored input (`third_party/*`, `target/fs/`, `asmlift-wasm/node_modules/`, the library outputs
+  under `build/out/`; without node_modules the split fails right after `splat-split` with no message), and every
+  file gets a time newer than any object, so the first link recompiles everything. The script clones those inputs
+  in, copies this checkout's mtimes, and touches the files the commit has differently, so make rebuilds exactly
+  what depends on them; it prints how many objects the link will recompile. Remove the tree with
+  `git worktree remove <dir>`.
 - `make -C src splat-symbols` after a new link re-picks the arbitrary name of byte-identical twins, so two runs'
   symbol files conflict on such lines: regenerate after merging rather than pick a side. `splat-scan` and
   `splat-match` can disagree on a count; trust the splat build's verification, and read `git diff

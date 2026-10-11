@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
-import { liftFunction } from '@asmlift/wasm/lift';
+import { liftFlags, liftFunction } from '@asmlift/wasm/lift';
 import { liftInputs } from '@asmlift/wasm/lift-inputs';
 import { readCallgraph } from '@asmlift/wasm/readout';
 import { liftCompileFlags } from '@asmlift/wasm-benchmark/flags';
@@ -43,11 +43,29 @@ describe('lift', () => {
     }
   });
 
-  it('writes the component flags the CLI lift uses when no row gives them', () => {
+  it('writes the flags the CLI lift uses when no row gives them', () => {
     const t = pageTarget();
     const sqlite = rows.find((r) => r.setup === 'sqlite')!;
-    expect(defaultLiftFlags(t, sqlite.index)).toBe('-O3 -fPIC');
-    expect(lift(t, sqlite.index, defaultLiftFlags(t, sqlite.index)).source).toContain('// em++ -O3 -fPIC');
+    expect(defaultLiftFlags(t, sqlite.index).flags).toBe('-O3 -fPIC');
+    expect(lift(t, sqlite.index, defaultLiftFlags(t, sqlite.index)).source).toContain('// em++ -O3 -fPIC\n');
+    // a uenux2 function in group ecourna: uenux2's flags, by its record, and the header says so
+    const cli = liftInputs(INPUTS.wasm, {}, () => {});
+    const chosen = liftFlags(1260, cli.attribution?.get(1260)?.component, cli.trees);
+    expect(defaultLiftFlags(t, 1260)).toEqual(chosen);
+    expect(chosen.by).toBe('record');
+    expect(lift(t, 1260, defaultLiftFlags(t, 1260)).source).toBe(
+      liftFunction(cli.m, 1260, { names: cli.names, ...(cli.mangled ? { mangled: cli.mangled } : {}), flags: chosen.flags, flagsWhy: chosen.why }).source,
+    );
+  });
+
+  it('chooses the flags the CLI lift chooses for every function', () => {
+    const t = pageTarget();
+    const cli = liftInputs(INPUTS.wasm, {}, () => {});
+    for (const fn of t.m.funcs) {
+      expect(defaultLiftFlags(t, fn.index), String(fn.index)).toEqual(
+        liftFlags(fn.index, cli.attribution?.get(fn.index)?.component, cli.trees),
+      );
+    }
   });
 });
 

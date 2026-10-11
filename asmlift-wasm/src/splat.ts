@@ -949,11 +949,23 @@ export interface AssembleResult {
   unchanged: number[];
 }
 
+/** A copy of a split held in memory: its manifest, and the pieces (by manifest path) whose bytes differ from the
+ *  files under the split's directory. The rest are read from there. */
+export interface SplitOverlay {
+  manifest: SplatManifest;
+  files: ReadonlyMap<string, Uint8Array>;
+}
+
 /** Rebuild the module from the pieces under `dir`, with `substitutes` (function index → body bytes)
- *  in place of those functions' pieces. A piece whose bytes no longer hash to the manifest is an
- *  error: an edited piece is a substitution and goes through `substitutes`. */
-export function assembleSplit(dir: string, substitutes: ReadonlyMap<number, Uint8Array> = new Map()): AssembleResult {
-  const m = readManifest(dir);
+ *  in place of those functions' pieces. A piece whose bytes do not hash to the manifest is an
+ *  error: an edited piece is a substitution and goes through `substitutes`. With `overlay`, the split is that copy
+ *  of the one under `dir` (splat-review's blanked split). */
+export function assembleSplit(
+  dir: string,
+  substitutes: ReadonlyMap<number, Uint8Array> = new Map(),
+  overlay?: SplitOverlay,
+): AssembleResult {
+  const m = overlay?.manifest ?? readManifest(dir);
   const byIndex = new Map(m.functions.map((f) => [f.index, f]));
   for (const [index, b] of substitutes) {
     const f = byIndex.get(index);
@@ -965,7 +977,7 @@ export function assembleSplit(dir: string, substitutes: ReadonlyMap<number, Uint
     checkBody(index, f.typeIndex, b);
   }
   const piece = (path: string, expect?: { sha256: string; size: number }): Uint8Array => {
-    const b = new Uint8Array(readFileSync(join(dir, path)));
+    const b = overlay?.files.get(path) ?? new Uint8Array(readFileSync(join(dir, path)));
     if (expect !== undefined && (b.length !== expect.size || sha256(b) !== expect.sha256)) {
       throw new Error(
         `${join(dir, path)}: the piece no longer has the bytes the manifest recorded (pass a changed body with --substitute)`,

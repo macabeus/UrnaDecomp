@@ -41,6 +41,7 @@ pnpm playground                      # the web app over the target and the bench
 | `splat-scan <target> <plain> [-o scan.tsv] [--match [<matches>]] [--kinds f \| --no-kinds]`                 | every target function against our re-pointed candidate; `--match` appends new matches to the match list                                                                           |
 | `splat-build <target> <plain> [--matches f] [-o out.wasm] [--expect <sha256>] [--kinds f \| --no-kinds] [--max-kind-unverified n]` | the split with our bytes for every match; fails on a match that does not verify, or on more than n kind-unverified matches; prints the meter, the kind-unverified matches and the review warnings |
 | `splat-kinds <plain> [--shifted <dir>] [-o kinds.json] [--matches f]`                                       | the operand-kind table: which constants of our link are addresses, table slots or integers, from a relink with data and table moved                                             |
+| `splat-review <target> <plain> <index> [--matches f] [-o <dir>] [--kinds f \| --no-kinds]`                  | the blanked-target check of one match: its piece blanked, the split assembled with the match's own bytes (the gate, the exit status) and with every operand at its first reading |
 
 `<fn>` is a function index (function index space: imports first, so the target's first defined
 function is 136), `export:<name>` (linked module; the real name, resolved through the glue when the
@@ -185,8 +186,8 @@ produce (`--targets`).
 
 ## lift: rough C++ to start a function from
 
-In short: `lift` writes one `<index>.cpp` per function that `em++ -c` compiles at the function's
-component flags, with that compile line in its header comment. It is a starting point to refine,
+In short: `lift` writes one `<index>.cpp` per function that `em++ -c` compiles at the flags of the
+tree the function's code comes from, with that compile line and the reason for it in its header comment. It is a starting point to refine,
 not a match. The workarounds that keep it compiling and close to clang's own lowering:
 
 - `goto` where a branch is not a plain `if`/`while`/`do … while`/`switch`;
@@ -209,13 +210,27 @@ C++ translation unit: `<stdint.h>`, `extern "C"` declarations of every callee an
 touches (wasm types mapped to `int32_t`/`int64_t`/`float`/`double`), then the function under its
 symbol. It never declines: a construct without a closer spelling is a compilable stand-in with a
 `/* wasm: … */` comment, and `notes` lists them. Every function of the target lifts and compiles
-with `em++ -c` at its component's flags (`lift --all -o <dir> --check`).
+with `em++ -c` at its flags (`lift --all -o <dir> --check`).
 
 ```sh
 pnpm wasm lift ../target/vota_web_wasm.wasm 156 10058 -o /tmp/lifted --check
 pnpm wasm lift ../target/vota_web_wasm.wasm --all
 ```
 
+- **Flags.** The header's `// em++ …` line is the flag set of the tree the function's code comes
+  from, and the line under it says what decided (`liftFlags` in `lift.ts`, the evidence from
+  `readTreeEvidence` in `lift-inputs.ts`). In order: the files of its `std::source_location`
+  records (`<root>/ledger/source-locations.tsv`), when they name one tree (`/home/rubio/tse/uenux2/…`
+  is uenux2, the conan package's `…/b/src/ecourna/…` is ecourna; a header the package installs,
+  `…/p/include/…`, names none, since uenux2's units include it too); else the tree under
+  `<root>/src/` holding its stub comment (`// f<index> · …` in `src/uenux2`, `src/ecourna` or
+  `src/asn1`, a tree's `unplaced.cpp` aside, since the stub generator puts a function there by its
+  component); else its ledger component (`componentFlags`; a library's own code has neither and comes here).
+  The component says which code calls a function, not where it is written: 1260
+  (`api::CDirReader::NextEntry`, group `ecourna`) gets uenux2's flags from its record in
+  `cdirreader.cpp`. The per-tree flags are `TREE_FLAGS`; `lift --check`, `lift-eval` and the
+  playground choose the same way. The table cannot express ecourna's per-directory `-fno-PIC`:
+  urna's `tools/round/try-tu.sh` reads the real flags from `src/Makefile`.
 - **Names.** Imports and exports by the glue's real names; other functions by the ledger's
   `best_name` when the pairing is byte, fingerprint or addr (a shape pairing is often another
   function). The ledger spells C++ names demangled, so `--mangled` takes two line-aligned lists
@@ -313,8 +328,8 @@ link resolves a libc callee such as `emscripten_builtin_free` and wasm-opt then 
 functions with a fixed seed, stratified by the ledger's component (`func-attribution.tsv`, `unknown`
 where it has none; shares proportional to the square root of each component's size, at least 3
 each) and by body-size band (tiny ≤ 32 bytes, small ≤ 128, medium ≤ 512, large ≤ 2048, huge). It
-lifts each one, compiles them all with `em++ -c` in one pinned container at each function's component
-flags, pulls the function out of its object by symbol and scores it against the target at depth 0.
+lifts each one, compiles them all with `em++ -c` in one pinned container at the flags `lift` would
+write for it (its tree's, else its component's), pulls the function out of its object by symbol and scores it against the target at depth 0.
 Then `optimizeLifted` (`rank.ts`) links each object alone with `wasm-ld` (exporting its symbol) and
 runs the target link's two wasm-opt passes over it (`-Oz --low-memory-unused --zero-filled-memory
 …`, then `--optimize-stack-ir`), and the function is scored again: the `-Oz` columns. The target
@@ -356,7 +371,7 @@ indices of the steering sample) checks that a lifter change does not fit the ste
 `benchmark/` (package `@asmlift/wasm-benchmark`, a workspace member depending on this one) is the
 lifter's benchmark: target functions from every compile setup of the module, the TSE application and
 its libraries and emscripten's system libraries, each compiled with its own setup's flags by
-`evaluateLift` (a sample row's `flags` override `componentFlags`). Where lift-eval samples by the
+`evaluateLift` (a sample row's `flags` override `liftFlags`). Where lift-eval samples by the
 ledger's component, the benchmark decides each row's setup from the build object that defines the
 ledger's name and checks its flags against `src/Makefile`. Its README has the setups, the dataset, the
 results schema (`BenchResults`) and how to add a row.
@@ -574,7 +589,11 @@ the strongest choice it needed: none (re-pointing alone writes the target body),
 copy of identical string or read-only bytes, or which of a function's table slots, an operand names.
 
 The match list (urna `splat/matched.txt`) is `<target index> <our symbol>` per line with `#` comments;
-`splat-scan --match` appends the scan's new matches and keeps every existing line. **splat-build** re-points each
+`splat-scan --match` appends the scan's new matches and keeps every existing line but one kind: a line whose
+symbol is not in our link, while the scan matches the same function under another symbol (a byte-identical
+twin our link names after another object, urna docs/reference/facts/splat.md §S6), is rewritten in place to
+that symbol and printed; a missing symbol the scan matches under no other is left for splat-build to refuse.
+**splat-build** re-points each
 matched function through the maps with every match applied, compares it with its piece, and assembles the split with those bytes (every other function
 from its piece); it refuses to write a module while any match fails (each failure names the match list line, the
 function and its first differing instruction, or the reason it does not resolve) and when the module is not the
@@ -586,8 +605,27 @@ the readings the target chose.
 | `splat-scan <target> <plain> [-o scan.tsv] [--match [<matches>]] [--pieces d]`              | every target function against our re-pointed candidate          |
 | `splat-build <target> <plain> [--matches f] [-o out.wasm] [--expect <sha256>] [--pieces d] [--max-kind-unverified n]` | the split with our bytes for every match, verified, and a meter |
 | `splat-kinds <plain> [--shifted <dir>] [--map-dir d] [-o kinds.json] [--matches f]`         | the operand-kind table from the plain link and its shifted relink |
+| `splat-review <target> <plain> <index> [--matches f] [-o <dir>] [--pieces d]`                | one match's blanked-target check, both ways                     |
 
-`splat-scan`, `splat-build`, `splat-remap` and `splat-sym-coverage` take `--kinds <kinds.json>`, default
+**splat-review** (`splat-review.ts`) is the check urna's `docs/reference/splat.md` "Reviewing a match" describes. It
+blanks the matched piece in a copy of the split (in memory: a body of the same size with no locals, `unreachable`s
+and a final `end`, its sha256 in the copy's manifest), assembles the copy with our body for it, and prints whether
+the module is the target's sha256, for two bodies. Both re-point through the maps with every match of the list
+applied first (`withMatches`), as `splat-build` does:
+
+- **the match's own bytes**: `verifyMatches` on the real split, so each ambiguous operand takes the reading the
+  target body picked among ours (the match rule). This is the gate, and the only way that sets the exit status. A
+  match the build refuses as `UNCONFIRMED` fails it; `verifyMatches` runs on the part of the list that may confirm the
+  match's self-voted names (`confirmingPart`), which confirms it whenever the whole list does, so the check takes
+  seconds.
+- **preferred readings**: `remapBody(...).bytes`, every operand at its first reading, with the blanked module as the
+  target side. That module and a copy of the target's glue beside it (the import names) are written to `-o`
+  (default `<root>/build/out/splat-review/<index>`). No target body exists in that run. A match whose operands needed
+  the target body's choice among our readings (which copy of the same content, which table slot of a function, and
+  in a kind-unverified function which kind) fails it legitimately: the command lists each such operand, the reading
+  the target body picked and the first one.
+
+`splat-scan`, `splat-build`, `splat-review`, `splat-remap` and `splat-sym-coverage` take `--kinds <kinds.json>`, default
 `build/out/wasm-kinds/<name>/kinds.json` beside the plain link; they refuse to run without a table unless given
 `--no-kinds`, and refuse a table that describes another plain module (sha256) or another format. With it, each
 `i32.const`, `i64.const` and memarg offset is offered only the readings of its kind: a literal its own bytes, an
@@ -640,15 +678,18 @@ and covers every component and band, `canonRow` equalises the object's and the t
 a four-function evaluation compiles, optimises and scores through the pinned image, and two em++
 errors differing only in a name fall in one class (skips without it).
 
-The splat tests (`splat.test.ts`, `splat-symbols.test.ts`, `splat-sub.test.ts`) read a checkout that has the
-splat build (`URNA_SPLAT_ROOT`, default the same checkout): its target, split, plain link, link map and `splat/`
-files, and skip what needs them when they are absent. They cover:
+The splat tests (`splat.test.ts`, `splat-symbols.test.ts`, `splat-sub.test.ts`, `splat-review.test.ts`) read a
+checkout that has the splat build (`URNA_SPLAT_ROOT`, default the same checkout): its target, split, plain link, link
+map and `splat/` files, and skip what needs them when they are absent. They cover:
 
 - the round trip to the target's sha256, and a refused edited piece;
 - the symbol file's pairs, refutations and virtual-base vtables;
 - a match that re-points through both maps;
 - AudioCollector's destructors not matching;
-- a self-voted match failing the build.
+- a self-voted match failing the build;
+- the blanked-target check: 9218 reproducing the target both ways (and its preferred readings 313 B without operand
+  kinds), 12829 failing the preferred way on the table slot copy the target body picked, a wrong match failing the
+  gate.
 
 ## Traps
 

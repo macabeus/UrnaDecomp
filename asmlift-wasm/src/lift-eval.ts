@@ -1,5 +1,5 @@
 // The lifter's measurement harness: a fixed, stratified sample of target functions is lifted,
-// compiled with em++ in the pinned image at each function's component flags (one container for
+// compiled with em++ in the pinned image at each function's flags (`liftFlags`; one container for
 // the whole sample), pulled out of its object by symbol and scored against the target function at
 // depth 0. Each object is also linked alone and put through the target link's wasm-opt passes
 // (`optimizeLifted`) and scored again: the target went through wasm-opt -Oz, an object did not, so
@@ -16,7 +16,7 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import type { Attribution } from './ledger';
-import { type LiftOptions, componentFlags, liftFunction } from './lift';
+import { type LiftOptions, type TreeEvidence, liftFlags, liftFunction } from './lift';
 import { type NormalizeOptions, normalizeModule, signature } from './normalize';
 import { extractFunction } from './object';
 import { type Module, funcAt, parseModule } from './parse';
@@ -41,7 +41,7 @@ export interface SampleRow {
   component: string;
   band: string;
   size: number;
-  /** the em++ flags to compile this function's lift with; the component's (`componentFlags`) without */
+  /** the em++ flags to compile this function's lift with; without, `liftFlags` chooses (its tree's, else its component's) */
   flags?: string;
 }
 
@@ -260,8 +260,10 @@ export interface EvalRow extends SampleRow {
 }
 
 export interface EvalOptions {
-  lift: Omit<LiftOptions, 'flags' | 'instrs'>;
+  lift: Omit<LiftOptions, 'flags' | 'flagsWhy' | 'instrs'>;
   attribution: ReadonlyMap<number, Attribution> | null;
+  /** the tree evidence `liftFlags` chooses a row's flags by when the row gives none */
+  trees?: TreeEvidence | null;
   /** where the lifted sources, objects and em++ errors are written (docker must be able to mount it) */
   dir: string;
   image?: string;
@@ -293,9 +295,11 @@ export function evaluateLift(m: Module, sample: readonly SampleRow[], opts: Eval
       compiled: false,
     };
     try {
+      const chosen =
+        s.flags === undefined ? liftFlags(s.index, opts.attribution?.get(s.index)?.component, opts.trees) : null;
       const lifted = liftFunction(m, s.index, {
         ...opts.lift,
-        flags: s.flags ?? componentFlags(opts.attribution?.get(s.index)?.component),
+        ...(chosen === null ? { flags: s.flags } : { flags: chosen.flags, flagsWhy: chosen.why }),
       });
       row.symbol = lifted.symbol;
       row.notes = lifted.notes;

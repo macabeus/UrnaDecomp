@@ -43,8 +43,10 @@ export interface LiftOptions {
   names?: ReadonlyMap<number, string>;
   /** demangled → mangled, so a demangled ledger name becomes the symbol the source must define */
   mangled?: ReadonlyMap<string, string>;
-  /** the component's compile flags, written into the header */
+  /** the compile flags, written into the header (`liftFlags` chooses them) */
   flags?: string;
+  /** why those flags (`LiftFlags.why`), written into the header under them */
+  flagsWhy?: string;
   /** the decoded body, when the caller already has it */
   instrs?: Instr[];
 }
@@ -1874,6 +1876,9 @@ export function liftFunction(m: Module, index: number, opts: LiftOptions = {}): 
   out.push(`// wasm function ${index}${pretty}`);
   if (opts.flags !== undefined) {
     out.push(`// em++ ${opts.flags}`);
+    if (opts.flagsWhy !== undefined) {
+      out.push(`// ${opts.flagsWhy}`);
+    }
   }
   out.push('#include <stdint.h>', '');
   if (notes.includes(ARM_TAIL_NOTE)) {
@@ -1966,6 +1971,7 @@ function unguardMemOps(body: Line[]): Line[] {
 const APP = '-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing';
 const ECOURNA =
   '-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fPIC';
+const ASN1 = '-Os -fno-exceptions -std=c++17 -DNDEBUG';
 
 /** The vota build's compile flags per ledger component (urna docs/reference/toolchain.md §3); libc++,
  *  libc++abi and unattributed functions get the application's. A copy for the lifted file's header and for
@@ -1982,7 +1988,7 @@ export const COMPONENT_FLAGS: Readonly<Record<string, string>> = {
   boost: APP,
   api: APP,
   ecourna: ECOURNA,
-  ASN1: '-Os -fno-exceptions -std=c++17 -DNDEBUG',
+  ASN1,
   sqlite: '-O3 -fPIC',
   openssl: '-O3 -fPIC',
   '7zip': '-O3 -D_7ZIP_ST -DNDEBUG',
@@ -1991,6 +1997,82 @@ export const COMPONENT_FLAGS: Readonly<Record<string, string>> = {
 
 export function componentFlags(component: string | undefined): string {
   return (component === undefined ? undefined : COMPONENT_FLAGS[component]) ?? APP;
+}
+
+/** The trees of TSE's code under urna's src/, each compiled with one flag set (src/Makefile, src/mk/asn1.mk). */
+export type SourceTree = 'uenux2' | 'ecourna' | 'asn1';
+
+export const TREE_FLAGS: Readonly<Record<SourceTree, string>> = { uenux2: APP, ecourna: ECOURNA, asn1: ASN1 };
+
+/** What says which tree a function's code comes from, before its ledger component does. */
+export interface TreeEvidence {
+  /** index → the file of each `std::source_location` record it loads (ledger/source-locations.tsv) */
+  records: ReadonlyMap<number, readonly string[]>;
+  /** index → the file under src/ holding its stub comment (`// f<index> · …`), a tree's unplaced.cpp left out */
+  stubs: ReadonlyMap<number, string>;
+}
+
+/** The tree a record's file is in: TSE's uenux2 checkout, or the ecourna sources in the conan package's build
+ *  directory. A header the package installs (`…/p/include/ecourna/…`) names none: uenux2's units include it too. */
+export function recordTree(file: string): SourceTree | null {
+  if (file.startsWith('/home/rubio/tse/uenux2/')) {
+    return 'uenux2';
+  }
+  return /^\/home\/rubio\/\.conan2\/p\/b\/[^/]+\/b\/src\/ecourna\//.test(file) ? 'ecourna' : null;
+}
+
+/** The tree of a path under urna's src/ (`src/uenux2/…`). */
+export function srcTree(path: string): SourceTree | null {
+  const top = /^src\/(uenux2|ecourna|asn1)\//.exec(path)?.[1];
+  return top === undefined ? null : (top as SourceTree);
+}
+
+export interface LiftFlags {
+  flags: string;
+  /** what chose them: the function's records, its stub, or (neither deciding) its ledger component */
+  by: 'record' | 'stub' | 'component';
+  /** the tree (record, stub) or the component (`-` for none) whose flags they are */
+  of: string;
+  /** one line saying why, for the lifted file's header */
+  why: string;
+}
+
+/** The flags a function's lift compiles with: those of the tree its code comes from, by its `std::source_location`
+ *  records when they name one tree, else by the tree its stub is in, else its ledger component's (`componentFlags`).
+ *  The component says which code calls a function, not where it is written: a uenux2 function only ecourna's
+ *  classes call is in group `ecourna` but compiles with uenux2's flags. */
+export function liftFlags(index: number, component: string | undefined, trees?: TreeEvidence | null): LiftFlags {
+  const files = trees?.records.get(index) ?? [];
+  const named = new Map<SourceTree, string>();
+  for (const f of files) {
+    const t = recordTree(f);
+    if (t !== null && !named.has(t)) {
+      named.set(t, f);
+    }
+  }
+  if (named.size === 1) {
+    const [[tree, file]] = [...named];
+    return { flags: TREE_FLAGS[tree], by: 'record', of: tree, why: `${tree}'s flags: a std::source_location record names ${file}` };
+  }
+  const stub = trees?.stubs.get(index);
+  const stubTree = stub === undefined ? null : srcTree(stub);
+  if (stub !== undefined && stubTree !== null) {
+    return { flags: TREE_FLAGS[stubTree], by: 'stub', of: stubTree, why: `${stubTree}'s flags: its stub is in ${stub}` };
+  }
+  const c = component === undefined || component === '-' ? undefined : component;
+  const own = c !== undefined && COMPONENT_FLAGS[c] !== undefined;
+  const unsure =
+    named.size > 1
+      ? `its records name ${[...named.keys()].join(' and ')}`
+      : 'no record or stub names its tree';
+  return {
+    flags: componentFlags(c),
+    by: 'component',
+    of: c ?? '-',
+    why: own
+      ? `component ${c}'s flags: ${unsure}`
+      : `the application's flags: ${c === undefined ? 'no component' : `component ${c}`}, and ${unsure}`,
+  };
 }
 
 // ---------------------------------------------------------------------------------------------

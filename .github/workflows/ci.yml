@@ -95,7 +95,7 @@ jobs:
         run: pnpm run test --reporter=default --reporter=json --outputFile.json="$REPORTS/test.json"
       - name: pnpm test counts
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
-        run: node ../.github/scripts/test-counts.mjs 'pnpm test' "$REPORTS/test.json" 74
+        run: node ../.github/scripts/test-counts.mjs 'pnpm test' "$REPORTS/test.json" 81
 
       - name: pnpm test:bench
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}

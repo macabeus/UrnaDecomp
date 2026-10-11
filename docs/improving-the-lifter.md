@@ -97,8 +97,9 @@ From rewriting drafts into landed sources:
 - **Switch case order** is not shown, though the order of a `br_table`'s targets encodes the source's case order.
 - **Boolean logic reads as bit arithmetic**, and `shared_ptr` reference counting as raw arithmetic.
 - **A lone link of a draft needs data stubs** for the `theInfo` and typeinfo symbols it references.
-- **The header's compile line** comes from the lifter's own table (`COMPONENT_FLAGS`), which cannot express ecourna's
-  per-directory `-fno-PIC`; `tools/round/try-tu.sh` reads the real flags from `src/Makefile`.
+- **The header's compile line** comes from the lifter's own tables (`TREE_FLAGS` for the tree the function's records
+  or stub name, else `COMPONENT_FLAGS`), which cannot express ecourna's per-directory `-fno-PIC`;
+  `tools/round/try-tu.sh` reads the real flags from `src/Makefile`.
 
 A callee prints by its mangled symbol when the ledger names it: the symbol lists `make -C src link` writes
 (`build/out/wasm/vota_web/symbols.{mangled,demangled}.txt`) give the spelling for every name the ledger has. A callee

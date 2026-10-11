@@ -22,7 +22,7 @@ import {
   renderLedgerTsv,
   siblingSymbolMap,
 } from './ledger';
-import { componentFlags, liftFunction, liftNames } from './lift';
+import { liftFlags, liftFunction, liftNames } from './lift';
 import { type LiftInputs, liftInputs as loadLiftInputs, projectDefaults } from './lift-inputs';
 import {
   evaluateLift,
@@ -107,7 +107,13 @@ function usage(): never {
               [--max-kind-unverified <n>]    the split assembled with our bytes for every match; fails on a match
                                              that does not verify, or on more than <n> kind-unverified matches;
                                              prints the kind-unverified matches and the review warnings
-    splat-scan, splat-build, splat-remap and splat-sym-coverage take --kinds <kinds.json> (default
+  splat-review <target.wasm> <plain.wasm> <target index> [--matches <f>] [-o <dir>]
+                                             the blanked-target check of one match: its piece blanked in a copy of
+                                             the split, assembled with our body two ways, the match's own bytes (the
+                                             gate: it alone sets the exit status) and every operand at its first
+                                             reading against the blanked module (written to <dir>, default
+                                             build/out/splat-review/<index>); prints whether each is the target
+    splat-scan, splat-build, splat-review, splat-remap and splat-sym-coverage take --kinds <kinds.json> (default
     build/out/wasm-kinds/<name>/kinds.json, and they refuse to run without it): each constant and memarg offset is
     offered only the readings of its kind (literal, address, table slot, an unfolded __table_base sum's base and
     the slots relative to it); --no-kinds leaves every function kind-unverified (every reading offered)
@@ -659,7 +665,7 @@ async function main(argv: string[]): Promise<void> {
       const check = has(args, '--check');
       const image = flag(args, '--image') ?? DEFAULT_IMAGE;
       const wasmPath = args[0] ?? usage();
-      const { m, names, mangled, attribution } = liftInputs(wasmPath, args);
+      const { m, names, mangled, attribution, trees } = liftInputs(wasmPath, args);
       const indices = all ? m.funcs.map((f) => f.index) : args.slice(1).map((s) => findFunction(m, selector(s)).index);
       if (indices.length === 0) {
         usage();
@@ -672,12 +678,13 @@ async function main(argv: string[]): Promise<void> {
       const written: string[] = [];
       const t0 = Date.now();
       for (const index of indices) {
-        const component = attribution?.get(index)?.component;
+        const chosen = liftFlags(index, attribution?.get(index)?.component, trees);
         try {
           const lifted = liftFunction(m, index, {
             names,
             ...(mangled ? { mangled } : {}),
-            flags: componentFlags(component),
+            flags: chosen.flags,
+            flagsWhy: chosen.why,
           });
           for (const n of lifted.notes) {
             notes.set(n, (notes.get(n) ?? 0) + 1);
@@ -730,7 +737,7 @@ async function main(argv: string[]): Promise<void> {
       const againstDir = flag(args, '--against');
       const image = flag(args, '--image') ?? DEFAULT_IMAGE;
       const wasmPath = args[0] ?? usage();
-      const { m, names, mangled, attribution } = liftInputs(wasmPath, args);
+      const { m, names, mangled, attribution, trees } = liftInputs(wasmPath, args);
       const ledgerDir = projectDefaults(wasmPath).ledger;
       const out = resolve(outFlag ?? (ledgerDir === undefined ? usage() : join(ledgerDir, 'lift-eval', label)));
       const lifted = join(out, 'lifted');
@@ -745,6 +752,7 @@ async function main(argv: string[]): Promise<void> {
         result = evaluateLift(m, sample, {
           lift: { names, ...(mangled ? { mangled } : {}) },
           attribution,
+          trees,
           dir: lifted,
           image,
           importName: importResolver(glue?.imports ?? null),

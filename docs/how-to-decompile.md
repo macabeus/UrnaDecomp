@@ -62,19 +62,23 @@ Start with TSE code: its `differs` rows have a body of ours already, and the wor
 listed in [status.md](status.md) "By component"):
 
 ```sh
-awk -F'\t' '$5=="differs" && $9 ~ /^(vota|comum|api|simulador|vota-web|ecourna|asn1-modules|ASN1)$/ \
-  && $11 ~ /^app\/(uenux2|ecourna|asn1)\//' splat/scan.tsv \
-  | sort -t$'\t' -k7,7n | cut -f1,2,6,7,9,11 | less     # smallest first
+python3 -I -B tools/round/pick_pool.py --differs | less     # index, symbol, detail, size, group, object; smallest first
 ```
 
-The last condition keeps the bodies compiled from `src/uenux2`, `src/ecourna` and `src/asn1` (the `object` column).
-Without it the filter also lists library bodies that only TSE code calls, since `group` says who uses a function
-(below): of 46 TSE-group `differs` rows on 2026-10-11, 21 are TSE code; the rest are RHVoice, OpenSSL, 7-Zip and
-libc++ bodies, binaryen's merged ones and the `src/app` stand-ins', and they are most of the smallest.
+It keeps the `differs` rows of TSE groups whose body was compiled from `src/uenux2`, `src/ecourna` or `src/asn1`
+(the `object` column). The group alone would also list library bodies that only TSE code calls, since `group` says
+who uses a function (below): over a third of the TSE-group `differs` rows are not TSE code but RHVoice, OpenSSL,
+7-Zip and libc++ bodies, binaryen's merged ones and the `src/app` stand-ins', and they are most of the smallest.
 
-The `no-candidate` rows (`$5=="no-candidate"` in the same filter) are the functions the scan found no body of ours
-for: the symbol file names none, the census paired none, and no unmatched body of ours re-points into it. That is
-not the same as unwritten. A function can be written and still pair with nothing: target 1883,
+The other pool is the functions not written yet, which have a comment stub in their tree:
+
+```sh
+python3 -I -B tools/round/pick_pool.py src/ecourna      # or src/uenux2, src/asn1, --tse for all three; --min/--max in B
+```
+
+It prints `index verdict size group file:line` for each stub of 40 to 600 B, smallest first. Their verdict is mostly
+`no-candidate`: the scan found no body of ours for it, as the symbol file names none, the census paired none, and no
+unmatched body of ours re-points into it. `no-candidate` is not the same as unwritten. A function can be written and still pair with nothing: target 1883,
 `CSqlResultSet::VerifyColumnIndex`, is defined in `src/ecourna/api/sql/sqlite/csqlresultset.cpp` and is
 `no-candidate`. The stubs tell the two kinds apart. `tools/round/stubs.py` writes no stub for a function it finds
 code of ours for, and `python3 -I -B tools/round/stubs.py --report` counts those by reason. So a `no-candidate` row
@@ -96,8 +100,8 @@ awk -F'\t' '$6 ~ /(^|,)1931(,|$)/ {print $2, $3, $5}' ledger/source-locations.ts
 ```
 
 The path under `/home/rubio/tse/uenux2/` or `…/libecea1da310e5107/b/src/ecourna/` is where the file goes under
-`src/uenux2/` or `src/ecourna/`. Its *component* (`ledger/func-attribution.tsv`) says which tree it belongs to, and
-so which flags compile it ([component and owner](glossary.md#component-and-owner)).
+`src/uenux2/` or `src/ecourna/`, and that tree's flags compile it; the *component* (`ledger/func-attribution.tsv`)
+can name another tree ([component and owner](glossary.md#component-and-owner)).
 
 A TSE function not decompiled yet usually has a *stub* in that tree, a generated comment where the evidence says the
 function sat ([src/README.md](../src/README.md) "Stubs"). Find it by its index:
@@ -176,7 +180,9 @@ f219(…)` although `splat/symbol_addrs.txt` names it (`_ZN4ASN18SEQUENCEC2EPKv 
 **A callee can be a twin.** binaryen merges byte-identical functions, in the target and in our link alike, and keeps
 one name for the body. So a callee's name in `splat/matched.txt` or the symbol file can be another function's that
 compiles to the same bytes: 760 is matched as `std::vector<std::pair<unsigned long, unsigned long>>::push_back(&&)`,
-and the `push_back` of a vector of another 8-byte element type can be that same body. Write the call your source
+and in the target it is also the `push_back` of another vector of an 8-byte element: 11361, the converter of
+`comum::asn::CConversorSituacoesEleicoes`, which builds a `std::vector<comum::md::CSituacoesEleicoes>`, calls 760
+(`pnpm wasm fn ../target/vota_web_wasm.wasm 11361`, from `asmlift-wasm/`, shows `call 760` at +0x93). Write the call your source
 makes. If your instantiation compiles to the same bytes, our link merges it into the matched body and the call
 re-points to the target's function; if it does not, the target has no such body and the caller cannot match
 with that call. When your object comes first in the link, its symbol becomes the survivor's name and the existing
@@ -229,13 +235,25 @@ declares the charset for `src/uenux2/` and `src/ecourna/` (with the few exceptio
 `tools/round/check_encoding.py` fails on a file that was re-encoded. Write a new file in Latin-1 too when its
 strings have accents.
 
-The compile line in the lifted file's header comes from the lifter's own copy of the flags, chosen by the function's
-*component* (`componentFlags` in `asmlift-wasm/src/lift.ts`), not by the tree the code lands in. So every uenux2
-function in group `ecourna` (step 1) is lifted, and compiled by `--check`, with ecourna's `-O3 -fexceptions …`:
-`head -2 /tmp/lift/1260.cpp` after a lift of 1260 (`api::CDirReader::NextEntry`, in `src/uenux2/`) prints
-`// em++ -O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks
--fno-strict-overflow -fPIC`. The next steps use `try-tu.sh`, which reads the flags from `src/Makefile` by the
-source's path; trust those.
+The compile line in the lifted file's header is the flag set of the tree the function's code comes from, and the
+line under it says what decided (`liftFlags` in `asmlift-wasm/src/lift.ts`): the function's `std::source_location`
+records when they name one tree (a path under `/home/rubio/tse/uenux2/` is uenux2, one under the conan package's
+`…/b/src/ecourna/` is ecourna), else the tree whose file holds its stub (`src/uenux2`, `src/ecourna`, `src/asn1`),
+else its *component*. The component says which code calls a function, not where it is written, so a uenux2 function
+in group `ecourna` (step 1) still gets uenux2's flags from its record. After
+`TMPDIR=/tmp pnpm wasm lift ../target/vota_web_wasm.wasm 1260 -o /tmp/lift` (1260 is `api::CDirReader::NextEntry`,
+group `ecourna`), `head -3 /tmp/lift/1260.cpp` prints:
+
+```
+// wasm function 1260
+// em++ -O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing
+// uenux2's flags: a std::source_location record names /home/rubio/tse/uenux2/src/api/util/cdirreader.cpp
+```
+
+A function with no record and no stub outside `unplaced.cpp`, or whose records name both trees, gets its component's
+flags, and the third line says so (`component ecourna's flags: no record or stub names its tree`). The lifter's copy
+of the flags has no per-directory `-fno-PIC` either. The next steps use `try-tu.sh`, which reads the flags from
+`src/Makefile` by the source's path; trust those.
 
 ## 4. Iterate on the function alone
 
@@ -250,12 +268,11 @@ under heavy load. The flags come from the recipe `src/Makefile` has for the obje
 outside `src/` needs `--component` with the directory under `src/` it would land in (`uenux2/src/app/comum/dados`,
 `ecourna/app/dados`, `asn1`, …). `--print-flags` shows the compile command without running it.
 
-The lone compile always adds `-fexceptions`, whatever the component: the rank template that `--single` uses
-starts with it. uenux2 code is built without it (no landing pads, [facts/app-flags.md](reference/facts/app-flags.md)
-§F6), so a uenux2 TU scored alone grows `call import:invoke_…` and `__resumeException` rows the build never has.
-Pass `--flags '-fignore-exceptions'` for a uenux2 TU: for 1260 the invoke rows go (score 162 over 184 rows
-without it, 224 over 250 with it, the rest being what binaryen inlines into a body linked alone), and the splat
-build matched the same source unchanged ([facts/tool-traps.md](reference/facts/tool-traps.md) §X6).
+The lone compile and link is one `em++` with `-fexceptions`, as the build's link is. uenux2 code is compiled
+without it (no landing pads, [facts/app-flags.md](reference/facts/app-flags.md) §F6), so for a TU whose own flags
+lack `-fexceptions` `--single` adds `-fignore-exceptions`, and the `flags:` line it prints ends with it: its throw
+sites call `__cxa_throw` directly, as in the build, instead of growing `call import:invoke_…` and
+`__resumeException` rows ([facts/tool-traps.md](reference/facts/tool-traps.md) §X6).
 
 Several TUs after `--single` are rival candidates, ranked against each other, not one program: a callee defined
 in a second TU stays an import (`call import:<symbol>`), and the second TU is dropped when it does not define the
@@ -368,14 +385,10 @@ signal to land. `splat-remap` reads the committed symbol file and none of the ma
 The `ours` index is the function's index in the try link; `pnpm wasm fn` on the try link's wasm with that index
 shows its body beside the target's.
 
-**A uenux2 TU with records, before its fragment exists.** The generic uenux2 rule compiles `src/uenux2/<path>`, a
-relative path that `UENUX2_PREFIX_MAP` (`/work/src/uenux2=…`) never rewrites, so the TU's `std::source_location`
-records name `src/uenux2/…` instead of the target's `/home/rubio/tse/uenux2/…`, and `splat-remap` stops at the
-record's `i32.const` (`address: source_location not in the target`). The landed units add the missing map to their
-own objects (step 6), and try-tu reads it from the fragment once there is one; until then pass it yourself:
-`--flags '-ffile-prefix-map=src/uenux2=/home/rubio/tse/uenux2'` (`--print-flags` shows it on the compile line). It
-only works for a TU under `src/uenux2/`, compiled at its own path, without `--component`
-([facts/tool-traps.md](reference/facts/tool-traps.md) §X7).
+A TSE TU's `std::source_location` records name the target's files in a try link too: every uenux2 and ecourna
+compile runs from the source's `/work/src/…` path, which the tree's `-ffile-prefix-map` rewrites to
+`/home/rubio/tse/uenux2/…` or the conan path (`--print-flags` shows the compile line;
+[facts/tool-traps.md](reference/facts/tool-traps.md) §X7).
 
 ## 6. Land the unit
 
@@ -384,12 +397,11 @@ only works for a TU under `src/uenux2/`, compiled at its own path, without `--co
    directory the files share, or the class. `src/units/README.md` describes what a fragment holds, its naming
    scheme, and the *roots*, *pending* and *externs* companion files. A source deeper than `src/ecourna/*/*/`
    (`app/dados/asn/x.cpp`) needs a rule in the fragment that names it as a prerequisite, or edits to it never
-   rebuild its object ("What a fragment holds" item 3). A uenux2 source whose functions have
-   `std::source_location` records needs the path map the generic uenux2 rule lacks (step 5), as a target-specific
-   line on its objects; `src/units/21-uenux2-cdirreader.mk` has it:
-   `$(addprefix $(ROOT)/$(APP)/uenux2/,$(addsuffix .o,$(CDIRREADER_SRCS))): UENUX2_CXXFLAGS +=
-   -ffile-prefix-map=src/uenux2=/home/rubio/tse/uenux2`. Without it `TMPDIR=/tmp make -C src check-srcloc` lists the records.
-   Add the fragment's row to the table in `src/units/README.md`.
+   rebuild its object ("What a fragment holds" item 3). A rule of your own compiles the TSE source from its
+   `/work/src/…` path, as the generic rules do, so the tree's `-ffile-prefix-map` rewrites the file name its
+   `std::source_location` records hold; a relative path is never rewritten, and
+   `TMPDIR=/tmp make -C src check-srcloc` then fails with `UNMAPPED` and the record. Add the fragment's row to the
+   table in `src/units/README.md`.
 3. If nothing in the skeleton calls the unit yet, add a `-roots.cpp` that reaches each function the way the target
    does (address taken; at least two direct callers, counting the reconstructed ones; or none so it inlines;
    `src/units/README.md` "Companion files").
@@ -433,8 +445,8 @@ git diff splat/matched.txt
 ```
 
 `splat-match` scans every target function, re-points each candidate body of ours into the target's index and
-address spaces, appends every new byte-identical match to `splat/matched.txt` as `<target index> <our symbol>`,
-rewrites `splat/scan.tsv`, regenerates the status blocks of `docs/status.md`
+address spaces, appends every new byte-identical match to `splat/matched.txt` as `<target index> <our symbol>`
+(and renames a listed match whose symbol left our link to its twin: step 10, "A twin whose name moved"), rewrites `splat/scan.tsv`, regenerates the status blocks of `docs/status.md`
 (`make -C src status`), and rewrites the stubs and gaps (`make -C src stubs`): a function with a match or a body of ours
 has no stub, so yours goes, and a stub-only file whose last stub goes is removed. A pending member's stub goes too,
 although its body is only a trap: `stubs.py` counts a function in a slot of a vtable our link holds as code of
@@ -471,13 +483,23 @@ source. For a TSE function, check that each one of yours is a number its source 
 
 **A twin whose name moved** is the one break that is not drift. When your unit brings in a body byte-identical to a
 matched one (another class's deleting destructor, another instantiation), binaryen keeps the first in link order,
-and if yours comes first, the matched symbol leaves our link. The build then says `function 246 matched to
-_ZN21ModuloTiposEleitorais4FotoD0Ev: our link has no function _ZN21ModuloTiposEleitorais4FotoD0Ev`, while
-`splat/scan.tsv` already pairs 246 with the survivor by content. `splat-match` only appends, so delete the stale
-line from `splat/matched.txt`, run `TMPDIR=/tmp make -C src splat-match` again (it adds the index back under the
-survivor's name) and the build again, and say so in the commit message ([facts/splat.md](reference/facts/splat.md)
-§S6). `git diff splat/matched.txt` then shows a `-` and a `+` line for the same index: a rename, not a lost match.
-So count lost matches by index, not by line; against `main` (or any commit):
+and if yours comes first, the matched symbol leaves our link. A build run before `splat-match` says `function 246
+matched to _ZN21ModuloTiposEleitorais4FotoD0Ev: our link has no function _ZN21ModuloTiposEleitorais4FotoD0Ev`. Step
+9's `splat-match` repairs it: when a listed symbol is missing from our link and the scan matches the same index under
+another symbol (the survivor, whose body re-points into the target's bytes), it rewrites that line in place and
+prints the rename:
+
+```
+…/splat/matched.txt: 0 matches added, 1 renamed
+  line 7218: function 246 renamed _ZN21ModuloTiposEleitorais4FotoD0Ev → _ZN21ModuloEstadoGeralDefs26NumViasImpressasRelatoriosD0Ev: …
+```
+
+Any other missing symbol is left as written and printed (`… left as written, so the splat build fails on it`): that
+one is drift or a deleted function, and yours to fix. Say in the commit message which lines were renamed
+([facts/splat.md](reference/facts/splat.md) §S6). `git diff splat/matched.txt` shows each rename as a `-` and a `+`
+line with the same index at the same place, and `git diff --word-diff splat/matched.txt` as one line,
+`246 [-_ZN21ModuloTiposEleitorais4FotoD0Ev-]{+_ZN21ModuloEstadoGeralDefs26NumViasImpressasRelatoriosD0Ev+}`: a
+rename, not a lost match. So count lost matches by index, not by line; against `main` (or any commit):
 
 ```sh
 git show main:splat/matched.txt | cut -d' ' -f1 | sort > build/out/main-matched.idx

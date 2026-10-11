@@ -155,30 +155,27 @@ How to pick, from [how-to-decompile.md](../../docs/how-to-decompile.md) step 1:
   (step 1 explains why they differ):
 
   ```sh
-  TREE=src/ecourna
-  LC_ALL=C /usr/bin/grep -rnoE '^// f[0-9]+ ' "$TREE" \
-    | awk -F: '{i=$(3); sub(/^\/\/ f/, "", i); sub(/ $/, "", i); print i "\t" $(1) ":" $(2)}' | sort -k1,1 > build/out/pick-stubs.tsv
-  awk -F'\t' 'NR>1 {print $(1) "\t" $(5) "\t" $(7) "\t" $(9)}' splat/scan.tsv | sort -k1,1 \
-    | join -t "$(printf '\t')" - build/out/pick-stubs.tsv | sort -t "$(printf '\t')" -k3,3n \
-    | awk -F'\t' '$(3) >= 40 && $(3) <= 600'          # index, verdict, size, group, stub file:line
+  python3 -I -B tools/round/pick_pool.py src/ecourna    # src/uenux2, src/asn1, or --tse; index, verdict, size, group, stub
+  python3 -I -B tools/round/pick_pool.py --differs      # the TSE differs rows (how-to step 1)
   ```
 
-  The awk fields in this file are written `$(1)`, never with a digit right after the `$`: Claude Code replaces a `$`
-  followed by a digit in a command file with one of the command's argument words before the session reads it (the
-  first word for a zero), so a plain field reference reaches the coordinator as one of the user's words. Keep that
-  spelling when you edit this file; `/usr/bin/grep -nE '\$[0-9]' .claude/commands/decompile-functions.md` must print
-  nothing.
+  The first lists the stubs of 40 to 600 B (`--min`/`--max` change it), smallest first. The `differs` rows of TSE
+  code (the second) are the other pool: a body of ours exists and the work is fixing its C++.
 
-  The `differs` rows of TSE code (step 1's filter, which keeps only bodies compiled from `src/uenux2`, `src/ecourna`
-  or `src/asn1`) are the other pool: a body of ours exists and the work is fixing its C++.
+  Claude Code replaces a `$` followed by a digit in this file with one of the command's argument words before the
+  session reads it (a dollar and 0 become the first word; Claude Code's skills docs, "Available string substitutions"), fenced code
+  included, so the file holds no such text, and a query belongs in a script, not here:
+  `/usr/bin/grep -nE '\$[0-9]' .claude/commands/decompile-functions.md` must print nothing.
 - **Every callee must resolve.** Read each candidate with `pnpm wasm fn` and lift it with `pnpm wasm lift … --check`
   (how-to steps 2 and 3). `fn` does not name the function behind an `invoke_*` table slot; the lift does
-  (`/* &fN */`). A callee resolves when it is matched (`awk -v n=N '$(1) == n' splat/matched.txt` prints a line) or
+  (`/* &fN */`). A callee resolves when it is matched (`/usr/bin/grep -E '^N ' splat/matched.txt` prints a line) or
   named (`/usr/bin/grep -F '= func:N;' splat/symbol_addrs.txt` prints one). A function whose callees are unnamed
   needs those first. The name that resolves can be a *twin*'s: binaryen merges byte-identical bodies and keeps one
-  name, so 760, matched as `vector<pair<unsigned long, unsigned long>>::push_back`, can also be the `push_back` of a
-  vector of another 8-byte element type. A caller that uses that other instantiation still resolves when its body
-  is the same (how-to step 3, "A callee can be a twin").
+  name, so 760, matched as `vector<pair<unsigned long, unsigned long>>::push_back`, is also the `push_back` of
+  another vector of an 8-byte element in the target: 11361, `CConversorSituacoesEleicoes`'s converter, which builds a
+  `vector<CSituacoesEleicoes>`, calls 760 (`pnpm wasm fn ../target/vota_web_wasm.wasm 11361` shows `call 760`). A
+  caller that uses that other instantiation still resolves when its body is the same (how-to step 3, "A callee can
+  be a twin").
 - **The stub may sit over code we have**: search our sources for the class before choosing (step 1).
 - **The name and the file**: from the records, the vtable slot, `ledger/vtables.json` and `ledger/classes.json`;
   for an `unplaced.cpp` stub, the file rules of how-to step 3.
@@ -226,11 +223,12 @@ It changes no tracked file, works in scratch under `build/out/verify/` (ignored)
    line removed and its index added back under another symbol is a twin rename: check that the old symbol is gone
    from the link (`build/out/wasm-map/vota_web/names.tsv`) and the new one is a byte-identical body.
 3. **The blanked-target check**, as [docs/reference/splat.md](../../docs/reference/splat.md) "Reviewing a match"
-   describes: blank the matched piece in a copy of the split, assemble it with our body, and get the target's
-   sha256. There is no command for it yet; write the script that section describes under `build/out/verify/` as
-   an `.mts` file and run it from `asmlift-wasm/` with `pnpm --silent exec tsx`. The match's own bytes are the gate.
-   Run the preferred-readings way too and report its result, but a match whose operands need the target's choice
-   (splat.md §3) fails it legitimately. Say which way gave which result.
+   describes: for each target index the lane matched, from `asmlift-wasm/`,
+   `pnpm --silent wasm splat-review ../target/vota_web_wasm.wasm ../build/out/wasm/vota_web/vota_web_wasm.wasm <index> -o ../build/out/verify/<index>`.
+   It blanks the matched piece in a copy of the split, assembles it with our body two ways, and prints whether each
+   gives the target's sha256. The match's own bytes are the gate: the command exits non-zero only when they fail.
+   Report the preferred-readings way too, but a match whose operands need the target's choice (splat.md §3) fails it
+   legitimately, and the command lists each reading the target body picked. Say which way gave which result.
 4. **The checks**: `make -C src stubs-check`, `python3 -I -B tools/round/status.py --check`,
    `python3 -I -B tools/round/stubs.py --check`, `python3 -I -B tools/round/check_encoding.py`,
    `TMPDIR=/tmp make -C src check-srcloc` with no wrong record of a matched function (compare its list with
@@ -305,27 +303,23 @@ what exists), tell the user:
 
 ---
 
-## Worked example: DECOMP1 (2026-10-10), `2 ecourna`
+## Example: `2 ecourna`
 
-- **PICK** found 616 ecourna `no-candidate` rows, of which 253 had a stub under `src/ecourna`, none placed by a
-  record. Of the stubs of 60 to 600 B, only template instantiations and the `CConversor*` ASN.1 converter hooks had
-  every callee matched or named. It picked 9132 `CConversorHorariosUrna::DoDeconverte` (134 B) for lane A and 9131
-  `CConversorMunicipioZona::DoConverte` (54 B) for lane B, with 9130 (B's sibling slot) as B's stretch goal, and
-  fragment numbers 15 and 16.
-- **MATCH A** wrote the `CHorariosUrna` data class (its out-of-line constructor gives the target's 32-byte frame)
-  and the converter in `app/dados/asn/`, with a `-pending.cpp` for 9133 and a `-roots.cpp` for the vtable.
-  Matching by content also confirmed the callee's name and matched 9218
-  (`CConversorCabecalhoEntidade::DoDeconverte`) as a side effect: 7,213 matches. **MATCH B** matched 9131 (7,212
-  matches). 9130 stayed pending: it needs constructor thunks that binaryen merged and that have no names yet.
-- **VERIFY** confirmed both lanes, including the blanked-target check. 9132 also passed the preferred-readings way.
-  9218 needs the target's reading choice and fails that way, as splat.md says it may.
-- **LAND** fast-forwarded lane A (`f6dc3aa`) and merged lane B (`96eb729`). The merge conflicted in every
-  generated file and in the census snapshot that both lanes had renamed. After the regeneration (link 3m19s,
-  census, symbols, match), the splat build printed the target's sha256 with 7,215 matches: 7,211 + 9132, 9218,
-  9131, and 6122, a libc++ function that neither lane had. The merged link dropped a self-voted vtable name, so
-  that vtable was placed by its content. No match was lost.
-- **DOCS** (`47efbf4`) answered the round's 33 friction posts with doc changes: among them the `unplaced.cpp`
-  file rules, the sret parameter order, `--unresolved-symbols` for a lone link, remapping a try link, the
-  deep-source rebuild trap, the fragment-number race, the landing recipe for a moved main, the `$` in `byn$`
-  symbols under `pnpm wasm`, and the blanked-target scripts. Two follow-ups need code: a command for the
-  blanked-target check, and a source prerequisite in the generic ecourna rule.
+- **PICK** starts from the ecourna stubs (`pick_pool.py src/ecourna`). Of the small ones, those whose callees all
+  resolve are mostly template instantiations and the `CConversor*` ASN.1 converter hooks. It gives lane A 9132
+  `CConversorHorariosUrna::DoDeconverte` (134 B) and lane B 9131 `CConversorMunicipioZona::DoConverte` (54 B), with
+  9130, B's sibling slot, as B's stretch goal, and you assign the fragment numbers 15 and 16.
+- **MATCH A** writes the `CHorariosUrna` data class (its out-of-line constructor gives the target's 32-byte frame)
+  and the converter in `app/dados/asn/`, with a `-pending.cpp` for 9133 and a `-roots.cpp` for the vtable. Its
+  scan also matches 9218 (`CConversorCabecalhoEntidade::DoDeconverte`), a body the lane did not write: the match
+  found by content confirms a callee's name, which resolves another function. The lane reports both matches.
+  **MATCH B** matches 9131. Its stretch goal 9130 stays pending: it needs constructor thunks that binaryen merged and
+  that have no names yet, which the lane reports as a `facts/` post.
+- **VERIFY** confirms both lanes, the blanked-target check included.
+- **LAND** fast-forwards lane A and merges lane B. The merge conflicts in every generated file and in the census
+  snapshot both lanes renamed, and is resolved as how-to step 10 "Landing onto a moved main" says. After the
+  regeneration the splat build prints the target's sha256 with every lane's matches plus 6122, a libc++ function
+  that neither lane had: the merged link drops a self-voted vtable name, and the vtable is then placed by its
+  content. No match is lost.
+- **DOCS** answers each friction post with a doc change, and lists as follow-ups the fixes that need code (a
+  Makefile rule, a tool command).

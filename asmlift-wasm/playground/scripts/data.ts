@@ -1,12 +1,14 @@
 // What the page loads besides the module and its glue: the ledger's names, components, owners, best
-// matches and strings, distilled from the urna checkout into one JSON file. The inputs are the ones
-// `liftInputs` reads, so the page lifts with the names and mangled spellings the CLI lifts with.
+// matches and strings, and the evidence of each function's tree, distilled from the urna checkout into
+// one JSON file. The inputs are the ones `liftInputs` reads, so the page lifts with the names, mangled
+// spellings and flags the CLI lifts with.
 import { copyFileSync, existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { disassemble } from '@asmlift/wasm/disasm';
 import { ledgerNames, readAttribution, readLedgerTsv, readMangledPairs } from '@asmlift/wasm/ledger';
+import { readTreeEvidence } from '@asmlift/wasm/lift-inputs';
 import { parseModule } from '@asmlift/wasm/parse';
 import { readStrings } from '@asmlift/wasm/readout';
 import { type LedgerString, referencedStrings } from '@asmlift/wasm/strings';
@@ -63,8 +65,14 @@ export function distillLedger(inputs: typeof INPUTS = INPUTS): LedgerData {
   const rows = readLedgerTsv(inputs.functions);
   const attribution = readAttribution(inputs.attribution);
   const names = ledgerNames(rows);
-  const tables = { components: [] as string[], owners: [] as string[], evidence: [] as string[], labels: [] as string[] };
-  const ids = { components: new Map(), owners: new Map(), evidence: new Map(), labels: new Map() };
+  const tables = {
+    components: [] as string[],
+    owners: [] as string[],
+    evidence: [] as string[],
+    labels: [] as string[],
+    files: [] as string[],
+  };
+  const ids = { components: new Map(), owners: new Map(), evidence: new Map(), labels: new Map(), files: new Map() };
   const data: LedgerData = {
     first: m.importedFuncCount,
     count: m.funcs.length,
@@ -80,6 +88,9 @@ export function distillLedger(inputs: typeof INPUTS = INPUTS): LedgerData {
     best: {},
     mangled: {},
     strings: [],
+    treeFiles: tables.files,
+    treeRecords: {},
+    treeStubs: {},
   };
   for (const fn of m.funcs) {
     const a = attribution.get(fn.index);
@@ -108,6 +119,13 @@ export function distillLedger(inputs: typeof INPUTS = INPUTS): LedgerData {
     }
   }
   data.strings = referencedOnly(wasm, readStrings(inputs.strings)).map((s) => [s.addr, s.len, s.enc, s.text]);
+  const trees = readTreeEvidence(URNA_ROOT);
+  for (const [index, files] of trees?.records ?? []) {
+    data.treeRecords[index] = files.map((f) => intern(tables.files, ids.files, f));
+  }
+  for (const [index, file] of trees?.stubs ?? []) {
+    data.treeStubs[index] = intern(tables.files, ids.files, file);
+  }
   return data;
 }
 

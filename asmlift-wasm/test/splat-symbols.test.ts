@@ -196,7 +196,8 @@ describe('srclocAnchors', { timeout: 180_000 }, () => {
     expect(syms.fns.get(START_TICK)).toBe(700);
     expect(syms.fnEvidence.get(START_TICK)?.evidence).toBe('srcloc-anchor');
     expect(syms.fns.get(VFORMAT_TO)).toBe(146);
-    expect(soleFnVoters(syms, VFORMAT_TO)).toEqual([700, 5447]);
+    // 10250 (CPosixSemaphore's ctor) votes too since its std::source_location record names the target's file
+    expect(soleFnVoters(syms, VFORMAT_TO)).toEqual([700, 5447, 10250]);
     // a name a seed pair voted for lists no voters
     expect(soleFnVoters(syms, '__cxa_allocate_exception')).toBeNull();
   });

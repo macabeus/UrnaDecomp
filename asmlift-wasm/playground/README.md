@@ -61,9 +61,10 @@ benchmark rows grouped by compile setup, or step to the previous or next index. 
 | Callers, Callees, Strings | direct callers (computed over every body after the first paint), direct callees with their call sites, and the ledger strings an `i32.const` points into |
 
 A benchmark row is lifted with its setup's flags as the benchmark compiles them (`liftCompileFlags`);
-any other function with its ledger component's flags (`componentFlags`), as `pnpm wasm lift` does.
-Both produce the same source as the CLI: the tests compare the page's lift with `liftInputs` +
-`liftFunction` on every row.
+any other function with the flags `pnpm wasm lift` chooses (`liftFlags`: the tree its source_location
+records or its stub name, else its ledger component's), from the same evidence, distilled into the
+ledger data. Both produce the same source as the CLI: the tests compare the page's lift with
+`liftInputs` + `liftFunction` on every row, and its choice of flags with the CLI's for every function.
 
 The commands, with `/tmp/lift/<index>.cpp` as the file (Download saves the editor's text under that name):
 
@@ -117,7 +118,8 @@ references) read no file; the file-reading halves are `glue-file.ts` and `readou
 `pnpm test:playground` runs on the real target, glue, ledger and results, with no mocks: the distilled
 names equal `ledgerNames`, every function's component, owner and best pair equal the ledger files',
 and every function references the same strings with the distilled table as with the full one; the
-page's names equal `liftInputs`' and its lift equals the CLI's for all 190 rows; the WAT has one line
+page's names equal `liftInputs`' and its lift equals the CLI's for all 190 rows, its flags the CLI's for every
+function; the WAT has one line
 per instruction and names every callee; the folded readout calls callees by name; the direct callers
 equal `ledger/callgraph.tsv` for every function; search by index and by name; the per-setup
 summaries and the dataset groups cover every row; the run diff counts better and worse rows as

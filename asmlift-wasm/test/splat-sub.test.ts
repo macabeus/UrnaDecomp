@@ -1,6 +1,6 @@
 // Substitution on the real modules of this checkout: the target's split (build/out/splat/pieces), the plain
 // skeleton link with its scratch map (tools/round/link-map.sh) and splat/symbol_addrs.txt.
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
 import { disassemble } from '../src/disasm';
@@ -319,8 +319,59 @@ describe('addMatches', () => {
       { index: 170, symbol: 'x', verdict: 'differs' },
     ] as ScanRow[];
     const r = addMatches('# hand note\n162 sqlite3ErrorMsg # kept\n', rows);
-    expect(r).toEqual({ text: '# hand note\n162 sqlite3ErrorMsg # kept\n169 BN_CTX_get\n', added: 1 });
+    expect(r).toEqual({
+      text: '# hand note\n162 sqlite3ErrorMsg # kept\n169 BN_CTX_get\n',
+      added: 1,
+      renamed: [],
+      missing: [],
+    });
   });
+
+  it('renames in place a line whose symbol left our link to the twin the scan matches, and keeps any other', () => {
+    const rows = [
+      { index: 246, symbol: 'NumViasD0', verdict: 'match' },
+      { index: 247, symbol: 'kept', verdict: 'match' },
+      { index: 248, symbol: 'other', verdict: 'differs' },
+      { index: 249, symbol: 'fresh', verdict: 'match' },
+    ] as ScanRow[];
+    const ours = new Set(['NumViasD0', 'kept', 'other', 'fresh']);
+    const r = addMatches('246 FotoD0  # twin\n247 kept\n248 gone\n', rows, (s) => ours.has(s));
+    expect(r.text).toBe('246 NumViasD0  # twin\n247 kept\n248 gone\n249 fresh\n');
+    expect(r.renamed).toEqual([{ index: 246, line: 1, from: 'FotoD0', to: 'NumViasD0' }]);
+    // 248's symbol is missing too, but the scan matches 248 with nothing: the build is left to refuse it
+    expect(r.missing).toEqual([{ index: 248, symbol: 'gone', line: 3 }]);
+    expect(r.added).toBe(1);
+    // without the link's symbols, nothing is renamed
+    expect(addMatches('246 FotoD0\n', rows).text).toBe('246 FotoD0\n247 kept\n249 fresh\n');
+  });
+
+  it.skipIf(!real)(
+    "renames 246 back to the survivor of the twin merge that took FotoD0Ev's name (facts/splat.md §S6)",
+    { timeout: 180_000 },
+    () => {
+      // a stale match list: 246 under FotoD0Ev, the symbol that left our link when unit 20 brought in a twin of its
+      // body linked ahead of it
+      const { maps } = load();
+      const FOTO = '_ZN21ModuloTiposEleitorais4FotoD0Ev';
+      const SURVIVOR = '_ZN21ModuloEstadoGeralDefs26NumViasImpressasRelatoriosD0Ev';
+      const inOurLink = (s: string): boolean => (maps.ours.fnByKey.get(s) ?? -1) >= maps.ours.module.importedFuncCount;
+      expect(inOurLink(FOTO)).toBe(false);
+      const list = readFileSync(`${URNA}/splat/matched.txt`, 'utf8');
+      expect(list).toContain(`\n246 ${SURVIVOR}\n`);
+      const stale = list.replace(`\n246 ${SURVIVOR}\n`, `\n246 ${FOTO}\n`);
+      const { matches } = parseMatchList(stale);
+      const { bodies } = load();
+      const r = attempt(withMatches(maps, matches), candidate(SURVIVOR), 246, bodies.get(246)!);
+      expect(r.verdict).toBe('match');
+      const row = { index: 246, symbol: SURVIVOR, verdict: 'match' } as ScanRow;
+      const out = addMatches(stale, [row], inOurLink);
+      expect(out.renamed).toEqual([
+        { index: 246, line: matches.find((m) => m.index === 246)!.line, from: FOTO, to: SURVIVOR },
+      ]);
+      expect(out.missing).toEqual([]);
+      expect(out.text).toBe(list);
+    },
+  );
 });
 
 describe('renderScan', () => {

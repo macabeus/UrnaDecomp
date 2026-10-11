@@ -5,8 +5,11 @@
 //               [--symbols <f>] [--ledger <d>] [--map-dir <d>] [--kinds <kinds.json> | --no-kinds]
 //               [--max-kind-unverified <n>]
 //   splat-kinds <plain.wasm> [--shifted <dir>] [--map-dir <d>] [-o <kinds.json>] [--matches <f>]
+//   splat-review <target.wasm> <plain.wasm> <target index> [--matches <f>] [-o <dir>] [--pieces <d>] [--symbols <f>]
+//               [--ledger <d>] [--map-dir <d>] [--kinds <kinds.json> | --no-kinds]
 // splat-scan reads the match list (--match's path, else <root>/splat/matched.txt) as evidence of names and, with
-// --match, appends its new matches to it.
+// --match, appends its new matches to it and renames in place a listed match whose symbol left our link to the twin
+// the scan matches the same function with (addMatches).
 // --kinds is the operand-kind table (splat-kinds.ts, `make -C src link-kinds`), by default the one beside the plain
 // link; the commands refuse to run without one unless given --no-kinds, which checks every match kind-unverified (each
 // ambiguous operand keeps every reading).
@@ -15,16 +18,21 @@
 // splat-kinds compares the plain link with its shifted relink (<shifted dir>/vota_web_wasm.wasm, its names.tsv and
 // names.sha256, tools/round/link-kinds.sh) and writes the table; it refuses a map dir or a names.tsv that does not
 // describe the link it reads.
+// splat-review blanks the match's piece in a copy of the split (in memory), assembles it with our body two ways (the
+// match's own bytes, the gate, and every operand at its preferred reading against the blanked module, written with the
+// target's glue to -o, default <root>/build/out/splat-review/<index>), and prints whether each is the target's sha256.
 // Defaults follow the urna layout: <root>/target/x.wasm, <root>/build/out/splat/pieces, <root>/splat/matched.txt,
 // <root>/splat/symbol_addrs.txt, <root>/splat/scan.tsv, <root>/ledger, <root>/build/out/splat/x.wasm,
 // <root>/build/out/wasm-kinds/<plain dir>/kinds.json.
 import { createHash } from 'node:crypto';
-import { existsSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
-import { basename, dirname, join, resolve } from 'node:path';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
+import { basename, dirname, join, relative, resolve } from 'node:path';
 
+import { siblingGluePath } from './glue-file';
 import { readLedgerTsv } from './ledger';
 import { parseModule } from './parse';
-import { readManifest } from './splat';
+import { readManifest, sha256 } from './splat';
+import { blankBody, reviewMatch } from './splat-review';
 import {
   type OperandKinds,
   classifyOperands,
@@ -101,9 +109,11 @@ interface Setup {
   mapDir: string;
   /** the operand-kind table, or null to run without one */
   kindsPath: string | null;
+  /** the operands after <target.wasm> <plain.wasm> (setup's `operands`) */
+  rest: string[];
 }
 
-function setup(cmd: string, args: string[]): Setup {
+function setup(cmd: string, args: string[], operands = 0): Setup {
   const pieces = take(args, '--pieces');
   const symbols = take(args, '--symbols');
   const ledger = take(args, '--ledger');
@@ -127,6 +137,7 @@ function setup(cmd: string, args: string[]): Setup {
     symbolsPath: symbols ?? join(root, 'splat', 'symbol_addrs.txt'),
     mapDir: mapDir ?? defaultMapDir(plainPath),
     kindsPath: kindsPathOf(plainPath, kindsArg, noKinds >= 0),
+    rest: args.splice(0, operands),
   };
   noMoreArgs(cmd, args);
   for (const [what, p] of [
@@ -263,9 +274,23 @@ function scan(args: string[]): void {
   }
   if (append !== undefined) {
     const before = existsSync(listPath) ? readFileSync(listPath, 'utf8') : '';
-    const r = addMatches(before, rows);
+    const inOurLink = (symbol: string): boolean => {
+      const ours = maps.ours.fnByKey.get(symbol);
+      return ours !== undefined && ours >= maps.ours.module.importedFuncCount;
+    };
+    const r = addMatches(before, rows, inOurLink);
     writeFileSync(listPath, r.text);
-    w(`${listPath}: ${r.added} matches added`);
+    w(`${listPath}: ${r.added} matches added, ${r.renamed.length} renamed`);
+    for (const x of r.renamed) {
+      w(
+        `  line ${x.line}: function ${x.index} renamed ${x.from} → ${x.to}: ${x.from} left our link, and the scan matches ${x.index} with ${x.to}, its byte-identical twin (docs/reference/facts/splat.md §S6)`,
+      );
+    }
+    for (const x of r.missing) {
+      w(
+        `  line ${x.line}: function ${x.index} matched to ${x.symbol}: our link has no function ${x.symbol}, and the scan matches ${x.index} with no other symbol; left as written, so the splat build fails on it`,
+      );
+    }
   }
 }
 
@@ -394,6 +419,92 @@ function kinds(args: string[]): void {
   }
 }
 
+/** The blanked-target check of one match, both ways (splat-review.ts); a failure of the match's own bytes, the gate,
+ *  sets the exit status. */
+function review(args: string[]): void {
+  const listArg = take(args, '--matches');
+  const out = take(args, '-o');
+  const s = setup('splat-review', args, 1);
+  const [indexArg] = s.rest;
+  if (indexArg === undefined || !/^\d+$/.test(indexArg)) {
+    throw new Error(`splat-review: expected <target.wasm> <plain.wasm> <target index>, got '${indexArg ?? ''}'`);
+  }
+  const index = Number(indexArg);
+  const listPath = listArg ?? join(s.root, 'splat', 'matched.txt');
+  const outDir = out ?? join(s.root, 'build', 'out', 'splat-review', String(index));
+  const glue = siblingGluePath(s.targetPath);
+  if (glue === null) {
+    throw new Error(
+      `${s.targetPath} has no glue beside it (x.wasm → x.js): without its import names every invoke_* call is unresolved`,
+    );
+  }
+  const { matches } = parseMatchList(readFileSync(listPath, 'utf8'));
+  const t0 = Date.now();
+  const maps = loadMaps(s);
+  const blankedPath = join(outDir, basename(s.targetPath));
+  const r = reviewMatch(maps, s.pieces, matches, index, (bytes) => {
+    // the blanked module with the target's glue beside it: loadTargetSide reads the import names there
+    mkdirSync(outDir, { recursive: true });
+    writeFileSync(blankedPath, bytes);
+    copyFileSync(glue, join(outDir, basename(glue)));
+    return loadTargetSide(blankedPath, s.symbolsPath, s.ledgerDir, maps.ours.stackSize);
+  });
+  const w = (x: string): boolean => process.stdout.write(`${x}\n`);
+  const size = (b: Uint8Array | null): string => (b === null ? '-' : `${b.length} B`);
+  const kinds =
+    maps.kinds === undefined
+      ? 'no operand-kind table (--no-kinds): every ambiguous operand kept every reading'
+      : r.kindUnverified === undefined
+        ? 'operand kinds verified'
+        : `KIND-UNVERIFIED (${r.kindUnverified}): every ambiguous operand kept every reading`;
+  w(
+    `function ${index}${r.piece.name === null ? '' : ` (${r.piece.name})`} ← ${r.match.symbol} (ours ${r.ours ?? '-'}), line ${r.match.line} of ${relative(process.cwd(), listPath)}; ${kinds}`,
+  );
+  w(
+    `blanked: ${r.piece.path} (${r.piece.size} B) → no locals, unreachable, end${r.piece.sha256 === sha256(blankBody(r.piece.size)) ? ' (the piece was that already)' : ''}; the blanked split is sha256 ${r.blanked.sha256}, written to ${relative(process.cwd(), blankedPath)}`,
+  );
+  const verdict = (x: { reproduces: boolean; sha256: string | null }): string =>
+    x.reproduces ? `REPRODUCES the target, sha256 ${x.sha256}` : `DIFFERS, sha256 ${x.sha256}`;
+  if (r.own.bytes === null) {
+    w(`the match's own bytes: FAILS: ${r.own.why}`);
+  } else {
+    w(
+      `the match's own bytes: ${verdict(r.own)} (${size(r.own.bytes)}; ${r.own.chosen.length} ambiguous operands at the readings the target body picked, ${r.needed.length} of them not the first)`,
+    );
+  }
+  if (r.preferred.bytes === null) {
+    w(`preferred readings:    UNRESOLVED: ${r.preferred.why}`);
+  } else if (r.preferred.reproduces) {
+    w(
+      `preferred readings:    ${verdict(r.preferred)} (${size(r.preferred.bytes)}; every operand at its first reading, the blanked module as the target side)`,
+    );
+  } else {
+    const at =
+      r.own.bytes === null
+        ? ''
+        : ` against the match's ${size(r.own.bytes)}${r.preferred.differsAt === null ? '' : `, from body byte ${r.preferred.differsAt}`}`;
+    w(`preferred readings:    ${verdict(r.preferred)} (${size(r.preferred.bytes)}${at})`);
+  }
+  if (!r.preferred.reproduces && r.needed.length > 0) {
+    w(
+      `  legitimately: the match needs the target body's choice among our readings of ${r.needed.length} operand${r.needed.length === 1 ? '' : 's'} (docs/reference/splat.md §3):`,
+    );
+    for (const n of r.needed) {
+      w(
+        `  ours +0x${n.oursAt.toString(16)} ${n.instr} (target body byte ${n.at}): the target body read ${n.reading}; the first reading is ${n.preferred}`,
+      );
+    }
+  } else if (!r.preferred.reproduces && r.preferred.bytes !== null && r.own.bytes !== null) {
+    w('  NOT explained by a reading the target picked: every operand of the match took its first reading');
+  }
+  w(
+    `the gate is the match's own bytes: ${r.own.reproduces ? 'pass' : 'FAIL'} (${((Date.now() - t0) / 1000).toFixed(1)} s)`,
+  );
+  if (!r.own.reproduces) {
+    process.exitCode = 1;
+  }
+}
+
 /** true when `cmd` is one of these commands (and it ran) */
 export function runSplatSubCommand(cmd: string, args: string[]): boolean {
   switch (cmd) {
@@ -405,6 +516,9 @@ export function runSplatSubCommand(cmd: string, args: string[]): boolean {
       return true;
     case 'splat-kinds':
       kinds(args);
+      return true;
+    case 'splat-review':
+      review(args);
       return true;
     default:
       return false;

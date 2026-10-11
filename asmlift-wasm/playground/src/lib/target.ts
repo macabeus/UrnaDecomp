@@ -4,7 +4,7 @@
 import { type Instr, disassemble, instrText } from '@asmlift/wasm/disasm';
 import { foldFunction } from '@asmlift/wasm/fold';
 import { exportNamesFromGlue, importNamesFromGlue } from '@asmlift/wasm/imports';
-import { type Lifted, componentFlags, liftFunction, liftNames } from '@asmlift/wasm/lift';
+import { type LiftFlags, type Lifted, type TreeEvidence, liftFlags, liftFunction, liftNames } from '@asmlift/wasm/lift';
 import { type Func, type Module, funcAt, importedFunc, parseModule, typeText } from '@asmlift/wasm/parse';
 import { type LedgerString, referencedStrings } from '@asmlift/wasm/strings';
 import type { PairKind } from '@asmlift/wasm-benchmark/schema';
@@ -20,6 +20,8 @@ export interface Target {
   /** function index → the real names it is exported under */
   exports: Map<number, string[]>;
   strings: LedgerString[];
+  /** the tree evidence `liftFlags` reads, as `liftInputs` gives it to the CLI */
+  trees: TreeEvidence;
 }
 
 export function openTarget(wasm: Uint8Array, glue: string, data: LedgerData): Target {
@@ -38,7 +40,11 @@ export function openTarget(wasm: Uint8Array, glue: string, data: LedgerData): Ta
     exports.set(e.index, [...(exports.get(e.index) ?? []), real]);
   }
   const strings = data.strings.map(([addr, len, enc, text]) => ({ addr, len, enc, text }));
-  return { m, data, names, mangled, exports, strings };
+  const trees: TreeEvidence = {
+    records: new Map(Object.entries(data.treeRecords).map(([k, v]) => [Number(k), v.map((f) => data.treeFiles[f])])),
+    stubs: new Map(Object.entries(data.treeStubs).map(([k, v]) => [Number(k), data.treeFiles[v]])),
+  };
+  return { m, data, names, mangled, exports, strings, trees };
 }
 
 export function isDefined(t: Target, index: number): boolean {
@@ -75,14 +81,17 @@ export function ledgerFacts(t: Target, index: number): LedgerFacts {
   };
 }
 
-/** The flags `lift` writes into a function's header when no benchmark row gives them: its component's. */
-export function defaultLiftFlags(t: Target, index: number): string {
+/** The flags `pnpm wasm lift` writes into a function's header when no benchmark row gives them: its tree's,
+ *  else its component's (`liftFlags`), with why. */
+export function defaultLiftFlags(t: Target, index: number): LiftFlags {
   const component = ledgerFacts(t, index).component;
-  return componentFlags(component === '-' ? undefined : component);
+  return liftFlags(index, component === '-' ? undefined : component, t.trees);
 }
 
-export function lift(t: Target, index: number, flags: string): Lifted {
-  return liftFunction(t.m, index, { names: t.names, mangled: t.mangled, flags });
+/** A row's flags as a string, or `defaultLiftFlags`' choice, whose reason the header carries too. */
+export function lift(t: Target, index: number, flags: string | LiftFlags): Lifted {
+  const f = typeof flags === 'string' ? { flags } : { flags: flags.flags, flagsWhy: flags.why };
+  return liftFunction(t.m, index, { names: t.names, mangled: t.mangled, ...f });
 }
 
 function defined(t: Target, index: number): Func {
