@@ -792,6 +792,9 @@ export interface AddedMatches {
   /** the listed matches whose symbol is not in our link and that the scan matches under no other symbol: left as
    *  written, for the build to refuse */
   missing: ListedMatch[];
+  /** the listed matches whose target function the symbol file names after other functions of our link: the match
+   *  verifies, but the evidence says the function is another; left as written, for review */
+  contradicted: { match: ListedMatch; named: string[] }[];
 }
 
 /**
@@ -801,11 +804,15 @@ export interface AddedMatches {
  * link (docs/reference/facts/splat.md §S6). A listed line whose symbol `inOurLink` refuses is rewritten in place to
  * the symbol the scan matches the same target function with (its body, re-pointed, is the target's bytes); any other
  * line whose symbol is missing stays, and is reported in `missing`. Without `inOurLink` no line is touched.
+ * `namedBy` (the symbol file's names of a target function) reports in `contradicted` a listed line whose function the
+ * symbol file names only after other functions of our link: a body can verify where the evidence says another
+ * function sits (a twin class's member, re-pointed onto the target's class).
  */
 export function addMatches(
   text: string,
   rows: readonly ScanRow[],
   inOurLink?: (symbol: string) => boolean,
+  namedBy?: (index: number) => readonly string[],
 ): AddedMatches {
   const { matches, lines } = parseMatchList(text);
   const listed = new Set(matches.map((m) => m.index));
@@ -828,7 +835,14 @@ export function addMatches(
   }
   const fresh = rows.filter((r) => r.verdict === 'match' && !listed.has(r.index));
   out.push(...fresh.map((r) => `${r.index} ${r.symbol}`));
-  return { text: `${out.join('\n')}\n`, added: fresh.length, renamed, missing };
+  const contradicted: AddedMatches['contradicted'] = [];
+  for (const m of namedBy === undefined ? [] : matches) {
+    const named = namedBy!(m.index).filter((n) => present(n));
+    if (named.length > 0 && !named.includes(m.symbol) && !renamed.some((x) => x.index === m.index)) {
+      contradicted.push({ match: m, named });
+    }
+  }
+  return { text: `${out.join('\n')}\n`, added: fresh.length, renamed, missing, contradicted };
 }
 
 // ---------------------------------------------------------------------------------------------------------------

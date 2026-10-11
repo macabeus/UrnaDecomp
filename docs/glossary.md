@@ -357,7 +357,7 @@ marker survive regeneration; a hand edit needs evidence that does not come from 
 **evidence kinds** — why the symbol file names something: `glue` and `export` (names from the target's glue),
 `pair-fingerprint` and `pair-addr` (a census pair unique on both sides), `call` and `table` (aligned callees and
 function pointers), `vote:N` (aligned address operands; `by:` lists up to four voters), `rtti`, `content`, `string`,
-`srcloc`, `srcloc-anchor`; the hand edits name their own (`vtable-slot`, `rtti-vptr`, `rtti-operand`,
+`srcloc`, `srcloc-anchor`, `vtable` (the same slot of a vtable both sides name by RTTI); the hand edits name their own (`vtable-slot`, `rtti-vptr`, `rtti-operand`,
 `pair-depth0`, `callers+content`). *Where:* `docs/reference/splat.md` §2, `asmlift-wasm/src/splat-symbols.ts`.
 
 **re-pointing** (`splat-remap`) — rewriting one of our function bodies into the target's index and address spaces:

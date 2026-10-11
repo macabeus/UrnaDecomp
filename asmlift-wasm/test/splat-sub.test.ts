@@ -21,7 +21,7 @@ import {
   selfVoted,
   withMatches,
 } from '../src/splat-sub';
-import { loadOurSide, loadTargetSide, symbolMaps } from '../src/splat-symbols';
+import { loadOurSide, loadTargetSide, parseSymbolFile, symbolMaps, targetSymbolsOf } from '../src/splat-symbols';
 import { URNA_ROOT } from './helpers';
 
 const URNA = process.env.URNA_SPLAT_ROOT ?? URNA_ROOT;
@@ -324,6 +324,7 @@ describe('addMatches', () => {
       added: 1,
       renamed: [],
       missing: [],
+      contradicted: [],
     });
   });
 
@@ -344,6 +345,32 @@ describe('addMatches', () => {
     // without the link's symbols, nothing is renamed
     expect(addMatches('246 FotoD0\n', rows).text).toBe('246 FotoD0\n247 kept\n249 fresh\n');
   });
+
+  it('reports a listed line whose function the symbol file names after another function of our link', () => {
+    const rows = [{ index: 11611, symbol: 'weekdayRethrow', verdict: 'match' }] as ScanRow[];
+    const ours = new Set(['weekdayRethrow', 'monthRethrow']);
+    const named = (i: number): string[] => (i === 11611 ? ['monthRethrow'] : []);
+    const r = addMatches('11611 weekdayRethrow\n', rows, (x) => ours.has(x), named);
+    expect(r.text).toBe('11611 weekdayRethrow\n');
+    expect(r.contradicted).toEqual([{ match: { index: 11611, symbol: 'weekdayRethrow', line: 1 }, named: ['monthRethrow'] }]);
+    // a name our link lacks, or the listed one among the names, is no contradiction
+    expect(addMatches('11611 weekdayRethrow\n', rows, (x) => x === 'weekdayRethrow', named).contradicted).toEqual([]);
+    expect(addMatches('11611 monthRethrow\n', rows, (x) => ours.has(x), named).contradicted).toEqual([]);
+  });
+
+  it.skipIf(!existsSync(SYMBOLS))(
+    "names 11611 wrapexcept<bad_month>::rethrow by the slot of the target's vtable that holds it",
+    () => {
+      const syms = targetSymbolsOf(parseSymbolFile(readFileSync(SYMBOLS, 'utf8')));
+      const name = '_ZNK5boost10wrapexceptINS_9gregorian9bad_monthEE7rethrowEv';
+      expect(syms.fns.get(name)).toBe(11611);
+      expect(syms.fnEvidence.get(name)?.evidence).toBe('vtable');
+      expect(syms.fns.get('_ZNK5boost10wrapexceptINS_9gregorian11bad_weekdayEE7rethrowEv')).toBeUndefined();
+      // CMixerST's second table has two slots more in our 7-Zip than in the target's: its slots pair with none, so
+      // the target's SelectMainCoder thunk (8361) is not named after our AddCoder thunk two slots up
+      expect(syms.fns.get('_ZThn4_N12NCoderMixer28CMixerST8AddCoderERK13CCreatedCoder')).toBeUndefined();
+    },
+  );
 
   it.skipIf(!real)(
     "renames 246 back to the survivor of the twin merge that took FotoD0Ev's name (facts/splat.md §S6)",

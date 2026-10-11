@@ -252,7 +252,30 @@ _ZN21ModuloEstadoGeralDefs26NumViasImpressasRelatoriosD0Ev, its byte-identical t
 line in the list), and the second `diff` prints `same`: the list is the committed one again. The stale scan's row for
 246 has `content` in its `source` column: the scan pairs 246 by content, not through the listed line.
 
-`git diff 58b2352 -- splat/matched.txt` shows `-246 …FotoD0Ev` although no match was lost; count lost matches by
-index (`docs/how-to-decompile.md` step 10). The same merging makes a callee's matched name possibly another
-instantiation's: 760 is matched as `vector<pair<unsigned long, unsigned long>>::push_back(&&)`
-(`awk -v n=760 '$(1) == n' splat/matched.txt`).
+So a diff of `splat/matched.txt` across such a rename shows a `-246 …FotoD0Ev` line and a `+246 …` line although no
+match was lost, as the first `diff` above does; count lost matches by index (`docs/how-to-decompile.md` step 10). The
+same merging makes a callee's matched name possibly another instantiation's: 760 is matched as
+`vector<pair<unsigned long, unsigned long>>::push_back(&&)` (`awk -v n=760 '$(1) == n' splat/matched.txt`).
+
+## S7. A match that verifies under a twin class's name; vtable slots name functions
+
+Target 11611 is `boost::wrapexcept<boost::gregorian::bad_month>::rethrow`, yet a match of it under
+`boost::wrapexcept<boost::gregorian::bad_weekday>::rethrow` (ours from `app/roots_boost.o`) verifies too. The target
+has no `bad_weekday` at all (`strings -a target/vota_web_wasm.wasm | grep -c bad_weekday` prints 0): its gregorian
+exceptions are `bad_day_of_month`, `bad_month` and `bad_year`. Our probe instantiates `bad_weekday` as well, its
+`rethrow` has the same shape as `bad_month`'s, and its vtable's content, re-pointed, is the target's
+`wrapexcept<bad_month>` vtable, so the body verifies under either name. The target's own vtable says which function
+11611 is: the RTTI names `_ZTVN5boost10wrapexceptINS_9gregorian9bad_monthEEE` at 0x17baa8, and its slot 3 (+12)
+holds table slot 2237, function 11611, next to slot 2 (+8), function 11612, `wrapexcept<bad_month>::clone` (read
+the target's data and element segments). `awk -v n=11611 '$(1) == n' splat/matched.txt` prints the `bad_month` name.
+
+`splat-symbols` names functions from the slots of RTTI-named vtables (evidence `vtable`, `docs/reference/splat.md`
+§2; `grep -c 'evidence:vtable' splat/symbol_addrs.txt` counts them). It pairs a table of slots only with a target
+table of the same length at the same offset: in `NCoderMixer2::CMixerST`'s vtable, the second table (from +56, the
+base at offset 4) has ten slots in our 7-Zip and eight in the target's, so pairing it slot by slot would name the
+target's `SelectMainCoder` thunk, 8361 (it calls 4915, `CMixerST::SelectMainCoder`), after our `AddCoder` thunk. These names need no pair of the function's own,
+so they reach functions the census cannot tell apart: mostly destructors, deleting destructors and virtual thunks of
+7-Zip, RHVoice, libc++ and the ASN.1 runtime. Where a vtable name and a match line agree, the match has evidence
+that does not come from its own body. Where they disagree, `splat-match` reports the line: `line <n>: function
+<index> matched to <symbol>, but the symbol file names it <name>: the body verifies, the evidence says another
+function; check which is right (docs/how-to-decompile.md step 9)`.

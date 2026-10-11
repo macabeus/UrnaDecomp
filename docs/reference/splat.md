@@ -80,9 +80,15 @@ integer) comes from a second link of the same objects, with the data and the tab
 - `content`, `string`, `srcloc`: unique bytes, a C string, or a `std::source_location` record.
 - `srcloc-anchor`: a function pair whose bodies are the same instructions and load the same
   `std::source_location` record.
+- `vtable`: the function in a slot of a vtable both links name by `rtti`, where the target's same slot holds the
+  target function. A vtable is one table of slots per base with virtual functions, and a table pairs only when the
+  target's table at the same offset has as many slots: a base that declares other members in the target's version
+  of a library shifts every later slot. A name is given only when every slot holding our function agrees, no other
+  function of ours votes for that target function (binaryen's merged bodies), neither side is named yet, and the
+  signatures agree.
 
 The hand edits name their own evidence in the comment after it. The kinds in use: `vtable` and `vtable-slot` (the
-function fills a slot of a vtable decoded from RTTI), `rtti-vptr` (the only target function that stores a class's
+function fills a slot of a vtable decoded from RTTI, as the generated `vtable` kind above does), `rtti-vptr` (the only target function that stores a class's
 vtable address point), `rtti-operand` (the only target function holding a class's vtable and typeinfo addresses),
 `pair-depth0` (the only pair with that fingerprint at depth 0, where deeper fingerprints differ only by an inlined
 callee) and `callers+content` (the target callers and the loaded content single the function out). Each hand edit's

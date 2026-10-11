@@ -57,7 +57,15 @@ import {
   renderScan,
   scanSplit,
 } from './splat-sub';
-import { defaultMapDir, loadOurSide, loadTargetSide, readOurNames, symbolMaps } from './splat-symbols';
+import {
+  defaultMapDir,
+  loadOurSide,
+  loadTargetSide,
+  parseSymbolFile,
+  readOurNames,
+  symbolMaps,
+  targetSymbolsOf,
+} from './splat-symbols';
 
 function take(args: string[], name: string): string | undefined {
   const i = args.indexOf(name);
@@ -278,12 +286,21 @@ function scan(args: string[]): void {
       const ours = maps.ours.fnByKey.get(symbol);
       return ours !== undefined && ours >= maps.ours.module.importedFuncCount;
     };
-    const r = addMatches(before, rows, inOurLink);
+    const named = new Map<number, string[]>();
+    for (const [name, index] of targetSymbolsOf(parseSymbolFile(readFileSync(s.symbolsPath, 'utf8'))).fns) {
+      (named.get(index) ?? named.set(index, []).get(index)!).push(name);
+    }
+    const r = addMatches(before, rows, inOurLink, (index) => named.get(index) ?? []);
     writeFileSync(listPath, r.text);
     w(`${listPath}: ${r.added} matches added, ${r.renamed.length} renamed`);
     for (const x of r.renamed) {
       w(
         `  line ${x.line}: function ${x.index} renamed ${x.from} → ${x.to}: ${x.from} left our link, and the scan matches ${x.index} with ${x.to}, its byte-identical twin (docs/reference/facts/splat.md §S6)`,
+      );
+    }
+    for (const x of r.contradicted) {
+      w(
+        `  line ${x.match.line}: function ${x.match.index} matched to ${x.match.symbol}, but the symbol file names it ${x.named.join(', ')}: the body verifies, the evidence says another function; check which is right (docs/how-to-decompile.md step 9)`,
       );
     }
     for (const x of r.missing) {

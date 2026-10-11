@@ -395,9 +395,9 @@ compile runs from the source's `/work/src/…` path, which the tree's `-ffile-pr
 1. Keep the sources at the paths the `std::source_location` records name, or that step 3 chose.
 2. Write the fragment `src/units/<NN>-<component>-<what>.mk` with the next free `NN`, named by content: the source
    directory the files share, or the class. `src/units/README.md` describes what a fragment holds, its naming
-   scheme, and the *roots*, *pending* and *externs* companion files. A source deeper than `src/ecourna/*/*/`
-   (`app/dados/asn/x.cpp`) needs a rule in the fragment that names it as a prerequisite, or edits to it never
-   rebuild its object ("What a fragment holds" item 3). A rule of your own compiles the TSE source from its
+   scheme, and the *roots*, *pending* and *externs* companion files. The generic rules make each object depend on
+   its own source and on every header of its tree, so a fragment needs a compile rule of its own only for other
+   flags ("What a fragment holds" item 3). A rule of your own compiles the TSE source from its
    `/work/src/…` path, as the generic rules do, so the tree's `-ffile-prefix-map` rewrites the file name its
    `std::source_location` records hold; a relative path is never rewritten, and
    `TMPDIR=/tmp make -C src check-srcloc` then fails with `UNMAPPED` and the record. Add the fragment's row to the
@@ -455,6 +455,12 @@ to do, so name it there. For one function, `pnpm wasm splat-remap` shows the com
 [reference/splat.md](reference/splat.md) "Matching a function" has the command and explains `IDENTICAL`, unresolved
 operands and the first differing byte. It applies none of the matches, so it can say `differs` for a function the
 scan matches.
+
+`splat-match` also reports a listed line whose function the symbol file names after another function of our link:
+the body verifies, but the evidence says another function sits there, as with 11611, matched as
+`wrapexcept<bad_weekday>::rethrow` while the target's `wrapexcept<bad_month>` vtable holds it
+([facts/splat.md](reference/facts/splat.md) §S7). It changes nothing; find which side is right, and correct the
+match line by hand when the evidence is.
 
 A match the scan found by body has `content` in the `source` column of `splat/scan.tsv`. Once the match names the
 function, a later scan writes `symbol` there, so a rescan of the committed state differs from the committed

@@ -1612,6 +1612,70 @@ export function gatherEvidence({ ours, target, ledgerDir, trivial = 8 }: Generat
     stats.dataRtti++;
   }
 
+  // the functions in the slots of a vtable the RTTI names on both sides: the target's slot holds the function ours
+  // does. Named only when the slot's run has the target's length (below), every slot that holds our function agrees
+  // on one target function, no other function of ours votes for it, neither side is named yet, and the signatures
+  // agree (target 11611 is wrapexcept<bad_month>::rethrow by its vtable's slot 3)
+  stats.fnVtable = 0;
+  {
+    const namedIndex = new Set([...fnNames.values()].map((v) => v.index));
+    const slotVotes = new Map<number, Set<number>>();
+    for (const [name, d] of dataNames) {
+      const obj = ourByKey.get(name);
+      if (!name.startsWith('_ZTV') || !d.evidence.endsWith('rtti') || obj === undefined) {
+        continue;
+      }
+      // a vtable is one table per base with virtual functions, each a run of slots after its offset-to-top and
+      // typeinfo words; a run pairs with the target's only when the target has a run of the same length at the same
+      // offset (a base can declare other members in the target's version, which shifts every later slot)
+      const ourSlot = (q: number): boolean => {
+        const w = u32At(ourImage, GLOBAL_BASE, obj.addr + q);
+        return w !== null && ours.elem.has(w);
+      };
+      const targetSlot = (q: number): boolean => {
+        const w = u32At(image, imageBase, d.addr + q);
+        return w !== null && target.elem.has(w);
+      };
+      for (let q = 0; q + 4 <= obj.size; ) {
+        if (!ourSlot(q)) {
+          q += 4;
+          continue;
+        }
+        let end = q;
+        while (end + 4 <= obj.size && ourSlot(end)) {
+          end += 4;
+        }
+        let same = (q === 0 || !targetSlot(q - 4)) && !targetSlot(end);
+        for (let k = q; same && k < end; k += 4) {
+          same = targetSlot(k);
+        }
+        for (let k = q; same && k < end; k += 4) {
+          const o = ours.elem.get(u32At(ourImage, GLOBAL_BASE, obj.addr + k)!)!;
+          (slotVotes.get(o) ?? slotVotes.set(o, new Set()).get(o)!).add(target.elem.get(u32At(image, imageBase, d.addr + k)!)!);
+        }
+        q = end;
+      }
+    }
+    // a target function several of ours vote for is a body binaryen merged: which name it keeps is not evidence
+    const voters = new Map<number, number>();
+    for (const ts of slotVotes.values()) {
+      for (const t of ts) {
+        voters.set(t, (voters.get(t) ?? 0) + 1);
+      }
+    }
+    for (const [o, ts] of slotVotes) {
+      const f = ours.fns.get(o);
+      const [t] = ts;
+      if (ts.size !== 1 || voters.get(t) !== 1 || f === undefined || fnNames.has(f.key) || namedIndex.has(t) ||
+          !sameSignature(o, t)) {
+        continue;
+      }
+      fnNames.set(f.key, { index: t, evidence: 'vtable' });
+      namedIndex.add(t);
+      stats.fnVtable++;
+    }
+  }
+
   // our named read-only objects found by content
   stats.dataContent = 0;
   for (const obj of ours.map.data) {
