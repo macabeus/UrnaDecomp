@@ -10,11 +10,11 @@ reconstructed units with and without it and scoring them against the target; the
 
 | tree | sources | flags | set in | evidence |
 | --- | --- | --- | --- | --- |
-| uenux2 | `src/uenux2/` | `-O2 -fPIC -std=c++20 -DNDEBUG`, no `-fexceptions` | `UENUX2_CXXFLAGS` in `src/Makefile` | facts §F6 (level and PIC), §F1 (`-std`, `-DNDEBUG`); exceptions below |
+| uenux2 | `src/uenux2/` | `-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing`, no `-fexceptions` | `UENUX2_CXXFLAGS` in `src/Makefile` | facts §F6 (level, PIC and aliasing), §F1 (`-std`, `-DNDEBUG`); exceptions below |
 | ecourna | `src/ecourna/` | `-O3 -fPIC -fexceptions -std=c++20 -DNDEBUG` | `ECOURNA_CXXFLAGS` in `src/Makefile` | facts §F1 |
 | ecourna, every unit | | `+ -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow` | `src/mk/ecourna-flags.mk` | facts §F2, §F3, §F4 |
 | ecourna `app/dados`, `api/io`, `api/compression` | | `-fno-PIC` (PIC is per CMake target, not per package) | `src/mk/ecourna-flags.mk` for `app/dados`, the unit fragments in `src/units/` for the others | facts §F5 |
-| the stand-in and roots TUs (`src/app/`, `src/web/`, the units' `-roots.cpp`) | | `APP_CXXFLAGS` = `UENUX2_CXXFLAGS`; `APP_CFLAGS` for the generated C roots | `src/Makefile` | they stand in for app code |
+| the stand-in and roots TUs (`src/app/`, `src/web/`, the units' `-roots.cpp`) | | `APP_CXXFLAGS` = `UENUX2_CXXFLAGS` without `-fno-strict-aliasing`; `APP_CFLAGS` for the generated C roots | `src/Makefile` | they stand in for app code; the library templates they instantiate win the link, and the target's copies have TBAA (facts §F6) |
 
 Both trees also take a `-ffile-prefix-map` that puts the original build directory into their `std::source_location`
 records (below). `make -C src print-ECOURNA_CXXFLAGS` and `print-UENUX2_CXXFLAGS` print the values in effect;

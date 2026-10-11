@@ -80,7 +80,7 @@ Each row is measured by reconstructing or building that component and scoring it
 
 | component | source root embedded in the binary | compile flags |
 | --- | --- | --- |
-| uenux2 (the application) | `/home/rubio/tse/uenux2/src/...` | `-O2 -fPIC -std=c++20 -DNDEBUG`, no `-fexceptions` |
+| uenux2 (the application) | `/home/rubio/tse/uenux2/src/...` | `-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing`, no `-fexceptions` |
 | ecourna (conan package `libecea1da310e5107`) | `/home/rubio/.conan2/p/b/libecea1da310e5107/b/src/ecourna/...` | `-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks`; `-fPIC` per file |
 | III ASN.1 runtime (TSE fork) | none | `-Os -fno-exceptions -std=c++17 -DNDEBUG` |
 | SQLite 3.50.4 amalgamation | none | `-O3 -fPIC` + `-DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_UNLOCK_NOTIFY` + `-DHAVE_FDATASYNC -DHAVE_GMTIME_R -DHAVE_LOCALTIME_R -DHAVE_POSIX_FALLOCATE -DHAVE_STRERROR_R -DHAVE_USLEEP` |
@@ -95,6 +95,7 @@ Each row is measured by reconstructing or building that component and scoring it
 **uenux2.** A whole-link sweep over reconstructed units decides these flags.
 - `-O2` and `-O3` give identical results on every unit measured so far. `-Os` loses `CIniKey::operator=`, and `-Oz` loses all the units.
 - `-fPIC` removes the last structural differences in the constructors.
+- `-fno-strict-aliasing`: comum's converters reload a vector's begin right after storing a constant, which only code without TBAA does (fn 10289).
 - None of the 1,645 uenux2 functions that load an error record call an `invoke_*` thunk. Their `throw` sites call `__cxa_throw` directly, so the code was built without `-fexceptions`.
 
 **ecourna.** A sweep over reconstructed units decides these flags.

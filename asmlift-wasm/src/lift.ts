@@ -1963,7 +1963,7 @@ function unguardMemOps(body: Line[]): Line[] {
   return out;
 }
 
-const APP = '-O2 -fPIC -std=c++20 -DNDEBUG';
+const APP = '-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing';
 const ECOURNA =
   '-O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow -fPIC';
 

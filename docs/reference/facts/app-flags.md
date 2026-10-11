@@ -16,7 +16,7 @@ link over a lone link (`tools/round/try-tu.sh --single`): a lone link changes in
 | component | flags |
 | --- | --- |
 | ecourna (`src/ecourna`) | `-O3 -fPIC -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks -fno-strict-overflow`; `-fno-PIC` for `api/io`, `api/compression`, `app/dados` |
-| uenux2 (`src/uenux2`) | `-O2 -fPIC -std=c++20 -DNDEBUG`, without `-fexceptions` |
+| uenux2 (`src/uenux2`) | `-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing`, without `-fexceptions` |
 | ASN.1 runtime (`src/asn1`) | `-Os -fno-exceptions -std=c++14 -DNDEBUG` ([asn1.md](asn1.md)) |
 
 ## F1. ecourna: `-O3 -fPIC -fexceptions -std=c++20 -DNDEBUG`
@@ -112,7 +112,7 @@ The fragments compile those TUs with `$(filter-out -fPIC,$(ECOURNA_CXXFLAGS)) -f
 `ECOURNA_CXXFLAGS += -fno-PIC` (the last `-f` wins); `src/mk/ecourna-flags.mk` covers every
 `app/dados` object.
 
-## F6. uenux2: `-O2 -fPIC -std=c++20 -DNDEBUG`, without `-fexceptions`
+## F6. uenux2: `-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing`, without `-fexceptions`
 
 Compared on three reconstructed units (`api/util/cwait.cpp`, `api/io/cinikey.cpp`,
 `api/ipc/posix/cposixmutex.cpp` + `cposixsemaphore.cpp`; 13 target functions), each flag set in a private
@@ -137,7 +137,28 @@ whole-skeleton link (`make -s -C src link APP=… OUT=… OUT_NAMED=… UENUX2_C
   throw sites call `__cxa_throw` directly. Without `-fexceptions` emcc defaults to `-fignore-exceptions`
   (throw → direct `__cxa_throw`, no landing pads). That is **not** `-fno-exceptions`, which fails to compile every
   uenux2 TU with a `throw`; write the flag set as "without `-fexceptions`".
-- `-fno-strict-aliasing` changes some uenux2 objects but no surviving function: undecided, not added.
+- **`-fno-strict-aliasing`: no TBAA.** `comum::asn::CConversorCorrespResultado::DoConverte` (fn 10289, rows 355-360
+  of `pnpm wasm fn ../target/vota_web_wasm.wasm 10289`) stores a constant into a SEQUENCE field and then reloads the
+  fields vector's begin (`local.get 0; i32.load offset=8; i32.load offset=4; i32.const 1; i32.store offset=8`). No
+  call can sit between the store and the reload, and with TBAA clang's EarlyCSE keeps the begin in a local (an `int`
+  store and a pointer load are disjoint in clang's TBAA tree; `-fno-strict-aliasing` emits no TBAA at all). Every
+  comum converter with two or more field stores reloads the same way (10276, 10289, 11383, 11386, 11388, …), as
+  ecourna's do (F2). comum is uenux2: all 755 `app/comum` records are `/home/rubio/tse/uenux2/…`
+  (`ledger/source-locations.tsv`). On every uenux2 object the flag changes the bytes of four api objects (`cwait`,
+  `cposixmutex`, `cposixsemaphore`, `ctickmanager`) and keeps every match: with it in `UENUX2_CXXFLAGS`,
+  `make -C src splat` gives the target's sha256 on every match.
+- **The stand-ins keep strict aliasing.** `APP_CXXFLAGS` (the `src/app` stand-ins and the units' roots and pending
+  files) is uenux2's set without the flag. With it, six matches stop verifying: 152, 1383, 1527, 3501, 3639 and 5150,
+  libc++ templates (`std::__tree`, `__split_buffer`, `operator>>`) whose winning copy comes from
+  `app/roots_rhvoice.o` or `app/roots_boost.o` (`build/out/wasm-map/vota_web/names.tsv`'s object column). The target's
+  copies were compiled with TBAA, as the library TUs that instantiate them are. Letting the library objects win
+  instead does not reproduce the target: a private link with `roots_rhvoice.o` and `roots_boost.o` at uenux2's flags
+  and moved after the RHVoice objects loses dozens of matches, 152 among them, whose first definer becomes uenux2's
+  `ctickmanager.cpp.o` (no TBAA). So in the TSE link some code with TBAA that defines these templates precedes the
+  uenux2 and ecourna objects that also define them, as our stand-ins do (2026-10-11).
+- **Not ecourna's other two.** In a private whole link (the flags through `UENUX2_PREFIX_MAP`, so the stand-ins keep
+  theirs; F9.6), adding `-fno-delete-null-pointer-checks` loses 3 matches (5194, 11321 and 11326, the
+  `CVotos::Partido`/`Legenda` lambdas) and `-fno-strict-overflow` loses 1 (3663 `CBmpConversor::InvertColors`).
 - `-std=c++17` does not compile (`source_location`, class NTTPs).
 - Paths: `-ffile-prefix-map=/work/src/uenux2=/home/rubio/tse/uenux2`.
 
@@ -204,3 +225,8 @@ The recovered class layouts are in the sources themselves (`src/ecourna/app/dado
 7. **A lone-link residue of whole-program DAE.** Extra `drop`s after `~shared_ptr` in a landing pad, or a
    `memcpy` return value kept or dropped, come from callers elsewhere in the program; they close only in the
    whole link.
+8. **A reload is not proof of no TBAA.** An out-of-line callee from another TU between a store and a load also makes
+   LLVM reload, and binaryen `-Oz` then inlines the callee at link (it inlines every directly-called size-2 function),
+   so the final body is the same. fn 11386 matches both with inline getters and `-fno-strict-aliasing` and with
+   out-of-line getters and strict aliasing. Decide with a site where no call can sit between the two, such as a
+   constant stored next (fn 10289, F6).

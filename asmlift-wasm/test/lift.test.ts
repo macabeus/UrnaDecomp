@@ -201,12 +201,15 @@ describe('liftFunction', () => {
   });
 
   it('reads and writes memory through may_alias types unless the flags turn strict aliasing off', () => {
-    const strict = liftFunction(target(), 1549, { ...opts(), flags: COMPONENT_FLAGS.vota }).source;
+    const strict = liftFunction(target(), 1549, { ...opts(), flags: COMPONENT_FLAGS.RHVoice }).source;
     expect(strict).toContain('typedef int32_t int32_ma __attribute__((may_alias));');
     expect(strict).toMatch(/\*\(int64_(ma|a\d)\*\)/);
-    const relaxed = liftFunction(target(), 1549, { ...opts(), flags: COMPONENT_FLAGS.ecourna }).source;
-    expect(relaxed).not.toContain('may_alias');
-    expect(relaxed).toContain('*(int32_t*)');
+    // ecourna and uenux2 compile with -fno-strict-aliasing
+    for (const flags of [COMPONENT_FLAGS.ecourna, COMPONENT_FLAGS.vota]) {
+      const relaxed = liftFunction(target(), 1549, { ...opts(), flags }).source;
+      expect(relaxed).not.toContain('may_alias');
+      expect(relaxed).toContain('*(int32_t*)');
+    }
   });
 
   it('keeps loads after the call the wasm makes first', () => {
@@ -343,7 +346,7 @@ describe('liftFunction', () => {
         const file = `${index}.cpp`;
         writeFileSync(
           join(dir, file),
-          liftFunction(m, index, { ...opts(), flags: '-O2 -fPIC -std=c++20 -DNDEBUG' }).source,
+          liftFunction(m, index, { ...opts(), flags: '-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing' }).source,
         );
         return file;
       });

@@ -22,7 +22,11 @@ export type SetupTruth =
   /** an emscripten system library: its archive in the image's sysroot, its flags from tools/system_libs.py */
   | { kind: 'emscripten'; library: string; archive: string }
   /** header-only: compiled by whichever setup's TU includes it */
-  | { kind: 'header-only'; namespace: string };
+  | { kind: 'header-only'; namespace: string }
+  /** the flags the hand-written stand-ins (link inputs no other setup covers) compile with, per language the
+   *  `src/Makefile` variable holding them: it owns no object and no row, and is only the `instantiatedBy` of a
+   *  header-only function that only a stand-in instantiates */
+  | { kind: 'stand-ins'; vars: Partial<Record<Lang, string>> };
 
 export interface Setup {
   key: string;

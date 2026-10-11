@@ -177,7 +177,7 @@ export function compileLifted(dir: string, files: string[], image = DEFAULT_IMAG
   writeFileSync(list, `${files.join('\n')}\n`);
   const script =
     'xargs -P 8 -I{} sh -c \'f="{}"; flags=$(sed -n "s|^// em++ ||p" "$f" | head -1); ' +
-    'em++ -c ${flags:--O2 -fPIC -std=c++20 -DNDEBUG} -w "$f" -o "$f.o" 2> "$f.err" || echo "$f"\' < .lift-files';
+    'em++ -c ${flags:--O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing} -w "$f" -o "$f.o" 2> "$f.err" || echo "$f"\' < .lift-files';
   const r = spawnSync('docker', ['run', '--rm', '-v', `${dir}:${dir}`, '-w', dir, image, 'sh', '-c', script], {
     encoding: 'utf8',
     maxBuffer: 1 << 26,

@@ -136,7 +136,7 @@ export function buildDefinitions(setups: readonly Setup[], image: string): Defin
         ? []
         : setups.filter(
             (s) =>
-              s.truth.kind === 'make' &&
+              (s.truth.kind === 'make' || s.truth.kind === 'stand-ins') &&
               s.flags?.[cmd.lang] !== undefined &&
               effectiveFlags(s.flags[cmd.lang]!) === effectiveFlags(cmd.flags),
           );

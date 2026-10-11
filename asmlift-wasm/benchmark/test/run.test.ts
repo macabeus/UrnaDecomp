@@ -48,7 +48,8 @@ describe('baseline.json', () => {
 describe('renderBenchReport', () => {
   it('writes a table row for every setup with its exact count', () => {
     const md = renderBenchReport(baseline);
-    for (const s of loadSetups()) {
+    // the stand-ins' flag set owns no row, so no table row
+    for (const s of loadSetups().filter((x) => x.truth.kind !== 'stand-ins')) {
       expect(md).toContain(`| \`${s.key}\` | ${baseline.totals.bySetup[s.key].rows} |`);
     }
   });

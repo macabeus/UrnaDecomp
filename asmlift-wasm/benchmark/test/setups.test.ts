@@ -45,6 +45,20 @@ describe('classifyObjects', () => {
     expect(c.detail.some((d) => d.includes('api_io_cfile.cpp.o') && d.includes('no setup has'))).toBe(true);
   });
 
+  it("counts the stand-ins compiling with the stand-ins' flags, keeps them stand-ins, and reports drift", () => {
+    const { checks, objects, standIns } = classifyObjects(loadSetups(), IMAGE);
+    const c = checks.find((x) => x.key === 'app-stand-ins')!;
+    expect(c.status, c.detail.join('; ')).toBe('ok');
+    expect(c.objects).toBeGreaterThan(0);
+    expect(standIns).toContain('build/out/app/roots_boost.o');
+    expect(objects.some((o) => o.setup === 'app-stand-ins')).toBe(false);
+    const edit = classifyObjects(
+      edited('app-stand-ins', (s) => ({ ...s, flags: { 'c++': `${s.flags!['c++']} -fno-strict-aliasing` } })),
+      IMAGE,
+    );
+    expect(edit.checks.find((x) => x.key === 'app-stand-ins')!.status).toBe('drift');
+  });
+
   it.skipIf(!existsSync(join(URNA_ROOT, 'build/out/sqlite/O3pic2/cflags.txt')))(
     'reports drift when a library build recorded other flags',
     () => {

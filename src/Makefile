@@ -70,15 +70,18 @@ ECOURNA_PREFIX_MAP := -ffile-prefix-map=/work/src/ecourna=/home/rubio/.conan2/p/
 ECOURNA_CXXFLAGS   := -O3 -fPIC -fexceptions -std=c++20 -DNDEBUG $(ECOURNA_PREFIX_MAP) -Isrc -Isrc/asn1
 # uenux2 (the app itself, /home/rubio/tse/uenux2, tree mirrored under src/uenux2 so the records' paths map): -O2 -fPIC,
 # NO -fexceptions (emcc's default -fignore-exceptions: throw sites call __cxa_throw directly, no landing pads),
-# -DNDEBUG; measured on the api/util, api/io and api/ipc/posix units (docs/reference/facts/app-flags.md §F6). The
+# -DNDEBUG, -fno-strict-aliasing (no TBAA: comum's converters reload a vector's begin after an int store, fn 10289);
+# measured on the api/util, api/io, api/ipc/posix and comum units (docs/reference/facts/app-flags.md §F6). The
 # include root of the app's own headers is src/uenux2/src ("api/util/cwait.h"); ecourna headers come from -Isrc.
 UENUX2_PREFIX_MAP  := -ffile-prefix-map=/work/src/uenux2=/home/rubio/tse/uenux2
-UENUX2_CXXFLAGS    := -O2 -fPIC -std=c++20 -DNDEBUG $(UENUX2_PREFIX_MAP) -Isrc -Isrc/uenux2/src -Isrc/asn1
+UENUX2_CXXFLAGS    := -O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing $(UENUX2_PREFIX_MAP) -Isrc -Isrc/uenux2/src -Isrc/asn1
 # the ASN.1 runtime (src/asn1, an app-side tree) has its own flags and compile rule in src/mk/asn1.mk:
 # -Os -fno-exceptions -std=c++17, the throwing TUs -fexceptions -fignore-exceptions
-# the src/app stand-ins (exported entry points, root callers) compile with the uenux2 flags (-DNDEBUG: the target imports no __assert_fail)
-APP_CXXFLAGS := $(UENUX2_CXXFLAGS)
-APP_CFLAGS   := $(filter-out -std=%,$(UENUX2_CXXFLAGS))
+# the src/app stand-ins (exported entry points, root callers) compile with the uenux2 flags (-DNDEBUG: the target imports
+# no __assert_fail) but keep strict aliasing: the library templates they instantiate (roots_rhvoice.o's std::__tree and
+# __split_buffer, roots_boost.o's __tree_remove) win the link, and the target's copies have TBAA (6 matches need it)
+APP_CXXFLAGS := $(filter-out -fno-strict-aliasing,$(UENUX2_CXXFLAGS))
+APP_CFLAGS   := $(filter-out -std=% -fno-strict-aliasing,$(UENUX2_CXXFLAGS))
 SEVENZIP_FLAGS := -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_7ZIP_ST -I$(SEVENZIP_SRC)
 # the overlay shows the RHVoice build's generated config headers inside the source tree (tools/libs/rhvoice/build.sh)
 RHVOICE_CFG    := -ivfsoverlay $(RHVOICE_DIR)/cfg/overlay.yaml

@@ -229,9 +229,10 @@ pnpm wasm lift ../target/vota_web_wasm.wasm --all
 - **Values.** The operand stack folds into expressions. Pushing a call spills every pending value
   that reads memory or calls, and pushing a load or a global read spills every pending call, so no
   expression leaves C++ an evaluation order the wasm does not have. Loads and stores are
-  `*(T*)((char*)base + off)` with the memarg's width and signedness; under strict aliasing (every
-  component but ecourna) `T` is a `may_alias` typedef (`int32_ma`), since a width in the wasm says
-  nothing about a source type, and an under-aligned access adds `aligned(N)` (`int64_a4`). A base
+  `*(T*)((char*)base + off)` with the memarg's width and signedness; under strict aliasing (the
+  ASN.1 runtime and the libraries built from their own sources) `T` is a `may_alias` typedef
+  (`int32_ma`), since a width in the wasm says nothing about a source type, and an under-aligned
+  access adds `aligned(N)` (`int64_a4`). A base
   plus a scaled index (`l4 + (l2 << 4)`) is pointer arithmetic, base first, as clang lowers
   `&base[i]`, also as a value (`l3 = (int32_t)((char*)p0 + (l6 << 2));`): an integer add puts an
   argument after the shift, and LLVM folds the cast back into one only where nothing dereferences

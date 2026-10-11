@@ -12,11 +12,6 @@
 NUMVIAS_SRCS := src/app/comum/dados/asn/estadoaplicacao/cconversornumviasimpressasrelatorios.cpp \
   src/app/comum/dados/md/estadoaplicacao/cnumviasimpressasrelatorios.cpp
 UENUX2_SRCS += $(NUMVIAS_SRCS)
-# Without TBAA: DoConverte (fn 11386) reloads the entity's `fields` vector begin before each of its four
-# ASN1::INTEGER::value stores, which only -fno-strict-aliasing gives (with uenux2's strict aliasing LLVM keeps it in a
-# local). Every landed app/ object of uenux2 compiles to the same bytes with and without the flag, so the tree-wide
-# setting is still open (docs/reference/facts/app-flags.md §F6); target-specific so the other uenux2 units keep theirs.
-$(addprefix $(ROOT)/$(APP)/uenux2/,$(addsuffix .o,$(NUMVIAS_SRCS))): UENUX2_CXXFLAGS += -fno-strict-aliasing
 # the converter's users are not reconstructed yet: 20-uenux2-cconversornumviasimpressasrelatorios-roots.cpp keeps its
 # vtable and gives the data class constructor its second caller, the way the target reaches them
 $(ROOT)/$(APP)/20-uenux2-cconversornumviasimpressasrelatorios-roots.o: $(ROOT)/src/units/20-uenux2-cconversornumviasimpressasrelatorios-roots.cpp $(ROOT)/src/Makefile

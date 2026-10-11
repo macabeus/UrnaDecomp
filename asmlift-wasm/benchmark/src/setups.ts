@@ -75,6 +75,8 @@ export function classifyObjects(setups: readonly Setup[], image: string): Classi
   for (const s of setups) {
     if (s.truth.kind === 'make' || s.truth.kind === 'artefact') {
       s.truth.vars.forEach((v) => vars.add(v));
+    } else if (s.truth.kind === 'stand-ins') {
+      Object.values(s.truth.vars).forEach((v) => vars.add(v!));
     }
   }
   const printed = makePrint([...vars]);
@@ -182,6 +184,30 @@ export function classifyObjects(setups: readonly Setup[], image: string): Classi
     checks.get(o.setup)!.objects++;
   }
   const standIns = printed.get('LINK_OBJS')!.filter((o) => !covered.has(o));
+
+  // stand-ins: the Makefile variables' flags must be the setup's; the stand-in objects compiling with them are
+  // counted, and stay stand-ins
+  const standInSetups = setups.filter((s) => s.truth.kind === 'stand-ins');
+  if (standInSetups.length > 0) {
+    const standInCommands = makeCommands(standIns);
+    for (const s of standInSetups) {
+      const truth = s.truth as Extract<Setup['truth'], { kind: 'stand-ins' }>;
+      for (const [lang, v] of Object.entries(truth.vars) as [Lang, string][]) {
+        const made = printed.get(v)!;
+        if (s.flags?.[lang] === undefined || effectiveFlags(made) !== effectiveFlags(s.flags[lang]!)) {
+          drift(s.key, `src/Makefile ${v} is \`${made.join(' ')}\` (${lang})`);
+        }
+      }
+      const fitting = standIns.filter((o) => {
+        const cmd = standInCommands.get(o);
+        return cmd !== undefined && s.flags?.[cmd.lang] !== undefined && effectiveFlags(s.flags[cmd.lang]!) === effectiveFlags(cmd.flags);
+      });
+      checks.get(s.key)!.objects = fitting.length;
+      if (fitting.length === 0) {
+        drift(s.key, 'no stand-in of LINK_OBJS compiles with these flags');
+      }
+    }
+  }
   return { objects, standIns, checks: [...checks.values()] };
 }
 

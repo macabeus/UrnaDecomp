@@ -55,6 +55,7 @@ them (`truth`).
 | `7zip` | 7-Zip / LZMA SDK 21.02, single-threaded | `tools/libs/7zip/build.sh` (recorded in `flags.nul`) | 12 |
 | `rhvoice` | RHVoice 1.14.0 core, hts_engine and sonic | `tools/libs/rhvoice/build.sh` (recorded in `flags.nul`) | 12 |
 | `boost` | Boost 1.89.0, header-only | the instantiating setup's flags | 12 |
+| `app-stand-ins` | the stand-ins' flags: what the Boost probe instantiates with (no rows of its own) | `src/Makefile` `APP_CXXFLAGS`, `APP_CFLAGS` | 0 |
 | `libc` | emscripten's musl (`libc.a`) | emscripten `tools/system_libs.py` | 12 |
 | `libc-optz` | the `-Oz` link's size-optimised libc members (`libc_optz.a`) | the same | 5 |
 | `dlmalloc` | `libdlmalloc.a` | the same | 8 |
@@ -79,6 +80,10 @@ the build and fails on drift, so a flag changed in the Makefile cannot leave the
 - `emscripten`: `tools/system-lib-flags.py` asks emscripten in the image which flags it builds each
   system library with for a `-fexceptions`, no-assertions link.
 - `header-only`: nothing to compile; see Boost below.
+- `stand-ins`: the flags of the link inputs no other setup covers (the hand-written roots, drivers and
+  probes): `make print-<VAR>` of the variables holding them (`APP_CXXFLAGS`, `APP_CFLAGS`) must be the
+  setup's, and at least one stand-in must compile with them. They stay stand-ins: the setup owns no
+  object and no row.
 
 Flags are compared by effect (`effectiveFlags`): the last `-O` and `-std` win, PIC and exceptions are
 on or off whatever the spelling, include paths, path maps, warnings and debug info are not flags of
@@ -98,8 +103,11 @@ share it.
 
 - **Boost** is header-only. A `boost::` function belongs to the `boost` setup with the flags of the
   setup whose objects instantiate it (`instantiatedBy`). Where only the Boost probe stand-in
-  (`roots_boost.o`) instantiates it, its flags (the application's) are recorded, and the row is
-  selected only when the ledger pairs it at byte or fingerprint.
+  (`roots_boost.o`) instantiates it, the row takes the setup whose flags the probe compiles with,
+  `app-stand-ins`, and is selected only when the ledger pairs it at byte or fingerprint. The stand-ins
+  compile with uenux2's flags without `-fno-strict-aliasing`: they come first on the link line, the
+  libc++ templates they instantiate win the link, and the target's copies of those have TBAA
+  (urna's `docs/reference/facts/app-flags.md` §F6).
 - **uenux2** has few reconstructed units, so its rows also come from the ledger's attribution
   (components `vota`, `vota-web`, `comum`, `simulador`): `evidence: "component"`, no object, no
   reference.

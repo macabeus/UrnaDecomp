@@ -17,7 +17,8 @@ const baseline = read<BenchResults>('results/baseline.json');
 describe('setupSummaries', () => {
   it('lists every setup of the baseline in the registry order, their rows adding up to the run', () => {
     const s = setupSummaries(baseline, setups);
-    expect(s.map((x) => x.key)).toEqual(setups.map((x) => x.key));
+    // the stand-ins' flag set owns no row
+    expect(s.map((x) => x.key)).toEqual(setups.filter((x) => x.truth.kind !== 'stand-ins').map((x) => x.key));
     expect(s.reduce((n, x) => n + x.totals.rows, 0)).toBe(baseline.totals.overall.rows);
   });
 });

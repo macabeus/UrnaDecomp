@@ -3,7 +3,7 @@
     "key": "uenux2",
     "title": "uenux2, the TSE application",
     "flags": {
-      "c++": "-O2 -fPIC -std=c++20 -DNDEBUG"
+      "c++": "-O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing"
     },
     "image": "urna-emsdk:6.0.0",
     "source": "src/Makefile UENUX2_CXXFLAGS; docs/reference/toolchain.md §3",
@@ -188,6 +188,24 @@
       "namespace": "boost::"
     },
     "note": "A row's flags are those of the setup whose objects instantiate it (`instantiatedBy`)."
+  },
+  {
+    "key": "app-stand-ins",
+    "title": "the stand-ins: hand-written roots, drivers and probes (src/app, the units' -roots.cpp)",
+    "flags": {
+      "c++": "-O2 -fPIC -std=c++20 -DNDEBUG",
+      "c": "-O2 -fPIC -DNDEBUG"
+    },
+    "image": "urna-emsdk:6.0.0",
+    "source": "src/Makefile APP_CXXFLAGS, APP_CFLAGS; docs/reference/facts/app-flags.md §F6",
+    "truth": {
+      "kind": "stand-ins",
+      "vars": {
+        "c++": "APP_CXXFLAGS",
+        "c": "APP_CFLAGS"
+      }
+    },
+    "note": "No row of its own: only the `instantiatedBy` of a Boost function that only the probe stand-in (roots_boost.o) instantiates. uenux2's flags without -fno-strict-aliasing: the stand-ins come first on the link line, their libc++ template copies win, and the target's copies have TBAA (matches 152, 1383, 1527, 3501, 3639, 5150)."
   },
   {
     "key": "libc",

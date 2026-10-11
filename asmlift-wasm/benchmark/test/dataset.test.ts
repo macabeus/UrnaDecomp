@@ -33,7 +33,13 @@ const hasTrees = referenceTrees(rows).every((t) => existsSync(join(URNA_ROOT, t)
 describe('rows.json', () => {
   it('has rows from every setup of the registry', () => {
     for (const s of setups) {
-      expect(rows.filter((r) => r.setup === s.key).length, s.key).toBeGreaterThanOrEqual(5);
+      // the stand-ins' flag set owns no row: it is only what a stand-in instantiates a header-only function with
+      const n = rows.filter((r) => r.setup === s.key).length;
+      if (s.truth.kind === 'stand-ins') {
+        expect(n, s.key).toBe(0);
+      } else {
+        expect(n, s.key).toBeGreaterThanOrEqual(5);
+      }
     }
   });
 
