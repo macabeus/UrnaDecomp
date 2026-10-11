@@ -113,7 +113,7 @@ index	symbol	ours	source	verdict	detail	size	ledger_kind	group	tried	object
 247	vdbeMemClearExternAndSetNull	204	symbol	match	-	268	addr	sqlite	1	sqlite/O3pic2/sqlite3.o
 248	-	-	-	no-candidate	no symbol and no ledger pair	320	none	app	0	-
 249	BIO_free	205	symbol	match	readings: address string	198	addr	openssl	1	openssl/O3/crypto/bio/libcrypto-lib-bio_lib.o
-250	sqlite3_initialize	206	symbol	unresolved	ours +0x32 i32.const 2018: a table slot of ours: the target function fills 126 slots	4896	addr	sqlite	1	sqlite/O3pic2/sqlite3.o
+250	sqlite3_initialize	206	symbol	unresolved	self-voted +0x9bf i32.const 1803568: sqlite3RegisterBuiltinFunctions.aBuiltinFunc = 0x1b8530 (evidence:vote:1 by:250) comes from this function's own operand; our object's bytes say nothing (zeros, or pointers that do not resolve) and no other match re-points through it	4896	addr	sqlite	1	sqlite/O3pic2/sqlite3.o
 251	-	-	-	no-candidate	no symbol and no ledger pair	128	none	libc++	0	-
 252	_ZNSt3__2plB8ne210108IcNS_11char_traitsIcEENS_9allocatorIcEEEENS_12basic_stringIT_T0_T1_EEOS9_SA_	10986	symbol	match	-	43	fingerprint	unknown	1	sysroot:libc++.a(directory_iterator.o)
 253	-	-	-	no-candidate	no symbol and no ledger pair	18	none	ecourna	0	-
@@ -4588,7 +4588,7 @@ index	symbol	ours	source	verdict	detail	size	ledger_kind	group	tried	object
 4722	_ZNSt3__29use_facetB8ne210108INS_10moneypunctIcLb0EEEEERKT_RKNS_6localeE	5241	symbol	match	readings: address symbol	12	none	libc++	1	sysroot:libc++.a(locale.o)
 4723	_ZNSt3__29use_facetB8ne210108INS_10moneypunctIcLb1EEEEERKT_RKNS_6localeE	5242	symbol	match	readings: address symbol	12	none	libc++	1	sysroot:libc++.a(locale.o)
 4724	_ZNSt3__25equalB8ne210108INS_11__wrap_iterIPcEES3_NS_10__equal_toEEEbT_S5_T0_T1_	5243	symbol	match	-	15	fingerprint	libc++	1	sysroot:libc++.a(locale.o)
-4725	_ZNSt3__219__double_or_nothingB8ne210108IjEEvRNS_10unique_ptrIT_PFvPvEEERPS2_S9_	5244	symbol	unresolved	ours +0x21 i32.const 9628: a table slot of ours: the target function fills 126 slots	223	none	libc++	1	sysroot:libc++.a(locale.o)
+4725	_ZNSt3__219__double_or_nothingB8ne210108IjEEvRNS_10unique_ptrIT_PFvPvEEERPS2_S9_	5244	symbol	unresolved	ours +0x92 call 5240: _ZNSt3__210unique_ptrIcPFvPvEEaSB8ne210108EOS4_ has no target function	223	none	libc++	1	sysroot:libc++.a(locale.o)
 4726	_ZNKSt3__210moneypunctIwLb0EE16do_negative_signEv	5245	symbol	match	-	11	addr	libc++	1	sysroot:libc++.a(locale.o)
 4727	-	-	-	no-candidate	no symbol and no ledger pair	11	none	libc++	0	-
 4728	_ZNKSt3__210__time_put8__do_putEPcRS1_PK2tmcc	5247	symbol	match	-	100	addr	libc++	1	sysroot:libc++.a(locale.o)
@@ -7064,7 +7064,7 @@ index	symbol	ours	source	verdict	detail	size	ledger_kind	group	tried	object
 7198	-	-	-	no-candidate	no symbol and no ledger pair	207	none	vota	0	-
 7199	default_context_do_init_ossl_	7531	symbol	match	readings: address symbol	34	none	unknown	1	openssl/O3/crypto/libcrypto-lib-context.o
 7200	do_init_module_list_lock_ossl_	7533	symbol	match	readings: address symbol,address string	69	addr	openssl	1	openssl/O3/crypto/conf/libcrypto-lib-conf_mod.o
-7201	do_load_builtin_modules_ossl_	7535	symbol	unresolved	ours +0x8 i32.const 6443: a table slot of ours: the target function fills 126 slots	116	addr	openssl	1	openssl/O3/crypto/conf/libcrypto-lib-conf_mod.o
+7201	do_load_builtin_modules_ossl_	7535	symbol	match	readings: address string,table slot,address symbol	116	addr	openssl	1	openssl/O3/crypto/conf/libcrypto-lib-conf_mod.o
 7202	-	-	-	no-candidate	no symbol and no ledger pair	10	none	openssl	0	-
 7203	ssl_module_init	7532	symbol	match	readings: address string,address symbol	478	addr	openssl	1	openssl/O3/crypto/conf/libcrypto-lib-conf_ssl.o
 7204	alg_module_init	7143	symbol	match	readings: address string,address same-content	840	addr	openssl	1	openssl/O3/crypto/evp/libcrypto-lib-evp_cnf.o
@@ -7743,16 +7743,16 @@ index	symbol	ours	source	verdict	detail	size	ledger_kind	group	tried	object
 7877	_ZNKSt3__29money_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_bRNS_8ios_baseEce	10782	ledger	unresolved	ours +0x3c0 i32.const 9618: a table slot of ours: _ZNSt3__216__pad_and_outputB8ne210108IcNS_11char_traitsIcEEEENS_19ostreambuf_iteratorIT_T0_EES6_PKS4_S8_S8_RNS_8ios_baseES4_ has no target function	1215	shape	libc++	1	sysroot:libc++.a(locale.o)
 7878	-	-	-	no-candidate	no symbol and no ledger pair	51	none	libc++	0	-
 7879	_ZNSt3__212basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6appendB8ne210108IPwTnNS_9enable_ifIXsr31__has_forward_iterator_categoryIT_EE5valueEiE4typeELi0EEERS5_S9_S9_	10783	symbol	match	readings: address symbol,table slot	369	addr	libc++	1	sysroot:libc++.a(locale.o)
-7880	_ZNKSt3__29money_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_bRNS_8ios_baseERjRNS_12basic_stringIwS3_NS_9allocatorIwEEEE	10784	symbol	unresolved	ours +0x1f i32.const 9628: a table slot of ours: the target function fills 126 slots	677	addr	libc++	1	sysroot:libc++.a(locale.o)
+7880	_ZNKSt3__29money_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_bRNS_8ios_baseERjRNS_12basic_stringIwS3_NS_9allocatorIwEEEE	10784	symbol	match	readings: table slot,address symbol	677	addr	libc++	1	sysroot:libc++.a(locale.o)
 7881	_ZNSt3__211__money_getIwE13__gather_infoEbRKNS_6localeERNS_10money_base7patternERwS8_RNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEERNS9_IwNSA_IwEENSC_IwEEEESJ_SJ_Ri	10786	symbol	match	-	256	addr	libc++	1	sysroot:libc++.a(locale.o)
-7882	_ZNSt3__29money_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE8__do_getERS4_S4_bRKNS_6localeEjRjRbRKNS_5ctypeIwEERNS_10unique_ptrIwPFvPvEEERPwSM_	10787	symbol	unresolved	ours +0x44 i32.const 9628: a table slot of ours: the target function fills 126 slots	3602	addr	libc++	1	sysroot:libc++.a(locale.o)
-7883	_ZNKSt3__29money_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_bRNS_8ios_baseERjRe	10788	ledger	unresolved	ours +0x1f i32.const 9628: a table slot of ours: the target function fills 126 slots	873	shape	libc++	1	sysroot:libc++.a(locale.o)
+7882	_ZNSt3__29money_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE8__do_getERS4_S4_bRKNS_6localeEjRjRbRKNS_5ctypeIwEERNS_10unique_ptrIwPFvPvEEERPwSM_	10787	symbol	match	readings: table slot,address symbol	3602	addr	libc++	1	sysroot:libc++.a(locale.o)
+7883	_ZNKSt3__29money_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_bRNS_8ios_baseERjRe	10788	ledger	unresolved	ours +0x24b i32.const 9630: a table slot of ours: _ZNSt3__221__throw_runtime_errorEPKc has no target function	873	shape	libc++	1	sysroot:libc++.a(locale.o)
 7884	-	-	-	no-candidate	no symbol and no ledger pair	637	none	libc++	0	-
 7885	_ZNSt3__220__shared_ptr_emplaceIN3api15CPosixSemaphoreENS_9allocatorIS2_EEED0Ev	9359	ledger	unresolved	ours +0x3 i32.const 1203324: an address of ours: _ZTVNSt3__220__shared_ptr_emplaceIN3api15CPosixSemaphoreENS_9allocatorIS2_EEEE (.data) has no target symbol; too little content to place by its re-pointed bytes	17	addr	libc++	1	app/roots_uenux2.o
 7886	-	-	-	no-candidate	no symbol and no ledger pair	220	none	libc++	0	-
 7887	_ZNSt3__211__money_getIcE13__gather_infoEbRKNS_6localeERNS_10money_base7patternERcS8_RNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEESF_SF_SF_Ri	10793	symbol	match	-	256	addr	libc++	1	sysroot:libc++.a(locale.o)
-7888	_ZNSt3__29money_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE8__do_getERS4_S4_bRKNS_6localeEjRjRbRKNS_5ctypeIcEERNS_10unique_ptrIcPFvPvEEERPcSM_	10794	ledger	unresolved	ours +0x44 i32.const 9628: a table slot of ours: the target function fills 126 slots	3484	shape	libc++	1	sysroot:libc++.a(locale.o)
-7889	_ZNKSt3__29money_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_bRNS_8ios_baseERjRe	10795	ledger	unresolved	ours +0x1f i32.const 9628: a table slot of ours: the target function fills 126 slots	860	shape	libc++	1	sysroot:libc++.a(locale.o)
+7888	_ZNSt3__29money_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE8__do_getERS4_S4_bRKNS_6localeEjRjRbRKNS_5ctypeIcEERNS_10unique_ptrIcPFvPvEEERPcSM_	10794	ledger	unresolved	ours +0x646 i32.const 9632: a table slot of ours: _ZNSt3__219__double_or_nothingB8ne210108IcEEvRNS_10unique_ptrIT_PFvPvEEERPS2_S9_ has no target function	3484	shape	libc++	1	sysroot:libc++.a(locale.o)
+7889	_ZNKSt3__29money_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_bRNS_8ios_baseERjRe	10795	ledger	unresolved	ours +0xbb i32.const 9629: a table slot of ours: _ZNSt3__29money_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE8__do_getERS4_S4_bRKNS_6localeEjRjRbRKNS_5ctypeIcEERNS_10unique_ptrIcPFvPvEEERPcSM_ has no target function	860	shape	libc++	1	sysroot:libc++.a(locale.o)
 7890	_ZNSt3__220__shared_ptr_emplaceIN7ecourna3app5dados25CNumeroIdentificacaoLivreENS_9allocatorIS4_EEED2Ev	10024	ledger	differs	+0x4 target +0x3 i32.const 1532140 | ours +0x3 i32.const 1555632 [ours 1203164 = _ZTVNSt3__220__shared_ptr_emplaceIN7ecourna3app5dados25CNumeroIdentificacaoLivreENS_9allocatorIS4_EEEE+8: address symbol _ZTVNSt3__220__shared_ptr_emplaceIN7ecourna3app5dados25CNumeroIdentificacaoLivreENS_9allocatorIS4_EEEE → 0x17bcb0]	14	addr	libc++	1	app/roots_ecourna.o
 7891	-	-	-	no-candidate	no symbol and no ledger pair	389	none	libc++	0	-
 7892	_ZNKSt3__28time_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_RNS_8ios_baseEcPK2tmcc	10798	symbol	match	-	185	addr	libc++	1	sysroot:libc++.a(locale.o)
@@ -12692,7 +12692,7 @@ index	symbol	ours	source	verdict	detail	size	ledger_kind	group	tried	object
 12826	sqlite3_bind_zeroblob	4850	symbol	match	readings: address symbol	128	addr	libc++	1	sqlite/O3pic2/sqlite3.o
 12827	sqlite3_bind_text16	4851	symbol	match	-	21	addr	libc++	1	sqlite/O3pic2/sqlite3.o
 12828	sqlite3_bind_text64	4852	symbol	match	-	36	addr	libc++	1	sqlite/O3pic2/sqlite3.o
-12829	sqlite3_bind_pointer	4854	symbol	unresolved	ours +0x2a i32.const 2044: a table slot of ours: the target function fills 126 slots	135	addr	libc++	1	sqlite/O3pic2/sqlite3.o
+12829	sqlite3_bind_pointer	4854	symbol	match	readings: table slot,address same-content,address symbol	135	addr	libc++	1	sqlite/O3pic2/sqlite3.o
 12830	-	-	-	no-candidate	no symbol and no ledger pair	17	none	libc++	0	-
 12831	sqlite3_bind_blob64	4858	symbol	match	readings: address symbol	145	addr	libc++	1	sqlite/O3pic2/sqlite3.o
 12832	sqlite3_column_origin_name16	4860	symbol	match	-	13	addr	libc++	1	sqlite/O3pic2/sqlite3.o
@@ -12726,7 +12726,7 @@ index	symbol	ours	source	verdict	detail	size	ledger_kind	group	tried	object
 12860	sqlite3_result_text	4890	symbol	match	-	15	addr	sqlite	1	sqlite/O3pic2/sqlite3.o
 12861	sqlite3_result_subtype	4891	symbol	match	-	28	addr	sqlite	1	sqlite/O3pic2/sqlite3.o
 12862	-	-	-	no-candidate	no symbol and no ledger pair	28	none	sqlite	0	-
-12863	sqlite3_result_pointer	4892	symbol	unresolved	ours +0x33 i32.const 2044: a table slot of ours: the target function fills 126 slots	99	addr	sqlite	1	sqlite/O3pic2/sqlite3.o
+12863	sqlite3_result_pointer	4892	symbol	match	readings: table slot,address same-content	99	addr	sqlite	1	sqlite/O3pic2/sqlite3.o
 12864	sqlite3_result_null	4893	symbol	match	-	32	addr	sqlite	1	sqlite/O3pic2/sqlite3.o
 12865	sqlite3_result_int64	4894	symbol	match	-	41	addr	sqlite	1	sqlite/O3pic2/sqlite3.o
 12866	sqlite3_result_int	4895	symbol	match	-	48	addr	sqlite	1	sqlite/O3pic2/sqlite3.o
@@ -12795,7 +12795,7 @@ index	symbol	ours	source	verdict	detail	size	ledger_kind	group	tried	object
 12929	sqlite3_memory_used	4952	symbol	match	readings: address symbol	62	addr	sqlite	1	sqlite/O3pic2/sqlite3.o
 12930	sqlite3_mutex_try	4953	symbol	match	readings: address symbol	24	addr	sqlite	1	sqlite/O3pic2/sqlite3.o
 12931	sqlite3_mutex_free	10110	symbol	match	readings: address symbol	20	addr	sqlite	1	sqlite/O3pic2/sqlite3.o
-12932	sqlite3_mutex_alloc	10111	symbol	unresolved	ours +0x30 i32.const 2018: a table slot of ours: the target function fills 126 slots	217	addr	sqlite	1	sqlite/O3pic2/sqlite3.o
+12932	sqlite3_mutex_alloc	10111	symbol	match	readings: address symbol,table slot	217	addr	sqlite	1	sqlite/O3pic2/sqlite3.o
 12933	sqlite3_vfs_unregister	4954	symbol	match	readings: address symbol	173	addr	sqlite	1	sqlite/O3pic2/sqlite3.o
 12934	sqlite3_vfs_register	4955	symbol	match	readings: address symbol	241	addr	sqlite	1	sqlite/O3pic2/sqlite3.o
 12935	noopMutexAlloc	4956	symbol	match	-	4	byte	sqlite	1	sqlite/O3pic2/sqlite3.o
@@ -13008,7 +13008,7 @@ index	symbol	ours	source	verdict	detail	size	ledger_kind	group	tried	object
 13142	der2obj_decode	5673	symbol	match	readings: address string,address same-content	259	addr	unknown	1	openssl/O3/providers/implementations/storemgmt/libdefault-lib-file_store_any2obj.o
 13143	file_eof	5674	symbol	match	-	74	addr	unknown	1	openssl/O3/providers/implementations/storemgmt/libdefault-lib-file_store.o
 13144	file_load_construct	5675	symbol	match	-	17	byte	unknown	1	openssl/O3/providers/implementations/storemgmt/libdefault-lib-file_store.o
-13145	file_load	5676	symbol	unresolved	ours +0x1f0 i32.const 9079: a table slot of ours: the target function fills 126 slots	1275	addr	openssl	1	openssl/O3/providers/implementations/storemgmt/libdefault-lib-file_store.o
+13145	file_load	5676	symbol	unresolved	ours +0x26a i32.const 1349688: an address of ours: .L__const.file_load_dir_entry.object (.data) has no target symbol; re-pointed bytes not in the target	1275	addr	openssl	1	openssl/O3/providers/implementations/storemgmt/libdefault-lib-file_store.o
 13146	-	-	-	no-candidate	no symbol and no ledger pair	560	none	openssl	0	-
 13147	file_settable_ctx_params	5678	symbol	match	readings: address content-repointed	7	none	openssl	1	openssl/O3/providers/implementations/storemgmt/libdefault-lib-file_store.o
 13148	file_attach	5679	symbol	match	readings: address string	99	addr	openssl	1	openssl/O3/providers/implementations/storemgmt/libdefault-lib-file_store.o

@@ -181,25 +181,32 @@ The counts grow with the link and the match list; what holds is `N/N kind-verifi
      relocation reading takes it for an address. `vdbeSorterSort`'s 2035, 2036 and 2037 are relative to
      `__table_base` and name `vdbeSorterCompareInt`, `vdbeSorterCompareText` and `vdbeSorterCompare`, not the
      functions in slots 2035 to 2037.
-4. **A function in more than 64 target slots gives no slot reading.** A table slot is offered a function's target
-   slots only up to `SAME_CONTENT_LIMIT` (64, `asmlift-wasm/src/splat-symbols.ts`). Binaryen merged identical
-   functions, and the target's table holds its empty `(i32) -> ()` function (target 218, a 2-byte body) in 126 slots,
-   so a pointer of ours to such a function is unresolved, from `asmlift-wasm/`:
+4. **A table slot of known kind is offered every target slot of its function.** Binaryen merged identical
+   functions, and the target's table holds its empty `(i32) -> ()` function (target 218, a 2-byte body) in 126 slots.
+   Each slot holds the same function, so a pointer of ours to it is offered all 126; an operand of a kind-unverified
+   function is still offered a function's slots only up to `SAME_CONTENT_LIMIT` (64, `asmlift-wasm/src/splat-symbols.ts`).
+   From `asmlift-wasm/`:
 
    ```sh
    pnpm --silent wasm splat-remap ../target/vota_web_wasm.wasm ../build/out/wasm/vota_web/vota_web_wasm.wasm \
      sym:sqlite3_bind_pointer --against 12829
-   # ours 4854: UNRESOLVED (1)
-   #   +002a i32.const 2044: a table slot of ours: the target function fills 126 slots
+   # target 12829: IDENTICAL (3 ambiguous operands read as table slot copy 11892 of symbol
+   #   _ZN12_GLOBAL__N_112probe_client4doneEv, address same-content 0x6de8b, address symbol sqlite3Config)
    ```
 
-   With `--no-kinds` the operand keeps the readings its value suggests, none of them the target's 11892, one of the
-   126 slots, and the body `differs at body byte 43 (target instruction +2a i32.const 11892)`. In the committed scan
-   (which a rescan at this commit reproduces), `grep -c 'fills 126 slots' ../splat/scan.tsv` gives 12 `unresolved`
-   rows for such an operand.
-5. **The build's lists.** `TMPDIR=/tmp make -C src splat` on the 7,217 matches prints `kind-unverified: 0/7217` and
-   `review warnings: 55 … 16 past-data, 11 target-object, 28 past-table`. All 55 warnings are in upstream library
-   functions built from their own sources (sqlite, OpenSSL, libc++, 7-Zip, RHVoice, zlib's minizip), whose numbers
-   come from those sources.
+   With `--no-kinds` the body `differs at body byte 43 (target instruction +2a i32.const 11892)`. Functions that
+   match through this rule include 7201 `do_load_builtin_modules_ossl_`, 7880 and 7882 (`money_get<wchar_t>`), 12829
+   `sqlite3_bind_pointer`, 12863 `sqlite3_result_pointer` and 12932 `sqlite3_mutex_alloc`;
+   `grep -c 'fills 126 slots' splat/scan.tsv` prints 0. The target body picks which of the 126 slots each pointer
+   becomes, so check each pick against the two links' tables (read both element segments): every slot the target
+   body uses has the same neighbours as our slot. For example our 2044 and the target's 11892 both
+   sit between `getPageNormal` and `sqlite3RCStrUnref`, and `sqlite3_mutex_alloc`'s nine slots 2018 to 2029 line up
+   with 11866 to 11877, `pthreadMutexFree` and `pthreadMutexEnd` included. The one copied address,
+   `sqlite3_bind_pointer`'s and `sqlite3_result_pointer`'s `""` (SQLite's default `zPType`), is the NUL after a
+   `" \t"` string in both links (ours 0x32590, the target's 0x6de8b).
+5. **The build's lists.** `TMPDIR=/tmp make -C src splat` prints `kind-unverified: 0/<matches> matches` and
+   `review warnings: <n> literal operands … <n> past-data, <n> target-object, <n> past-table`. The warnings are in
+   upstream library functions built from their own sources (sqlite, OpenSSL, libc++, 7-Zip, RHVoice, zlib's minizip),
+   whose numbers come from those sources.
 
 The limits of the check that remain are listed in `docs/reference/splat.md` "Reviewing a match".

@@ -744,8 +744,29 @@ describe('table slots read with operand kinds', { timeout: 300_000 }, () => {
     expect([0xa8, 0xab, 0xae].map(named)).toEqual([['vdbeSorterCompareInt'], ['vdbeSorterCompareText'], ['vdbeSorterCompare']]);
   });
 
-  it.skipIf(!real)("reads INV2's 2077 in sqlite3AddDefaultValue as a table slot, as both links' tables say", () => {
-    // INV2 judged it an address ('ok: .o has address relocs', of the object as a whole)
+  it.skipIf(!real)('offers a table slot every target slot of its function, however many', () => {
+    // sqlite3_initialize's +0x32 names the empty function binaryen merged the target's into, which fills 126 slots
+    const { maps } = load();
+    const ours = maps.ours.fnByKey.get('sqlite3_initialize')!;
+    const piece = (m: SymbolMaps) => {
+      const r = remapBody(m, ours);
+      return r.ok ? r.pieces.find((p) => !(p instanceof Uint8Array) && p.at === 0x32) : undefined;
+    };
+    const p = piece(maps);
+    expect(p !== undefined && !(p instanceof Uint8Array) && p.alternatives.length).toBe(126);
+    const a = attempt(maps, { ours, symbol: 'sqlite3_initialize', source: 'symbol' }, 250, readPieceBodies(PIECES).get(250)!);
+    expect(a.verdict).toBe('match');
+    // an operand that may be anything is offered a function's slots only while they are few (here an address too)
+    const unverified = piece({ ...maps, kinds: undefined });
+    expect(unverified !== undefined && !(unverified instanceof Uint8Array) && unverified.readings).toEqual([
+      'address string',
+      expect.stringMatching(/^address same-content /),
+      'literal',
+    ]);
+  });
+
+  it.skipIf(!real)("reads 2077 in sqlite3AddDefaultValue as a table slot, as both links' tables say", () => {
+    // its object as a whole has address relocations, which does not make this operand an address
     const { kinds, maps, plain } = load();
     const p = indexOf(plain, 'sqlite3AddDefaultValue');
     expect(valueAt(plain.module, p, 0x292)).toBe(2077);

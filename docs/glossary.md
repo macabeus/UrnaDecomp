@@ -375,8 +375,8 @@ keep every reading, and the build lists it and fails on more of them than `SPLAT
 **reading** — one target value an operand of ours may re-point to. Each operand is offered only the readings of its
 kind: a literal its own bytes; an address the target place of what it points at, plus every other place holding the
 same content (a *copy*); a table slot the target slot that holds its function, or each of them when binaryen merged
-identical functions into one that fills several slots (up to 64; a function in more slots leaves the operand
-unresolved). The target body picks only among copies. The meter's "readings the target chose" lines (re-pointing
+identical functions into one that fills several slots (all of them; in a kind-unverified function, up to 64, and a
+function in more slots leaves the operand unresolved). The target body picks only among copies. The meter's "readings the target chose" lines (re-pointing
 alone / another reading / which copy) count how often it had to pick; "another reading" (the target body picking a
 kind) happens only in a kind-unverified match. A data object the symbol file does not
 name is placed by its content: a C string, a `source_location` record, exact read-only bytes, or its bytes with each

@@ -196,23 +196,11 @@ sqlite                          878/927        700394/772965  90.61%
 vota                              8/780          2977/470204  0.63%
 ...
 readings the target chose (ambiguous operands: address, table slot or literal; which copy of identical bytes):
-  re-pointing alone     5309 matches (844076 B)
-  another reading       1649 matches (915984 B), 7115 operands: literal 5647, table slot 1468
-  which copy             253 matches (359296 B), 491 operands
-```
-
-Since 2026-10-11 the build also reads what each constant of ours is (an address, a table slot or an integer) from a
-second link with the data and the table moved, `make -C src link-kinds` (under a minute, run on the first build and
-whenever the plain link changes; [reference/splat.md](reference/splat.md) §3). With it, "another reading" is 0, and
-the output ends with two more lists. With the 7,217 matches of 2026-10-11 it ends:
-
-```
-readings the target chose (ambiguous operands: address, table slot or literal; which copy of identical bytes):
-  re-pointing alone     6964 matches (1758167 B)
+  re-pointing alone     7122 matches (1766025 B)
   another reading          0 matches (0 B), 0 operands: -
-  which copy             253 matches (358580 B), 491 operands
-kind-unverified: 0/7217 matches (0 B) whose operand kinds the shifted link could not tell; their operands kept every reading
-review warnings: 55 literal operands of matches that may be a target number the source copied (the check cannot tell): 16 past-data, 11 target-object, 28 past-table
+  which copy             268 matches (368207 B), 526 operands
+kind-unverified: 0/7390 matches (0 B) whose operand kinds the shifted link could not tell; their operands kept every reading
+review warnings: 58 literal operands of matches that may be a target number the source copied (the check cannot tell): 19 past-data, 11 target-object, 28 past-table
   target-object line 694: function 1307 allocateBtreePage (ours 957) +0x529 i32.const 78143 = str.7fce96d5a99b
 ...
 ```

@@ -127,9 +127,9 @@ offers several:
 - an address: the target address of what it points at, plus every other target place holding the same content (a
   *copy*, below);
 - a table slot: the target slot that holds its function. Binaryen merges identical functions, so the target's table
-  can hold one function in several slots; each is a copy, up to 64 (`SAME_CONTENT_LIMIT`). A function in more slots
-  gives no reading: binaryen's merged empty function fills 126, and a table slot of ours that points at it leaves the
-  body `unresolved`;
+  can hold one function in several slots; each is a copy, all of them (binaryen's merged empty function fills 126). An
+  operand of a kind-unverified function is offered a function's slots only up to 64 (`SAME_CONTENT_LIMIT`), and a
+  function in more slots leaves its body `unresolved`;
 - the table base and a constant relative to it: the target's base, and the target slots of the function in our slot
   base + it, minus the target's base.
 
@@ -290,7 +290,7 @@ What no check here rejects, so a reviewer of a TSE function reads it in the sour
 
 - which copy an address or a table slot of ours became. Where our side offers several target places of the same
   content (a C string's copies, read-only content found at several places by its bytes or its re-pointed bytes) or
-  several target slots of one function (up to 64), the target body picks one, and no check proves that the place
+  several target slots of one function (126 for binaryen's merged empty function), the target body picks one, and no check proves that the place
   holds the object our source names. A pointer swapped for one to another object of ours whose content also sits at
   the place the target body uses gives the target's bytes. Calls through any slot of a function are the same, but
   pointer identity differs;

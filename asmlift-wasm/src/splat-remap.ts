@@ -10,7 +10,7 @@
 // table moved) says it, and the operand offers only the readings of its kind:
 //   literal                         its own bytes, nothing else
 //   address                         the target address(es) of what it points at; for an i64.const, of its low word
-//   table slot                      the target slot(s) of the function in our slot
+//   table slot                      the target slot(s) of the function in our slot: every slot holding it
 //   table base, relative to it      an unfolded `__table_base + rel` sum (-fPIC): the base reads as the target's
 //                                   table base, a relative operand as the target slot(s) of the function in our slot
 //                                   base + rel, minus the target's base
@@ -167,12 +167,12 @@ function lowWordReadings(maps: SymbolMaps, v: bigint): { values: bigint[]; readi
 }
 
 /** The target slots of the function in our table slot `v`: one, or each slot of a function the target's table holds
- *  several times (binaryen merged identical functions); none with the reason. With `relative`, each slot minus the
- *  target's table base (a table-rel operand, `v` already our base + it). */
+ *  several times (binaryen merged identical functions), up to `limit` of them; none with the reason. With `relative`,
+ *  each slot minus the target's table base (a table-rel operand, `v` already our base + it). */
 function slotReadings(
   maps: SymbolMaps,
   v: number,
-  relative = false,
+  { relative = false, limit = SAME_CONTENT_LIMIT }: { relative?: boolean; limit?: number } = {},
 ): { alternatives: Uint8Array[]; readings: string[]; reason: string } {
   const f = maps.ours.elem.get(v);
   const r = f === undefined ? null : resolveFunction(maps, f);
@@ -182,7 +182,7 @@ function slotReadings(
   if (slots?.length === 1) {
     return { alternatives: [Uint8Array.from(sleb(slots[0] - base))], readings: [`table slot of ${how}`], reason: '' };
   }
-  if (slots !== undefined && slots.length <= SAME_CONTENT_LIMIT) {
+  if (slots !== undefined && slots.length <= limit) {
     // the target's table holds the function in several slots: each is a pointer to it
     return {
       alternatives: slots.map((slot) => Uint8Array.from(sleb(slot - base))),
@@ -375,7 +375,13 @@ export function remapBody(maps: SymbolMaps, ourIndex: number): RemapResult {
             readings.push('table base');
           }
           if (kind === 'slot' || kind === 'table-rel' || (kind === undefined && v >= 1 && v < maps.ours.tableSize)) {
-            const t = kind === 'table-rel' ? slotReadings(maps, tableBase(m) + v, true) : slotReadings(maps, v);
+            // a slot of ours is a pointer to its function in any slot holding it; an operand that may be anything is
+            // offered a function's slots only while they are few
+            const limit = kind === undefined ? SAME_CONTENT_LIMIT : Number.POSITIVE_INFINITY;
+            const t =
+              kind === 'table-rel'
+                ? slotReadings(maps, tableBase(m) + v, { relative: true, limit })
+                : slotReadings(maps, v, { limit });
             alternatives.push(...t.alternatives);
             readings.push(...t.readings);
             if (t.reason !== '') {

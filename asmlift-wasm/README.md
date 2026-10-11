@@ -521,8 +521,9 @@ data holding pointers) is placed by its bytes with each pointer word re-pointed 
 pattern occurs once, or at each place for read-only content; a writable object found at several places stays
 unresolved. Placing one object can re-point a word of another, so the placement repeats until nothing more
 resolves. A function the target's table holds in several slots (binaryen merged identical functions) offers each
-slot as a reading, up to `SAME_CONTENT_LIMIT` (64) slots; a function in more slots (binaryen's merged empty function
-fills 126) gives no slot reading, and a table slot of known kind that points at it is unresolved.
+slot as a reading: every one of them for a table slot of known kind (binaryen's merged empty function fills 126), up
+to `SAME_CONTENT_LIMIT` (64) for an operand of a kind-unverified function, where a function in more slots gives no
+slot reading.
 
 | command                                                                                        | does                                                                       |
 | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
