@@ -65,15 +65,17 @@ APP := build/out/app
 GEN := $(APP)/gen
 # ---- the TSE application TUs' flags (docs/reference/app-flags.md; measured on the ecourna units in src/ecourna) ----------
 # ecourna (conan package libecea1da310e5107): -O3 -fPIC -fexceptions -std=c++20 -DNDEBUG; the sources sit in the
-# conan build dir, so the file names std::source_location records are reproduced with -ffile-prefix-map.
-ECOURNA_PREFIX_MAP := -ffile-prefix-map=/work/src/ecourna=/home/rubio/.conan2/p/b/libecea1da310e5107/b/src/ecourna
+# conan build dir, so the file names std::source_location records are reproduced with -ffile-prefix-map: the /work
+# spelling for the sources, the relative one for the headers found through -Isrc (api/asn/iconversorasn.hpp).
+ECOURNA_PREFIX_MAP := -ffile-prefix-map=/work/src/ecourna=/home/rubio/.conan2/p/b/libecea1da310e5107/b/src/ecourna \
+                      -ffile-prefix-map=src/ecourna=/home/rubio/.conan2/p/b/libecea1da310e5107/b/src/ecourna
 ECOURNA_CXXFLAGS   := -O3 -fPIC -fexceptions -std=c++20 -DNDEBUG $(ECOURNA_PREFIX_MAP) -Isrc -Isrc/asn1
 # uenux2 (the app itself, /home/rubio/tse/uenux2, tree mirrored under src/uenux2 so the records' paths map): -O2 -fPIC,
 # NO -fexceptions (emcc's default -fignore-exceptions: throw sites call __cxa_throw directly, no landing pads),
 # -DNDEBUG, -fno-strict-aliasing (no TBAA: comum's converters reload a vector's begin after an int store, fn 10289);
 # measured on the api/util, api/io, api/ipc/posix and comum units (docs/reference/facts/app-flags.md §F6). The
 # include root of the app's own headers is src/uenux2/src ("api/util/cwait.h"); ecourna headers come from -Isrc.
-UENUX2_PREFIX_MAP  := -ffile-prefix-map=/work/src/uenux2=/home/rubio/tse/uenux2
+UENUX2_PREFIX_MAP  := -ffile-prefix-map=/work/src/uenux2=/home/rubio/tse/uenux2 -ffile-prefix-map=src/uenux2=/home/rubio/tse/uenux2
 UENUX2_CXXFLAGS    := -O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing $(UENUX2_PREFIX_MAP) -Isrc -Isrc/uenux2/src -Isrc/asn1
 # the ASN.1 runtime (src/asn1, an app-side tree) has its own flags and compile rule in src/mk/asn1.mk:
 # -Os -fno-exceptions -std=c++17, the throwing TUs -fexceptions -fignore-exceptions
@@ -82,6 +84,13 @@ UENUX2_CXXFLAGS    := -O2 -fPIC -std=c++20 -DNDEBUG -fno-strict-aliasing $(UENUX
 # __split_buffer, roots_boost.o's __tree_remove) win the link, and the target's copies have TBAA (6 matches need it)
 APP_CXXFLAGS := $(filter-out -fno-strict-aliasing,$(UENUX2_CXXFLAGS))
 APP_CFLAGS   := $(filter-out -std=% -fno-strict-aliasing,$(UENUX2_CXXFLAGS))
+# Measuring a flag set: UENUX2_EXTRA and ECOURNA_EXTRA (empty here) are added to a tree's flags after the stand-ins'
+# are derived, so a private link adds a flag to that tree's objects alone, the fragments' own additions kept
+# (docs/reference/facts/app-flags.md §F9 item 6). make keeps an object whose flags changed: use a new APP directory.
+UENUX2_EXTRA  ?=
+ECOURNA_EXTRA ?=
+UENUX2_CXXFLAGS  += $(UENUX2_EXTRA)
+ECOURNA_CXXFLAGS += $(ECOURNA_EXTRA)
 SEVENZIP_FLAGS := -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_7ZIP_ST -I$(SEVENZIP_SRC)
 # the overlay shows the RHVoice build's generated config headers inside the source tree (tools/libs/rhvoice/build.sh)
 RHVOICE_CFG    := -ivfsoverlay $(RHVOICE_DIR)/cfg/overlay.yaml
@@ -126,10 +135,12 @@ $(ROOT)/$(APP)/roots_ecourna.o: $(ROOT)/src/app/roots_ecourna.cpp $(ROOT)/src/Ma
 # the reconstructed uenux2 units: UENUX2_SRCS are paths relative to src/uenux2 (src/api/util/cwait.cpp,
 # wasm/vota_web/…); the object keeps the path (build/out/app/uenux2/src/api/util/cwait.cpp.o), so file names may
 # hold underscores. Every unit depends on every uenux2/ecourna header (a unit moves headers, not only .cpp files).
+# A unit compiles from its /work path, which UENUX2_PREFIX_MAP rewrites: its std::source_location records then name
+# /home/rubio/tse/uenux2/<path>, as the target's do (a relative path is never rewritten).
 UENUX2_HDRS := $(shell find $(ROOT)/src/uenux2 -name '*.h' -o -name '*.hpp' 2>/dev/null) $(wildcard $(ROOT)/src/ecourna/*/*/*.hpp $(ROOT)/src/ecourna/*/*.hpp)
 UENUX2_OBJS := $(addprefix $(ROOT)/$(APP)/uenux2/,$(addsuffix .o,$(UENUX2_SRCS)))
 $(ROOT)/$(APP)/uenux2/%.cpp.o: $(ROOT)/src/uenux2/%.cpp $(ROOT)/src/Makefile $(UENUX2_HDRS)
-	$(H) mkdir -p $(dir $(R)) && build/docker-build.sh em++ $(UENUX2_CXXFLAGS) -c src/uenux2/$*.cpp -o $(R)
+	$(H) mkdir -p $(dir $(R)) && build/docker-build.sh em++ $(UENUX2_CXXFLAGS) -c /work/src/uenux2/$*.cpp -o $(R)
 $(ROOT)/$(APP)/roots_uenux2.o: $(ROOT)/src/app/roots_uenux2.cpp $(ROOT)/src/Makefile $(UENUX2_HDRS)
 	$(H) mkdir -p $(APP) && build/docker-build.sh em++ $(APP_CXXFLAGS) -c src/app/roots_uenux2.cpp -o $(R)
 

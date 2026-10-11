@@ -116,8 +116,7 @@ The fragments compile those TUs with `$(filter-out -fPIC,$(ECOURNA_CXXFLAGS)) -f
 
 Compared on three reconstructed units (`api/util/cwait.cpp`, `api/io/cinikey.cpp`,
 `api/ipc/posix/cposixmutex.cpp` + `cposixsemaphore.cpp`; 13 target functions), each flag set in a private
-whole-skeleton link (`make -s -C src link APP=… OUT=… OUT_NAMED=… UENUX2_CXXFLAGS="…"`, before any fragment
-added flags of its own; today a flag goes through `UENUX2_PREFIX_MAP`, F9 item 6):
+whole-skeleton link (`make -s -C src link APP=… OUT=… OUT_NAMED=…`; F9 item 6 gives the command):
 
 | fn | function | -Oz | -Os | -O2 | -O3 | -O2 -fPIC |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -156,8 +155,8 @@ added flags of its own; today a flag goes through `UENUX2_PREFIX_MAP`, F9 item 6
   instead does not reproduce the target: a private link with `roots_rhvoice.o` and `roots_boost.o` at uenux2's flags
   and moved after the RHVoice objects loses dozens of matches, 152 among them, whose first definer becomes uenux2's
   `ctickmanager.cpp.o` (no TBAA). So in the TSE link some code with TBAA that defines these templates precedes the
-  uenux2 and ecourna objects that also define them, as our stand-ins do (2026-10-11).
-- **Not ecourna's other two.** In a private whole link (the flags through `UENUX2_PREFIX_MAP`, so the stand-ins keep
+  uenux2 and ecourna objects that also define them, as our stand-ins do.
+- **Not ecourna's other two.** In a private whole link (the flags through `UENUX2_EXTRA`, so the stand-ins keep
   theirs; F9.6), adding `-fno-delete-null-pointer-checks` loses 3 matches (5194, 11321 and 11326, the
   `CVotos::Partido`/`Legenda` lambdas) and `-fno-strict-overflow` loses 1 (3663 `CBmpConversor::InvertColors`).
 - `-std=c++17` does not compile (`source_location`, class NTTPs).
@@ -224,19 +223,17 @@ The recovered class layouts are in the sources themselves (`src/ecourna/app/dado
    flag change in a `src/units/*.mk` fragment. Measure a flag set in a private link
    (`make -C src link APP=build/out/<name>/app OUT=… OUT_NAMED=…`), which rebuilds all app objects.
 
-   **Pass a uenux2 flag through `UENUX2_PREFIX_MAP`**, not `UENUX2_CXXFLAGS`. A command-line `UENUX2_CXXFLAGS="…"`
-   also replaces every fragment's target-specific `UENUX2_CXXFLAGS += …` (the path map of units 13, 21 and 22, so
-   their records name another path), and `APP_CXXFLAGS` and `APP_CFLAGS`, computed from it, carry the flag to every
-   stand-in (`src/app`, the units' `-roots.cpp`). `UENUX2_PREFIX_MAP` is part of `UENUX2_CXXFLAGS` and no fragment
-   sets it; pin the stand-ins' flags to their current values. The private link, then the splat check of it (the
-   link map, the shifted link and its kind table beside it, then `splat-build` with the committed matches; the
-   default `make -C src splat` only reads `build/out/wasm/vota_web`):
+   **Add the flag with `UENUX2_EXTRA` (or `ECOURNA_EXTRA`)**, which `src/Makefile` appends to the tree's flags after
+   the stand-ins' `APP_CXXFLAGS` are derived, so the stand-ins keep theirs and the fragments' own target-specific
+   additions stay. Do not set `UENUX2_CXXFLAGS` on the command line: that replaces those additions and, through
+   `APP_CXXFLAGS`, gives the flag to every stand-in. The private link, then the splat check of it (the link map, the
+   shifted link and its kind table beside it, then `splat-build` with the committed matches; the default
+   `make -C src splat` only reads `build/out/wasm/vota_web`):
 
    ```sh
    P=build/out/flags-nodelnull      # one new directory per flag set: make keeps an object whose flags changed
    TMPDIR=/tmp make -C src link APP=$P/app OUT=$P/wasm/vota_web OUT_NAMED=$P/wasm-named/vota_web \
-     UENUX2_PREFIX_MAP="$(make -s -C src print-UENUX2_PREFIX_MAP) -fno-delete-null-pointer-checks" \
-     APP_CXXFLAGS="$(make -s -C src print-APP_CXXFLAGS)" APP_CFLAGS="$(make -s -C src print-APP_CFLAGS)"
+     UENUX2_EXTRA=-fno-delete-null-pointer-checks
    TMPDIR=/tmp tools/round/link-map.sh $P/wasm/vota_web
    TMPDIR=/tmp tools/round/link-kinds.sh $P/wasm/vota_web
    cd asmlift-wasm
@@ -245,10 +242,11 @@ The recovered class layouts are in the sources themselves (`src/ecourna/app/dado
      --matches ../splat/matched.txt -o ../$P/splat.wasm
    ```
 
-   With `make -n` in place of the link, the flag is on exactly the 19 `UENUX2_SRCS` objects and the two uenux2
-   `-pending.cpp`, unit 13's path map is kept, and no stand-in gets it. On 2026-10-11 (main a0225a3, 7,223 matches)
-   the five steps took 6.5 minutes from an empty directory on a loaded machine and the build ended `3 matched functions no longer verify`:
-   5194, 11321 and 11326, as F6 says.
+   `APP` moves the ASN.1 runtime's objects too (`src/mk/asn1.mk`'s `ASN1_DIR` is `$(APP)/asn1`), so nothing of the
+   private link is read from or written to `build/out/app`. The link compiles every object into `$P/app`, ASN.1
+   runtime included, with the flag on the `UENUX2_SRCS` objects and the uenux2 `-pending.cpp` and on no stand-in. The
+   five steps take about 9 minutes on a loaded machine. With `-fno-delete-null-pointer-checks` the build ends
+   `3 matched functions no longer verify` (the tool's message), listing 5194, 11321 and 11326, as F6 says.
 7. **A lone-link residue of whole-program DAE.** Extra `drop`s after `~shared_ptr` in a landing pad, or a
    `memcpy` return value kept or dropped, come from callers elsewhere in the program; they close only in the
    whole link.

@@ -16,6 +16,11 @@ by a matched function (its symbol is in splat/matched.txt): a match cannot hold 
 line a change broke. A record loaded only by unmatched functions is reconstruction not finished yet and is printed
 as such; `--strict` fails on those too.
 
+A record whose file name is still our checkout's (`src/uenux2/…`, `src/ecourna/…`, or the container's
+`/work/src/…`) comes from a TSE source compiled without its tree's -ffile-prefix-map: no record of it can be the
+target's, so it is printed as UNMAPPED and fails the check whoever loads it. Records of the stand-ins
+(`src/app/…`, `src/units/…`) are not TSE code and are left out.
+
 Reads build/out/ (make -C src link writes it), so it needs a link but not the image; CI has neither.
 """
 import collections
@@ -212,12 +217,17 @@ def records(path):
             if f is None or g is None:
                 continue
             file, func = string(*f), string(*g)
-            if file is None or func is None or not file.startswith('/'):
+            if file is None or func is None or not (file.startswith('/') or unmapped(file)):
                 continue
             line = int.from_bytes(raw[p + 8:p + 12], 'little')
             col = int.from_bytes(raw[p + 12:p + 16], 'little')
             out.append(((file, func, line, col), frozenset(referrers.get((seg, p), ()))))
     return out
+
+
+def unmapped(file):
+    """A TSE source's file name the tree's -ffile-prefix-map did not rewrite."""
+    return file.startswith(('src/uenux2/', 'src/ecourna/', '/work/src/uenux2/', '/work/src/ecourna/'))
 
 
 def link_objects():
@@ -243,7 +253,7 @@ def main(argv):
         p = line.split()
         if len(p) >= 2 and not p[0].startswith('#'):
             matched.add(p[1].split('@')[0])
-    broken, unfinished, seen, files = [], [], 0, set()
+    broken, unfinished, unmapped_recs, seen, files = [], [], [], 0, set()
     for obj in objects:
         for rec, users in sorted(set(records(obj))):
             seen += 1
@@ -251,19 +261,27 @@ def main(argv):
             if rec in target:
                 continue
             file, func, line, col = rec
+            if unmapped(file):
+                unmapped_recs.append(f'{os.path.relpath(obj, ROOT)}: {func} at {file}:{line}:{col}: the file name is '
+                                     f"our checkout's, not the target's: the object was compiled without its tree's "
+                                     f'-ffile-prefix-map (docs/how-to-decompile.md step 6)')
+                continue
             where = ', '.join(by_function.get((file, func), [])) or 'no record of this function in this file'
             mine = sorted(users & matched)
             msg = (f'{os.path.relpath(obj, ROOT)}: {func} at {file}:{line}:{col}; the target has {where}; '
                    f'loaded by {", ".join(sorted(users)) or "no function"}')
             (broken if mine else unfinished).append(msg + (f' (matched: {", ".join(mine)})' if mine else ''))
+    for m in unmapped_recs:
+        print('UNMAPPED ' + m, file=sys.stderr)
     for m in broken:
         print('MOVED ' + m, file=sys.stderr)
     for m in unfinished:
         print(('MOVED ' if strict else 'unmatched ') + m, file=sys.stderr)
     print(f'{seen} source_location records in {len(objects)} objects ({len(files)} files): '
-          f'{seen - len(broken) - len(unfinished)} are records of the target; {len(broken)} that matched functions '
-          f'load are not; {len(unfinished)} that only unmatched functions load are not')
-    return 1 if broken or (strict and unfinished) else 0
+          f'{seen - len(broken) - len(unfinished) - len(unmapped_recs)} are records of the target; {len(broken)} that '
+          f'matched functions load are not; {len(unfinished)} that only unmatched functions load are not; '
+          f'{len(unmapped_recs)} name an unmapped file')
+    return 1 if broken or unmapped_recs or (strict and unfinished) else 0
 
 
 if __name__ == '__main__':

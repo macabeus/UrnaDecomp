@@ -46,16 +46,10 @@ UENUX2_SRCS += src/api/util/cwait.cpp
    flag that only a target-specific variable carries (`06-…`'s `api_compression_%.o: ECOURNA_CXXFLAGS += -fno-PIC`),
    touch the unit's sources, or delete their objects by name when they are deeper than three levels.
 
-   The generic uenux2 rule compiles `src/uenux2/<path>`, a relative path that `UENUX2_PREFIX_MAP`
-   (`-ffile-prefix-map=/work/src/uenux2=…`) never rewrites, so a uenux2 source with `std::source_location` records
-   would record `src/uenux2/…` instead of the target's `/home/rubio/tse/uenux2/…`. Units 02 and 14 compile from the
-   `/work` path in a rule of their own; 13, 21 and 22 keep the generic rule and add the map to their objects, the
-   shorter way (`21-uenux2-cdirreader.mk`):
-
-   ```make
-   $(addprefix $(ROOT)/$(APP)/uenux2/,$(addsuffix .o,$(CDIRREADER_SRCS))): \
-     UENUX2_CXXFLAGS += -ffile-prefix-map=src/uenux2=/home/rubio/tse/uenux2
-   ```
+   A rule of the fragment's own compiles the TSE source from its `/work/src/…` path, as the generic ecourna and
+   uenux2 rules do: the tree's `-ffile-prefix-map` (`UENUX2_PREFIX_MAP`, `ECOURNA_PREFIX_MAP`) rewrites only that
+   spelling, so the file names in the `std::source_location` records become the target's. A relative `src/…` path
+   is never rewritten, and `make -C src check-srcloc` fails with `UNMAPPED` on such a record.
 4. A rule for each companion file (next section) and `override EXTRA_OBJS += $(APP)/<fragment>-roots.o`. `override`
    keeps the companions in the link when `tools/round/try-tu.sh` passes its own `EXTRA_OBJS` on the make command line.
 
@@ -65,7 +59,7 @@ flag as `docs/reference/facts/app-flags.md §F5`. A flag that one function seems
 a fragment carries it only when the evidence is per TU, as `-fno-PIC`'s is (§F5;
 `docs/how-to-decompile.md` step 4, "When only a flag closes the gap").
 
-A flag a fragment does add (a path map aside, which is not a flag of the code) gives its objects a flag set, and
+A flag a fragment does add gives its objects a flag set, and
 the benchmark's registry `asmlift-wasm/benchmark/dataset/setups.json` must have a setup with exactly that set, as
 `ecourna-nopic` has for `-fno-PIC`. Otherwise, from `asmlift-wasm/`, `pnpm bench setups --check` reports the tree's
 setup as drift and `pnpm test:bench` fails; every splat, status and stubs check still passes, so run it before

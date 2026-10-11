@@ -112,11 +112,12 @@ pieces and meter (`docs/reference/splat.md`), `docs/reference/link-order.md` §7
 benchmark rows' `component` field.
 
 **owner** — the coarser library class of `tools/libs/classify.py`, stored in `tools/libs/cls2.json`: `app`,
-`openssl`, `sqlite`, `7zip`, `rhvoice`, `libcxx`, `asn1`, `boost`, `libc`, `zlib`, or `-`. It was seeded from
-library strings and vtable namespaces during the library census. It is a heuristic and can be wrong for TSE code:
-`api::CDirReader::NextEntry` (1260, record `/home/rubio/tse/uenux2/src/api/util/cdirreader.cpp`) is owner `sqlite`
-(`awk -F'\t' '$1==1260' ledger/functions.tsv | cut -f1-5` prints `1260 87 10 sqlite ecourna`), probably through its
-one library-looking callee, `readdir`. For TSE code go by the records and the stub's tree. *Where:*
+`openssl`, `sqlite`, `7zip`, `rhvoice`, `libcxx`, `asn1`, `boost`, `libc`, `zlib`, or `-`. It is seeded from
+library strings and vtable namespaces, then spread through callers, callees and neighbours; a function that loads a
+TSE `std::source_location` record is `app` whatever those say. That rule overrides the spread for 178 functions,
+such as `api::CDirReader::NextEntry`, 1260, which the spread alone makes `sqlite` through its one library-looking
+callee, `readdir`. Elsewhere it stays a heuristic, so for TSE code go by the records and the stub's tree.
+`awk -F'\t' '$1==1260' ledger/functions.tsv | cut -f1-5` prints `1260 87 10 app ecourna`. *Where:*
 `ledger/functions.tsv` column `owner`, `pnpm wasm progress --by owner` (the command's default) and so
 `build/out/census/progress.md`, `pnpm wasm fn --owners`, the benchmark rows' `owner` field.
 

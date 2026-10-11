@@ -10,7 +10,7 @@
 # converter that builds an entity references (Turno::theInfo, ...). Compiled with the runtime's flags plus the modules'
 # include dir; the converters' fragment (src/units/04-ecourna-app-dados-asn.mk) puts them in the link, where the
 # records nothing references are garbage-collected.
-ASN1MOD_DIR  := build/out/app/asn1/modules
+ASN1MOD_DIR  := $(APP)/asn1/modules
 ASN1MOD_SRCS := $(sort $(notdir $(wildcard $(ROOT)/src/asn1/modules/*.cxx)))
 ASN1MOD_OBJS := $(addprefix $(ROOT)/$(ASN1MOD_DIR)/,$(ASN1MOD_SRCS:.cxx=.o))
 # This rule comes before the runtime's: make 3.81 takes the first pattern that applies, and the runtime's
@@ -18,7 +18,7 @@ ASN1MOD_OBJS := $(addprefix $(ROOT)/$(ASN1MOD_DIR)/,$(ASN1MOD_SRCS:.cxx=.o))
 $(ROOT)/$(ASN1MOD_DIR)/%.o: $(ROOT)/src/asn1/modules/%.cxx $(wildcard $(ROOT)/src/asn1/modules/*.h $(ROOT)/src/asn1/*.h) $(ROOT)/src/mk/asn1.mk
 	$(H) mkdir -p $(ASN1MOD_DIR) && build/docker-build.sh em++ $(ASN1_CXXFLAGS) -Isrc/asn1/modules -c src/asn1/modules/$*.cxx -o $(R)
 
-ASN1_DIR      := build/out/app/asn1
+ASN1_DIR      := $(APP)/asn1
 ASN1_CXXFLAGS := -Os -fno-exceptions -std=c++17 -DNDEBUG -Isrc/asn1
 ASN1_SRCS     := $(sort $(notdir $(wildcard $(ROOT)/src/asn1/*.cxx)))
 ASN1_OBJS     := $(addprefix $(ROOT)/$(ASN1_DIR)/,$(ASN1_SRCS:.cxx=.o))

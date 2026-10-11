@@ -63,6 +63,19 @@ for rnd in range(12):
     a=propagate(); b=smooth(60)
     if not a and not b: break
 print('classified',len(cls),collections.Counter(how.values()),file=sys.stderr)
+# a function that loads a TSE std::source_location record (ledger/source-locations.tsv: a uenux2 or ecourna file) is
+# TSE code whatever library string, vtable, caller or neighbour classified it; applied last, so it moves no other
+ROOT=__import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.abspath(__file__))))
+TSE_FILE=re.compile(r'^(/home/rubio/tse/uenux2/|/home/rubio/\.conan2/p/b/libecea1da310e5107/b/src/ecourna/)')
+records=set()
+with open(ROOT+'/ledger/source-locations.tsv',encoding='utf-8') as fh:
+    next(fh)
+    for line in fh:
+        p=line.rstrip('\n').split('\t')
+        if TSE_FILE.match(p[1]): records.update(int(x) for x in p[5].split(',') if x)
+moved=collections.Counter(cls.get(f,'-') for f in records if cls.get(f)!='app')
+for f in records: cls[f]='app'; how[f]='record'
+print('TSE records',len(records),'functions; moved to app',sum(moved.values()),dict(moved),file=sys.stderr)
 json.dump(cls,open('cls2.json','w'))
 tot=collections.Counter(); size=collections.Counter(); seeds=collections.Counter(seed.values())
 print('class\tfuncs\tseeded\tbytes')

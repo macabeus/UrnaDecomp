@@ -5,10 +5,6 @@
 # Paths relative to src/uenux2; the generic uenux2 rule depends on the source and every uenux2 header.
 CDIRREADER_SRCS := src/api/util/cdirreader.cpp
 UENUX2_SRCS += $(CDIRREADER_SRCS)
-# the uenux2 rule compiles src/uenux2/<path> (relative), which UENUX2_PREFIX_MAP's /work/src/uenux2 never matches; the
-# record must name /home/rubio/tse/uenux2/<path> as the target's does (as in 13-uenux2-crdvvota.mk)
-$(addprefix $(ROOT)/$(APP)/uenux2/,$(addsuffix .o,$(CDIRREADER_SRCS))): \
-  UENUX2_CXXFLAGS += -ffile-prefix-map=src/uenux2=/home/rubio/tse/uenux2
 # NextEntry's six callers are not reconstructed yet: 21-uenux2-cdirreader-roots.cpp gives it two call sites
 $(ROOT)/$(APP)/21-uenux2-cdirreader-roots.o: $(ROOT)/src/units/21-uenux2-cdirreader-roots.cpp $(ROOT)/src/Makefile
 	$(H) mkdir -p $(APP) && build/docker-build.sh em++ $(APP_CXXFLAGS) -c src/units/21-uenux2-cdirreader-roots.cpp -o $(R)

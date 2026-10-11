@@ -823,11 +823,6 @@
 // f1884 · 1167 B · unmatched · placement: link order · name unknown
 // void f1884(i32, i32, i32) { ... }
 
-// link-order cluster 1177 · uses=6 · neighbours' file ecourna/api/io/cfile.cpp
-
-// f1889 · 18 B · unmatched · placement: link order · name unknown
-// ? f1889(i32, i32, i32, i32) { ... }
-
 // link-order cluster 1178 · uses=6 · neighbours' file uenux2/src/app/comum/util/cmonitoraalimentacao.cpp
 
 // f1899 · 25 B · unmatched · placement: link order · name unknown
@@ -1037,11 +1032,6 @@
 
 // f235 · 21 B · unmatched · placement: link order · name unknown
 // ? f235(i32, i32, i32, i32) { ... }
-
-// link-order cluster 1375 · uses=139
-
-// f210 · 21 B · unmatched · placement: link order · name unknown
-// ? f210(i32, i32, i32, i32) { ... }
 
 // link-order cluster 1383 · uses=282
 
