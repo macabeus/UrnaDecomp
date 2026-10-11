@@ -95,14 +95,25 @@ function usage(): never {
                                              its function's piece
   splat-symbols <target.wasm> <plain.wasm> [-o <symbol_addrs.txt>]   the target's symbol file from our link's maps
   splat-maps <target.wasm> <plain.wasm> (--fn <ours> | --data <addr> | --target-fn <n> | --summary)
-  splat-remap <target.wasm> <plain.wasm> <ours> [--against <target fn>]   one body re-pointed into the target
-  splat-sym-coverage <target.wasm> <plain.wasm> [--smoke N]          symbol coverage and ledger pairs re-pointed
+  splat-remap <target.wasm> <plain.wasm> <ours> [--against <target fn>] [--kinds <kinds.json> | --no-kinds]
+                                             one body re-pointed into the target
+  splat-sym-coverage <target.wasm> <plain.wasm> [--smoke N] [--kinds <kinds.json> | --no-kinds]
+                                             symbol coverage and ledger pairs re-pointed
   splat-twin-check <plain.wasm> <twin.wasm>   the --emit-symbol-map twin's bodies against the plain link's
                                              (src/splat-symbols-cli.ts; urna layout defaults)
   splat-scan <target.wasm> <plain.wasm> [-o <scan.tsv>] [--match [<matches>]]   every target function against our
                                              re-pointed candidate: match / differs / unresolved / no-candidate
-  splat-build <target.wasm> <plain.wasm> [--matches <f>] [-o <wasm>] [--expect <sha256>]   the split assembled with
-                                             our bytes for every match; fails on a match that no longer verifies
+  splat-build <target.wasm> <plain.wasm> [--matches <f>] [-o <wasm>] [--expect <sha256>]
+              [--max-kind-unverified <n>]    the split assembled with our bytes for every match; fails on a match
+                                             that does not verify, or on more than <n> kind-unverified matches;
+                                             prints the kind-unverified matches and the review warnings
+    splat-scan, splat-build, splat-remap and splat-sym-coverage take --kinds <kinds.json> (default
+    build/out/wasm-kinds/<name>/kinds.json, and they refuse to run without it): each constant and memarg offset is
+    offered only the readings of its kind (literal, address, table slot, an unfolded __table_base sum's base and
+    the slots relative to it); --no-kinds leaves every function kind-unverified (every reading offered)
+  splat-kinds <plain.wasm> [--shifted <dir>] [-o <kinds.json>] [--matches <f>]   the operand-kind table: the plain
+                                             link against its relink with data and table moved (<dir>, default
+                                             build/out/wasm-kinds/<name>: tools/round/link-kinds.sh)
                                              (src/splat-sub-cli.ts; urna layout defaults)
 Every command that normalises takes --import-names <names.json> (module A / the target) and --import-names-b
 <names.json> (module B / a candidate); without them the glue beside the module (x.wasm → x.js) is read when present.

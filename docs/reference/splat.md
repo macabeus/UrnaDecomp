@@ -17,9 +17,10 @@ function not decompiled yet is a comment stub in the sources ([../../src/README.
 TMPDIR=/tmp make -C src splat
 ```
 
-This runs link (if stale), link-map (if stale), split (if stale), then the build. It writes
+This runs link (if stale), link-map and link-kinds (if stale), split (if stale), then the build. It writes
 `build/out/splat/vota_web_wasm.wasm` and prints the meter. It fails unless the result has the
-target's sha256, `8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2`.
+target's sha256, `8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2`, and unless at most
+`SPLAT_MAX_KIND_UNVERIFIED` (0) matches are kind-unverified (§3).
 
 ## The pipeline
 
@@ -28,10 +29,11 @@ target's sha256, `8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007
 | split | `make -C src splat-split` | `target/vota_web_wasm.wasm`, `ledger/functions.tsv`, `ledger/func-attribution.tsv` | `build/out/splat/pieces/` |
 | our link | `TMPDIR=/tmp make -C src link` | `src/`, `third_party/`, `src/mk/*.mk`, `src/units/*.mk` | `build/out/wasm/vota_web/vota_web_wasm.wasm` (the plain link) |
 | our symbols | `make -C src link-map` | the plain link's own `link.cmd` | `build/out/wasm-map/vota_web/{names.tsv,vota_web_wasm.map}` |
+| our operand kinds | `make -C src link-kinds` | the plain link's `link.cmd` and objects, link-map's map | the shifted link `build/out/wasm-kinds/vota_web/{vota_web_wasm.wasm,names.tsv}` and `kinds.json` |
 | target symbols | `make -C src splat-symbols` | the target, the plain link, its map, `ledger/` | `splat/symbol_addrs.txt` (committed) |
 | scan | `make -C src splat-scan` | all of the above | `splat/scan.tsv` (committed) and the status blocks (`make -C src status`) |
 | match | `make -C src splat-match` | the scan | appends its new matches to `splat/matched.txt` (committed) |
-| build | `make -C src splat` | pieces, plain link, maps, symbol file, match list | `build/out/splat/vota_web_wasm.wasm` + meter |
+| build | `make -C src splat` | pieces, plain link, maps, operand kinds, symbol file, match list | `build/out/splat/vota_web_wasm.wasm` + meter |
 
 Everything under `build/out/` is generated from the target and our link, and is gitignored. The committed outputs
 are `splat/symbol_addrs.txt`, `splat/matched.txt` and `splat/scan.tsv`, with the `src/mk/splat-*.mk` rules.
@@ -62,7 +64,8 @@ There are two maps, one for each side.
 `EMCC_DEBUG=1`. It refuses to write anything unless that relink is byte-identical to the plain wasm. It
 then replays binaryen on the kept intermediates to name every final function index. `names.tsv` maps our
 function index to its wasm-ld symbol and object. The map gives every data symbol's address, and wasm-opt
-keeps data where wasm-ld put it.
+keeps data where wasm-ld put it. What each constant of ours is (an address, a table slot or a plain
+integer) comes from a second link of the same objects, with the data and the table moved (§3, "Operand kinds").
 
 **The target side is evidence**, in `splat/symbol_addrs.txt`. Each line is
 `<name> = func:N; | import:N; | 0xADDR; // [type:data] [size:0x…] evidence:… [by:…]`. The evidence kinds:
@@ -101,10 +104,46 @@ A target function is **matched** when four things hold:
 3. The re-pointed body is byte-identical to the target's piece.
 4. Nothing in the re-pointing reads a target body.
 
-An `i32.const` can be an address, a table slot or a plain integer, and so can a memarg offset of 1024 or
-more. Content can also sit at several places in the target, such as a tail-merged string. In these cases
-every reading from our side is kept, and the target body only picks among them. The meter reports how
-often it had to pick.
+**Operand kinds.** The final module has no relocations left, so an `i32.const`, an `i64.const` or a memarg offset
+of ours may be an address, a table slot or a plain integer, and the bytes do not say which. Our side learns it from
+a second link. `tools/round/link-kinds.sh` (`make -C src link-kinds`) reruns the plain link's own command with
+`-sGLOBAL_BASE=1024+D` and `-sTABLE_BASE=1+T` (emcc passes them to wasm-ld as `--global-base` and `--table-base`),
+with D = 1 MiB and T = 20,000: each larger than our data (1.46 MB) and our table (10,007 slots), and different from
+each other. It names that *shifted link*'s functions the way link-map names the plain one. It refuses to start while
+an object or archive on the link line is newer than the plain wasm, and fails unless its map lists the same input
+sections as link-map's map of the plain link, in the same order and of the same sizes. The toolkit's `splat-kinds`
+then aligns the two links by function name, not index, and writes `build/out/wasm-kinds/vota_web/kinds.json`. In a
+function whose instructions are the same in both links, an operand that moved by exactly D is an **address**, by
+exactly T a **table slot**, and one that did not move a **literal**. A `-fPIC` object (sqlite's) adds `__table_base`
+to a slot relative to it, and binaryen leaves the sum unfolded when the relative part is not one constant
+(`vdbeSorterSort`: `select(2035, 2036, 2037) + 1`). That base constant is followed to its use: the base reads as the
+target's table base, and the constants added to it as target slots minus that base. Every other moved slot is
+followed too, to see whether it is added to constants or to another slot.
+
+Each operand is offered only the readings of its kind, and the target body picks among them only where our side
+offers several:
+
+- a literal: its own bytes, nothing else;
+- an address: the target address of what it points at, plus every other target place holding the same content (a
+  *copy*, below);
+- a table slot: the target slot that holds its function. Binaryen merges identical functions, so the target's table
+  can hold one function in several slots; each is a copy, up to 64 (`SAME_CONTENT_LIMIT`). A function in more slots
+  gives no reading: binaryen's merged empty function fills 126, and a table slot of ours that points at it leaves the
+  body `unresolved`;
+- the table base and a constant relative to it: the target's base, and the target slots of the function in our slot
+  base + it, minus the target's base.
+
+An address or slot of ours whose object or function has no target image, or none our side can offer, makes the
+body `unresolved`. It is never read as a number.
+
+A function the kind table cannot vouch for is **kind-unverified**. That happens when it has another shape in the
+shifted link, when an operand moved by neither shift, when a base constant's use cannot be followed (it is kept in a
+local, carried out of a block, or added to anything but constants), or when a moved slot is added to constants or to
+another slot (part of the base may be folded in, so nothing tells which part is the base). Its operands keep every
+reading their value suggests: below 1024 the literal first, from 1024 the address, else the
+table slot, else the literal. The target body then picks the kind as well, so the build lists every kind-unverified
+match and fails on more of them than `SPLAT_MAX_KIND_UNVERIFIED` (`src/mk/splat-sub.mk`, 0). Today every function of
+our link is kind-verified ([facts/splat.md](facts/splat.md) §S5).
 
 An address of ours resolves through the symbol file's name for its object when there is one. Otherwise
 the object's content places it:
@@ -125,9 +164,6 @@ the object's content places it:
   The matches count among the names, and a scan pass re-points with the previous pass's matches applied, so
   a function is first matched before its own name re-points any word of the objects it uses.
 
-A table slot reading names the slot the target's table holds the function in. When binaryen merged
-identical functions, the target's table holds the survivor in several slots, and each slot is a copy.
-
 Two rules guard the evidence:
 
 - **No circular evidence.** A data name whose only vote came from the function being matched checks
@@ -146,7 +182,10 @@ Two rules guard the evidence:
 `splat-build` re-points every matched function and compares it with its piece. It then assembles the split
 from our bytes for the matched functions and from the original pieces for the rest. The function keeps
 the manifest's type index, and sizes and LEBs are re-encoded around the bodies. The build writes nothing
-in two cases: when any match fails, or when the module is not sha256 `8579ef8d…1007e2`.
+when any match fails, when more matches are kind-unverified than `--max-kind-unverified` allows (make passes
+`SPLAT_MAX_KIND_UNVERIFIED`; set it empty to list those matches without failing on them), or when the module is not
+sha256 `8579ef8d…1007e2`. After the meter it prints the kind-unverified matches and the review warnings ("Reviewing a
+match").
 
 ## The drift rule
 
@@ -189,25 +228,29 @@ pnpm --silent wasm splat-remap $URNA/target/vota_web_wasm.wasm \
 ```
 
 The output is `IDENTICAL`, or the unresolved operands, or the first byte no reading explains. This needs
-`make -C src link-map` first, which `splat-scan` and `splat` run when it is stale. `<our symbol>` is the `name`
-column of `build/out/wasm-map/vota_web/names.tsv` (mangled; look it up there rather than guess: a name that is not
-there fails with `no function of ours is called …`). For the 9132 match it printed:
+`make -C src link-map` and `make -C src link-kinds` first, which `splat-scan` and `splat` run when they are stale:
+`splat-remap` reads the operand-kind table beside the plain link (`build/out/wasm-kinds/vota_web/kinds.json`) and
+refuses to run without one, unless given `--no-kinds`, which re-points the body kind-unverified. `<our symbol>` is
+the `name` column of `build/out/wasm-map/vota_web/names.tsv` (mangled; look it up there rather than guess: a name
+that is not there fails with `no function of ours is called …`). For the 9132 match it prints:
 
 ```
-ours 10514: re-pointed, 134 bytes; rewritten {"global":3,"table":2,"func":4}; soft 0
-target 9132: IDENTICAL (2 ambiguous operands read as literal)
+ours 10518: re-pointed, 134 bytes; rewritten {"global":3,"func":4}; soft 0; operand kinds verified
+target 9132: IDENTICAL (0 ambiguous operands read as -)
 ```
 
 - `ours N` is our function's index in that link. `rewritten` counts the operands re-pointed, per kind (callees,
-  globals, table slots, addresses).
-- `soft N` counts the operands that look like an address or a table slot (at or above 1024) but resolve to
-  neither. They keep only their literal reading, and each one is listed under the line.
-- `N ambiguous operands read as …` lists the readings the target body took for its ambiguous operands (§3). An
-  operand's preferred reading is the one re-pointing alone writes: below 1024 the literal; at or above it the
-  address, else the table slot, else the literal. 9132's two operands are below 1024, so `literal` was the preferred
-  reading and the match needed no choice. Any other reading (a `literal` at or above 1024, a table slot where an
-  address or a literal leads) counts as "another reading" in the meter. The output does not say which case it
-  was, and neither does the scan's `readings:` detail, so look at the operand's value in the body.
+  globals, table slots, addresses). The line ends with `operand kinds verified`, or `KIND-UNVERIFIED (<why>)` (§3).
+- `soft N` counts, in a kind-unverified function only, the operands that look like an address or a table slot (at
+  or above 1024) but resolve to neither. They keep only their literal reading, and each one is listed under the
+  line. In a kind-verified function such an operand is unresolved.
+- `N ambiguous operands read as …` lists the reading the target body took for each address and table-slot operand
+  (§3). A literal has one reading and is not listed: 9132's constants are all literals, and it re-points no address
+  or slot. An operand's first reading is its preferred one, the one re-pointing alone writes: the address its object
+  resolves to, or the first target slot of its function. An `address same-content 0x…` or `table slot copy …`
+  reading is a copy the target body picked, which the meter counts as "which copy". In a kind-unverified function
+  the literals are listed too, and the preferred reading goes by value: below 1024 the literal; at or above it the
+  address, else the table slot, else the literal. Any other reading there counts as "another reading".
 
 `splat-remap` reads the committed symbol file and none of the matches in `splat/matched.txt`. The scan and the
 build re-point with every match applied (§3, "A match names its function"), so `splat-remap` can say `differs` or
@@ -218,15 +261,46 @@ address with no target symbol) and `differs at body byte 6`. The splat build is 
 symbol (`byn$mgfn-shared$…`) reaches the command cut short. Run the CLI directly for those:
 `pnpm --silent exec tsx src/cli.ts splat-remap … 'sym:byn$mgfn-shared$…' --against <index>`.
 
-To check a candidate before it lands, give `splat-remap` a try link instead of the plain one, after
-`tools/round/link-map.sh build/out/try/<name>/wasm/vota_web` has mapped it
-([../how-to-decompile.md](../how-to-decompile.md) step 5).
+To check a candidate before it lands, give `splat-remap` a try link instead of the plain one. First map it with
+`tools/round/link-map.sh build/out/try/<name>/wasm/vota_web`, then relink it shifted with
+`tools/round/link-kinds.sh build/out/try/<name>/wasm/vota_web` and derive its kind table with
+`pnpm wasm splat-kinds ../build/out/try/<name>/wasm/vota_web/vota_web_wasm.wasm` (from `asmlift-wasm/`). Or skip the
+kinds with `--no-kinds` ([../how-to-decompile.md](../how-to-decompile.md) step 5).
 
 ### Reviewing a match
 
 The build is the check: `make -C src splat` re-points every matched function, compares it with its piece, and
-writes nothing unless every match verifies and the module is the target's sha256. Re-pointing never reads a target
-body (rule 4 of §3); the target body only picks among the readings our side offers.
+writes nothing unless every match verifies, the kind-unverified matches are within their limit, and the module is
+the target's sha256. Re-pointing never reads a target body (rule 4 of §3). Our side picks each operand's kind, and
+the target body only picks the copy where our side offers several.
+
+What the build lists after the meter is for the reviewer:
+
+- **kind-unverified**: the matches whose operand kinds the shifted link could not tell, with the reason. Their
+  operands kept every reading, so the target body picked their kinds too. There are none today.
+- **review warnings**: literal operands of matches that may be a target number the source copied. An integer of
+  ours is compared as itself, so a number read off the target and written into our source gives the target's bytes,
+  and no byte check can reject it. Three kinds are listed: `past-data` (a value in the target's data, past the end of
+  ours), `target-object` (the address of a target object the symbol file names, from 64 KiB, or the low word of a
+  packed string view) and `past-table` (a value in the target's table, past the end of ours). Thousands of
+  legitimate integers fall inside our own data range (OpenSSL's error codes such as 786688), so that range is not
+  listed. The warnings are all in upstream library functions built from their own sources.
+
+What no check here rejects, so a reviewer of a TSE function reads it in the source:
+
+- which copy an address or a table slot of ours became. Where our side offers several target places of the same
+  content (a C string's copies, read-only content found at several places by its bytes or its re-pointed bytes) or
+  several target slots of one function (up to 64), the target body picks one, and no check proves that the place
+  holds the object our source names. A pointer swapped for one to another object of ours whose content also sits at
+  the place the target body uses gives the target's bytes. Calls through any slot of a function are the same, but
+  pointer identity differs;
+- a number equal to the target's number of another kind: the target's slot number written as an integer inside our
+  table (every small integer is some target slot), a pointer of ours whose re-pointed value equals an integer the
+  target holds, or a target address written as an integer that lies inside our data range and is not the start of a
+  named target object. The module is the target byte for byte, but our source means something else. Neither binary
+  records the target's kind. The review warnings list only the target numbers outside our data and table.
+
+[facts/splat.md](facts/splat.md) §S5 has the measurements behind these lists and the cases the tests pin.
 
 A reviewer who wants to see the matched bytes come from our link, with the target's body gone, has no command for
 it. The pieces are checked against `manifest.json`, so blanking a piece makes `splat-build` refuse, and
@@ -247,9 +321,9 @@ The two ways differ in what picks the readings of the ambiguous operands:
 - **Preferred readings.** Assemble the blanked split into a module, copy `target/vota_web_wasm.js` beside it
   (`loadTargetSide` takes the import names from the glue next to the wasm it reads; without it every `invoke_*`
   call is `UNRESOLVED`), load that module as the target side, and take `remapBody(...).bytes`, every operand at
-  its preferred reading. No target body exists anywhere in that run, so this is stricter than the match rule: 9132
-  passes it, while 9218, a match that holds, gives 313 B against its 311 B piece because it needs the target to
-  pick readings.
+  its preferred reading. No target body exists anywhere in that run, so this is stricter than the match rule. With
+  operand kinds, the preferred bytes of 9131, 9132 and 9218 are their pieces. Without them (`--no-kinds`), 9218's are
+  313 B against its 311 B piece, because then the target body had to pick its operands' kinds.
 
 Say which way a review used. A TypeScript script with top-level `await` runs under `pnpm exec tsx` only as an
 `.mts` file.
@@ -265,8 +339,10 @@ How to read the meter:
 - A component is the target function's caller attribution (`ledger/func-attribution.tsv`), not its
   library. For example, libc's `pad` (target 788) counts as RHVoice.
 - "another reading" and "which copy" count matches where the target body chose among our readings of an
-  ambiguous operand: "which copy" when the choice was among copies of the same content or among the table
-  slots of one function. "Re-pointing alone" counts matches where no choice was needed.
+  operand: "which copy" when the choice was among copies of the same content or among the table slots of one
+  function, "another reading" when it chose an operand's kind, which happens only in a kind-unverified match (0
+  today). "Re-pointing alone" counts matches where no choice was needed.
+- The lines after it list the kind-unverified matches and the review warnings ("Reviewing a match").
 - Matches of tiny bodies (8 B or less) and of bodies with a byte-identical twin in the target carry an arbitrary
   name, because binaryen merges identical bodies. [../status.md](../status.md) "Reading the meter" counts both,
   from the committed scan and the target.

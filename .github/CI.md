@@ -44,7 +44,7 @@ job summary, with every skipped test listed. The suite fails when more tests ski
 
 | suite | budget | what skips, and what it needs |
 | --- | ---: | --- |
-| `pnpm test` | 48 | 39 in `splat-sub` and `splat-symbols` (`build/out/wasm-map/` from `make -C src link-map`, and for `splat-sub` the pieces from `make -C src splat-split`); 4 in `lift` (`build/out/wasm/vota_web/symbols.mangled.txt`, which `make -C src link` writes); 4 in `lift`, `lift-eval` and `rank` (the image); 1 in `report` (the plain link, `build/out/wasm/vota_web/vota_web_wasm.wasm`) |
+| `pnpm test` | 73 | 39 in `splat-sub` and `splat-symbols` (`build/out/wasm-map/` from `make -C src link-map`, and for `splat-sub` the pieces from `make -C src splat-split`); 25 in `splat-kinds` (the shifted relink and its operand-kind table, `build/out/wasm-kinds/` from `make -C src link-kinds`, with the maps and the pieces: the INV2 cases and the classifier on the real links; its 10 tests on hand-written links run); 4 in `lift` (`build/out/wasm/vota_web/symbols.mangled.txt`, which `make -C src link` writes); 4 in `lift`, `lift-eval` and `rank` (the image); 1 in `report` (the plain link, `build/out/wasm/vota_web/vota_web_wasm.wasm`) |
 | `pnpm test:bench` | 9 | 6 in `dataset`, `run` and `setups` (the image); 2 in `dataset` (the library trees the rows' references point into: `third_party/` fetched, `build/out/` built); 1 in `setups` (the SQLite build's recorded flags in `build/out/sqlite/`) |
 | `pnpm test:playground` | 0 | nothing |
 

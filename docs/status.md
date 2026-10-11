@@ -119,13 +119,13 @@ candidate are not placed by anything yet.
 | verdict | functions | code bytes | what it means |
 | --- | ---: | ---: | --- |
 | `match` | 7,217 | 2,116,747 | matched |
-| `differs` | 401 | 157,753 | our link has a candidate body and it differs; `detail` names the first difference. These are the closest to a match. |
-| `unresolved` | 160 | 95,970 | an operand of our body has no counterpart in the target: a callee the symbol file maps to no target function (such as our roots stand-in or a `byn$mgfn-shared$` thunk), or a data name only this function voted for (*self-voted*) |
+| `differs` | 251 | 39,025 | our link has a candidate body and it differs; `detail` names the first difference. These are the closest to a match. |
+| `unresolved` | 310 | 214,698 | an operand of our body has no counterpart in the target: a callee the symbol file maps to no target function (such as our roots stand-in or a `byn$mgfn-shared$` thunk), an address or table slot of ours (by its operand kind) whose object or function has no target image, or a data name only this function voted for (*self-voted*). It is checked before the bytes are compared, so a body that is also different shows only this |
 | `no-candidate` | 6,565 | 3,513,433 | our link has no body for it yet |
 <!-- /status:verdicts -->
 
 <!-- status:tse-verdicts -->
-For TSE code alone: 378 `match`, 68 `differs`, 41 `unresolved` and 2,798 `no-candidate`.
+For TSE code alone: 378 `match`, 46 `differs`, 63 `unresolved` and 2,798 `no-candidate`.
 <!-- /status:tse-verdicts -->
 
 [how-to-decompile.md](how-to-decompile.md) walks from picking one of these to a match.
@@ -148,7 +148,7 @@ the component tables), and three lines about readings:
 because binaryen merges identical bodies and the target keeps one copy under one index:
 
 <!-- status:twins -->
-261 matches are bodies of 8 B or less, and 37 matches have a byte-identical twin in the target.
+261 matches are bodies of 8 B or less, and 37 matches have a byte-identical twin in the target. 0 matches are kind-unverified: the operand-kind table cannot vouch for their constants, so the check offered each one every reading (`make -C src splat` names them).
 <!-- /status:twins -->
 
 A meter that does not show the target's sha256 is not a meter: the build failed, and its output lists the matches
@@ -179,9 +179,9 @@ functions pair at a weaker tier, because a fingerprint also covers the callees t
 | --- | ---: | ---: | ---: | ---: | ---: |
 | `byte` | 919 | 917 | 0 | 0 | 2 |
 | `fingerprint` | 541 | 540 | 0 | 1 | 0 |
-| `addr` | 5,577 | 5,219 | 273 | 81 | 4 |
-| `shape` | 220 | 132 | 69 | 17 | 2 |
-| `none` | 7,086 | 409 | 59 | 61 | 6,557 |
+| `addr` | 5,577 | 5,219 | 179 | 175 | 4 |
+| `shape` | 220 | 132 | 30 | 56 | 2 |
+| `none` | 7,086 | 409 | 42 | 78 | 6,557 |
 <!-- /status:tiers -->
 
 `pnpm wasm progress --by component`, run from `asmlift-wasm/`, prints the tiers per component, with what moved

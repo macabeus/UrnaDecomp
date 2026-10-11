@@ -201,12 +201,30 @@ readings the target chose (ambiguous operands: address, table slot or literal; w
   which copy             253 matches (359296 B), 491 operands
 ```
 
+Since 2026-10-11 the build also reads what each constant of ours is (an address, a table slot or an integer) from a
+second link with the data and the table moved, `make -C src link-kinds` (under a minute, run on the first build and
+whenever the plain link changes; [reference/splat.md](reference/splat.md) §3). With it, "another reading" is 0, and
+the output ends with two more lists. With the 7,217 matches of 2026-10-11 it ends:
+
+```
+readings the target chose (ambiguous operands: address, table slot or literal; which copy of identical bytes):
+  re-pointing alone     6964 matches (1758167 B)
+  another reading          0 matches (0 B), 0 operands: -
+  which copy             253 matches (358580 B), 491 operands
+kind-unverified: 0/7217 matches (0 B) whose operand kinds the shifted link could not tell; their operands kept every reading
+review warnings: 55 literal operands of matches that may be a target number the source copied (the check cannot tell): 16 past-data, 11 target-object, 28 past-table
+  target-object line 694: function 1307 allocateBtreePage (ours 957) +0x529 i32.const 78143 = str.7fce96d5a99b
+...
+```
+
 The line with `sha256` and `expected` is the check: the result must be the target's, `8579ef8d…1007e2`. The
 `substituted` line is the meter, the project's one progress number: the matches in `splat/matched.txt`; the table
-under it splits it by component. [status.md](status.md) has today's numbers, generated from the committed scan. The first run also builds the link map
-(`build/out/wasm-map/vota_web/names.tsv`, a relink of the plain link) and the pieces (`build/out/splat/pieces/`);
-later runs reuse them until the plain link changes. [reference/splat.md](reference/splat.md) covers the pipeline
-and how to match a function.
+under it splits it by component. The build also fails when a match is kind-unverified; the review warnings never
+fail it ([reference/splat.md](reference/splat.md) "Reviewing a match"). [status.md](status.md) has
+today's numbers, generated from the committed scan. The link map is `build/out/wasm-map/vota_web/names.tsv` (a
+relink of the plain link), the shifted link is under `build/out/wasm-kinds/vota_web/`, and the pieces are under
+`build/out/splat/pieces/`. [reference/splat.md](reference/splat.md) covers the pipeline and how to match a
+function.
 
 ## When something fails
 

@@ -29,7 +29,7 @@ byte-compare it).
 | `web/wasm_shim.cpp` | the 34 EM_JS functions (generated: `../tools/extract/gen_wasm_shim.py` from `web/library_vota.pretty.js` + the target import types) |
 
 The scripts the build calls are in `../tools/round/` (`census.sh`, `census_report.py`, `link-map.sh`,
-`link-symbols.sh`, `status.py`) and `../tools/libs/`; `../tools/README.md` describes each.
+`link-kinds.sh`, `link-symbols.sh`, `status.py`) and `../tools/libs/`; `../tools/README.md` describes each.
 
 ## Stubs: the TSE functions not decompiled yet
 
@@ -142,8 +142,9 @@ TMPDIR=/tmp tools/round/try-tu.sh cand.cpp|dir [--flags '…'] [--targets idx.tx
   before and after, the skeleton function it pairs with and the first differing rows. `unmatched-symbols.txt` lists
   the TU functions that reached the link and paired with no target function. try-tu never writes `ledger/`.
   A census tier of `none` does not mean the body differs. `tools/round/link-map.sh build/out/try/<name>/wasm/vota_web`
-  maps the try link the way `make -C src link-map` maps the plain one, and `pnpm wasm splat-remap` then compares
-  one function of it with the target (`docs/how-to-decompile.md` step 5).
+  maps the try link the way `make -C src link-map` maps the plain one, `tools/round/link-kinds.sh` with the toolkit's
+  `splat-kinds` gives it an operand-kind table the way `make -C src link-kinds` does, and `pnpm wasm splat-remap` then
+  compares one function of it with the target (`docs/how-to-decompile.md` step 5).
 
 `--skip-units <fragment>.mk` leaves a landed fragment out of the link, with its companion objects, so its TUs can be
 tried again without a duplicate symbol.

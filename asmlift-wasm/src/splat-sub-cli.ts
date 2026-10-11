@@ -1,30 +1,55 @@
 // The substitution commands (cli.ts dispatches here):
 //   splat-scan  <target.wasm> <plain.wasm> [--pieces <d>] [-o <scan.tsv>] [--match [<matches>]] [--symbols <f>]
-//               [--ledger <d>] [--map-dir <d>]
+//               [--ledger <d>] [--map-dir <d>] [--kinds <kinds.json> | --no-kinds]
 //   splat-build <target.wasm> <plain.wasm> [--pieces <d>] [--matches <f>] [-o <out.wasm>] [--expect <sha256>]
-//               [--symbols <f>] [--ledger <d>] [--map-dir <d>]
+//               [--symbols <f>] [--ledger <d>] [--map-dir <d>] [--kinds <kinds.json> | --no-kinds]
+//               [--max-kind-unverified <n>]
+//   splat-kinds <plain.wasm> [--shifted <dir>] [--map-dir <d>] [-o <kinds.json>] [--matches <f>]
 // splat-scan reads the match list (--match's path, else <root>/splat/matched.txt) as evidence of names and, with
 // --match, appends its new matches to it.
+// --kinds is the operand-kind table (splat-kinds.ts, `make -C src link-kinds`), by default the one beside the plain
+// link; the commands refuse to run without one unless given --no-kinds, which checks every match kind-unverified (each
+// ambiguous operand keeps every reading).
+// --max-kind-unverified fails splat-build (and removes its output) when more matches than that are kind-unverified;
+// make -C src splat passes SPLAT_MAX_KIND_UNVERIFIED (src/mk/splat-sub.mk).
+// splat-kinds compares the plain link with its shifted relink (<shifted dir>/vota_web_wasm.wasm, its names.tsv and
+// names.sha256, tools/round/link-kinds.sh) and writes the table; it refuses a map dir or a names.tsv that does not
+// describe the link it reads.
 // Defaults follow the urna layout: <root>/target/x.wasm, <root>/build/out/splat/pieces, <root>/splat/matched.txt,
-// <root>/splat/symbol_addrs.txt, <root>/splat/scan.tsv, <root>/ledger, <root>/build/out/splat/x.wasm.
+// <root>/splat/symbol_addrs.txt, <root>/splat/scan.tsv, <root>/ledger, <root>/build/out/splat/x.wasm,
+// <root>/build/out/wasm-kinds/<plain dir>/kinds.json.
+import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, resolve } from 'node:path';
 
 import { readLedgerTsv } from './ledger';
+import { parseModule } from './parse';
 import { readManifest } from './splat';
+import {
+  type OperandKinds,
+  classifyOperands,
+  defaultKindsPath,
+  kindsPathOf,
+  kindsSide,
+  kindsSummary,
+  noMoreArgs,
+  readOperandKinds,
+  renderOperandKinds,
+} from './splat-kinds';
 import {
   MatchesFailed,
   type ReadingMeter,
   type ScanRow,
   addMatches,
   buildSplat,
+  kindUnverifiedOverLimit,
   parseMatchList,
   readPieceBodies,
   readingMeterOf,
   renderScan,
   scanSplit,
 } from './splat-sub';
-import { defaultMapDir, loadOurSide, loadTargetSide, symbolMaps } from './splat-symbols';
+import { defaultMapDir, loadOurSide, loadTargetSide, readOurNames, symbolMaps } from './splat-symbols';
 
 function take(args: string[], name: string): string | undefined {
   const i = args.indexOf(name);
@@ -34,6 +59,21 @@ function take(args: string[], name: string): string | undefined {
   const v = args[i + 1];
   args.splice(i, 2);
   return v;
+}
+
+/** A flag that takes a count: its value, undefined when the flag is absent; throws when its value is not a count (a
+ *  flag left without one, such as an empty make variable). Taken before the other flags, so it cannot take theirs. */
+function takeCount(args: string[], name: string): number | undefined {
+  const i = args.indexOf(name);
+  if (i < 0) {
+    return undefined;
+  }
+  const v = args[i + 1];
+  if (v === undefined || !/^\d+$/.test(v)) {
+    throw new Error(`${name} takes a count, not '${v ?? ''}'`);
+  }
+  args.splice(i, 2);
+  return Number(v);
 }
 
 /** `--match` with an optional path: true when bare */
@@ -59,13 +99,20 @@ interface Setup {
   ledgerDir: string;
   symbolsPath: string;
   mapDir: string;
+  /** the operand-kind table, or null to run without one */
+  kindsPath: string | null;
 }
 
-function setup(args: string[]): Setup {
+function setup(cmd: string, args: string[]): Setup {
   const pieces = take(args, '--pieces');
   const symbols = take(args, '--symbols');
   const ledger = take(args, '--ledger');
   const mapDir = take(args, '--map-dir');
+  const kindsArg = take(args, '--kinds');
+  const noKinds = args.indexOf('--no-kinds');
+  if (noKinds >= 0) {
+    args.splice(noKinds, 1);
+  }
   const [targetPath, plainPath] = args.splice(0, 2);
   if (targetPath === undefined || plainPath === undefined) {
     throw new Error('expected <target.wasm> <plain.wasm>');
@@ -79,7 +126,9 @@ function setup(args: string[]): Setup {
     ledgerDir: ledger ?? join(root, 'ledger'),
     symbolsPath: symbols ?? join(root, 'splat', 'symbol_addrs.txt'),
     mapDir: mapDir ?? defaultMapDir(plainPath),
+    kindsPath: kindsPathOf(plainPath, kindsArg, noKinds >= 0),
   };
+  noMoreArgs(cmd, args);
   for (const [what, p] of [
     ['the split (make -C src splat-split)', join(s.pieces, 'manifest.json')],
     ['the symbol file (splat-symbols)', s.symbolsPath],
@@ -94,7 +143,9 @@ function setup(args: string[]): Setup {
 function loadMaps(s: Setup) {
   const ours = loadOurSide(s.plainPath, s.mapDir);
   const target = loadTargetSide(s.targetPath, s.symbolsPath, s.ledgerDir, ours.stackSize);
-  return symbolMaps(ours, target);
+  const kinds: OperandKinds | undefined =
+    s.kindsPath === null ? undefined : readOperandKinds(s.kindsPath, ours.module.bytes);
+  return symbolMaps(ours, target, kinds);
 }
 
 /** a reason with its particulars blanked, to count rows per kind of failure */
@@ -151,7 +202,7 @@ function readingLines(r: ReadingMeter): string[] {
 function scan(args: string[]): void {
   const out = take(args, '-o');
   const append = takeOptional(args, '--match');
-  const s = setup(args);
+  const s = setup('splat-scan', args);
   const t0 = Date.now();
   const maps = loadMaps(s);
   const manifest = readManifest(s.pieces);
@@ -179,6 +230,10 @@ function scan(args: string[]): void {
   }
   w(
     `  matches by source: ${(['symbol', 'ledger', 'content'] as const).map((k) => `${k} ${matched.filter((r) => r.source === k).length}`).join(', ')}`,
+  );
+  const unverified = matched.filter((r) => r.kindUnverified !== undefined);
+  w(
+    `  kind-unverified matches: ${unverified.length} (${unverified.reduce((n, r) => n + r.size, 0)} B)${maps.kinds === undefined ? ', no operand-kind table' : ''}`,
   );
   const usedBy = new Map<number, number>();
   for (const r of matched) {
@@ -215,10 +270,11 @@ function scan(args: string[]): void {
 }
 
 function build(args: string[]): void {
+  const maxKind = takeCount(args, '--max-kind-unverified');
   const listArg = take(args, '--matches');
   const out = take(args, '-o');
   const expect = take(args, '--expect');
-  const s = setup(args);
+  const s = setup('splat-build', args);
   const listPath = listArg ?? join(s.root, 'splat', 'matched.txt');
   const outPath = out ?? join(s.root, 'build', 'out', 'splat', basename(s.targetPath));
   const { matches } = parseMatchList(existsSync(listPath) ? readFileSync(listPath, 'utf8') : '');
@@ -227,6 +283,10 @@ function build(args: string[]): void {
   let r: ReturnType<typeof buildSplat>;
   try {
     r = buildSplat(maps, s.pieces, matches, expected);
+    const over = maxKind === undefined ? null : kindUnverifiedOverLimit(r, maxKind);
+    if (over !== null) {
+      throw new Error(`${listPath}: ${over}`);
+    }
   } catch (e) {
     if (existsSync(outPath)) {
       unlinkSync(outPath);
@@ -254,6 +314,84 @@ function build(args: string[]): void {
   for (const l of readingLines(r.readings)) {
     w(l);
   }
+  w(
+    `kind-unverified: ${r.kindUnverified.length}/${r.matched} matches (${r.kindUnverifiedBytes} B) whose operand kinds the shifted link could not tell; their operands kept every reading`,
+  );
+  if (maps.kinds === undefined) {
+    w('  no operand-kind table (--no-kinds)');
+  } else {
+    for (const u of r.kindUnverified) {
+      w(`  line ${u.match.line}: function ${u.match.index} ${u.match.symbol} (ours ${u.ours}): ${u.why}`);
+    }
+  }
+  const kinds = ['past-data', 'target-object', 'past-table'] as const;
+  w(
+    `review warnings: ${r.reviewWarnings.length} literal operands of matches that may be a target number the source copied (the check cannot tell): ${kinds.map((k) => `${r.reviewWarnings.filter((x) => x.why === k).length} ${k}`).join(', ')}`,
+  );
+  for (const x of r.reviewWarnings) {
+    w(
+      `  ${x.why.padEnd(13)} line ${x.match.line}: function ${x.match.index} ${x.match.symbol} (ours ${x.ours}) +0x${x.at.toString(16)} ${x.instr}${x.object === undefined ? '' : ` = ${x.object}`}`,
+    );
+  }
+}
+
+/** The operand-kind table: the plain link against its shifted relink (tools/round/link-kinds.sh). */
+function kinds(args: string[]): void {
+  const shiftedArg = take(args, '--shifted');
+  const mapDir = take(args, '--map-dir');
+  const out = take(args, '-o');
+  const matchesPath = take(args, '--matches');
+  const [plainPath] = args.splice(0, 1);
+  if (plainPath === undefined) {
+    throw new Error('expected <plain.wasm>');
+  }
+  noMoreArgs('splat-kinds', args);
+  const outPath = out ?? defaultKindsPath(plainPath);
+  const shiftedDir = shiftedArg ?? dirname(defaultKindsPath(plainPath));
+  const plainMapDir = mapDir ?? defaultMapDir(plainPath);
+  const plainBytes = new Uint8Array(readFileSync(plainPath));
+  const shiftedBytes = new Uint8Array(readFileSync(join(shiftedDir, 'vota_web_wasm.wasm')));
+  // the names must be the two links': the plain map dir's scratch link is the plain link (as loadOurSide checks), and
+  // link-kinds.sh records the sha256 of the wasm it named
+  const scratch = join(plainMapDir, 'vota_web_wasm.wasm');
+  if (!existsSync(scratch) || !Buffer.from(readFileSync(scratch)).equals(Buffer.from(plainBytes))) {
+    throw new Error(`${plainMapDir} does not describe ${plainPath}: run make -C src link-map`);
+  }
+  const namedSha = join(shiftedDir, 'names.sha256');
+  const shiftedSha = createHash('sha256').update(shiftedBytes).digest('hex');
+  if (!existsSync(namedSha) || readFileSync(namedSha, 'utf8').trim() !== shiftedSha) {
+    throw new Error(`${shiftedDir}/names.tsv does not describe its vota_web_wasm.wasm: run make -C src link-kinds`);
+  }
+  const plain = parseModule(plainBytes);
+  const shifted = parseModule(shiftedBytes);
+  const t0 = Date.now();
+  const k = classifyOperands(
+    kindsSide(plain, join(plainMapDir, 'names.tsv')),
+    kindsSide(shifted, join(shiftedDir, 'names.tsv')),
+  );
+  writeFileSync(outPath, renderOperandKinds(k));
+  const w = (x: string): boolean => process.stdout.write(`${x}\n`);
+  w(
+    `${outPath}: data moved by ${k.dataShift}, table by ${k.tableShift}; ${k.functions.size} functions in ${((Date.now() - t0) / 1000).toFixed(1)} s`,
+  );
+  const show = (label: string, among?: number[]): void => {
+    const s = kindsSummary(k, plain, among);
+    w(
+      `  ${label}: ${s.verified}/${s.functions} kind-verified; operands: ${s.operands.literal} literal, ${s.operands.address} address, ${s.operands.slot} table slot, ${s.operands['table-base']} table base + ${s.operands['table-rel']} relative to it`,
+    );
+    for (const [why, n] of [...s.unverified].sort((a, b) => b[1] - a[1]).slice(0, 10)) {
+      w(`    ${String(n).padStart(6)} kind-unverified: ${why}`);
+    }
+  };
+  show('every function');
+  if (matchesPath !== undefined && existsSync(matchesPath)) {
+    const byKey = new Map(readOurNames(join(plainMapDir, 'names.tsv')).map((f) => [f.key, f.index]));
+    const { matches } = parseMatchList(readFileSync(matchesPath, 'utf8'));
+    show(
+      `the ${matches.length} matches`,
+      matches.map((m) => byKey.get(m.symbol)).filter((x): x is number => x !== undefined),
+    );
+  }
 }
 
 /** true when `cmd` is one of these commands (and it ran) */
@@ -264,6 +402,9 @@ export function runSplatSubCommand(cmd: string, args: string[]): boolean {
       return true;
     case 'splat-build':
       build(args);
+      return true;
+    case 'splat-kinds':
+      kinds(args);
       return true;
     default:
       return false;

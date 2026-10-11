@@ -10,6 +10,7 @@ import type { LedgerRow } from './ledger';
 import { GLOBAL_BASE } from './normalize';
 import type { Func, Module } from './parse';
 import { type AssembleResult, type SplatManifest, assembleSplit, readManifest, sha256 } from './splat';
+import { operandKind, tableBase } from './splat-kinds';
 import { type Piece, type RemapResult, matchesTarget, remapBody } from './splat-remap';
 import {
   type DataObject,
@@ -42,7 +43,15 @@ export interface Chosen {
   oursAt: number;
 }
 
-export type Match = { verdict: 'match'; candidate: Candidate; bytes: Uint8Array; readings: string[]; chosen: Chosen[] };
+export type Match = {
+  verdict: 'match';
+  candidate: Candidate;
+  bytes: Uint8Array;
+  readings: string[];
+  chosen: Chosen[];
+  /** why our function's operand kinds are not known (RemapResult.kindUnverified): it matched with every reading */
+  kindUnverified?: string;
+};
 
 export type Attempt = Match | { verdict: 'differs' | 'unresolved'; candidate: Candidate; detail: string; at: number };
 
@@ -61,6 +70,8 @@ export interface ScanRow {
   tried: number;
   /** a match's chosen readings */
   chosen?: Chosen[];
+  /** a match of a kind-unverified function of ours: why */
+  kindUnverified?: string;
 }
 
 /** target function index → the symbols the symbol file gives it */
@@ -137,7 +148,12 @@ export function realize(pieces: readonly Piece[], readings: readonly string[]): 
 }
 
 /** The match the readings matchesTarget chose make of `pieces`. */
-function matchOf(candidate: Candidate, pieces: readonly Piece[], readings: readonly string[]): Match {
+function matchOf(
+  candidate: Candidate,
+  pieces: readonly Piece[],
+  readings: readonly string[],
+  kindUnverified?: string,
+): Match {
   const chosen: Chosen[] = [];
   let at = 0;
   let r = 0;
@@ -150,7 +166,14 @@ function matchOf(candidate: Candidate, pieces: readonly Piece[], readings: reado
     chosen.push({ reading, preferred: p.readings[0] === reading, at, oursAt: p.at });
     at += p.alternatives[p.readings.indexOf(reading)].length;
   }
-  return { verdict: 'match', candidate, bytes: realize(pieces, readings), readings: [...readings], chosen };
+  return {
+    verdict: 'match',
+    candidate,
+    bytes: realize(pieces, readings),
+    readings: [...readings],
+    chosen,
+    ...(kindUnverified === undefined ? {} : { kindUnverified }),
+  };
 }
 
 /** our function index → its body re-pointed through one set of maps */
@@ -186,10 +209,17 @@ export function cachedRemapper(
 
 const referenced = new WeakMap<object, Map<number, number[]>>();
 
+/** Our table slot an i32.const of our function `ours` names, read as a slot: its value, or for a constant relative
+ *  to an unfolded __table_base (splat-kinds.ts table-rel) the base plus it. */
+function slotOf(maps: SymbolMaps, ours: number, at: number, value: number): number {
+  const kind = operandKind(maps.kinds?.functions.get(ours), at);
+  return kind === 'table-rel' ? tableBase(maps.ours.module) + value : value;
+}
+
 /** The functions our function `ours` calls, references or names through a constant the target body reads as a
  *  table slot (`chosen`), with the body offset of each operand. A constant the target keeps as an integer names
  *  nothing, even when it equals one of our table slots. */
-function referencedFunctionsAt(maps: SymbolMaps, ours: number, chosen: readonly Chosen[]): { f: number; at: number }[] {
+export function referencedFunctionsAt(maps: SymbolMaps, ours: number, chosen: readonly Chosen[]): { f: number; at: number }[] {
   const m = maps.ours.module;
   const slots = new Set(chosen.filter((c) => c.reading.startsWith('table slot')).map((c) => c.oursAt));
   const out: { f: number; at: number }[] = [];
@@ -198,7 +228,7 @@ function referencedFunctionsAt(maps: SymbolMaps, ours: number, chosen: readonly 
       if (im.kind === 'u32' && im.role === 'func') {
         out.push({ f: im.value, at: i.offset });
       } else if (im.kind === 's32' && i.opcode === 0x41 && slots.has(i.offset)) {
-        const f = maps.ours.elem.get(im.value);
+        const f = maps.ours.elem.get(slotOf(maps, ours, i.offset, im.value));
         if (f !== undefined) {
           out.push({ f, at: i.offset });
         }
@@ -223,9 +253,12 @@ function referencedFunctions(maps: SymbolMaps, ours: number): number[] {
         if (im.kind === 'u32' && im.role === 'func') {
           refs.push(im.value);
         } else if (im.kind === 's32' && i.opcode === 0x41) {
-          const f = maps.ours.elem.get(im.value);
-          if (f !== undefined) {
-            refs.push(f);
+          // every function the constant may name: its own slot, and for a table-rel constant the base plus it
+          for (const slot of new Set([im.value, slotOf(maps, ours, i.offset, im.value)])) {
+            const f = maps.ours.elem.get(slot);
+            if (f !== undefined) {
+              refs.push(f);
+            }
           }
         }
       }
@@ -250,7 +283,7 @@ export function attempt(
   }
   const m = matchesTarget(r.pieces, targetBody);
   if (m.match) {
-    const match = matchOf(candidate, r.pieces, m.readings ?? []);
+    const match = matchOf(candidate, r.pieces, m.readings ?? [], r.kindUnverified);
     if (Buffer.compare(Buffer.from(match.bytes), Buffer.from(targetBody)) !== 0) {
       throw new Error(`function ${targetIndex}: the readings matchesTarget chose do not rebuild the target body`);
     }
@@ -275,7 +308,16 @@ function ourOperand(maps: SymbolMaps, original: Func, repointed: Func, at: numbe
   const i = k < 0 ? undefined : disassemble(original)[k];
   const v = i?.imms.find((im) => im.kind === 'memarg' || (im.kind === 's32' && i.opcode === 0x41));
   const value = v === undefined ? undefined : v.kind === 'memarg' ? v.offset : v.kind === 's32' ? v.value : undefined;
-  if (value === undefined || value < GLOBAL_BASE || value >= maps.ours.dataEnd) {
+  const kind = i === undefined ? undefined : operandKind(maps.kinds?.functions.get(original.index), i.offset);
+  if (value !== undefined && kind === 'literal' && value >= GLOBAL_BASE) {
+    return ` [ours ${value}: an integer (operand kinds)]`;
+  }
+  if (
+    value === undefined ||
+    (kind !== undefined && kind !== 'address' && kind !== 'literal') ||
+    value < GLOBAL_BASE ||
+    value >= maps.ours.dataEnd
+  ) {
     return '';
   }
   const r = resolveDataAddress(maps.ours, maps.ourImage, maps.target, value);
@@ -364,7 +406,7 @@ export function contentPairs(
       const m = matchesTarget(r.pieces, bodies.get(t)!);
       if (m.match) {
         const candidate: Candidate = { ours: f.index, symbol: key, source: 'content' };
-        found.set(t, [...(found.get(t) ?? []), matchOf(candidate, r.pieces, m.readings ?? [])]);
+        found.set(t, [...(found.get(t) ?? []), matchOf(candidate, r.pieces, m.readings ?? [], r.kindUnverified)]);
         oursHits.set(f.index, (oursHits.get(f.index) ?? 0) + 1);
       }
     }
@@ -557,6 +599,7 @@ export function scanSplit(
         verdict: 'match',
         detail: `${readingsText(a.readings)}${was}`.replace(/^; /, ''),
         chosen: a.chosen,
+        ...(a.kindUnverified === undefined ? {} : { kindUnverified: a.kindUnverified }),
       };
     });
     const refused = selfVoted(
@@ -574,6 +617,7 @@ export function scanSplit(
             verdict: 'unresolved',
             detail: selfVotedText(passMaps, r.index, bodies.get(r.index)!, x),
             chosen: undefined,
+            kindUnverified: undefined,
           };
     });
     // a later pass reaches through the matched name what an earlier one found: keep how it was first found
@@ -635,6 +679,7 @@ function scanCandidates(
       verdict: best.verdict,
       detail: best.verdict === 'match' ? readingsText(best.readings) : best.detail,
       ...(best.verdict === 'match' ? { chosen: best.chosen } : {}),
+      ...(best.verdict === 'match' && best.kindUnverified !== undefined ? { kindUnverified: best.kindUnverified } : {}),
     };
   });
 }
@@ -682,7 +727,8 @@ export function renderScan(
         r.ours ?? '-',
         r.source ?? '-',
         r.verdict,
-        clean(r.detail) || '-',
+        clean(r.kindUnverified === undefined ? r.detail : `${r.detail}; kinds unverified: ${r.kindUnverified}`.replace(/^; /, '')) ||
+          '-',
         r.size,
         r.ledgerKind,
         r.group,
@@ -763,6 +809,114 @@ export interface BuildResult {
   matchedBytes: number;
   functions: number;
   bytes: number;
+  /** the matches of kind-unverified functions of ours (counted in `matched` too), with why */
+  kindUnverified: KindUnverifiedMatch[];
+  kindUnverifiedBytes: number;
+  reviewWarnings: ReviewWarning[];
+}
+
+export interface KindUnverifiedMatch {
+  match: ListedMatch;
+  ours: number;
+  why: string;
+}
+
+/**
+ * A literal operand of a match that the check cannot tell from a target number: the source may have written the
+ * target's address or slot by hand (read off the target), and the bytes would agree, since an integer of ours is
+ * compared as itself. Three kinds of integer are listed; the rest are left out, as they are as often legitimate as
+ * any constant (OpenSSL's error codes in our data range, small integers that equal some target slot):
+ *   past-data     in the target's data [GLOBAL_BASE, target data end) and past ours, where nothing of ours lives
+ *                 (an i64.const by its low word);
+ *   target-object the address of a target data object the symbol file names, at REVIEW_OBJECT_FROM or above (below
+ *                 it sizes, masks such as 65520, line numbers and field offsets coincide with the addresses of the
+ *                 target's many strings: 36 more on 7,217 matches); an i64.const by its value, or by its low word,
+ *                 at any value, when its high word looks like a length (a packed string view: length << 32 | address);
+ *   past-table    an i32.const in the target's table [our table size, target table size), past ours.
+ * A literal equal to a target slot inside our table, or an operand of ours that is a pointer where the target holds
+ * an integer equal to its re-pointed value, is not listed: nothing tells it from a legitimate one.
+ */
+export interface ReviewWarning {
+  match: ListedMatch;
+  ours: number;
+  /** body offset of our instruction */
+  at: number;
+  instr: string;
+  value: number;
+  why: 'past-data' | 'target-object' | 'past-table';
+  /** the target object a target-object warning names */
+  object?: string;
+}
+
+/** Below it, a literal equal to a target object's address is not a review warning (see ReviewWarning). */
+export const REVIEW_OBJECT_FROM = 65536;
+
+/** The review warnings of the matches `matched` (target index → our function). */
+export function reviewWarnings(
+  maps: SymbolMaps,
+  matched: ReadonlyMap<number, { match: ListedMatch; ours: number }>,
+): ReviewWarning[] {
+  const end = maps.target.dataEnd ?? GLOBAL_BASE;
+  const tableEnd = maps.target.module.tables[0]?.min ?? 0;
+  const objects = new Map<number, string>();
+  for (const [name, addr] of maps.target.symbols.data) {
+    if (!objects.has(addr)) {
+      objects.set(addr, name);
+    }
+  }
+  const m = maps.ours.module;
+  const out: ReviewWarning[] = [];
+  for (const { match, ours } of matched.values()) {
+    const fk = maps.kinds?.functions.get(ours);
+    for (const i of disassemble(m.funcs[ours - m.importedFuncCount])) {
+      const kind = operandKind(fk, i.offset);
+      if (kind !== undefined && kind !== 'literal') {
+        continue;
+      }
+      for (const im of i.imms) {
+        // the 32-bit number the operand may be: an i32.const or memarg offset, an i64.const's low word
+        let value: number | undefined;
+        let object: number | undefined;
+        if (im.kind === 'memarg' || (im.kind === 's32' && i.opcode === 0x41)) {
+          value = im.kind === 'memarg' ? im.offset : im.value;
+          object = value >= REVIEW_OBJECT_FROM ? value : undefined;
+        } else if (im.kind === 's64' && i.opcode === 0x42) {
+          // any other i64 is no 32-bit number of the target's
+          const high = Number(BigInt.asUintN(64, im.value) >> 32n);
+          value = high < 65536 ? Number(BigInt.asUintN(32, im.value)) : undefined;
+          object = value === undefined || (high === 0 && value < REVIEW_OBJECT_FROM) ? undefined : value;
+        }
+        if (value === undefined) {
+          continue;
+        }
+        const warn = (why: ReviewWarning['why'], name?: string): void => {
+          const named = name === undefined ? {} : { object: name };
+          out.push({ match, ours, at: i.offset, instr: instrText(i, m), value, why, ...named });
+        };
+        if (value >= GLOBAL_BASE && value >= maps.ours.dataEnd && value < end) {
+          warn('past-data');
+        } else if (object !== undefined && objects.has(object)) {
+          warn('target-object', objects.get(object));
+        } else if (im.kind === 's32' && value >= maps.ours.tableSize && value < tableEnd) {
+          warn('past-table');
+        }
+      }
+    }
+  }
+  return out.sort((a, b) => a.match.line - b.match.line || a.at - b.at);
+}
+
+/** splat-build --max-kind-unverified: what is wrong when more than `max` matches are kind-unverified, else null. A
+ *  kind-unverified match is checked with every reading, so each new one is a decision to raise the limit. */
+export function kindUnverifiedOverLimit(r: BuildResult, max: number): string | null {
+  if (r.kindUnverified.length <= max) {
+    return null;
+  }
+  return [
+    `${r.kindUnverified.length} matches are kind-unverified, more than the ${max} allowed (--max-kind-unverified); the`,
+    'operand-kind table cannot vouch for their constants, so each is checked with every reading:',
+    ...r.kindUnverified.map((u) => `  line ${u.match.line}: function ${u.match.index} ${u.match.symbol} (ours ${u.ours}): ${u.why}`),
+  ].join('\n');
 }
 
 /** Re-point every matched function and compare it with its piece; failures name the function and where it differs. */
@@ -771,10 +925,17 @@ export function verifyMatches(
   manifest: SplatManifest,
   bodies: ReadonlyMap<number, Uint8Array>,
   matches: readonly ListedMatch[],
-): { substitutes: Map<number, Uint8Array>; chosen: Map<number, Chosen[]>; failures: MatchFailure[] } {
+): {
+  substitutes: Map<number, Uint8Array>;
+  chosen: Map<number, Chosen[]>;
+  failures: MatchFailure[];
+  /** target index → why our function's operand kinds are not known, for each verified match that has none */
+  kindUnverified: Map<number, string>;
+} {
   const byIndex = new Map(manifest.functions.map((f) => [f.index, f]));
   const substitutes = new Map<number, Uint8Array>();
   const chosen = new Map<number, Chosen[]>();
+  const kindUnverified = new Map<number, string>();
   const failures: MatchFailure[] = [];
   const who = (match: ListedMatch, ours?: number): string => {
     const f = byIndex.get(match.index);
@@ -794,6 +955,9 @@ export function verifyMatches(
     if (a.verdict === 'match') {
       substitutes.set(match.index, a.bytes);
       chosen.set(match.index, a.chosen);
+      if (a.kindUnverified !== undefined) {
+        kindUnverified.set(match.index, a.kindUnverified);
+      }
     } else {
       failures.push({
         match,
@@ -808,6 +972,7 @@ export function verifyMatches(
     if (x !== undefined) {
       substitutes.delete(match.index);
       chosen.delete(match.index);
+      kindUnverified.delete(match.index);
       failures.push({
         match,
         message: `${who(match, maps.ours.fnByKey.get(match.symbol))} is UNCONFIRMED: ${selfVotedText(maps, match.index, bodies.get(match.index)!, x)}`,
@@ -815,7 +980,7 @@ export function verifyMatches(
     }
   }
   failures.sort((a, b) => a.match.line - b.match.line);
-  return { substitutes, chosen, failures };
+  return { substitutes, chosen, failures, kindUnverified };
 }
 
 /** How the target's bytes chose among our readings: per match, the strongest choice it needed. */
@@ -894,7 +1059,12 @@ export class MatchesFailed extends Error {
 export function buildSplat(maps: SymbolMaps, dir: string, matches: readonly ListedMatch[], expectSha256: string): BuildResult {
   const manifest = readManifest(dir);
   const bodies = readPieceBodies(dir, manifest);
-  const { substitutes, chosen, failures } = verifyMatches(withMatches(maps, matches), manifest, bodies, matches);
+  const { substitutes, chosen, failures, kindUnverified } = verifyMatches(
+    withMatches(maps, matches),
+    manifest,
+    bodies,
+    matches,
+  );
   if (failures.length > 0) {
     throw new MatchesFailed(failures);
   }
@@ -908,6 +1078,9 @@ export function buildSplat(maps: SymbolMaps, dir: string, matches: readonly List
   const matchedSet = new Set(substitutes.keys());
   const meter = meterOf(manifest, matchedSet);
   const sum = (k: keyof ComponentMeter): number => meter.reduce((n, c) => n + (c[k] as number), 0);
+  const size = new Map(manifest.functions.map((f) => [f.index, f.size]));
+  const oursOf = (m: ListedMatch): number => maps.ours.fnByKey.get(m.symbol)!;
+  const listed = matches.filter((m) => substitutes.has(m.index));
   return {
     assembled,
     meter,
@@ -916,5 +1089,10 @@ export function buildSplat(maps: SymbolMaps, dir: string, matches: readonly List
     matchedBytes: sum('matchedBytes'),
     functions: sum('functions'),
     bytes: sum('bytes'),
+    kindUnverified: listed
+      .filter((m) => kindUnverified.has(m.index))
+      .map((m) => ({ match: m, ours: oursOf(m), why: kindUnverified.get(m.index)! })),
+    kindUnverifiedBytes: [...kindUnverified.keys()].reduce((n, t) => n + (size.get(t) ?? 0), 0),
+    reviewWarnings: reviewWarnings(maps, new Map(listed.map((m) => [m.index, { match: m, ours: oursOf(m) }]))),
   };
 }

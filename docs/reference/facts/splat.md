@@ -67,12 +67,13 @@ non-byte pairs and checks each against its target body: each gives exactly the t
    imports such as `close`, `fopen`, `sbrk`, and a `call_indirect` type). Re-point imports by glue name and types by
    signature.
 5. **An integer can sit inside one of our data objects.** `BN_CTX_get`'s `i32.const 786688` is a constant that
-   happens to land in RHVoice's unicode table in our layout. Never pick one reading of an `i32.const ≥ 1024` blind:
-   keep address, slot and literal, and let the target body choose. A vote from an aligned pair whose two values are
-   equal is an integer, not an address.
-6. **Our table overlaps our data.** With 9,841 table slots and data from 1024, every `i32.const` in 1024…9840 is both
-   a possible address and a possible function pointer (`__cxa_allocate_exception`'s 9806 is a table slot that
-   target 143 spells 12818).
+   happens to land in RHVoice's unicode table in our layout. Never pick one reading of an `i32.const ≥ 1024` by its
+   value. The splat check reads the kind from the shifted link (§S5); only with `--no-kinds` does it keep address,
+   slot and literal and let the target body choose. A vote from an aligned pair whose two values are equal is an
+   integer, not an address.
+6. **Our table overlaps our data.** Our table has thousands of slots and our data starts at 1024, so every
+   `i32.const` from 1024 up to the table's size is both a possible address and a possible function pointer (`__cxa_allocate_exception`'s 9806 is a table slot that
+   target 143 spells 12818). Only the shifted link tells them apart (§S5).
 7. `python3 -I` still writes `__pycache__` beside an imported module: run the Python tools with `-B`.
 
 ## S4. A vote can map one class onto another, and the match still verifies
@@ -105,3 +106,100 @@ Related facts:
   the symbol.
 
 So a hand edit to `splat/symbol_addrs.txt` needs evidence that does not come from the match it enables.
+
+## S5. Operand kinds: our side says what each constant is
+
+Without a kind table (`--no-kinds`), the check offers every `i32.const` (and every memarg offset of 1024 or more)
+each reading its value allows: the literal, the target address of what it points at in our data, and the target slot
+of the function in our table slot. The target's bytes then pick the reading, so an operand's kind comes from the
+target. Patch one operand of a copy of our link and run `splat-build` that way, and these wrong values pass: an
+integer of ours equal to one of our table slots whose function the target keeps in the target's slot of that number
+(c2); an address written as the target's number for the right string (c5); a function-pointer slot written as the
+target's slot number (c8); and a vtable address written as the target's, past the end of our data (c9). The case
+names are those of `asmlift-wasm/test/splat-kinds.test.ts` (item 3).
+
+`make -C src link-kinds` learns the kinds from a second link (`docs/reference/splat.md` §3 "Operand kinds"). On the
+plain link and the matches of `splat/matched.txt`, after `make -C src splat`, from `asmlift-wasm/`
+(`build/out/splat-check/` is a scratch directory):
+
+```sh
+mkdir -p ../build/out/splat-check
+pnpm --silent wasm splat-kinds ../build/out/wasm/vota_web/vota_web_wasm.wasm -o ../build/out/splat-check/kinds.json \
+  --matches ../splat/matched.txt
+# prints, for example:
+# ../build/out/splat-check/kinds.json: data moved by 1048576, table by 20000; 10854 functions in 0.6 s
+#   every function: 10854/10854 kind-verified; operands: 527074 literal, 68835 address, 9890 table slot, 2 table base + 6 relative to it
+#   the 7217 matches: 7217/7217 kind-verified; operands: 261150 literal, 26256 address, 1518 table slot, 1 table base + 3 relative to it
+```
+
+The counts grow with the link and the match list; what holds is `N/N kind-verified` on both lines.
+
+1. **The shifted link is the plain link with two bases moved.** `tools/round/link-kinds.sh` checks that its wasm-ld
+   map lists the same input sections, in the same order and of the same sizes, as link-map's map of the plain link;
+   only addresses and the sizes of the TABLE, GLOBAL, ELEM and DATA output sections differ. Every function of the
+   plain link has a namesake with the same instructions there, and every constant moved by exactly D = 1,048,576,
+   by exactly T = 20,000, or not at all. So no function is kind-unverified. The same holds on a try link
+   (`tools/round/link-kinds.sh build/out/try/<name>/wasm/vota_web`): the relink and its binaryen replay take about
+   40 s at a load average of 68, and `splat-kinds` on it kind-verifies every function.
+2. **The target body does not pick a kind.** The same match list built without and with the table, from
+   `asmlift-wasm/` (each prints, for example, the lines below):
+
+   ```sh
+   pnpm --silent wasm splat-build ../target/vota_web_wasm.wasm ../build/out/wasm/vota_web/vota_web_wasm.wasm \
+     --matches ../splat/matched.txt --no-kinds -o ../build/out/splat-check/nokinds.wasm
+   #   re-pointing alone     5321 matches (845384 B)
+   #   another reading       1638 matches (911037 B), 7068 operands: literal 5634, table slot 1434
+   #   which copy             258 matches (360326 B), 497 operands
+   pnpm --silent wasm splat-build ../target/vota_web_wasm.wasm ../build/out/wasm/vota_web/vota_web_wasm.wasm \
+     --matches ../splat/matched.txt -o ../build/out/splat-check/kinds.wasm
+   #   re-pointing alone     6964 matches (1758167 B)
+   #   another reading          0 matches (0 B), 0 operands: -
+   #   which copy             253 matches (358580 B), 491 operands
+   ```
+
+   Both outputs have the same sha256 (`shasum -a 256 ../build/out/splat-check/{nokinds,kinds}.wasm`), so the same
+   matches verify when each operand is offered only its own kind. Without the table, the operands of "another
+   reading" are those whose value suggests another kind than the one the target body takes: integers that look like addresses (OpenSSL's error code 786688 lies in RHVoice's
+   data in our layout, §S3.5), and function pointers that look like integers or addresses. No rule on the value alone
+   tells them apart, and with the table none is needed.
+3. **The perturbation cases are tests.** `pnpm test test/splat-kinds.test.ts` pins them (it needs the build outputs
+   of `make -C src splat`; without them the cases are skipped). Each case patches one operand, at a body offset of one
+   function, in a copy of our plain link and its shifted link (the `plain` and `shifted` values of the case), and
+   builds that function's match:
+   - c2, c5 and c8 build the target with every reading offered, and fail with the table (`DIFFERS`): the operand is a
+     literal, an address and a slot, and only that reading is offered.
+   - c1, c3, c4, c6, c7 and c10 (wrong values that coincide with nothing) stay rejected.
+   - c9, c5L, I2 and TH2 (the target's number written as an integer) build the target and are each one review
+     warning. An integer of ours is compared as itself, so no byte check can reject them.
+   - c8L (the target's slot 69 written as an integer, inside our table) and c2S (an integer of the target's written
+     as a pointer to the function the target keeps in that slot) build the target with no warning. These are the
+     limit of any check that compares bytes.
+   - V1 and V2 (an integer written over one of `vdbeSorterSort`'s slots relative to `__table_base`) are read relative
+     to the base and rejected.
+   - Where a reading of the objects' relocations disagrees with the table, the table is right. `i32.const 2077` in
+     `sqlite3AddDefaultValue` +0x292 is a table slot (both links' slot holds `renameUnmapSelectCb`), although a
+     relocation reading takes it for an address. `vdbeSorterSort`'s 2035, 2036 and 2037 are relative to
+     `__table_base` and name `vdbeSorterCompareInt`, `vdbeSorterCompareText` and `vdbeSorterCompare`, not the
+     functions in slots 2035 to 2037.
+4. **A function in more than 64 target slots gives no slot reading.** A table slot is offered a function's target
+   slots only up to `SAME_CONTENT_LIMIT` (64, `asmlift-wasm/src/splat-symbols.ts`). Binaryen merged identical
+   functions, and the target's table holds its empty `(i32) -> ()` function (target 218, a 2-byte body) in 126 slots,
+   so a pointer of ours to such a function is unresolved, from `asmlift-wasm/`:
+
+   ```sh
+   pnpm --silent wasm splat-remap ../target/vota_web_wasm.wasm ../build/out/wasm/vota_web/vota_web_wasm.wasm \
+     sym:sqlite3_bind_pointer --against 12829
+   # ours 4854: UNRESOLVED (1)
+   #   +002a i32.const 2044: a table slot of ours: the target function fills 126 slots
+   ```
+
+   With `--no-kinds` the operand keeps the readings its value suggests, none of them the target's 11892, one of the
+   126 slots, and the body `differs at body byte 43 (target instruction +2a i32.const 11892)`. In the committed scan
+   (which a rescan at this commit reproduces), `grep -c 'fills 126 slots' ../splat/scan.tsv` gives 12 `unresolved`
+   rows for such an operand.
+5. **The build's lists.** `TMPDIR=/tmp make -C src splat` on the 7,217 matches prints `kind-unverified: 0/7217` and
+   `review warnings: 55 … 16 past-data, 11 target-object, 28 past-table`. All 55 warnings are in upstream library
+   functions built from their own sources (sqlite, OpenSSL, libc++, 7-Zip, RHVoice, zlib's minizip), whose numbers
+   come from those sources.
+
+The limits of the check that remain are listed in `docs/reference/splat.md` "Reviewing a match".

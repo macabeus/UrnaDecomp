@@ -23,10 +23,12 @@
 # Target functions the report details: --targets <file of target indices>, else every target function whose best pair
 # in the try link is a function the TU(s) define (by symbol name through the --emit-symbol-map twin; --no-named skips the twin link
 # and the names). They are what the TU is expected to produce, not splat matches (splat/matched.txt).
-# A census tier of `none` does not mean the body differs. Map the try link with
+# A census tier of `none` does not mean the body differs. Map the try link and derive its operand kinds with
 #   tools/round/link-map.sh build/out/try/<name>/wasm/vota_web
+#   tools/round/link-kinds.sh build/out/try/<name>/wasm/vota_web
+#   (asmlift-wasm/) pnpm wasm splat-kinds ../build/out/try/<name>/wasm/vota_web/vota_web_wasm.wasm
 # and compare one function with `pnpm wasm splat-remap <target> build/out/try/<name>/wasm/vota_web/vota_web_wasm.wasm
-# sym:<mangled> --against <fn>` (docs/how-to-decompile.md step 5).
+# sym:<mangled> --against <fn>` (or skip the kinds with --no-kinds; docs/how-to-decompile.md step 5).
 # --single: no link of the skeleton; the toolkit's rank adapter compiles the TU alone and scores one exported function
 # (a candidate linked alone has other inlining/DAE decisions than inside the app — use it to iterate, not to conclude).
 # Several <tu.cpp> are rival candidates ranked against each other, not one program: a callee in another TU stays an

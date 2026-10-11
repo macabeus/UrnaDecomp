@@ -36,10 +36,11 @@ pnpm playground                      # the web app over the target and the bench
 | `splat-assemble <dir> -o <wasm> [--substitute <dir\|<index>[-<name>].bin>]…`                                | the module from the pieces alone, with replacement bodies for some functions                                                                                                      |
 | `splat-symbols <target> <plain> [-o <symbol_addrs.txt>]`                                                    | the target's symbol file (function indices and data addresses → names) from our link's maps and the evidence                                                                      |
 | `splat-maps <target> <plain> (--fn <ours> \| --data <addr> \| --target-fn <n> \| --summary)`                | one entry of the symbol maps                                                                                                                                                      |
-| `splat-remap <target> <plain> <ours> [--against <target fn>]`                                               | one body of ours re-pointed into the target, and whether it is the target body                                                                                                    |
-| `splat-sym-coverage <target> <plain> [--smoke N]` / `splat-twin-check <plain> <twin>`                       | symbol coverage; the `--emit-symbol-map` twin against the plain link                                                                                                              |
-| `splat-scan <target> <plain> [-o scan.tsv] [--match [<matches>]]`                                           | every target function against our re-pointed candidate; `--match` appends new matches to the match list                                                                           |
-| `splat-build <target> <plain> [--matches f] [-o out.wasm] [--expect <sha256>]`                              | the split with our bytes for every match; fails on a match that no longer verifies; prints the meter                                                                              |
+| `splat-remap <target> <plain> <ours> [--against <target fn>] [--kinds f \| --no-kinds]`                     | one body of ours re-pointed into the target, and whether it is the target body                                                                                                    |
+| `splat-sym-coverage <target> <plain> [--smoke N] [--kinds f \| --no-kinds]` / `splat-twin-check <plain> <twin>` | symbol coverage; the `--emit-symbol-map` twin against the plain link                                                                                                       |
+| `splat-scan <target> <plain> [-o scan.tsv] [--match [<matches>]] [--kinds f \| --no-kinds]`                 | every target function against our re-pointed candidate; `--match` appends new matches to the match list                                                                           |
+| `splat-build <target> <plain> [--matches f] [-o out.wasm] [--expect <sha256>] [--kinds f \| --no-kinds] [--max-kind-unverified n]` | the split with our bytes for every match; fails on a match that does not verify, or on more than n kind-unverified matches; prints the meter, the kind-unverified matches and the review warnings |
+| `splat-kinds <plain> [--shifted <dir>] [-o kinds.json] [--matches f]`                                       | the operand-kind table: which constants of our link are addresses, table slots or integers, from a relink with data and table moved                                             |
 
 `<fn>` is a function index (function index space: imports first, so the target's first defined
 function is 136), `export:<name>` (linked module; the real name, resolved through the glue when the
@@ -499,15 +500,20 @@ no data votes. A name only anchors voted for lists them in `by:`. This reaches s
 helpers our link inlines differently from the target's, so no unique pair ever reaches them.
 
 **remapBody(maps, ourIndex)** rewrites calls, `ref.func`, type indices and globals; a reference that does not
-resolve makes the body `unresolved`, with the instruction and the reason. An `i32.const` is ambiguous (address,
-table slot, integer) and so is a memarg offset of 1024 or more (a folded address, or a field offset such as
-`BF_KEY`'s S-boxes at 1024), so each keeps every reading that resolves plus its literal; an `i64.const` whose low
-word is one of our C strings and whose high word is that string's length is a string_view clang packed into one
-constant (std::format's format string), read as that string's target address(es) with the same length, or literally; **matchesTarget(pieces,
-body)** says whether some choice of readings gives the target body, and the first byte none explains. A data
-address resolves through our symbol to the target's; anonymous objects by what they hold: a string by its whole
-NUL-terminated text found once in the target, a `std::source_location` record by its file, function, line and
-column, other read-only objects by bytes found once. Content that the target holds at several places adds each
+resolve makes the body `unresolved`, with the instruction and the reason. An `i32.const`, an `i64.const` and a memarg
+offset may each be an address, a table slot or an integer, which the final module does not say; the operand-kind
+table (`splat-kinds.ts`, below) says it, and each operand is offered only the readings of its kind: a literal its own
+bytes, an address the target place(s) of what it points at, a table slot the target slot(s) of its function (an
+`i64.const` address by its low word). An address or slot with no target image makes the body `unresolved`. In a
+kind-unverified function (no table, or one the table cannot vouch for) an `i32.const` and a memarg offset of 1024 or
+more (a folded address, or a field offset such as `BF_KEY`'s S-boxes at 1024) keep every reading that resolves plus
+their literal, and an `i64.const` whose low word is one
+of our C strings and whose high word is that string's length is a string_view clang packed into one constant
+(std::format's format string), read as that string's target address(es) with the same length, or literally;
+**matchesTarget(pieces, body)** says whether some choice of readings gives the target body, and the first byte none
+explains. A data address resolves through our symbol to the target's; anonymous objects by what they hold: a string
+by its whole NUL-terminated text found once in the target, a `std::source_location` record by its file, function,
+line and column, other read-only objects by bytes found once. Content that the target holds at several places adds each
 place as a reading, and the target body picks the copy it uses: every place of the same C string through its NUL,
 wherever tail merging put it (`STRING_COPY_LIMIT`, 4,096), and up to `SAME_CONTENT_LIMIT` (64) places of the same
 read-only bytes. An object with no name whose exact bytes the target does not hold (a `.data` object, or read-only
@@ -515,21 +521,24 @@ data holding pointers) is placed by its bytes with each pointer word re-pointed 
 pattern occurs once, or at each place for read-only content; a writable object found at several places stays
 unresolved. Placing one object can re-point a word of another, so the placement repeats until nothing more
 resolves. A function the target's table holds in several slots (binaryen merged identical functions) offers each
-slot as a reading.
+slot as a reading, up to `SAME_CONTENT_LIMIT` (64) slots; a function in more slots (binaryen's merged empty function
+fills 126) gives no slot reading, and a table slot of known kind that points at it is unresolved.
 
 | command                                                                                        | does                                                                       |
 | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
 | `splat-symbols <target> <plain> [-o f]`                                                        | gather the evidence and write the symbol file, keeping its hand edits      |
 | `splat-maps <target> <plain> --fn <i\|sym:n> \| --data <addr> \| --target-fn <i> \| --summary` | one entry of the maps                                                      |
-| `splat-remap <target> <plain> <i\|sym:n> [--against <t>]`                                      | one body re-pointed: unresolved operands, or whether it is the target body |
-| `splat-sym-coverage <target> <plain> [--smoke N]`                                              | named target functions, and the ledger's pairs re-pointed                  |
+| `splat-remap <target> <plain> <i\|sym:n> [--against <t>] [--kinds f \| --no-kinds]`             | one body re-pointed: unresolved operands, or whether it is the target body |
+| `splat-sym-coverage <target> <plain> [--smoke N] [--kinds f \| --no-kinds]`                     | named target functions, and the ledger's pairs re-pointed                  |
 | `splat-twin-check <plain> <twin>`                                                              | the twin's bodies against the plain link's through a name/body pairing     |
 
-`splat-remap` prints `ours <i>: re-pointed, <n> bytes; rewritten {<kind>: <count>}; soft <n>` (each soft operand,
-one that looks like an address or table slot at or above 1024 and resolves to neither, on a line under it), then
-`target <t>: IDENTICAL (<n> ambiguous operands read as <readings>)` or `differs at body byte <k>` with the target
-instruction there. The readings are the ones `matchesTarget` chose; they include the preferred one
-(`RemapResult.bytes`), so a `literal` below 1024 needed no choice. It loads the symbol file (`--symbols`, default
+`splat-remap` prints `ours <i>: re-pointed, <n> bytes; rewritten {<kind>: <count>}; soft <n>; operand kinds verified`
+(or `KIND-UNVERIFIED (<why>)`; each soft operand, one of a kind-unverified function that looks like an address or
+table slot at or above 1024 and resolves to neither, on a line under it), then `target <t>: IDENTICAL (<n> ambiguous
+operands read as <readings>)` or `differs at body byte <k>` with the target instruction there. The readings are the
+ones `matchesTarget` chose for the operands re-pointed as an address or a table slot (and, in a kind-unverified
+function, the literals); the first reading of each is the preferred one (`RemapResult.bytes`), so it needed no
+choice. It loads the symbol file (`--symbols`, default
 `<root>/splat/symbol_addrs.txt`) and the map directory beside the plain module (`--map-dir`), and applies no
 matches, unlike `splat-scan` and `splat-build` (`withMatches`). `<ours>` is our index or `sym:<names.tsv name>`; run
 it as `pnpm exec tsx src/cli.ts splat-remap …` when the name holds a `$`, which `pnpm wasm` hands to a shell.
@@ -559,8 +568,8 @@ references nothing, even when it equals that function's slot in our table.
 
 The meter has a second axis (`readingMeterOf`): how much the target's bytes chose among our readings. Per match,
 the strongest choice it needed: none (re-pointing alone writes the target body), another reading of some operand
-(a literal or table slot where the address reading leads, or the reverse), or which copy of identical string or
-read-only bytes an operand names.
+(a literal or table slot where the address reading leads, or the reverse: only in a kind-unverified match), or which
+copy of identical string or read-only bytes, or which of a function's table slots, an operand names.
 
 The match list (urna `splat/matched.txt`) is `<target index> <our symbol>` per line with `#` comments;
 `splat-scan --match` appends the scan's new matches and keeps every existing line. **splat-build** re-points each
@@ -573,7 +582,37 @@ the readings the target chose.
 | command                                                                                     | does                                                            |
 | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
 | `splat-scan <target> <plain> [-o scan.tsv] [--match [<matches>]] [--pieces d]`              | every target function against our re-pointed candidate          |
-| `splat-build <target> <plain> [--matches f] [-o out.wasm] [--expect <sha256>] [--pieces d]` | the split with our bytes for every match, verified, and a meter |
+| `splat-build <target> <plain> [--matches f] [-o out.wasm] [--expect <sha256>] [--pieces d] [--max-kind-unverified n]` | the split with our bytes for every match, verified, and a meter |
+| `splat-kinds <plain> [--shifted <dir>] [--map-dir d] [-o kinds.json] [--matches f]`         | the operand-kind table from the plain link and its shifted relink |
+
+`splat-scan`, `splat-build`, `splat-remap` and `splat-sym-coverage` take `--kinds <kinds.json>`, default
+`build/out/wasm-kinds/<name>/kinds.json` beside the plain link; they refuse to run without a table unless given
+`--no-kinds`, and refuse a table that describes another plain module (sha256) or another format. With it, each
+`i32.const`, `i64.const` and memarg offset is offered only the readings of its kind: a literal its own bytes, an
+address the target address(es) of what it points at, a table slot the target slot(s) of its function; an address or
+slot with no target image is unresolved. `splat-kinds` (`splat-kinds.ts`) writes the table: urna's
+`tools/round/link-kinds.sh` relinks the plain link's objects with `-sGLOBAL_BASE=1024+D` and `-sTABLE_BASE=1+T` and
+names that link's functions like `link-map.sh` (recording the sha256 of the wasm it named, which `splat-kinds`
+checks, as it checks that the map dir describes the plain link); the two links are aligned by name, and in a function
+with the same instructions an operand that moved by D is an address, by T a table slot, not at all a literal. A moved
+constant equal to the link's own base is followed through the operand stack: added to constants (an unfolded `-fPIC`
+sum such as sqlite's `select(2035, 2036, 2037) + 1`), it is the table base, read as the target's, and those constants
+are slots relative to it, read as the target slot minus the target's base. Any other moved slot is followed too:
+added to constants or to another slot, part of the base may be folded into it, so nothing tells which part is the
+base. A function it cannot vouch for (another shape, a move by neither shift, a base kept in a local or carried out
+of a block or added to a variable, such a slot sum, a `__memory_base` sum) is kind-unverified and keeps every
+reading; so is every function with `--no-kinds`. `link-kinds.sh` refuses to start while an object or archive on the
+plain link's line is newer than the plain wasm, and fails unless its relink's map lists the same input sections, in
+the same order and of the same sizes, as `link-map.sh`'s map; urna's make re-derives the table whenever a toolkit
+source changes. `splat-build` lists the kind-unverified matches apart, and fails on more of them than
+`--max-kind-unverified`. A count flag needs a count: an empty one (`--max-kind-unverified` with no number) throws,
+and urna's make leaves the flag out when its variable is empty. It also lists as review warnings the literal operands
+of matches that may be a target number the source copied, which no byte check can reject: `past-data` (in the
+target's data, past ours), `target-object` (the address of a named target object, from 64 KiB, or the low word of a
+packed string view) and `past-table` (in the target's table, past ours). A target slot number inside our table
+written as an integer, and an integer of the target's written as a pointer whose re-pointed value equals it, are not
+listed: nothing tells them from legitimate ones. urna's `docs/reference/splat.md` "Reviewing a match" lists what no
+check rejects.
 
 ## Tests
 

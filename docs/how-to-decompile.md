@@ -288,19 +288,25 @@ sides of that: the report says `1931 343 B app/comum: none → none`, because a 
 matched all the same. The unit-16 run above prints `9131 54 B app/ecourna: none → none` too, for a body that is
 the target's once re-pointed.
 
-**When the report pairs nothing, re-point against the try link.** Map it once, then run `splat-remap`
-([reference/splat.md](reference/splat.md) "Matching a function") on its wasm:
+**When the report pairs nothing, re-point against the try link.** Map it once, relink it with the data and the
+table moved to learn what each of its constants is (the *operand kinds*, [reference/splat.md](reference/splat.md)
+§3), then run `splat-remap` ([reference/splat.md](reference/splat.md) "Matching a function") on its wasm:
 
 ```sh
 TMPDIR=/tmp tools/round/link-map.sh build/out/try/munzona/wasm/vota_web     # about 20 s
+TMPDIR=/tmp tools/round/link-kinds.sh build/out/try/munzona/wasm/vota_web   # about 40 s
 cd asmlift-wasm
+pnpm --silent wasm splat-kinds ../build/out/try/munzona/wasm/vota_web/vota_web_wasm.wasm
 pnpm --silent wasm splat-remap ../target/vota_web_wasm.wasm ../build/out/try/munzona/wasm/vota_web/vota_web_wasm.wasm \
   sym:_ZNK7ecourna3app5dados3asn23CConversorMunicipioZona10DoConverteERKNS1_14CMunicipioZonaE --against 9131
-# ours 10513: re-pointed, 54 bytes; rewritten {"address":2,"func":1}; soft 0
+# ours 10517: re-pointed, 54 bytes; rewritten {"address":2,"func":1}; soft 0; operand kinds verified
 # target 9131: IDENTICAL (2 ambiguous operands read as address content-repointed)
 ```
 
-`IDENTICAL` there is the signal to land. `splat-remap` reads the committed symbol file and none of the matches, so
+`link-kinds.sh` refuses a try link whose objects were rebuilt after it was linked: run it right after `try-tu.sh`.
+To skip the two kind steps, pass `--no-kinds` to `splat-remap`; it then says `KIND-UNVERIFIED (no operand-kind
+table)` and offers every operand every reading its value suggests. `IDENTICAL` there is the
+signal to land. `splat-remap` reads the committed symbol file and none of the matches, so
 `differs` or `UNRESOLVED` can still turn into a match once steps 8 and 9 add names; the scan in step 9 decides.
 The `ours` index is the function's index in the try link; `pnpm wasm fn` on the try link's wasm with that index
 shows its body beside the target's.
@@ -386,6 +392,12 @@ the target's, `8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2`
 (*drift*), the build names it and the first differing instruction; fix the source until it verifies again
 ([reference/splat.md](reference/splat.md) "The drift rule").
 
+It also fails when a match is *kind-unverified* (the shifted link cannot say what its constants are), and names
+each one with the reason. Read it before anything else ([reference/splat.md](reference/splat.md) "Reviewing a
+match"); raising `SPLAT_MAX_KIND_UNVERIFIED` in `src/mk/splat-sub.mk` is a decision for review, with the reason
+written beside it. The *review warnings* list the literals of matches that may be a target number copied into the
+source. For a TSE function, check that each one of yours is a number its source has a reason to hold.
+
 Commit in one commit: the sources, the fragment and its companion files, the fragment's row in
 `src/units/README.md`, the ledger files the census rewrote (with the `git rm` of the previous snapshot from step 7),
 `splat/symbol_addrs.txt`, `splat/matched.txt`, `splat/scan.tsv`, `README.md`, `docs/status.md` and the stub and gap
@@ -410,7 +422,9 @@ differs, the code is usually right and something around it is not. The scan's `d
 
 | `detail` says | what is usually wrong | how to look into it |
 | --- | --- | --- |
-| `object in .data has no target symbol`, `object in .bss has no target symbol` | the symbol file has no name for a data object the body uses, and its content does not place it either: what follows the `;` says why its re-pointed bytes did not (not in the target, several places of a writable object, too little content); a `.bss` object is zeros, so only a name places it | find independent evidence for that object (RTTI, a unique string or content, a census pair) and see whether `make -C src splat-symbols` picks it up; [reference/splat.md](reference/splat.md) §2 lists the evidence kinds and §3 how content places an object |
+| `an address of ours: … (.data) has no target symbol`, `… (.bss) has no target symbol` | the symbol file has no name for a data object the body uses, and its content does not place it either: what follows the `;` says why its re-pointed bytes did not (not in the target, several places of a writable object, too little content); a `.bss` object is zeros, so only a name places it | find independent evidence for that object (RTTI, a unique string or content, a census pair) and see whether `make -C src splat-symbols` picks it up; [reference/splat.md](reference/splat.md) §2 lists the evidence kinds and §3 how content places an object |
+| `a table slot of ours: X has no target function` | the shifted link says the operand is a pointer to our function X, and the symbol file names no target function for X | the same as a callee with no target function: X's own match or name comes first (step 8) |
+| `a table slot of ours: the target function fills N slots` | the operand is a pointer to a function the target's table holds in more than 64 slots (binaryen's merged empty function fills 126); re-pointing offers a function's slots only up to 64 | the source is not at fault: the check cannot re-point such an operand ([reference/splat.md](reference/splat.md) §3 "Operand kinds") |
 | `the address resolves (symbol)/(string) to another place` | our data sits elsewhere: a different string merge, a missing or extra object, or another version's constants | compare the two strings or objects at the addresses the detail prints; check the version evidence in `third_party/MANIFEST.md` |
 | `target i32.const N \| ours i32.const M` with small numbers | a table slot: the function-pointer table holds functions in another order, because another set of functions is address-taken | the roots TUs (`src/app/roots*.cpp`, the units' `-roots.cpp`) and the link order decide the table; [reference/link-order.md](reference/link-order.md) |
 | `target call X \| ours call Y` | the callee resolves to another target function: a callee without a name, a twin, or an inlining difference | `pnpm wasm splat-remap … --against <index>` prints how every operand resolves |

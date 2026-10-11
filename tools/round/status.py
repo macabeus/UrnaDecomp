@@ -5,7 +5,8 @@
 
 Inputs, all tracked: splat/matched.txt (the match list), splat/scan.tsv (the verdict of every target function, written
 by `make -C src splat-scan` and `splat-match`) and target/vota_web_wasm.wasm (for byte-identical twins). The scan's
-`match` rows are exactly the matches when splat-match wrote it, so its sums are the splat build's meter.
+`match` rows are exactly the matches when splat-match wrote it, so its sums are the splat build's meter; a match row
+whose detail says `kinds unverified` is counted apart as kind-unverified.
 
 Each generated block sits between `<!-- status:NAME -->` and `<!-- /status:NAME -->`; text outside the markers is
 hand-written and kept.
@@ -41,8 +42,10 @@ VERDICTS = [
     ('differs', 'our link has a candidate body and it differs; `detail` names the first difference. '
                 'These are the closest to a match.'),
     ('unresolved', 'an operand of our body has no counterpart in the target: a callee the symbol file maps to no '
-                   'target function (such as our roots stand-in or a `byn$mgfn-shared$` thunk), or a data name only '
-                   'this function voted for (*self-voted*)'),
+                   'target function (such as our roots stand-in or a `byn$mgfn-shared$` thunk), an address or table '
+                   'slot of ours (by its operand kind) whose object or function has no target image, or a data name '
+                   'only this function voted for (*self-voted*). It is checked before the bytes are compared, so a '
+                   'body that is also different shows only this'),
     ('no-candidate', 'our link has no body for it yet'),
 ]
 TIERS = ['byte', 'fingerprint', 'addr', 'shape', 'none']
@@ -180,6 +183,11 @@ def total(t, groups):
     return s
 
 
+def kind_unverified(rows):
+    """The matches the scan checked without operand kinds (splat-scan's detail says `kinds unverified: <why>`)."""
+    return sum(1 for r in rows if r['verdict'] == 'match' and 'kinds unverified: ' in r['detail'])
+
+
 def blocks(rows, listed):
     t = tally(rows)
     libs = sorted((g for g in t if g not in TSE and g not in NOT_ATTRIBUTED), key=lambda g: (-t[g][0], g))
@@ -242,7 +250,9 @@ def blocks(rows, listed):
     small = sum(1 for r in rows if r['index'] in matched and r['size'] <= 8)
     twins = sum(1 for i in matched if seen[hashlib.sha256(bodies[i]).digest()] > 1)
     out['twins'] = (f'{n(small)} matches are bodies of 8 B or less, and {n(twins)} matches have a byte-identical twin in '
-                    'the target.')
+                    f'the target. {n(kind_unverified(rows))} matches are kind-unverified: the operand-kind table cannot '
+                    'vouch for their constants, so the check offered each one every reading (`make -C src splat` '
+                    'names them).')
 
     tiers = collections.defaultdict(collections.Counter)
     for r in rows:
@@ -293,7 +303,8 @@ def main(argv):
     for p in problems:
         print(p, file=sys.stderr)
     if not problems:
-        print(f'{len(listed)} matches; docs/status.md agrees with splat/scan.tsv')
+        print(f'{len(listed)} matches ({kind_unverified(rows)} kind-unverified); docs/status.md agrees with '
+              'splat/scan.tsv')
     return 1 if problems else 0
 
 

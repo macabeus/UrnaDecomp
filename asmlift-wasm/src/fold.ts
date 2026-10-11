@@ -6,7 +6,7 @@
 import { type Instr, immText } from './disasm';
 import { type Func, type Module, funcAt, importedFunc } from './parse';
 
-const UNARY =
+export const UNARY =
   /^(i32|i64|f32|f64)\.(eqz|clz|ctz|popcnt|abs|neg|ceil|floor|trunc|nearest|sqrt|wrap_i64|extend\d+_s|extend_i32_[su]|trunc_(sat_)?f(32|64)_[su]|convert_i(32|64)_[su]|demote_f64|promote_f32|reinterpret_[if](32|64))$/;
 const LOAD = /\.load/;
 const STORE = /\.store/;

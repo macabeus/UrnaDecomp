@@ -30,6 +30,7 @@ import { glueNamesFor } from './glue-file';
 import { importResolver } from './imports';
 import { GLOBAL_BASE, type NormalizedFn, normalizeModule } from './normalize';
 import { type Module, parseModule, typeText } from './parse';
+import type { OperandKinds } from './splat-kinds';
 
 // ---------------------------------------------------------------------------------------------------------------
 // wasm-ld --Map
@@ -1087,15 +1088,19 @@ export interface SymbolMaps {
   target: TargetSide;
   types: Map<number, number>;
   globals: Map<number, number>;
+  /** which of our constants are addresses, table slots or integers (splat-kinds.ts); without it every function of
+   *  ours is kind-unverified and each ambiguous operand keeps every reading */
+  kinds?: OperandKinds;
 }
 
-export function symbolMaps(ours: OurSide, target: TargetSide): SymbolMaps {
+export function symbolMaps(ours: OurSide, target: TargetSide, kinds?: OperandKinds): SymbolMaps {
   return {
     ours,
     ourImage: memoryImage(ours.module).image,
     target,
     types: typeMap(ours.module, target.module),
     globals: globalMap(ours.module, target.module),
+    ...(kinds === undefined ? {} : { kinds }),
   };
 }
 

@@ -5,6 +5,19 @@
 //   call / return_call / ref.func   our function → its symbol → the target function (imports by real name)
 //   call_indirect / block types     our type → the target type with the same signature
 //   global.get / global.set         by index when the type agrees (__stack_pointer, tempRet0)
+// An i32.const, an i64.const and a memarg offset are each an address, a table slot or a plain integer, which the final
+// module does not say. The operand-kind table (splat-kinds.ts: our link against a relink with the data and the
+// table moved) says it, and the operand offers only the readings of its kind:
+//   literal                         its own bytes, nothing else
+//   address                         the target address(es) of what it points at; for an i64.const, of its low word
+//   table slot                      the target slot(s) of the function in our slot
+//   table base, relative to it      an unfolded `__table_base + rel` sum (-fPIC): the base reads as the target's
+//                                   table base, a relative operand as the target slot(s) of the function in our slot
+//                                   base + rel, minus the target's base
+// An address or slot of ours with no target image makes the body unresolved.
+// A function the table cannot vouch for (KIND-UNVERIFIED: no table, another shape in the relink, an operand moved by
+// neither shift, a base constant whose use cannot be followed) keeps the readings the value alone suggests, and says
+// so (`kindUnverified`); then:
 //   memarg offset ≥ GLOBAL_BASE     AMBIGUOUS: an address binaryen folded into the load, or a field offset;
 //                                   it carries its address readings and its literal
 //   i32.const                       AMBIGUOUS: an address, a table slot and a plain integer look alike, so it
@@ -16,11 +29,13 @@
 // An address reading is the target address of our object's symbol or content (splat-symbols resolveDataAddress:
 // a C string through its NUL, read-only bytes, an object's bytes with its pointers re-pointed), plus every other
 // target address holding the same content: the target body picks the copy it uses.
-// A named operand that does not resolve makes the body unresolved, with the reason; an ambiguous operand whose
-// address or slot reading does not resolve keeps only its literal reading and is listed in `soft`.
+// A named operand that does not resolve makes the body unresolved, with the reason; in a kind-unverified function an
+// ambiguous operand whose address or slot reading does not resolve keeps only its literal reading and is listed in
+// `soft`.
 import { type Imm, type Instr, disassemble, instrText } from './disasm';
 import { GLOBAL_BASE } from './normalize';
 import type { Func, Module } from './parse';
+import { type OperandKind, operandKind, tableBase } from './splat-kinds';
 import { SAME_CONTENT_LIMIT, type SymbolMaps, cStringAt, resolveDataAddress, resolveFunction } from './splat-symbols';
 
 /** A stretch of the re-pointed body: fixed bytes, or the encodings an ambiguous operand may take. */
@@ -47,10 +62,13 @@ export type RemapResult =
       bytes: Uint8Array;
       pieces: Piece[];
       /** constants and memarg offsets ≥ GLOBAL_BASE that look like an address or a table slot and resolved to
-       *  neither */
+       *  neither (a kind-unverified function only) */
       soft: Soft[];
       /** how many operands were rewritten, per kind */
       rewritten: Record<string, number>;
+      /** why the operand kinds of this function are not known (splat-kinds.ts), when they are not: every ambiguous
+       *  operand then keeps every reading */
+      kindUnverified?: string;
     }
   | { ok: false; unresolved: Unresolved[] };
 
@@ -134,6 +152,58 @@ function packedStringViewReadings(maps: SymbolMaps, v: bigint): { values: bigint
   };
 }
 
+/** The readings of an i64.const whose low word is an address of ours (the shifted link moved it by the data shift):
+ *  the same high word over each target address of the low word. */
+function lowWordReadings(maps: SymbolMaps, v: bigint): { values: bigint[]; readings: string[] } | { reason: string } {
+  const high = BigInt.asIntN(64, v) >> 32n;
+  const a = addressReadings(maps, Number(v & 0xffffffffn));
+  if (a.addrs.length === 0) {
+    return { reason: `the low word is an address of ours: ${a.reason}` };
+  }
+  return {
+    values: a.addrs.map((x) => BigInt.asIntN(64, (high << 32n) | BigInt(x))),
+    readings: a.readings.map((r) => `${r} (i64 low word)`),
+  };
+}
+
+/** The target slots of the function in our table slot `v`: one, or each slot of a function the target's table holds
+ *  several times (binaryen merged identical functions); none with the reason. With `relative`, each slot minus the
+ *  target's table base (a table-rel operand, `v` already our base + it). */
+function slotReadings(
+  maps: SymbolMaps,
+  v: number,
+  relative = false,
+): { alternatives: Uint8Array[]; readings: string[]; reason: string } {
+  const f = maps.ours.elem.get(v);
+  const r = f === undefined ? null : resolveFunction(maps, f);
+  const slots = r?.ok ? maps.target.slots.get(r.index!) : undefined;
+  const how = `${r?.ok ? r.how : ''}${relative ? ' − the table base' : ''}`;
+  const base = relative ? tableBase(maps.target.module) : 0;
+  if (slots?.length === 1) {
+    return { alternatives: [Uint8Array.from(sleb(slots[0] - base))], readings: [`table slot of ${how}`], reason: '' };
+  }
+  if (slots !== undefined && slots.length <= SAME_CONTENT_LIMIT) {
+    // the target's table holds the function in several slots: each is a pointer to it
+    return {
+      alternatives: slots.map((slot) => Uint8Array.from(sleb(slot - base))),
+      readings: slots.map((slot) => `table slot copy ${slot} of ${how}`),
+      reason: '',
+    };
+  }
+  return {
+    alternatives: [],
+    readings: [],
+    reason:
+      f === undefined
+        ? 'empty slot'
+        : r !== null && !r.ok
+          ? r.reason
+          : slots === undefined
+            ? 'the target function is in no table slot'
+            : `the target function fills ${slots.length} slots`,
+  };
+}
+
 /** s33 block type index (non-negative) */
 function s33(v: number): number[] {
   return sleb(v);
@@ -172,6 +242,16 @@ export function remapBody(maps: SymbolMaps, ourIndex: number): RemapResult {
   const fail = (i: Instr, reason: string): void => {
     unresolved.push({ at: i.offset, instr: instrText(i, m), reason });
   };
+  const fk = maps.kinds?.functions.get(ourIndex);
+  const kindAt = (at: number): OperandKind | undefined => operandKind(fk, at);
+  const kindUnverified =
+    maps.kinds === undefined
+      ? 'no operand-kind table'
+      : fk === undefined
+        ? 'not in the operand-kind table'
+        : fk.verified
+          ? undefined
+          : fk.why;
 
   for (const i of instrs) {
     const starts = i.imms.map((im) => im.at);
@@ -235,22 +315,33 @@ export function remapBody(maps: SymbolMaps, ourIndex: number): RemapResult {
         }
         case 'memarg': {
           copy(im.at, im.offsetAt);
-          if (im.offset >= GLOBAL_BASE && im.offset < maps.ours.dataEnd) {
+          const kind = kindAt(i.offset);
+          if (kind === 'address' || (kind === undefined && im.offset >= GLOBAL_BASE && im.offset < maps.ours.dataEnd)) {
             // binaryen folds a constant address into the offset, but a field offset of 1024 or more looks the same
             const a = addressReadings(maps, im.offset);
             if (a.addrs.length === 0) {
-              soft.push({ at: i.offset, instr: instrText(i, m), reason: `offset: ${a.reason}` });
+              if (kind === 'address') {
+                fail(i, `offset is an address of ours: ${a.reason}`);
+              } else {
+                soft.push({ at: i.offset, instr: instrText(i, m), reason: `offset: ${a.reason}` });
+              }
               copy(im.offsetAt, end);
             } else {
               flush();
               pieces.push({
-                alternatives: [...a.addrs.map((x) => Uint8Array.from(uleb(x))), body.slice(im.offsetAt, end)],
-                readings: [...a.readings, 'literal'],
+                alternatives: [
+                  ...a.addrs.map((x) => Uint8Array.from(uleb(x))),
+                  ...(kind === undefined ? [body.slice(im.offsetAt, end)] : []),
+                ],
+                readings: [...a.readings, ...(kind === undefined ? ['literal'] : [])],
                 at: i.offset,
               });
               count('memarg');
             }
           } else {
+            if (kind !== undefined && kind !== 'literal') {
+              fail(i, `a ${kind} operand as a memory offset`);
+            }
             copy(im.offsetAt, end);
           }
           return;
@@ -261,10 +352,15 @@ export function remapBody(maps: SymbolMaps, ourIndex: number): RemapResult {
             return;
           }
           const v = im.value;
+          const kind = kindAt(i.offset);
+          if (kind === 'literal') {
+            copy(im.at, end);
+            return;
+          }
           const alternatives: Uint8Array[] = [];
           const readings: string[] = [];
           const reasons: string[] = [];
-          if (v >= GLOBAL_BASE && v < maps.ours.dataEnd) {
+          if (kind === 'address' || (kind === undefined && v >= GLOBAL_BASE && v < maps.ours.dataEnd)) {
             const a = addressReadings(maps, v);
             if (a.addrs.length === 0) {
               reasons.push(`address: ${a.reason}`);
@@ -274,32 +370,25 @@ export function remapBody(maps: SymbolMaps, ourIndex: number): RemapResult {
               readings.push(a.readings[k]);
             });
           }
-          if (v >= 1 && v < maps.ours.tableSize) {
-            const f = maps.ours.elem.get(v);
-            const r = f === undefined ? null : resolveFunction(maps, f);
-            const slots = r?.ok ? maps.target.slots.get(r.index!) : undefined;
-            if (slots?.length === 1) {
-              alternatives.push(Uint8Array.from(sleb(slots[0])));
-              readings.push(`table slot of ${r!.ok ? r!.how : ''}`);
-            } else if (slots !== undefined && slots.length <= SAME_CONTENT_LIMIT) {
-              // the target's table holds the function in several slots: each is a pointer to it
-              for (const slot of slots) {
-                alternatives.push(Uint8Array.from(sleb(slot)));
-                readings.push(`table slot copy ${slot} of ${r!.ok ? r!.how : ''}`);
-              }
-            } else {
-              reasons.push(
-                `table: ${
-                  f === undefined
-                    ? 'empty slot'
-                    : r !== null && !r.ok
-                      ? r.reason
-                      : slots === undefined
-                        ? 'the target function is in no table slot'
-                        : `the target function fills ${slots.length} slots`
-                }`,
-              );
+          if (kind === 'table-base') {
+            alternatives.push(Uint8Array.from(sleb(tableBase(maps.target.module))));
+            readings.push('table base');
+          }
+          if (kind === 'slot' || kind === 'table-rel' || (kind === undefined && v >= 1 && v < maps.ours.tableSize)) {
+            const t = kind === 'table-rel' ? slotReadings(maps, tableBase(m) + v, true) : slotReadings(maps, v);
+            alternatives.push(...t.alternatives);
+            readings.push(...t.readings);
+            if (t.reason !== '') {
+              reasons.push(`table: ${t.reason}`);
             }
+          }
+          if (kind !== undefined && alternatives.length === 0) {
+            // the shifted link says what this operand is, and the target has no image of it
+            const what =
+              kind === 'address' ? 'an address' : kind === 'table-rel' ? 'a table slot relative to the base' : 'a table slot';
+            fail(i, `${what} of ours: ${reasons.join('; ').replace(/^\w+: /, '')}`);
+            copy(im.at, end);
+            return;
           }
           // below GLOBAL_BASE a constant is an integer far more often than a table slot: no reading is no news
           if (v >= GLOBAL_BASE && reasons.length > 0 && alternatives.length === 0) {
@@ -310,29 +399,50 @@ export function remapBody(maps: SymbolMaps, ourIndex: number): RemapResult {
             return;
           }
           count(readings[0].split(' ')[0] === 'address' ? 'address' : 'table');
-          const literal = body.subarray(im.at, end);
-          // the preferred reading leads: below GLOBAL_BASE the integer, above it the address or slot
-          if (v < GLOBAL_BASE) {
-            alternatives.unshift(literal);
-            readings.unshift('literal');
-          } else {
-            alternatives.push(literal);
-            readings.push('literal');
+          if (kind === undefined) {
+            const literal = body.subarray(im.at, end);
+            // the preferred reading leads: below GLOBAL_BASE the integer, above it the address or slot
+            if (v < GLOBAL_BASE) {
+              alternatives.unshift(literal);
+              readings.unshift('literal');
+            } else {
+              alternatives.push(literal);
+              readings.push('literal');
+            }
           }
           flush();
           pieces.push({ alternatives, readings, at: i.offset });
           return;
         }
         case 's64': {
-          const sv = i.opcode === 0x42 ? packedStringViewReadings(maps, im.value) : null;
+          const kind = i.opcode === 0x42 ? kindAt(i.offset) : 'literal';
+          if (kind === 'literal') {
+            copy(im.at, end);
+            return;
+          }
+          let sv: { values: bigint[]; readings: string[] } | null;
+          if (kind === undefined) {
+            sv = packedStringViewReadings(maps, im.value);
+          } else {
+            const r = kind === 'address' ? lowWordReadings(maps, im.value) : { reason: `a ${kind} operand in an i64.const` };
+            if ('reason' in r) {
+              fail(i, r.reason);
+              copy(im.at, end);
+              return;
+            }
+            sv = r;
+          }
           if (sv === null) {
             copy(im.at, end);
             return;
           }
           flush();
           pieces.push({
-            alternatives: [...sv.values.map((x) => Uint8Array.from(sleb64(x))), body.slice(im.at, end)],
-            readings: [...sv.readings, 'literal'],
+            alternatives: [
+              ...sv.values.map((x) => Uint8Array.from(sleb64(x))),
+              ...(kind === undefined ? [body.slice(im.at, end)] : []),
+            ],
+            readings: [...sv.readings, ...(kind === undefined ? ['literal'] : [])],
             at: i.offset,
           });
           count('address');
@@ -347,7 +457,14 @@ export function remapBody(maps: SymbolMaps, ourIndex: number): RemapResult {
   if (unresolved.length > 0) {
     return { ok: false, unresolved };
   }
-  return { ok: true, bytes: preferred(pieces), pieces, soft, rewritten };
+  return {
+    ok: true,
+    bytes: preferred(pieces),
+    pieces,
+    soft,
+    rewritten,
+    ...(kindUnverified === undefined ? {} : { kindUnverified }),
+  };
 }
 
 function preferred(pieces: Piece[]): Uint8Array {

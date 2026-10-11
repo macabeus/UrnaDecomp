@@ -3,10 +3,14 @@
 //   splat-maps     <target.wasm> <plain.wasm> [--symbols <f>] [--map-dir <d>] [--ledger <d>]
 //                  (--fn <our index|sym:name> | --data <our address> | --target-fn <index> | --summary)
 //   splat-remap    <target.wasm> <plain.wasm> <our index|sym:name> [--against <target index>] [--symbols <f>]
+//                  [--kinds <kinds.json> | --no-kinds]
 //   splat-sym-coverage <target.wasm> <plain.wasm> [--symbols <f>] [--ledger <d>] [--smoke N]
+//                  [--kinds <kinds.json> | --no-kinds]
+//   (splat-remap and splat-sym-coverage refuse to run without the table unless given --no-kinds)
 //   splat-twin-check   <plain.wasm> <twin.wasm> [--map-dir <d>]   (the --emit-symbol-map twin against the plain link)
 // Defaults follow the urna layout: <root>/target/x.wasm, <root>/splat/symbol_addrs.txt, <root>/ledger, and the
-// plain link's scratch map dir build/out/wasm-map/<name> (tools/round/link-map.sh).
+// plain link's scratch map dir build/out/wasm-map/<name> (tools/round/link-map.sh); the commands that re-point a
+// body read the operand-kind table build/out/wasm-kinds/<name>/kinds.json (splat-kinds.ts).
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 
@@ -14,6 +18,7 @@ import { disassemble, instrText } from './disasm';
 import { glueNamesFor } from './glue-file';
 import { readLedgerTsv, readSymbolMap } from './ledger';
 import { parseModule } from './parse';
+import { kindsPathOf, noMoreArgs, readOperandKinds } from './splat-kinds';
 import { matchesTarget, remapBody, repointIndices } from './splat-remap';
 import {
   type OurSide,
@@ -63,10 +68,16 @@ interface Loaded {
   ledgerDir: string;
 }
 
-function load(args: string[], needSymbols = true): Loaded {
+/** `kinds`: the command re-points bodies, and reads the operand-kind table (--kinds, the default one, or --no-kinds) */
+function load(args: string[], needSymbols = true, kinds = false): Loaded {
   const symbolsArg = take(args, '--symbols');
   const mapDir = take(args, '--map-dir');
   const ledgerArg = take(args, '--ledger');
+  const kindsArg = take(args, '--kinds');
+  const noKinds = args.indexOf('--no-kinds');
+  if (noKinds >= 0) {
+    args.splice(noKinds, 1);
+  }
   const [targetPath, plainPath] = args.splice(0, 2);
   if (targetPath === undefined || plainPath === undefined) {
     throw new Error('expected <target.wasm> <plain.wasm>');
@@ -78,7 +89,9 @@ function load(args: string[], needSymbols = true): Loaded {
   }
   const ours = loadOurSide(plainPath, mapDir ?? defaultMapDir(plainPath));
   const target = loadTargetSide(targetPath, needSymbols ? symbolsPath : null, ledgerDir, ours.stackSize);
-  return { maps: symbolMaps(ours, target), symbolsPath, ledgerDir };
+  const kindsPath = kinds ? kindsPathOf(plainPath, kindsArg, noKinds >= 0) : null;
+  const table = kindsPath === null ? undefined : readOperandKinds(kindsPath, ours.module.bytes);
+  return { maps: symbolMaps(ours, target, table), symbolsPath, ledgerDir };
 }
 
 function ourFunction(ours: OurSide, sel: string): number {
@@ -174,11 +187,12 @@ function inspect(args: string[]): void {
 
 function remap(args: string[]): void {
   const against = take(args, '--against');
-  const { maps } = load(args);
-  const sel = args[0];
+  const { maps } = load(args, true, true);
+  const sel = args.shift();
   if (sel === undefined) {
     throw new Error('splat-remap needs <our index|sym:name>');
   }
+  noMoreArgs('splat-remap', args);
   const i = ourFunction(maps.ours, sel);
   const r = remapBody(maps, i);
   const w = (s: string): boolean => process.stdout.write(`${s}\n`);
@@ -189,7 +203,9 @@ function remap(args: string[]): void {
     }
     return;
   }
-  w(`ours ${i}: re-pointed, ${r.bytes.length} bytes; rewritten ${JSON.stringify(r.rewritten)}; soft ${r.soft.length}`);
+  w(
+    `ours ${i}: re-pointed, ${r.bytes.length} bytes; rewritten ${JSON.stringify(r.rewritten)}; soft ${r.soft.length}; ${r.kindUnverified === undefined ? 'operand kinds verified' : `KIND-UNVERIFIED (${r.kindUnverified})`}`,
+  );
   for (const s of r.soft) {
     w(`  soft +${s.at.toString(16).padStart(4, '0')} ${s.instr}: ${s.reason}`);
   }
@@ -215,7 +231,8 @@ function remap(args: string[]): void {
 
 function coverage(args: string[]): void {
   const smoke = Number(take(args, '--smoke') ?? 0);
-  const { maps, ledgerDir } = load(args);
+  const { maps, ledgerDir } = load(args, true, true);
+  noMoreArgs('splat-sym-coverage', args);
   const { ours, target } = maps;
   const w = (s: string): boolean => process.stdout.write(`${s}\n`);
   const tFirst = target.module.importedFuncCount;

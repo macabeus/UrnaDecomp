@@ -317,7 +317,9 @@ their count over time, built from `splat/scan.tsv` and the history of `splat/mat
 
 **match, matched, match list** — a match is a line `<target index> <our symbol>` in `splat/matched.txt` (the match
 list): a promise that our build produces exactly that target body, which the splat build verifies on every run (see
-the next section). A matched function is a target function with such a line, and the meter counts them.
+the next section). A matched function is a target function with such a line, and the meter counts them. The
+build also lists the matches it could check only in part (*kind-unverified*) and fails when there are more of them
+than its limit allows.
 `make -C src splat-match` adds the scan's new `match` verdicts to the list (`docs/how-to-decompile.md` step 9). The
 census never matches, it pairs (see **census tiers, pairing tiers**). The target functions a candidate TU is
 expected to produce are its *targets* (`try-tu.sh --targets`, the toolkit's `targets` command), not matches. A
@@ -354,18 +356,36 @@ function pointers), `vote:N` (aligned address operands; `by:` lists up to four v
 `pair-depth0`, `callers+content`). *Where:* `docs/reference/splat.md` §2, `asmlift-wasm/src/splat-symbols.ts`.
 
 **re-pointing** (`splat-remap`) — rewriting one of our function bodies into the target's index and address spaces:
-callees, `call_indirect` types, globals, imports, table slots and data addresses, through our link map and the symbol
-file. A target function is **matched** when the re-pointed body is byte-identical to its piece and nothing in the
-re-pointing read a target body. *Where:* `docs/reference/splat.md` §3, `asmlift-wasm/README.md` "splat symbols".
+callees, `call_indirect` types, globals, imports, table slots and data addresses, through our link map, the
+operand-kind table and the symbol file. A target function is **matched** when the re-pointed body is byte-identical
+to its piece and nothing in the re-pointing read a target body. *Where:* `docs/reference/splat.md` §3,
+`asmlift-wasm/README.md` "splat symbols".
 
-**reading** — one interpretation of an ambiguous operand: an `i32.const` (or a memarg offset ≥ 1024) may be an
-address, a table slot or a plain integer, and content held at several places in the target may be any of its copies.
-Every reading from our side is kept and the target body only picks among them; the meter's "readings the target chose"
-lines (re-pointing alone / another reading / which copy) count how often it had to pick. A data object the symbol
-file does not name is placed by its content: a C string, a `source_location` record, exact read-only bytes, or its
-bytes with each pointer word re-pointed (`content-repointed`); content at several places, and a function the
-target's table holds in several slots, offer each place as a copy. *Where:* `docs/reference/splat.md` §3
-and "How to read the meter".
+**operand kind, shifted link, kind-unverified** — whether a constant of ours (an `i32.const`, an `i64.const` or a
+memarg offset) is an address, a table slot or a plain integer (a *literal*). The final module does not say, so `make
+-C src link-kinds` links the same objects again with the data moved by 1 MiB and the table by 20,000 slots (the
+*shifted link*, `build/out/wasm-kinds/vota_web/`). In a function with the same instructions in both links, a
+constant that moved by the data shift is an address, by the table shift a table slot, and not at all a literal;
+`kinds.json` records it. A function the table cannot vouch for (another shape in the shifted link, a constant moved
+by neither shift, a sum of the table base or of a table slot it cannot follow) is *kind-unverified*: its operands
+keep every reading, and the build lists it and fails on more of them than `SPLAT_MAX_KIND_UNVERIFIED` (0). *Where:*
+`docs/reference/splat.md` §3 "Operand kinds", `tools/round/link-kinds.sh`, `asmlift-wasm/src/splat-kinds.ts`,
+`docs/reference/facts/splat.md` §S5.
+
+**reading** — one target value an operand of ours may re-point to. Each operand is offered only the readings of its
+kind: a literal its own bytes; an address the target place of what it points at, plus every other place holding the
+same content (a *copy*); a table slot the target slot that holds its function, or each of them when binaryen merged
+identical functions into one that fills several slots (up to 64; a function in more slots leaves the operand
+unresolved). The target body picks only among copies. The meter's "readings the target chose" lines (re-pointing
+alone / another reading / which copy) count how often it had to pick; "another reading" (the target body picking a
+kind) happens only in a kind-unverified match. A data object the symbol file does not
+name is placed by its content: a C string, a `source_location` record, exact read-only bytes, or its bytes with each
+pointer word re-pointed (`content-repointed`). *Where:* `docs/reference/splat.md` §3 and "The meter".
+
+**review warning** — a literal operand of a match that may be a target number written into our source (`past-data`,
+`target-object`, `past-table`). An integer is compared as itself, so the bytes agree and no check can reject it; the
+build lists them for a reviewer and never fails on them (all in upstream libraries). *Where:*
+`docs/reference/splat.md` "Reviewing a match".
 
 **scan verdicts** — `make -C src splat-scan` writes `splat/scan.tsv` (committed: the work list) with one verdict per
 target function: `match`, `differs` (with the first differing instruction), `unresolved` (an operand with no target
