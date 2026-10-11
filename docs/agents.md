@@ -53,9 +53,8 @@ The board is a folder **outside** the repository, created for one run; the run's
   `ECOURNA_EXTRA=…`), never a command-line `UENUX2_CXXFLAGS`, which drops the fragments' target-specific additions
   and reaches the stand-ins. [facts/app-flags.md](reference/facts/app-flags.md) §F9 item 6 has the command and the
   splat check of such a link.
-- A flag change in a `src/units/*.mk` fragment does not rebuild stale objects: touch the sources. An ecourna source
-  deeper than `src/ecourna/*/*/` is no prerequisite of the generic rule at all, so an edit of it does not rebuild
-  either, unless its fragment names it (`src/units/README.md` "What a fragment holds" item 3).
+- A flag change in a `src/units/*.mk` fragment does not rebuild stale objects: touch the sources. An edit of a
+  source or a header does: each object depends on its own source and on every header of its tree.
 - Two units landing in one run each need their own fragment number: the coordinator assigns them before the
   matchers start, and the unit that lands second re-runs link, census, symbols, match and the splat build on top of
   the first (`docs/how-to-decompile.md` step 10, "Landing onto a moved main").

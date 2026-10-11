@@ -127,7 +127,11 @@ include $(ROOT)/src/mk/ecourna-flags.mk
 include $(addprefix $(ROOT)/src/mk/,asn1.mk splat-build.mk splat-map.mk splat-sub.mk)
 UENUX2_SRCS ?=
 ECOURNA_OBJS := $(addprefix $(ROOT)/$(APP)/ecourna/,$(addsuffix .o,$(subst /,_,$(ECOURNA_SRCS))))
-$(ROOT)/$(APP)/ecourna/%.o: $(ROOT)/src/Makefile $(wildcard $(ROOT)/src/ecourna/*/*/*.hpp $(ROOT)/src/ecourna/*/*/*.cpp $(ROOT)/src/ecourna/*/*.hpp)
+# Each ecourna object depends on its own source, at any depth (the object's name flattens the path, so the pattern
+# rule cannot name it: these prerequisite-only rules do), and on every ecourna header at any depth.
+ECOURNA_HDRS := $(shell find $(ROOT)/src/ecourna -name '*.h' -o -name '*.hpp' 2>/dev/null)
+$(foreach u,$(ECOURNA_SRCS),$(eval $(ROOT)/$(APP)/ecourna/$(subst /,_,$(u)).o: $(ROOT)/src/ecourna/$(u)))
+$(ROOT)/$(APP)/ecourna/%.o: $(ROOT)/src/Makefile $(ECOURNA_HDRS)
 	$(H) mkdir -p $(APP)/ecourna && build/docker-build.sh em++ $(ECOURNA_CXXFLAGS) -c /work/src/ecourna/$(subst _,/,$(patsubst %.o,%,$*)) -o $(R)
 $(ROOT)/$(APP)/roots_ecourna.o: $(ROOT)/src/app/roots_ecourna.cpp $(ROOT)/src/Makefile
 	$(H) mkdir -p $(APP) && build/docker-build.sh em++ $(APP_CXXFLAGS) -c src/app/roots_ecourna.cpp -o $(R)
@@ -137,7 +141,7 @@ $(ROOT)/$(APP)/roots_ecourna.o: $(ROOT)/src/app/roots_ecourna.cpp $(ROOT)/src/Ma
 # hold underscores. Every unit depends on every uenux2/ecourna header (a unit moves headers, not only .cpp files).
 # A unit compiles from its /work path, which UENUX2_PREFIX_MAP rewrites: its std::source_location records then name
 # /home/rubio/tse/uenux2/<path>, as the target's do (a relative path is never rewritten).
-UENUX2_HDRS := $(shell find $(ROOT)/src/uenux2 -name '*.h' -o -name '*.hpp' 2>/dev/null) $(wildcard $(ROOT)/src/ecourna/*/*/*.hpp $(ROOT)/src/ecourna/*/*.hpp)
+UENUX2_HDRS := $(shell find $(ROOT)/src/uenux2 -name '*.h' -o -name '*.hpp' 2>/dev/null) $(ECOURNA_HDRS)
 UENUX2_OBJS := $(addprefix $(ROOT)/$(APP)/uenux2/,$(addsuffix .o,$(UENUX2_SRCS)))
 $(ROOT)/$(APP)/uenux2/%.cpp.o: $(ROOT)/src/uenux2/%.cpp $(ROOT)/src/Makefile $(UENUX2_HDRS)
 	$(H) mkdir -p $(dir $(R)) && build/docker-build.sh em++ $(UENUX2_CXXFLAGS) -c /work/src/uenux2/$*.cpp -o $(R)

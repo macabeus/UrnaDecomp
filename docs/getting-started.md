@@ -220,6 +220,6 @@ function.
 | --- | --- |
 | a compile through docker cannot find its input or output files | `TMPDIR` is not `/tmp` (section 1) |
 | `make -C src link` fails with `assert names`, or says "Nothing to be done" after a failure | a `-j` run; delete `build/out/wasm/vota_web/vota_web_wasm.wasm` and `build/out/wasm-named/vota_web/vota_web_wasm.wasm` by name and link again without `-j` |
-| a flag change in `src/units/*.mk`, or an edit of a source, does not change the link | make does not rebuild objects when only a fragment's flags change; touch the sources. The generic ecourna rule does not depend on a source deeper than `src/ecourna/*/*/` (`api/sql/sqlite/csqlstatement.cpp`), so touching it does nothing: delete its object by name (`build/out/app/ecourna/api_sql_sqlite_csqlstatement.cpp.o`), or give the fragment a prerequisite rule (`src/units/README.md` "What a fragment holds") |
+| a flag change in `src/units/*.mk` does not change the link | make does not rebuild objects when only a fragment's flags change; touch the sources (each object depends on its own source and every header of its tree, so an edit of either rebuilds it) |
 | the bootstrap refuses a `third_party/` checkout | that directory is at another commit; it is never reset for you, so move it aside and run the bootstrap again |
 | a step takes many times longer than the table says | the host is loaded; every compile is a docker run |

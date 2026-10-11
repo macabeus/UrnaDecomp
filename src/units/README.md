@@ -26,25 +26,16 @@ UENUX2_SRCS += src/api/util/cwait.cpp
    rewrites the `std::source_location` paths. Its prerequisites name the source, the fragment and the headers the
    unit includes, so an edit or a flag change here rebuilds the objects. A unit under `app/dados/` does not need
    one for `-fno-PIC`: `src/mk/ecourna-flags.mk` adds it to the generic rule for every `app_dados_%.o`
-   (`tools/round/try-tu.sh --print-flags <source>` ends in `-fno-PIC`). What an own rule still gives (04, 07, 08
-   and 09 have one) is the source as a prerequisite, which the generic rule lacks for deep sources:
+   (`tools/round/try-tu.sh --print-flags <source>` ends in `-fno-PIC`).
 
-   The generic ecourna rule in `src/Makefile` has no source prerequisite of its own. It depends on every
-   `src/ecourna/*/*/*.cpp` and `*.hpp` and on `src/ecourna/*/*.hpp`, so an edit of a source three levels deep
-   rebuilds every generic object, and an edit of a source or header deeper than that (`app/dados/asn/x.cpp`,
-   `api/sql/sqlite/x.cpp`) rebuilds nothing: the link silently keeps the old object. A unit with such a source
-   gives it a rule of its own (`16-…`) or a rule with prerequisites and no recipe, which leaves the generic
-   recipe and flags alone (`15-…`):
+   The generic ecourna rule in `src/Makefile` makes each object depend on its own source, at any depth, and on
+   every `src/ecourna` header, as the generic uenux2 rule does for its tree; units 03, 04, 07 to 10, 15 and 16 also
+   name their sources in rules of their own, which is redundant but harmless.
 
-   ```make
-   $(foreach u,$(HORARIOS_SRCS),$(eval $(ROOT)/$(APP)/ecourna/$(subst /,_,$(u)).o: $(ROOT)/src/ecourna/$(u) \
-     $(ROOT)/src/units/15-ecourna-cconversorhorariosurna.mk $(wildcard $(ROOT)/src/ecourna/app/dados/asn/*.hpp …)))
-   ```
-
-   Check it with `make -n -C src link -W $PWD/src/ecourna/<source> | grep -c 'em++.* -c '`: 0 means an edit
-   would not rebuild. The generic ecourna and uenux2 rules do not depend on any fragment either: after changing a
-   flag that only a target-specific variable carries (`06-…`'s `api_compression_%.o: ECOURNA_CXXFLAGS += -fno-PIC`),
-   touch the unit's sources, or delete their objects by name when they are deeper than three levels.
+   Check it with `make -n -C src link -W $PWD/src/ecourna/<source> | grep -c 'em++.* -c '`: 1 means an edit
+   rebuilds the source's object. The generic ecourna and uenux2 rules do not depend on any fragment: after changing
+   a flag that only a target-specific variable carries (`06-…`'s `api_compression_%.o: ECOURNA_CXXFLAGS +=
+   -fno-PIC`), touch the unit's sources.
 
    A rule of the fragment's own compiles the TSE source from its `/work/src/…` path, as the generic ecourna and
    uenux2 rules do: the tree's `-ffile-prefix-map` (`UENUX2_PREFIX_MAP`, `ECOURNA_PREFIX_MAP`) rewrites only that
