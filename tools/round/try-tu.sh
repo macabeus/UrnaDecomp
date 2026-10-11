@@ -34,6 +34,11 @@
 # Several <tu.cpp> are rival candidates ranked against each other, not one program: a callee in another TU stays an
 # import. Undefined functions become imports but undefined data fails the link; pass
 # --flags '-Wl,--unresolved-symbols=ignore-all' for a TU that uses another TU's data (theInfo, vtables, typeinfo).
+# The --single template always compiles with -fexceptions; uenux2 is built without it (no landing pads), so pass
+# --flags '-fignore-exceptions' for a uenux2 TU, or its score counts invoke_* thunks the build never has.
+# A uenux2 TU with std::source_location records and no fragment yet compiles from its relative path, which
+# UENUX2_PREFIX_MAP does not rewrite: pass --flags '-ffile-prefix-map=src/uenux2=/home/rubio/tse/uenux2' so the
+# try link's records name the target's path (docs/how-to-decompile.md steps 4 and 5).
 set -euo pipefail
 ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 cd "$ROOT"

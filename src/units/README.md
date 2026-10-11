@@ -45,12 +45,32 @@ UENUX2_SRCS += src/api/util/cwait.cpp
    would not rebuild. The generic ecourna and uenux2 rules do not depend on any fragment either: after changing a
    flag that only a target-specific variable carries (`06-…`'s `api_compression_%.o: ECOURNA_CXXFLAGS += -fno-PIC`),
    touch the unit's sources, or delete their objects by name when they are deeper than three levels.
+
+   The generic uenux2 rule compiles `src/uenux2/<path>`, a relative path that `UENUX2_PREFIX_MAP`
+   (`-ffile-prefix-map=/work/src/uenux2=…`) never rewrites, so a uenux2 source with `std::source_location` records
+   would record `src/uenux2/…` instead of the target's `/home/rubio/tse/uenux2/…`. Units 02 and 14 compile from the
+   `/work` path in a rule of their own; 13, 21 and 22 keep the generic rule and add the map to their objects, the
+   shorter way (`21-uenux2-cdirreader.mk`):
+
+   ```make
+   $(addprefix $(ROOT)/$(APP)/uenux2/,$(addsuffix .o,$(CDIRREADER_SRCS))): \
+     UENUX2_CXXFLAGS += -ffile-prefix-map=src/uenux2=/home/rubio/tse/uenux2
+   ```
 4. A rule for each companion file (next section) and `override EXTRA_OBJS += $(APP)/<fragment>-roots.o`. `override`
    keeps the companions in the link when `tools/round/try-tu.sh` passes its own `EXTRA_OBJS` on the make command line.
 
 A fragment holds no flag that every unit of its tree needs; those go in `src/mk/ecourna-flags.mk` or in
 `src/Makefile` (`docs/reference/app-flags.md` lists them with their evidence). Comments cite the facts that decided a
-flag as `docs/reference/facts/app-flags.md §F5`.
+flag as `docs/reference/facts/app-flags.md §F5`. A flag that one function seems to need is decided for its tree;
+a fragment carries it only when the evidence is per TU, as `-fno-PIC`'s is (§F5;
+`docs/how-to-decompile.md` step 4, "When only a flag closes the gap").
+
+A flag a fragment does add (a path map aside, which is not a flag of the code) gives its objects a flag set, and
+the benchmark's registry `asmlift-wasm/benchmark/dataset/setups.json` must have a setup with exactly that set, as
+`ecourna-nopic` has for `-fno-PIC`. Otherwise, from `asmlift-wasm/`, `pnpm bench setups --check` reports the tree's
+setup as drift and `pnpm test:bench` fails; every splat, status and stubs check still passes, so run it before
+the commit. A new setup is a new entry in `setups.json` and a re-selection of the dataset
+(`asmlift-wasm/benchmark/README.md` "The compile setups").
 
 ## Names
 
@@ -107,8 +127,10 @@ way the target does, because binaryen's inlining and dead-argument removal depen
 (`docs/reference/facts/tool-traps.md` §X1):
 
 - a function the target reaches through the table (an `invoke_*` thunk, a vtable) has its address taken;
-- a function with direct callers in the target gets two `noinline` callers, because binaryen inlines a function it
-  sees called once;
+- a function with direct callers in the target gets at least two callers in our link, because binaryen inlines a
+  function it sees called once. The reconstructed callers count: the roots TU adds `noinline` ones for the rest.
+  5629 has two direct callers in the target (`awk -F'\t' '$2==5629' ledger/callgraph.tsv` prints 5324 and 11387);
+  unit 20 reconstructs 11387, so `20-…-roots.cpp` adds one caller standing in for 5324;
 - a function the target inlines into its only caller is left unrooted, so it is inlined here too;
 - the roots TU declares what it calls through `__asm__` labels with the wasm-level signatures
   (`extern "C" int f(int, int) __asm__("_ZN7ecourna…")`) instead of including the unit's headers, so it

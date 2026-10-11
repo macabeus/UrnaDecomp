@@ -198,6 +198,11 @@ To repair drift, fix the source until the match verifies again. If the loss is d
 match line in the same commit and say why in the commit message. Never edit a piece, and never add a
 symbol-file hand edit to make a match pass.
 
+One failure is not drift: `our link has no function <symbol>` for a byte-identical twin whose surviving name moved,
+because a new unit's identical body comes first in the link. The body still verifies under the new name; delete the
+line, run `make -C src splat-match` to add it back under that name, and say so in the commit
+([../how-to-decompile.md](../how-to-decompile.md) step 10, "A twin whose name moved").
+
 ## Matching a function
 
 1. **Pick one.** The work list is the committed scan `splat/scan.tsv`; rows that are not `match` are left to do.
@@ -324,6 +329,11 @@ The two ways differ in what picks the readings of the ambiguous operands:
   its preferred reading. No target body exists anywhere in that run, so this is stricter than the match rule. With
   operand kinds, the preferred bytes of 9131, 9132 and 9218 are their pieces. Without them (`--no-kinds`), 9218's are
   313 B against its 311 B piece, because then the target body had to pick its operands' kinds.
+
+In both ways, give the maps the matches of `splat/matched.txt` first, `withMatches(maps, matches)` with the
+`matches` of `parseMatchList` (both in `splat-sub.ts`), as the build does (`buildSplat`): each matched symbol then
+names its target function, and a call to a function that only its match names re-points as in the build. Without
+them such a call can resolve elsewhere or not at all, and the review checks something other than the build.
 
 Say which way a review used. A TypeScript script with top-level `await` runs under `pnpm exec tsx` only as an
 `.mts` file.

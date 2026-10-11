@@ -210,3 +210,30 @@ The counts grow with the link and the match list; what holds is `N/N kind-verifi
    whose numbers come from those sources.
 
 The limits of the check that remain are listed in `docs/reference/splat.md` "Reviewing a match".
+
+## S6. Our link merges byte-identical functions too, and a new twin can take a match's name
+
+binaryen merges byte-identical functions in our link as it did in the target, and the link map names the merged
+body once: `build/out/wasm-map/vota_web/names.tsv` lists one name per function. Unit 20 (commit 1f6d86a) brought in
+the deleting destructor of `ModuloEstadoGeralDefs::NumViasImpressasRelatorios`, a generated ASN.1 class, which is
+byte-identical to `ModuloTiposEleitorais::Foto`'s. The converter's object instantiates it, and the uenux2 objects
+come before the ASN.1 modules on the link line (`LINK_OBJS` in `src/Makefile`; the modules ride in `EXTRA_OBJS`).
+The merged body's name became the new one (`names.tsv`'s object column names the converter's object), and
+`_ZN21ModuloTiposEleitorais4FotoD0Ev` left our link:
+
+- before: `git show 58b2352:splat/matched.txt | awk -v n=246 '$(1) == n'` prints
+  `246 _ZN21ModuloTiposEleitorais4FotoD0Ev`;
+- after the unit's link, census, symbols and match, `TMPDIR=/tmp make -C src splat` failed with `function 246
+  matched to _ZN21ModuloTiposEleitorais4FotoD0Ev: our link has no function _ZN21ModuloTiposEleitorais4FotoD0Ev`,
+  while `splat/scan.tsv` already paired 246 with `_ZN21ModuloEstadoGeralDefs26NumViasImpressasRelatoriosD0Ev` by
+  content;
+- `splat-match` keeps every existing line and only appends (`addMatches` in `asmlift-wasm/src/splat-sub.ts`), so
+  it does not rename the stale line. Deleting it and running `make -C src splat-match` again added
+  `246 _ZN21ModuloEstadoGeralDefs26NumViasImpressasRelatoriosD0Ev`, and the build verified it;
+- today `/usr/bin/grep -c FotoD0Ev build/out/wasm-map/vota_web/names.tsv` prints 0 and
+  `awk -v n=246 '$(1) == n' splat/matched.txt` prints the new name.
+
+`git diff 58b2352 -- splat/matched.txt` shows `-246 …FotoD0Ev` although no match was lost; count lost matches by
+index (`docs/how-to-decompile.md` step 10). The same merging makes a callee's matched name possibly another
+instantiation's: 760 is matched as `vector<pair<unsigned long, unsigned long>>::push_back(&&)`
+(`awk -v n=760 '$(1) == n' splat/matched.txt`).

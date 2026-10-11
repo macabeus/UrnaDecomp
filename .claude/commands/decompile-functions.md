@@ -1,6 +1,6 @@
 ---
 description: Run a decompilation round on urna, from picking target functions to landed, independently verified splat matches, with one worktree per lane, a message board and a doc-friction log
-argument-hint: <index> [<index> ...] | <count> <component> [agents=<N>] [round=<NAME>]
+argument-hint: <index> [<index> ...] | <count> <component> | <count> tse [agents=<N>] [round=<NAME>]
 ---
 
 Arguments: **$ARGUMENTS**
@@ -8,12 +8,17 @@ Arguments: **$ARGUMENTS**
 - `<index> [<index> …]`: the target function indices to match, one lane each (`9132 9131`).
 - `<count> <component>`: how many functions to match from that component (`2 ecourna`); the PICK stage chooses
   them. The component names are the `group` column of `splat/scan.tsv` (`docs/status.md` "By component").
+- `<count> tse`: how many functions to match from TSE's own code, the origin "TSE code" of `docs/status.md` "By
+  origin" (`vota`, `comum`, `api`, `simulador`, `vota-web`, `ecourna`, `asn1-modules`, `ASN1`). PICK chooses across
+  all of them, and the lanes may come from different trees. A request in words ("3 functions from the TSE's own
+  code") is this form. The other origins are not: upstream library rows are fixed by flags, roots and link order,
+  not by writing C++ (how-to "Library functions").
 - `agents=<N>`: how many agents may run at once. **The default is 2.** Raise it only when the user says so.
 - `round=<NAME>`: the round's handle, used in post names and agent handles (default `DECOMP<n>`, with `<n>` one
   more than the highest such number among the board folders in `$HOME/.cache/urna-board/`).
 
-If `$ARGUMENTS` names neither indices nor a count and a component, ask the user which functions or which component
-and how many before doing anything else. Do not choose the component yourself.
+If `$ARGUMENTS` names neither indices nor a count with a component or `tse`, ask the user which functions or which
+component and how many before doing anything else. Do not choose the component yourself.
 
 **You are the coordinator**: the top-level session. You create the board and the worktrees, launch every stage as
 its own subagent, own the urna checkout's `main` and are the only one who talks to the user. This file adds no
@@ -146,25 +151,34 @@ How to pick, from [how-to-decompile.md](../../docs/how-to-decompile.md) step 1:
 
 - **The pool.** A function not decompiled yet has a stub in its tree, so start from the stubs and join the scan
   (`src/ecourna` for `ecourna`; `src/uenux2` for `vota`, `comum`, `api`, `simulador`, `vota-web`; `src/asn1` for
-  `ASN1` and `asn1-modules`). Go by the tree that holds the stub, not by the `group` column (step 1 explains why
-  they differ):
+  `ASN1` and `asn1-modules`; all three for `tse`). Go by the tree that holds the stub, not by the `group` column
+  (step 1 explains why they differ):
 
   ```sh
   TREE=src/ecourna
   LC_ALL=C /usr/bin/grep -rnoE '^// f[0-9]+ ' "$TREE" \
-    | awk -F: '{i=$3; sub(/^\/\/ f/, "", i); sub(/ $/, "", i); print i "\t" $1 ":" $2}' | sort -k1,1 > build/out/pick-stubs.tsv
-  awk -F'\t' 'NR>1 {print $1 "\t" $5 "\t" $7 "\t" $9}' splat/scan.tsv | sort -k1,1 \
+    | awk -F: '{i=$(3); sub(/^\/\/ f/, "", i); sub(/ $/, "", i); print i "\t" $(1) ":" $(2)}' | sort -k1,1 > build/out/pick-stubs.tsv
+  awk -F'\t' 'NR>1 {print $(1) "\t" $(5) "\t" $(7) "\t" $(9)}' splat/scan.tsv | sort -k1,1 \
     | join -t "$(printf '\t')" - build/out/pick-stubs.tsv | sort -t "$(printf '\t')" -k3,3n \
-    | awk -F'\t' '$3 >= 40 && $3 <= 600'          # index, verdict, size, group, stub file:line
+    | awk -F'\t' '$(3) >= 40 && $(3) <= 600'          # index, verdict, size, group, stub file:line
   ```
 
-  The `differs` rows of TSE components (step 1's filter) are the other pool: a body of ours exists and the work is
-  fixing its C++.
+  The awk fields in this file are written `$(1)`, never with a digit right after the `$`: Claude Code replaces a `$`
+  followed by a digit in a command file with one of the command's argument words before the session reads it (the
+  first word for a zero), so a plain field reference reaches the coordinator as one of the user's words. Keep that
+  spelling when you edit this file; `/usr/bin/grep -nE '\$[0-9]' .claude/commands/decompile-functions.md` must print
+  nothing.
+
+  The `differs` rows of TSE code (step 1's filter, which keeps only bodies compiled from `src/uenux2`, `src/ecourna`
+  or `src/asn1`) are the other pool: a body of ours exists and the work is fixing its C++.
 - **Every callee must resolve.** Read each candidate with `pnpm wasm fn` and lift it with `pnpm wasm lift … --check`
   (how-to steps 2 and 3). `fn` does not name the function behind an `invoke_*` table slot; the lift does
-  (`/* &fN */`). A callee resolves when it is matched (`awk -v n=N '$1 == n' splat/matched.txt` prints a line) or
+  (`/* &fN */`). A callee resolves when it is matched (`awk -v n=N '$(1) == n' splat/matched.txt` prints a line) or
   named (`/usr/bin/grep -F '= func:N;' splat/symbol_addrs.txt` prints one). A function whose callees are unnamed
-  needs those first.
+  needs those first. The name that resolves can be a *twin*'s: binaryen merges byte-identical bodies and keeps one
+  name, so 760, matched as `vector<pair<unsigned long, unsigned long>>::push_back`, can also be the `push_back` of a
+  vector of another 8-byte element type. A caller that uses that other instantiation still resolves when its body
+  is the same (how-to step 3, "A callee can be a twin").
 - **The stub may sit over code we have**: search our sources for the class before choosing (step 1).
 - **The name and the file**: from the records, the vtable slot, `ledger/vtables.json` and `ledger/classes.json`;
   for an `unplaced.cpp` stub, the file rules of how-to step 3.
@@ -186,11 +200,15 @@ to 10 as written, including steps 6 to 10 in the worktree: link, census, symbols
 checks, and one commit on its branch. It never touches the urna checkout's `main` and never merges.
 
 It returns, and posts as a `rounds/` result: the verdict (matched, or not matchable yet and why), the commit(s), the
-splat build's sha256 and match count, the matches added and lost against `main`
-(`git diff main -- splat/matched.txt`: any line starting with `-` and a digit is a lost match), the files it owns,
+splat build's sha256 and match count, the matches added and lost against `main`, the files it owns,
 its stretch target's state, and the number of friction posts. A target that cannot be matched yet is a result:
 post the blocker as a `facts/` post (which callee, which codegen) and leave it pending. Nothing lands from a lane
 without a match.
+
+Count the matches by target index, not by line. `git diff main -- splat/matched.txt` shows the added lines, but a
+line removed there is not always a lost match: a twin whose surviving name moved is removed under its old symbol and
+added back under the new one. The lost matches are the indices `main` matches and the branch does not, which the
+`comm` of [how-to-decompile.md](../../docs/how-to-decompile.md) step 10 ("A twin whose name moved") prints.
 
 ---
 
@@ -204,8 +222,9 @@ It changes no tracked file, works in scratch under `build/out/verify/` (ignored)
 1. **Fresh objects.** Move the unit's objects aside by name (into `build/out/verify/old-objs/`), run
    `TMPDIR=/tmp make -C src splat`, and `cmp` the rebuilt objects with the old ones. A stale object means the
    source edits never rebuilt (`src/units/README.md` "What a fragment holds" item 3).
-2. **The splat build** prints the target's sha256, and the matches against `main` are only additions
-   (`git diff main -- splat/matched.txt`).
+2. **The splat build** prints the target's sha256, and no index `main` matches is lost (how-to step 10's `comm`). A
+   line removed and its index added back under another symbol is a twin rename: check that the old symbol is gone
+   from the link (`build/out/wasm-map/vota_web/names.tsv`) and the new one is a byte-identical body.
 3. **The blanked-target check**, as [docs/reference/splat.md](../../docs/reference/splat.md) "Reviewing a match"
    describes: blank the matched piece in a copy of the split, assemble it with our body, and get the target's
    sha256. There is no command for it yet; write the script that section describes under `build/out/verify/` as
@@ -213,9 +232,13 @@ It changes no tracked file, works in scratch under `build/out/verify/` (ignored)
    Run the preferred-readings way too and report its result, but a match whose operands need the target's choice
    (splat.md §3) fails it legitimately. Say which way gave which result.
 4. **The checks**: `make -C src stubs-check`, `python3 -I -B tools/round/status.py --check`,
-   `python3 -I -B tools/round/stubs.py --check`, `python3 -I -B tools/round/check_encoding.py`, and
+   `python3 -I -B tools/round/stubs.py --check`, `python3 -I -B tools/round/check_encoding.py`,
    `TMPDIR=/tmp make -C src check-srcloc` with no wrong record of a matched function (compare its list with
-   `main`'s; earlier ones are not the lane's).
+   `main`'s; the records `main` already lists are not the lane's), and from `asmlift-wasm/`
+   `TMPDIR=/tmp pnpm test:bench`. The last one
+   fails when the lane compiles an object with a flag set that no setup of
+   `asmlift-wasm/benchmark/dataset/setups.json` has (how-to step 4, "When only a flag closes the gap"); every other
+   check passes on such a lane.
 5. **Generated files are what the generators write.** Re-running `make -C src splat-symbols` leaves
    `git status` clean. A rescan changes `splat/scan.tsv` in one way only, the `source` column of a new match
    (how-to step 9). Restore anything a re-run rewrote with `git checkout -- <file>`, and report it.
@@ -241,8 +264,9 @@ Brief: the rules above, the board path, the CONFIRMED lanes in landing order, an
    Do not pick generated lines by hand.
 3. **Check the landing**: `TMPDIR=/tmp make -C src splat` prints sha256
    `8579ef8d1a93819152cecdbf52906d2e4dd0f57999cb2e1e8c0d1161cd1007e2`, the match count is the old count plus every
-   lane's matches, and `git diff <old main> -- splat/matched.txt` has no removed match. A merged link can add matches
-   no lane had (a name that moved, a vtable now placed by content). List them, with why, as a `facts/` post. Then
+   lane's matches, and no index of the old `main` is lost (how-to step 10's `comm`, with `<old main>` for `main`). A
+   merged link can add matches no lane had (a name that moved, a vtable the merged link places by content). List
+   them, with why, as a `facts/` post. Then
    run the checks of VERIFY step 4, and from `asmlift-wasm/` `pnpm test`, `pnpm typecheck` and `pnpm test:bench`.
 4. **Clean up**: for each landed lane whose worktree is clean (`git -C <worktree> status --porcelain` prints
    nothing) and whose tip is in `main` (`git merge-base --is-ancestor decomp/<lane> main`), run
@@ -252,10 +276,11 @@ Brief: the rules above, the board path, the CONFIRMED lanes in landing order, an
 
 ## Stage 5: DOCS (one agent, on `main`)
 
-Brief: the rules above, the board path, and the docs it may edit (rule 1's list and the help text of the tools
-they describe). It reads every `board/friction/` post (and every post that corrects one) and changes the docs so
-the next contributor does not hit it. It runs every command it writes into a doc, as written, before committing.
-Facts that a doc now depends on move into `docs/reference/facts/` (no doc cites the board). A fix that needs code
+Brief: the rules above, the board path, and the docs it may edit (rule 1's list, the help text of the tools they
+describe, and this command file). It reads every `board/friction/` post (and every post that corrects one) and
+changes the docs so the next contributor does not hit it. It runs every command it writes into a doc, as written,
+before committing.
+Facts that an edited doc depends on move into `docs/reference/facts/` (no doc cites the board). A fix that needs code
 (a Makefile rule, a tool option) is not made here: it is listed as a follow-up for the user. It checks that the
 relative links of every edited doc resolve and that `status.py --check`, `stubs.py --check` and
 `check_encoding.py` still pass, commits, and posts its result: the commit, and for each friction post the doc

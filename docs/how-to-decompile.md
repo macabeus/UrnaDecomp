@@ -62,9 +62,15 @@ Start with TSE code: its `differs` rows have a body of ours already, and the wor
 listed in [status.md](status.md) "By component"):
 
 ```sh
-awk -F'\t' '$5=="differs" && $9 ~ /^(vota|comum|api|simulador|vota-web|ecourna|asn1-modules|ASN1)$/' splat/scan.tsv \
-  | sort -t$'\t' -k7,7n | cut -f1,2,6,7,9 | less        # smallest first
+awk -F'\t' '$5=="differs" && $9 ~ /^(vota|comum|api|simulador|vota-web|ecourna|asn1-modules|ASN1)$/ \
+  && $11 ~ /^app\/(uenux2|ecourna|asn1)\//' splat/scan.tsv \
+  | sort -t$'\t' -k7,7n | cut -f1,2,6,7,9,11 | less     # smallest first
 ```
+
+The last condition keeps the bodies compiled from `src/uenux2`, `src/ecourna` and `src/asn1` (the `object` column).
+Without it the filter also lists library bodies that only TSE code calls, since `group` says who uses a function
+(below): of 46 TSE-group `differs` rows on 2026-10-11, 21 are TSE code; the rest are RHVoice, OpenSSL, 7-Zip and
+libc++ bodies, binaryen's merged ones and the `src/app` stand-ins', and they are most of the smallest.
 
 The `no-candidate` rows (`$5=="no-candidate"` in the same filter) are the functions the scan found no body of ours
 for: the symbol file names none, the census paired none, and no unmatched body of ours re-points into it. That is
@@ -144,8 +150,11 @@ value returns nothing in wasm and takes the address of the result as a hidden pa
 target 9131, `MunicipioZona CConversorMunicipioZona::DoConverte(const CMunicipioZona&) const`, has the wasm type
 `(i32 i32 i32)->()`: `p0` is the result, `p1` is `this`, `p2` is the argument. A stub's `void`
 says only that the wasm function returns nothing. For a virtual function, take the signature from the base class
-that declares the slot (the `fn` header names the vtable class and slot; for the ASN.1 converters it is
-`IConversorASN<ENTIDADE, DADO>` in `src/ecourna/api/asn/iconversorasn.hpp`).
+that declares the slot (the `fn` header names the vtable class and slot). For the ASN.1 converters there are two
+bases, and the namespace of the base's RTTI name in `ledger/classes.json` says which: ecourna's
+`ecourna::api::asn::IConversorASN<ENTIDADE, DADO>` in `src/ecourna/api/asn/iconversorasn.hpp` (slot 3 is
+`DoDeconverte`), and comum's `comum::asn::IConversorASN<ENTIDADE, DADO>` in
+`src/uenux2/src/app/comum/asn/iconversorasn.h` (slot 3 is `DoDesconverte`). Slot 2 is `DoConverte` in both.
 
 ## 3. Start from the lifter
 
@@ -163,6 +172,15 @@ it will land, at the path the `std::source_location` record names: here
 The lifter names a callee from the ledger's pairs, not from the symbol file, so a callee can be `extern "C" …
 f219(…)` although `splat/symbol_addrs.txt` names it (`_ZN4ASN18SEQUENCEC2EPKv = func:219;`, the
 `ASN1::SEQUENCE` constructor). Look a callee up there by `func:<index>;` before you guess.
+
+**A callee can be a twin.** binaryen merges byte-identical functions, in the target and in our link alike, and keeps
+one name for the body. So a callee's name in `splat/matched.txt` or the symbol file can be another function's that
+compiles to the same bytes: 760 is matched as `std::vector<std::pair<unsigned long, unsigned long>>::push_back(&&)`,
+and the `push_back` of a vector of another 8-byte element type can be that same body. Write the call your source
+makes. If your instantiation compiles to the same bytes, our link merges it into the matched body and the call
+re-points to the target's function; if it does not, the target has no such body and the caller cannot match
+with that call. When your object comes first in the link, its symbol becomes the survivor's name and the existing
+match line has to follow it (step 10, "A twin whose name moved"; [facts/splat.md](reference/facts/splat.md) §S6).
 
 **When no record names the file**, as for every stub in `unplaced.cpp`, choose the path the way the landed
 units do, and say why in the fragment's header comment (step 6):
@@ -190,14 +208,34 @@ early. `make -C src stubs` (step 9 runs it) writes the stubs and gaps again arou
 blank lines that are left, and `TMPDIR=/tmp make -C src check-srcloc` (after a link) lists every record of ours that
 is not the target's.
 
+The record's function name is bytes of the target too: clang's pretty-function text, with the typedef names and
+qualifiers the source spelled. Spell the definition's return and parameter types as the record does. 3663's record
+(`awk -F'\t' '$6 ~ /(^|,)3663(,|$)/ {print $5}' ledger/source-locations.tsv`) reads `static void
+api::CBmpConversor::InvertColors(unsigned char *, const int, const int)`, so its definition takes `unsigned char*`
+and `const int` by value, although the same tree spells bytes `uebyte` elsewhere; 144 records do spell `uebyte`
+(`cut -f5 ledger/source-locations.tsv | /usr/bin/grep -c uebyte`). [reference/app-flags.md](reference/app-flags.md)
+"The error records are std::source_location, not a macro" has the background.
+
+**A stub-only file.** A file the evidence names that does not exist yet holds its stubs only, written from line 2
+on, not at their records' lines ([src/README.md](../src/README.md) "Stubs"). `--strip` leaves next to nothing of
+it, so there is no "where the stub was": lay the file out yourself so that each throw lands on its record's line,
+with blank lines where the original lines are unknown. Before step 9 writes gaps into it, `awk 'NR==<line>' <file>`
+prints the line a record names; after a `--strip` of a file that has gaps, it does again
+(`awk 'NR==60' <file>` prints `InvertColors`' throw in the stripped `src/uenux2/src/api/gui/cbmpconversor.cpp`).
+
 **Save TSE sources as Latin-1.** TSE's files are ISO-8859-1, and their string literals are bytes of the target: an
 editor that saves `"inválido"` as UTF-8 changes the data the census and the splat scan compare. `.editorconfig`
 declares the charset for `src/uenux2/` and `src/ecourna/` (with the few exceptions it lists), and CI's
 `tools/round/check_encoding.py` fails on a file that was re-encoded. Write a new file in Latin-1 too when its
 strings have accents.
 
-The compile line in the lifted file's header comes from the lifter's own copy of the component flags, which can
-differ from the build's. The next steps use `try-tu.sh`, which reads the flags from `src/Makefile`; trust those.
+The compile line in the lifted file's header comes from the lifter's own copy of the flags, chosen by the function's
+*component* (`componentFlags` in `asmlift-wasm/src/lift.ts`), not by the tree the code lands in. So every uenux2
+function in group `ecourna` (step 1) is lifted, and compiled by `--check`, with ecourna's `-O3 -fexceptions …`:
+`head -2 /tmp/lift/1260.cpp` after a lift of 1260 (`api::CDirReader::NextEntry`, in `src/uenux2/`) prints
+`// em++ -O3 -fexceptions -std=c++20 -DNDEBUG -fno-strict-aliasing -fno-delete-null-pointer-checks
+-fno-strict-overflow -fPIC`. The next steps use `try-tu.sh`, which reads the flags from `src/Makefile` by the
+source's path; trust those.
 
 ## 4. Iterate on the function alone
 
@@ -211,6 +249,13 @@ alone through the toolkit's *rank adapter*, and scores it against the target: ab
 under heavy load. The flags come from the recipe `src/Makefile` has for the object the file would become. A file
 outside `src/` needs `--component` with the directory under `src/` it would land in (`uenux2/src/app/comum/dados`,
 `ecourna/app/dados`, `asn1`, …). `--print-flags` shows the compile command without running it.
+
+The lone compile always adds `-fexceptions`, whatever the component: the rank template that `--single` uses
+starts with it. uenux2 code is built without it (no landing pads, [facts/app-flags.md](reference/facts/app-flags.md)
+§F6), so a uenux2 TU scored alone grows `call import:invoke_…` and `__resumeException` rows the build never has.
+Pass `--flags '-fignore-exceptions'` for a uenux2 TU: for 1260 the invoke rows go (score 162 over 184 rows
+without it, 224 over 250 with it, the rest being what binaryen inlines into a body linked alone), and the splat
+build matched the same source unchanged ([facts/tool-traps.md](reference/facts/tool-traps.md) §X6).
 
 Several TUs after `--single` are rival candidates, ranked against each other, not one program: a callee defined
 in a second TU stays an import (`call import:<symbol>`), and the second TU is dropped when it does not define the
@@ -245,6 +290,18 @@ also in `build/out/wasm/vota_web/symbols.{mangled,demangled}.txt`, two line-alig
 A function linked alone gets different inlining and dead-argument decisions from the same function inside the
 program, so a score of 0 here is a reason to try the whole link, not a match. The reverse holds too: target 1931 is
 matched, yet its body linked alone still differs from the target's.
+
+**When only a flag closes the gap.** A body that differs in a way no C++ form you can find explains (a load the
+target repeats, a branch where ours has a `select`) may need a flag its tree's set lacks. Try it with `--flags`
+here, then find out whether the flag is the tree's: a flag is decided for a whole tree, on a site no source change
+can explain, never on the one function that needs it. [facts/app-flags.md](reference/facts/app-flags.md) §F9 item
+8 has a trap here (a reload that an out-of-line call gives as well), and §F6 the evidence for uenux2's
+`-fno-strict-aliasing`. A flag set changes in `src/Makefile` (or `src/mk/ecourna-flags.mk`) with its evidence in that facts
+file, and every match must still verify in a private link with it (§F9 item 6 has the command). A fragment may carry a target-specific flag only where the evidence is
+per TU, as `-fno-PIC` is (§F5), and then the objects' flag set must be a setup of
+`asmlift-wasm/benchmark/dataset/setups.json`, as `ecourna-nopic` is: `pnpm bench setups --check` fails on an
+object that compiles with flags no setup has ([asmlift-wasm/benchmark/README.md](../asmlift-wasm/benchmark/README.md)
+"The compile setups"). If neither holds, leave the function pending and report the measurement.
 
 ## 5. Conclude in the whole link
 
@@ -311,6 +368,15 @@ signal to land. `splat-remap` reads the committed symbol file and none of the ma
 The `ours` index is the function's index in the try link; `pnpm wasm fn` on the try link's wasm with that index
 shows its body beside the target's.
 
+**A uenux2 TU with records, before its fragment exists.** The generic uenux2 rule compiles `src/uenux2/<path>`, a
+relative path that `UENUX2_PREFIX_MAP` (`/work/src/uenux2=…`) never rewrites, so the TU's `std::source_location`
+records name `src/uenux2/…` instead of the target's `/home/rubio/tse/uenux2/…`, and `splat-remap` stops at the
+record's `i32.const` (`address: source_location not in the target`). The landed units add the missing map to their
+own objects (step 6), and try-tu reads it from the fragment once there is one; until then pass it yourself:
+`--flags '-ffile-prefix-map=src/uenux2=/home/rubio/tse/uenux2'` (`--print-flags` shows it on the compile line). It
+only works for a TU under `src/uenux2/`, compiled at its own path, without `--component`
+([facts/tool-traps.md](reference/facts/tool-traps.md) §X7).
+
 ## 6. Land the unit
 
 1. Keep the sources at the paths the `std::source_location` records name, or that step 3 chose.
@@ -318,10 +384,15 @@ shows its body beside the target's.
    directory the files share, or the class. `src/units/README.md` describes what a fragment holds, its naming
    scheme, and the *roots*, *pending* and *externs* companion files. A source deeper than `src/ecourna/*/*/`
    (`app/dados/asn/x.cpp`) needs a rule in the fragment that names it as a prerequisite, or edits to it never
-   rebuild its object ("What a fragment holds" item 3). Add the fragment's row to the table in
-   `src/units/README.md`.
+   rebuild its object ("What a fragment holds" item 3). A uenux2 source whose functions have
+   `std::source_location` records needs the path map the generic uenux2 rule lacks (step 5), as a target-specific
+   line on its objects; `src/units/21-uenux2-cdirreader.mk` has it:
+   `$(addprefix $(ROOT)/$(APP)/uenux2/,$(addsuffix .o,$(CDIRREADER_SRCS))): UENUX2_CXXFLAGS +=
+   -ffile-prefix-map=src/uenux2=/home/rubio/tse/uenux2`. Without it `TMPDIR=/tmp make -C src check-srcloc` lists the records.
+   Add the fragment's row to the table in `src/units/README.md`.
 3. If nothing in the skeleton calls the unit yet, add a `-roots.cpp` that reaches each function the way the target
-   does (address taken, two callers, or none so it inlines).
+   does (address taken; at least two direct callers, counting the reconstructed ones; or none so it inlines;
+   `src/units/README.md` "Companion files").
 4. Link: `TMPDIR=/tmp make -C src link`. Do not pass `-j` to the link: its two outputs share one recipe. make does
    not rebuild an object whose flags changed but whose prerequisites did not. To see whether an edit of a source
    recompiles anything, count the compiles make would run:
@@ -398,20 +469,49 @@ match"); raising `SPLAT_MAX_KIND_UNVERIFIED` in `src/mk/splat-sub.mk` is a decis
 written beside it. The *review warnings* list the literals of matches that may be a target number copied into the
 source. For a TSE function, check that each one of yours is a number its source has a reason to hold.
 
+**A twin whose name moved** is the one break that is not drift. When your unit brings in a body byte-identical to a
+matched one (another class's deleting destructor, another instantiation), binaryen keeps the first in link order,
+and if yours comes first, the matched symbol leaves our link. The build then says `function 246 matched to
+_ZN21ModuloTiposEleitorais4FotoD0Ev: our link has no function _ZN21ModuloTiposEleitorais4FotoD0Ev`, while
+`splat/scan.tsv` already pairs 246 with the survivor by content. `splat-match` only appends, so delete the stale
+line from `splat/matched.txt`, run `TMPDIR=/tmp make -C src splat-match` again (it adds the index back under the
+survivor's name) and the build again, and say so in the commit message ([facts/splat.md](reference/facts/splat.md)
+§S6). `git diff splat/matched.txt` then shows a `-` and a `+` line for the same index: a rename, not a lost match.
+So count lost matches by index, not by line; against `main` (or any commit):
+
+```sh
+git show main:splat/matched.txt | cut -d' ' -f1 | sort > build/out/main-matched.idx
+cut -d' ' -f1 splat/matched.txt | sort | comm -23 build/out/main-matched.idx -    # prints nothing when none is lost
+```
+
 Commit in one commit: the sources, the fragment and its companion files, the fragment's row in
 `src/units/README.md`, the ledger files the census rewrote (with the `git rm` of the previous snapshot from step 7),
-`splat/symbol_addrs.txt`, `splat/matched.txt`, `splat/scan.tsv`, `README.md`, `docs/status.md` and the stub and gap
-files step 9 rewrote (`git status src/`). CI checks that the four splat and status files agree
+`splat/symbol_addrs.txt`, `splat/matched.txt`, `splat/scan.tsv`, `docs/status.md` and the stub and gap files step 9
+rewrote (`git status src/`). CI checks that the match list, the scan and `docs/status.md` agree
 (`python3 -I -B tools/round/status.py --check`) and that every stub is the one the evidence gives and every gap the one
 the generator writes (`python3 -I -B tools/round/stubs.py --check`, also `make -C src stubs-check`). Run both before
-you commit, with `python3 -I -B tools/round/check_encoding.py` (step 3).
+you commit, with `python3 -I -B tools/round/check_encoding.py` (step 3) and, from `asmlift-wasm/`,
+`TMPDIR=/tmp pnpm test:bench`: the benchmark's tests check that every object compiles with the flags of a setup in
+`asmlift-wasm/benchmark/dataset/setups.json`, which a flag added in a fragment breaks while every other check passes
+([src/units/README.md](../src/units/README.md) "What a fragment holds").
 
 **Landing onto a moved main.** When another unit landed after your branch started, merging conflicts in every
 generated file and in the census snapshot, which both branches renamed. Resolve only the files people write:
 `src/units/README.md` keeps both rows, and `splat/matched.txt` keeps both branches' match lines (step 10 checks
-every one again). The stub file keeps both branches' removals. Every other generated file takes either side, and
-the census snapshot keeps one name, with the other `git rm`'d. Then run steps 6 to 10 again on the merge: link,
-census (`git rm` the snapshot you kept), symbols, match, build and the checks. Commit it all as the merge commit.
+every one again). The stub file keeps both branches' removals. Every other generated file takes one side whole, with
+`git checkout HEAD -- <file>` (it stages that side): a `git add` of a conflicted file stages its conflict markers.
+The census snapshot is a rename/rename conflict (`DD` on the old name, `AU` and `UA` on the two new ones), and git
+has already merged both snapshots into your side's name, markers included. Keep one name and drop the others from
+the index:
+
+```sh
+git checkout HEAD -- ledger/history/<your snapshot>
+git rm -q --cached ledger/history/<the old snapshot>
+git rm -q ledger/history/<the other branch's snapshot>
+```
+
+Then run steps 6 to 10 again on the merge: link, census (`git rm` the snapshot you kept, add the new one), symbols,
+match, build and the checks. Commit it all as the merge commit.
 Two branches that each took "the next free NN" collide too; `src/units/README.md` "Names" says how to avoid that.
 
 ## Library functions

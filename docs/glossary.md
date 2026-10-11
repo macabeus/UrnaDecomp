@@ -113,8 +113,12 @@ benchmark rows' `component` field.
 
 **owner** — the coarser library class of `tools/libs/classify.py`, stored in `tools/libs/cls2.json`: `app`,
 `openssl`, `sqlite`, `7zip`, `rhvoice`, `libcxx`, `asn1`, `boost`, `libc`, `zlib`, or `-`. It was seeded from
-library strings and vtable namespaces during the library census. *Where:* `ledger/functions.tsv` column `owner`,
-`pnpm wasm progress --by owner` (the command's default) and so `build/out/census/progress.md`, `pnpm wasm fn --owners`, the benchmark rows' `owner` field.
+library strings and vtable namespaces during the library census. It is a heuristic and can be wrong for TSE code:
+`api::CDirReader::NextEntry` (1260, record `/home/rubio/tse/uenux2/src/api/util/cdirreader.cpp`) is owner `sqlite`
+(`awk -F'\t' '$1==1260' ledger/functions.tsv | cut -f1-5` prints `1260 87 10 sqlite ecourna`), probably through its
+one library-looking callee, `readdir`. For TSE code go by the records and the stub's tree. *Where:*
+`ledger/functions.tsv` column `owner`, `pnpm wasm progress --by owner` (the command's default) and so
+`build/out/census/progress.md`, `pnpm wasm fn --owners`, the benchmark rows' `owner` field.
 
 **The scheme to use is component.** The official meter (the splat build) groups by it, it separates the TSE code
 into its parts, and it is what `docs/reference/appmap.md` describes. The splat build only falls back to the owner, spelled as
